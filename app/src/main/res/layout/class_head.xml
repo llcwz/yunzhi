@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/len_48">
+
+    <!--头部控制条布局-->
+    <LinearLayout
+        android:layout_weight="0.5"
+        android:layout_height="match_parent"
+        android:id="@+id/lv_all"
+        android:orientation="horizontal"
+        android:gravity="left"
+        android:layout_width="0dp"
+        android:layout_marginLeft="@dimen/len_8">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_all"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/class_list_24dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_all"
+            android:text="@string/class_all"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="0.5"
+        android:layout_height="match_parent"
+        android:id="@+id/lv_comprehensive"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_width="0dp"
+        android:layout_marginRight="@dimen/len_8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_comprehensive"
+            android:text="@string/class_comprehensive"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_comprehensive"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/class_comprehensive_24dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

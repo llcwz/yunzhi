@@ -1,13 +1,45 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    tools:context="com.union.yunzhi.yunzhi.fragment.main.ClassFragment">
+    android:layout_width="match_parent"
+    android:id="@+id/lv_drawer">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="class" />
+    <!--侧滑栏没显示默认显示Fragment-->
+    <FrameLayout
+        android:id="@+id/fragment_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/len_40">
+
+            <!--头部的控制条-->
+            <include layout="@layout/class_head"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!--可以隐藏的轮播推荐-->
+                <include layout="@layout/class_carousel"/>
+
+                <!--综合排序布局(此布局可以隐藏)-->
+                <include layout="@layout/class_comprehensive"/>
+
+            </FrameLayout>
+
+            <!--显示课程-->
+            <include layout="@layout/class_course"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!--左边侧滑显示分类的抽屉-->
+    <include layout="@layout/class_drawer"/>
+
+</android.support.v4.widget.DrawerLayout>
+
