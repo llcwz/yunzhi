@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_home">首页</string>
+    <string name="navigation_class">分类</string>
+    <string name="navigation_talk">交流</string>
+    <string name="navigation_live">直播</string>
+    <string name="navigation_me">个人</string>
+</resources>

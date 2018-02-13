@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:id="@+id/toolbar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbarHeight">
+
+
+    <LinearLayout
+        android:layout_marginLeft="9dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/searchview">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            >
+
+            <ImageView
+                android:padding="10dp"
+                android:src="@drawable/ic_search"
+                android:layout_width="40dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/serach"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="恋爱先生"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            app:civ_circle_background_color="@color/grey_300"
+            app:civ_border_color="@color/grey_300"
+            app:civ_border_width="3dp"
+            android:src="@drawable/ic_download"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

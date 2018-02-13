@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/round_img"
+        app:riv_corner_radius="@dimen/len_12"
+        android:layout_marginRight="@dimen/len_2"
+        android:layout_marginLeft="@dimen/len_2"
+        android:layout_marginBottom="@dimen/len_28"
+        android:src="@drawable/bg1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_44">
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            android:layout_marginBottom="10dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/ci_portrait"
+            android:layout_marginRight="@dimen/len_16"
+            android:layout_marginTop="@dimen/len_4"
+            android:layout_marginLeft="@dimen/len_4"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="@dimen/len_6"
+            android:src="@drawable/default_user_avatar"
+            android:layout_width="@dimen/len_40"
+            android:layout_height="@dimen/len_40" />
+
+        <LinearLayout
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="@dimen/len_4"
+            android:layout_toRightOf="@+id/ci_portrait"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_marginBottom="@dimen/len_2"
+                android:layout_gravity="bottom"
+                android:text="hellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>
