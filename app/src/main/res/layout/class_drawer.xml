@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_left"
+    android:layout_width="400dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:background="#f0f0f0">
+
+    <!--分类一块中侧滑抽屉的布局-->
+
+</RelativeLayout>
