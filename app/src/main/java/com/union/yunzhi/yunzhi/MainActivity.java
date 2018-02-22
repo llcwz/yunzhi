@@ -23,7 +23,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
 
     private FrameLayout mContainer;
 
-    private Boolean flag = false;//
+    private Boolean flag = false;
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_main;

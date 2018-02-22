@@ -4,10 +4,61 @@
     android:layout_height="match_parent"
     tools:context="com.union.yunzhi.yunzhi.fragment.main.LiveFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="live" />
+        android:orientation="vertical">
+
+        <!--TODO 直播预留搜索栏位置-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_40"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="预留搜索栏的位置"/>
+
+        </LinearLayout>
+
+
+        <!--分类滚动条-->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_40"
+            android:id="@+id/horizontal_view"
+            android:background="@color/blue_300"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/layout_horizontal_view"
+                android:orientation="horizontal"/>
+
+        </HorizontalScrollView>
+
+        <!--轮播推荐-->
+        <com.youth.banner.Banner
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_116"
+            android:id="@+id/banner_live"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/amber_100"/>
+
+        <!--显示直播-->
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/rec_live"/>
+
+
+    </LinearLayout>
+
 
 </FrameLayout>

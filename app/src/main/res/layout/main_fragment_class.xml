@@ -5,6 +5,7 @@
     android:id="@+id/lv_drawer">
 
     <!--侧滑栏没显示默认显示Fragment-->
+
     <FrameLayout
         android:id="@+id/fragment_layout"
         android:layout_width="fill_parent"
@@ -13,8 +14,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/len_40">
+            android:orientation="vertical">
+
+            <!-- TODO: 分类预留搜索栏的位置 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/len_40">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="预留搜索栏位置"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
 
             <!--头部的控制条-->
             <include layout="@layout/class_head"/>
@@ -23,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <!--可以隐藏的轮播推荐-->
+                <!--轮播推荐-->
                 <include layout="@layout/class_carousel"/>
 
                 <!--综合排序布局(此布局可以隐藏)-->

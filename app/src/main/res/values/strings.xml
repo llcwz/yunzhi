@@ -5,6 +5,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--分类模块的控件名称-->
-    <string name="class_all">全部</string>
+    <string name="class_all">全部课程</string>
     <string name="class_comprehensive">综合</string>
+    <string name="class_drawer_head_text">全部课程</string>
+
+    <string name="class_new">最新</string>
+    <string name="class_hot">最热</string>
+    <string name="class_finish">已完成</string>
+    <string name="class_not_finish">未完成</string>
+    <string name="class_not_start">待开始</string>
+    <string name="class_range">排序</string>
+    <string name="class_state">状态</string>
+
 </resources>

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
     <include layout="@layout/item_class_fragment_item1"/>
 
     <View
