@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_left"
     android:layout_width="400dp"
     android:layout_height="match_parent"
     android:layout_gravity="left"
+    android:orientation="vertical"
     android:background="#f0f0f0">
 
     <!--分类一块中侧滑抽屉的布局-->
+    <include layout="@layout/class_drawer_head"
+        android:id="@+id/constraint_class_drawer_head"/>
 
-</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rec_drawer">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
