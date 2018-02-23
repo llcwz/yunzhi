@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.union.yunzhi.common.R;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -98,6 +100,10 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
         MyViewHolder<Datas> holder = onCreateViewHolder(root,viewType);
 
         //    root = holder.itemView.findViewById(viewType);
+
+        // 设置View的Tag为ViewHolder，进行双向绑定
+        root.setTag(R.id.tag_recycler_holder, holder);
+
         root.setOnLongClickListener(this);
         root.setOnClickListener(this);
 
@@ -167,11 +173,12 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
      */
     @Override
     public void onClick(View v) {
+        MyViewHolder viewHolder = (MyViewHolder) v.getTag(R.id.tag_recycler_holder);
         if (this.mListener != null) {
             // 得到ViewHolder当前对应的适配器中的坐标
-//            int pos = viewHolder.getAdapterPosition();
-//            // 回掉方法
-//            this.mListener.onItemClick(viewHolder, mDataList.get(pos));
+            int pos = viewHolder.getAdapterPosition();
+            // 回掉方法
+            this.mListener.onItemClick(viewHolder, mDataList.get(pos));
 
         }
     }
