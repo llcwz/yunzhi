@@ -1,4 +1,4 @@
-package com.union.yunzhi.yunzhi._class;
+package com.union.yunzhi.factories.moudles.classfication;
 
 import java.util.ArrayList;
 import java.util.List;

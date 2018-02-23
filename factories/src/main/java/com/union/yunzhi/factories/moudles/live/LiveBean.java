@@ -1,4 +1,4 @@
-package com.union.yunzhi.yunzhi.live;
+package com.union.yunzhi.factories.moudles.live;
 
 import android.content.Context;
 import android.content.res.Resources;

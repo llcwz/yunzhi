@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.MyViewHolder<Datas>>
-        implements AdapterCallback<Datas>{
+        implements AdapterCallback<Datas>,View.OnClickListener,View.OnLongClickListener{
 
     @Override
     public void onViewRecycled(MyViewHolder<Datas> holder) {
@@ -29,12 +29,12 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
      **
      * 我们的自定义监听器
      */
-    public interface AdapterListener{
+    public interface AdapterListener<Datas>{
         // 当Cell点击的时候触发
-        void onItemClick(View v,int pos);
+        void onItemClick(MyViewHolder holder, Datas data);
 
         // 当Cell长按时触发
-        void onItemLongClick(View v,int pos);
+        void onItemLongClick(MyViewHolder holder, Datas data);
 
         //是否在长按之后添加一个短按动作，一般设置为false
         Boolean setAddActionContinue();
@@ -100,7 +100,7 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
 
         MyViewHolder<Datas> holder = onCreateViewHolder(root,viewType);
 
-<<<<<<< HEAD
+
         //    root = holder.itemView.findViewById(viewType);
 
         // 设置View的Tag为ViewHolder，进行双向绑定
@@ -114,8 +114,7 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
 
 
         //    holder.callback = (AdapterCallback<Datas>) this;
-=======
->>>>>>> 0f9888d9f72482e8149d428936144a60dca83863
+
 
         return holder;
     }
@@ -139,21 +138,6 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
             holder.bind(data,position);
 
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onItemClick(v,position);
-            }
-        });
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mListener.onItemLongClick(v,position);
-
-                return mListener.setAddActionContinue();
-            }
-        });
     }
 
     @Override
@@ -186,7 +170,6 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
         }
     }
 
-<<<<<<< HEAD
     /**
      * 点击事件的回调
      * @param v
@@ -203,8 +186,7 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
         }
     }
 
-=======
->>>>>>> 0f9888d9f72482e8149d428936144a60dca83863
+
     @Override
     public void update(Datas data, MyViewHolder<Datas> holder) {
         // 得到当前ViewHolder的坐标

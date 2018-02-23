@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.yunzhi.R;
-import com.union.yunzhi.yunzhi._class.TitleBean;
+import com.union.yunzhi.factories.moudles.classfication.TitleBean;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -39,6 +39,11 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
     @Override
     protected MyViewHolder<TitleBean> onCreateViewHolder(View root, int viewType) {
         return new DrawerViewHolder(root);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
     }
 
     public class DrawerViewHolder extends MyViewHolder<TitleBean>{

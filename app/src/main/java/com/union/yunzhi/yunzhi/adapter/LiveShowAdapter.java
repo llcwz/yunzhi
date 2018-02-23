@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import com.union.yunzhi.common.helper.ScreenUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.yunzhi.R;
-import com.union.yunzhi.yunzhi.live.LiveBean;
+import com.union.yunzhi.factories.moudles.live.LiveBean;
 
 import java.util.List;
 
@@ -30,6 +30,11 @@ public  class LiveShowAdapter extends MyAdapter<LiveBean> {
     @Override
     protected MyViewHolder<LiveBean> onCreateViewHolder(View root, int viewType) {
         return new LiveShowHolder(root);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
     }
 
     public class LiveShowHolder extends MyViewHolder<LiveBean>{

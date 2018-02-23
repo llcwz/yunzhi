@@ -1,4 +1,4 @@
-package com.union.yunzhi.yunzhi._class;
+package com.union.yunzhi.factories.moudles.classfication;
 
 /**
  * Created by cjw on 2018/2/20 0020.

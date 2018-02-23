@@ -28,6 +28,11 @@ public class ClassCourseAdapter extends MyAdapter<String>{
         return new CouseViewHolder(root);
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
+    }
+
     public class CouseViewHolder extends MyViewHolder<String>{
 
         private TextView mTextView;

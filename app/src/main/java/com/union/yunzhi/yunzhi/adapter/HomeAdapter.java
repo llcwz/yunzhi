@@ -81,6 +81,11 @@ public class HomeAdapter extends MyAdapter<homeModle> {
 
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
+    }
+
     public class bannerViewHolder extends MyViewHolder<homeModle> {
 
         private Banner banner;

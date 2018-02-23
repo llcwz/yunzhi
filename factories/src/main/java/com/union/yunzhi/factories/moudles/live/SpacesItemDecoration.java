@@ -1,4 +1,4 @@
-package com.union.yunzhi.yunzhi.live;
+package com.union.yunzhi.factories.moudles.live;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

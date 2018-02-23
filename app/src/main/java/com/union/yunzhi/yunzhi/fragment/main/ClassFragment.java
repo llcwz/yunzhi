@@ -21,8 +21,8 @@ import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.yunzhi.R;
-import com.union.yunzhi.yunzhi._class.ClassConst;
-import com.union.yunzhi.yunzhi._class.TitleBean;
+import com.union.yunzhi.factories.moudles.classfication.ClassConst;
+import com.union.yunzhi.factories.moudles.classfication.TitleBean;
 import com.union.yunzhi.yunzhi.adapter.ClassCourseAdapter;
 import com.union.yunzhi.yunzhi.adapter.ClassDrawerAdapter;
 import com.youth.banner.Banner;
@@ -222,6 +222,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     @Override
     protected void initData() {
 
+        /*
         //显示课程的适配
         ClassCourseAdapter adapter=new ClassCourseAdapter(test, new MyAdapter.AdapterListener() {
 
@@ -277,6 +278,8 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
         });
 
         mRecycleView2.setAdapter(adapter1);
+
+        */
 
     }
 
