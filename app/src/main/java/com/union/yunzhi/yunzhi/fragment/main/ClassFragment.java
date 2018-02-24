@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,9 +19,9 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.TitleBean;
+import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.ClassCourseAdapter;
 import com.union.yunzhi.yunzhi.adapter.ClassDrawerAdapter;
 import com.youth.banner.Banner;
@@ -222,25 +221,26 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     @Override
     protected void initData() {
 
-        /*
+
         //显示课程的适配
         ClassCourseAdapter adapter=new ClassCourseAdapter(test, new MyAdapter.AdapterListener() {
 
+
             @Override
-            public void onItemClick(View v, int pos) {
+            public void onItemClick(MyAdapter.MyViewHolder holder, Object data) {
                 //TODO 点击课程单元执行
             }
 
             @Override
-            public void onItemLongClick(View v, int pos) {
+            public void onItemLongClick(MyAdapter.MyViewHolder holder, Object data) {
                 //TODO 长按课程单元执行
             }
 
             @Override
             public Boolean setAddActionContinue() {
-
                 return false;
             }
+
 
             @Override
             public void updataUI(Object object) {
@@ -252,21 +252,19 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
 
         //显示分类适配
         ClassDrawerAdapter adapter1=new ClassDrawerAdapter(test1, new MyAdapter.AdapterListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
 
-                Log.d("TAG","点击item的位置是："+pos);
-                //TODO 点击分类单元块执行的操作
+            @Override
+            public void onItemClick(MyAdapter.MyViewHolder holder, Object data) {
+                    //TODO 点击分类单元块执行的操作
             }
 
             @Override
-            public void onItemLongClick(View v, int pos) {
-                //TODO 长按分类单元块执行的操作
+            public void onItemLongClick(MyAdapter.MyViewHolder holder, Object data) {
+                    //TODO 长按分类单元块执行的操作
             }
 
             @Override
             public Boolean setAddActionContinue() {
-
                 return false;
             }
 
@@ -279,7 +277,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
 
         mRecycleView2.setAdapter(adapter1);
 
-        */
+
 
     }
 

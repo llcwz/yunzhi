@@ -33,6 +33,7 @@ public class ClassCourseAdapter extends MyAdapter<String>{
         return false;
     }
 
+
     public class CouseViewHolder extends MyViewHolder<String>{
 
         private TextView mTextView;
