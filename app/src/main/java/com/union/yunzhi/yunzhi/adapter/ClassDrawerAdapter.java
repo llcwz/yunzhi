@@ -64,15 +64,12 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
         }
 
         @Override
-        protected void onBind(final TitleBean data, int position) {
+        protected void onBind(final TitleBean data, final int position) {
             //适配分类父标题
             mTextView.setText(data.getTitle());
             mImageView.setImageResource(R.drawable.ic_airplay_black_24dp);
 
             final List<String> getData=data.getSonTitle();
-
-            //RecycleView的当前的位置
-            pos1=position;
 
             //适配分类子标题
             mTagFlowLayout.setAdapter(new TagAdapter<String>(getData) {
@@ -94,17 +91,16 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
 
             mTagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                 @Override
-                public boolean onTagClick(View view, int position, FlowLayout parent) {
+                public boolean onTagClick(View view, int pos, FlowLayout parent) {
 
-                    pos2=position;
                     //pos1为RecycleView的当前位置，position为子项目的位置
-                    Toast.makeText(context, "当前位置:"+pos1+","+getData.get(position), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "当前位置:"+position+","+getData.get(pos), Toast.LENGTH_SHORT).show();
 
                     //TODO 点击Drawer里面的某个子项实现的操作
                     //更新文字提示
                     String temp=null;
                     if(pos1>=0&&pos2>=0){
-                        temp=mDataList.get(pos1).getTitle()+"-"+data.getSonTitle().get(pos2);
+                        temp=mDataList.get(position).getTitle()+"-"+data.getSonTitle().get(pos2);
                     }else{
                         temp="全部课程";
                     }

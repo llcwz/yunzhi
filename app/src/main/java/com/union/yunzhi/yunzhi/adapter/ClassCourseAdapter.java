@@ -30,8 +30,10 @@ public class ClassCourseAdapter extends MyAdapter<String>{
 
     @Override
     public boolean onLongClick(View v) {
+
         return false;
     }
+
 
     public class CouseViewHolder extends MyViewHolder<String>{
 

@@ -18,9 +18,11 @@ import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.helper.GlideImageLoader;
+import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.live.LiveBean;
 import com.union.yunzhi.factories.moudles.live.SpacesItemDecoration;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.adapter.LiveShowAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -112,15 +114,16 @@ public class LiveFragment extends FragmentM {
         SpacesItemDecoration decoration=new SpacesItemDecoration(1);
         mRecycleView.addItemDecoration(decoration);
         mRecycleView.setLayoutManager(mStaggeredGridLayoutManager);
-        /*
+
         LiveShowAdapter adapter=new LiveShowAdapter(list, new MyAdapter.AdapterListener() {
+
             @Override
-            public void onItemClick(View v, int pos) {
+            public void onItemClick(MyAdapter.MyViewHolder holder, Object data) {
 
             }
 
             @Override
-            public void onItemLongClick(View v, int pos) {
+            public void onItemLongClick(MyAdapter.MyViewHolder holder, Object data) {
 
             }
 
@@ -137,7 +140,6 @@ public class LiveFragment extends FragmentM {
 
 
         mRecycleView.setAdapter(adapter);
-        */
     }
 
     /**
