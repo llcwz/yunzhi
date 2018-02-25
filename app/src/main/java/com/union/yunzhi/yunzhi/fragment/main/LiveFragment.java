@@ -135,6 +135,7 @@ public class LiveFragment extends FragmentM {
             }
         });
 
+
         mRecycleView.setAdapter(adapter);
         */
     }
