@@ -10,6 +10,7 @@ import com.union.yunzhi.common.R;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -159,6 +160,18 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
 
 
     /**
+     * 插入一堆数据，并通知这段集合更新
+     *
+     * @param dataList Data
+     */
+    public void add(Datas... dataList) {
+        if (dataList != null && dataList.length > 0) {
+            int startPos = mDataList.size();
+            Collections.addAll(mDataList, dataList);
+            notifyItemRangeInserted(startPos, dataList.length);
+        }
+    }
+    /**
      * 插入一条数据并通知插入
      *
      * @param data Data
@@ -183,6 +196,27 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
     }
 
     /**
+     * 替换为一个新的集合，其中包括了清空
+     *
+     * @param dataList 一个新的集合
+     */
+    public void replace(Collection<Datas> dataList) {
+        mDataList.clear();
+        if (dataList == null || dataList.size() == 0)
+            return;
+        mDataList.addAll(dataList);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 删除操作
+     */
+    public void clear() {
+        mDataList.clear();
+        notifyDataSetChanged();
+    }
+
+    /**
      * 点击事件的回调
      * @param v
      */
@@ -197,6 +231,21 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
 
         }
     }
+
+    //长按下的点击事件
+    @Override
+    public boolean onLongClick(View v) {
+        MyViewHolder viewHolder = (MyViewHolder) v.getTag(R.id.tag_recycler_holder);
+        if (this.mListener != null) {
+            // 得到ViewHolder当前对应的适配器中的坐标
+            int pos = viewHolder.getAdapterPosition();
+            // 回掉方法
+            this.mListener.onItemLongClick(viewHolder, mDataList.get(pos));
+            return true;
+        }
+        return false;
+    }
+
 
 
     @Override
