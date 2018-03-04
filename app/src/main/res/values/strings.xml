@@ -17,13 +17,12 @@
     <string name="class_range">排序</string>
     <string name="class_state">状态</string>
 
-<<<<<<< HEAD
     <!--课程详情模块-->
     <string name="details_jianjie">课程简介</string>
     <string name="details_show_all">显示详情</string>
     <string name="details_hide">隐藏</string>
     <string name="details_enter">进入课程</string>
-=======
+
     <!-- QR_Code -->
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the
@@ -52,6 +51,5 @@
     <string name="preferences_supplemental_title">Retrieve more info</string>
     <string name="preferences_vibrate_title">Vibrate</string>
     <string name="preview_msg">&#160;preview pages available,click Download for more.</string>
->>>>>>> 9c6ee73733c4ae3e24fa237b777b3f00ee64ebea
 
 </resources>
