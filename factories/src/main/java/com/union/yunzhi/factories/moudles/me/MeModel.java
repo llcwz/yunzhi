@@ -6,7 +6,6 @@ package com.union.yunzhi.factories.moudles.me;
 
 public class MeModel {
     private PersonModel mPersonModel;
-    private NavigationModel mNavigationModel;
     private CourseModel mCourseModel;
 
     private int mViewType;
@@ -23,14 +22,6 @@ public class MeModel {
 
     public void setPersonModel(PersonModel personModel) {
         mPersonModel = personModel;
-    }
-
-    public NavigationModel getNavigationModel() {
-        return mNavigationModel;
-    }
-
-    public void setNavigationModel(NavigationModel navigationModel) {
-        mNavigationModel = navigationModel;
     }
 
     public CourseModel getCourseModel() {

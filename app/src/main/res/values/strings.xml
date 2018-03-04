@@ -50,6 +50,10 @@
     <string name="preferences_supplemental_summary">Try to retrieve more information about the barcode contents</string>
     <string name="preferences_supplemental_title">Retrieve more info</string>
     <string name="preferences_vibrate_title">Vibrate</string>
+<<<<<<< HEAD
     <string name="preview_msg"></string>
+=======
+    <string name="preview_msg">&#160;preview pages available,click Download for more.</string>
+>>>>>>> 37d200bd03c49aaec41f534463b4b36086e6adb2
 
 </resources>
