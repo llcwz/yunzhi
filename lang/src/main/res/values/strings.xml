@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">lang</string>
+    <string name="me_my_course">我的课程</string>
+    <string name="me_my_message">我的消息</string>
+    <string name="me_navigation_my_work">我的任务</string>
+    <string name="me_navigation_comprehensive">综合实训</string>
+    <string name="me_navigation_score_search">成绩查询</string>
+    <string name="me_navigation_ability">能力档案</string>
+    <string name="me_navigation_news">新闻资讯</string>
+    <string name="me_navigation_course_management">课程管理</string>
+    <string name="me_navigation_work_management">任务管理</string>
+    <string name="me_navigation_data_analysis">数据分析</string>
 </resources>

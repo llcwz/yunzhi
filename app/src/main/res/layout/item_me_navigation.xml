@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/len_16">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ri_navigation_icon"
+            android:layout_width="@dimen/len_64"
+            android:layout_height="@dimen/len_64"
+            tools:background="@color/amber_300"/>
+        <TextView
+            android:id="@+id/tv_navigation_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/len_8"
+            tools:text="课程管理"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

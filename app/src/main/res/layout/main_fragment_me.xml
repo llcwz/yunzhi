@@ -1,13 +1,101 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.union.yunzhi.yunzhi.fragment.main.MeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_48"
+        android:background="?attr/colorPrimary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+       android:background="@color/blue_400">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_100"
+            android:paddingLeft="@dimen/len_16"
+            android:paddingRight="@dimen/len_16"
+            android:paddingTop="@dimen/len_8"
+            android:paddingBottom="@dimen/len_8">
+
+            <RelativeLayout
+                android:layout_width="@dimen/len_88"
+                android:layout_height="match_parent">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ci_me"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:background="@color/amber_50"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/len_16"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_20"
+                    android:textStyle="bold"
+                    tools:text="Crazy贵子" />
+
+                <TextView
+                    android:id="@+id/tv_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/len_8"
+                    tools:text="201509155064"/>
+
+            </LinearLayout>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_36">
+
+            <TextView
+                android:id="@+id/tv_my_course"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/black_alpha_32"
+            android:text="@string/me_my_course"/>
+
+            <TextView
+                android:layout_width="@dimen/len_1"
+                android:layout_height="match_parent"
+                android:background="@color/black_alpha_112"/>
+            <TextView
+                android:id="@+id/tv_my_message"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/black_alpha_32"
+                android:text="@string/me_my_message"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_me"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="me" />
+        android:layout_margin="@dimen/len_8"/>
 
-</FrameLayout>
+
+</LinearLayout>

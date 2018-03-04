@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.union.yunzhi.yunzhi.activities.me.MyCourseActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_48"
+        android:background="?attr/colorPrimary"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_38"
+        android:padding="@dimen/len_10">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:textSize="@dimen/font_16"
+            android:textColor="@color/black"
+            android:text="状态："/>
+
+        <Spinner
+            android:id="@+id/spn_my_course_state"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_my_course"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/len_8"/>
+</LinearLayout>

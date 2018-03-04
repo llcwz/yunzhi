@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/black_alpha_48"
+              android:layout_margin="@dimen/len_8"
+              android:padding="@dimen/len_16">
+
+    <TextView
+        android:id="@+id/tv_course_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="操作系统"
+        android:textStyle="bold"
+        android:textSize="@dimen/font_16"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/len_8">
+
+        <ImageView
+            android:id="@+id/iv_course_icon"
+            android:layout_width="@dimen/len_156"
+            android:layout_height="@dimen/len_96"
+            tools:background="@color/amber_200"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/len_8">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_school_of_course"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="武汉科技大学"/>
+
+                    <TextView
+                        android:id="@+id/tv_teacher_of_course"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/len_8"
+                        tools:text="黄革新"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/len_2"
+                    android:layout_height="@dimen/len_24"
+                    android:layout_margin="@dimen/len_16"
+                    android:background="@color/white_alpha_224"/>
+
+                <TextView
+                    android:id="@+id/tv_course_practise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue_600"
+                    android:text="练习"
+                    android:textSize="@dimen/font_16"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_course_schedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/len_8"
+                    tools:text="进行至第5周，总共16周"
+                    android:textSize="@dimen/font_12"/>
+                <ProgressBar
+                    android:id="@+id/proBar_course_progress"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/len_4"
+                    android:background="@color/white_alpha_240"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
