@@ -1,14 +1,11 @@
 package com.union.yunzhi.yunzhi.fragment.main;
 
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.factories.moudles.home.homeModle;
@@ -16,28 +13,20 @@ import com.union.yunzhi.factories.moudles.home.videoClassModle;
 import com.union.yunzhi.factories.moudles.home.videoModle;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.HomeAdapter;
-import com.union.yunzhi.yunzhi.zxing.app.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link FragmentM} subclass.
  *
  */
-public class HomeFragment extends FragmentM implements View.OnClickListener{
+public class HomeFragment extends FragmentM {
 
-    private static final int REQUEST_QRCODE = 0x01;
 
     private RecyclerView recyclerView;
 
     private LinearLayout toolbarLayout;
-
-    //扫码按钮
-    private CircleImageView mQRcode;
-
 
     private HomeAdapter mHomeAdapter;
     List<homeModle> list = new ArrayList<>();
@@ -51,8 +40,6 @@ public class HomeFragment extends FragmentM implements View.OnClickListener{
     protected void initWidget(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
-        mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
-        mQRcode.setOnClickListener(this);
     }
 
     @Override
@@ -94,29 +81,4 @@ public class HomeFragment extends FragmentM implements View.OnClickListener{
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.cv_qrcode:
-                Intent intent = new Intent(getContext(),CaptureActivity.class);
-                startActivity(intent);
-                break;
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case REQUEST_QRCODE:
-                if (resultCode == Activity.RESULT_OK) {
-                    String code = data.getStringExtra("SCAN_RESULT");
-                    if (code.contains("http") || code.contains("https")) {
-                      //跳转到相应的地方
-                    } else {
-                        Toast.makeText(getContext(), code, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-        }//end switch
-    }
 }
