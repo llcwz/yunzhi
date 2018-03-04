@@ -37,7 +37,7 @@ public class ClassCourseAdapter extends MyAdapter<String>{
 
     public class CouseViewHolder extends MyViewHolder<String>{
 
-        private TextView mTextView;
+        public TextView mTextView;
         public CouseViewHolder(View itemView) {
             super(itemView);
             mTextView=(TextView) itemView.findViewById(R.id.tv_smallTitle);

@@ -107,27 +107,11 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
         // 设置View的Tag为ViewHolder，进行双向绑定
         root.setTag(R.id.tag_recycler_holder, holder);
 
-        root.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                MyViewHolder viewHolder = (MyViewHolder) v.getTag(R.id.tag_recycler_holder);
-                if (mListener != null) {
-                    // 得到ViewHolder当前对应的适配器中的坐标
-                    int pos = viewHolder.getAdapterPosition();
-                    // 回掉方法
-                    mListener.onItemLongClick(viewHolder, mDataList.get(pos));
-                }
-                return mListener.setAddActionContinue();
-            }
-        });
+        root.setOnLongClickListener(this);
         root.setOnClickListener(this);
 
        // root = holder.itemView.findViewById(viewType);
-
-
-
         //    holder.callback = (AdapterCallback<Datas>) this;
-
 
         return holder;
     }
@@ -243,7 +227,7 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
             this.mListener.onItemLongClick(viewHolder, mDataList.get(pos));
             return true;
         }
-        return false;
+        return mListener.setAddActionContinue();
     }
 
 
