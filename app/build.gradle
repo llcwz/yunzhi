@@ -37,7 +37,9 @@ dependencies {
 
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'//底部导航加强版
 
-    compile 'com.hyman:flowlayout-lib:1.1.2'//TabFlowLayout
+    compile 'com.hyman:flowlayout-lib:1.1.2'//TabFlowLayout 流式布局
+
+    compile 'com.timqi.collapsibletextview:library:1.1.2'//collapsibletextview 显示详情的textView
 
     testCompile 'junit:junit:4.12'
 }

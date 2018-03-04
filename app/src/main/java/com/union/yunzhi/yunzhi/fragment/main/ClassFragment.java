@@ -1,6 +1,7 @@
 package com.union.yunzhi.yunzhi.fragment.main;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.constraint.ConstraintLayout;
@@ -10,10 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.helper.GlideImageLoader;
@@ -24,6 +27,7 @@ import com.union.yunzhi.factories.moudles.classfication.TitleBean;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.ClassCourseAdapter;
 import com.union.yunzhi.yunzhi.adapter.ClassDrawerAdapter;
+import com.union.yunzhi.yunzhi.classfication.ClassCourseDetails;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -50,6 +54,8 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     private RadioButton mRadioButton1,mRadioButton2,mRadioButton3,mRadioButton4,mRadioButton5,mRadioButton6,mRadioButton7;
     private int ID1,ID2;
     private String range,state;
+    private View.OnClickListener onClick;
+    private View.OnLongClickListener onLongClick;
 
 
     @Override
@@ -79,7 +85,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
         test.add("软件工程");test.add("数值计算");test.add("Linux系统");test.add("Java程序设计");
 
         //分类测试抽屉数据
-        TitleBean kiss=new TitleBean("计算机学院",test);
+        TitleBean kiss=new TitleBean("计算机学院",test,null);
         test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);
         test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);
         test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);
@@ -221,6 +227,33 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     @Override
     protected void initData() {
 
+        // TODO itemView 内部点击事件
+        onClick=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch(v.getId()){
+
+                    case R.id.imgBtn_thumbUp:
+                        Toast.makeText(getActivity(),"点赞",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.imgBtn_thumbDown:
+                        Toast.makeText(getActivity(),"差评",Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        // TODO itemView 内部长按点击事件
+        onLongClick=new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        };
+
 
         //显示课程的适配
         ClassCourseAdapter adapter=new ClassCourseAdapter(test, new MyAdapter.AdapterListener() {
@@ -229,6 +262,19 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, Object data) {
                 //TODO 点击课程单元执行
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), ClassCourseDetails.class));
+                    }
+                });
+
+                //TODO 实现课程内部点击
+                ImageButton imgBtn1,imgBtn2;
+                imgBtn1= (ImageButton) holder.itemView.findViewById(R.id.imgBtn_thumbUp);
+                imgBtn2= (ImageButton) holder.itemView.findViewById(R.id.imgBtn_thumbDown);
+                imgBtn1.setOnClickListener(onClick);
+                imgBtn2.setOnClickListener(onClick);
             }
 
             @Override
@@ -277,8 +323,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
 
         mRecycleView2.setAdapter(adapter1);
 
-
-
     }
 
     /**
@@ -296,7 +340,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
      * 布局隐藏或者出现
      */
     public void showHidden(){
-        int tag= HiddenAnimUtils.newInstance(getContext(),hidden_coprhsv,mImageView2,172).toggle();
+        int tag= HiddenAnimUtils.newInstance(getContext(),hidden_coprhsv,mImageView2,172,30).toggle();
         if(tag==0){ mTextView2.setText(range+"-"+state);}
         else{ mTextView2.setText("收起");}
     }

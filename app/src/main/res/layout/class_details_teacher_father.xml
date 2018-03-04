@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_alpha_16">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/len_8"
+        android:layout_marginLeft="@dimen/len_8"
+        android:layout_marginTop="@dimen/len_8"
+        android:background="@color/white_alpha_112">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cImagV_portrait"
+            android:layout_width="@dimen/len_60"
+            android:layout_height="@dimen/len_60"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_60"
+            android:layout_toRightOf="@id/cImagV_portrait"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_teacher_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="@dimen/len_8"
+                    android:text="老师姓名"
+                    android:textSize="@dimen/font_20" />
+
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_teacher_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="老师身份"
+                    android:textSize="@dimen/font_14"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="0dp"
+                    app:layout_constraintVertical_bias="0.0"
+                    android:layout_marginStart="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_down_num"
+                    android:layout_width="60dp"
+                    android:layout_height="14dp"
+                    android:gravity="center_vertical|left"
+                    android:text="12"
+                    android:textSize="@dimen/font_10"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintVertical_bias="0.0"
+                    android:layout_marginRight="@dimen/len_24"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginEnd="@dimen/len_8" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:textSize="@dimen/font_10"
+                    android:text="差评"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_down_num"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:id="@+id/textView2" />
+                <TextView
+                    android:id="@+id/tv_up_num"
+                    android:layout_width="60dp"
+                    android:layout_height="14dp"
+                    android:text="13456"
+                    android:textSize="@dimen/font_10"
+                    app:layout_constraintRight_toLeftOf="@+id/textView2"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="14dp"
+                    android:textSize="@dimen/font_10"
+                    android:text="好评"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_up_num"
+                    android:layout_marginRight="8dp" />
+
+
+
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

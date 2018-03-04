@@ -99,8 +99,8 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
                     //TODO 点击Drawer里面的某个子项实现的操作
                     //更新文字提示
                     String temp=null;
-                    if(pos1>=0&&pos2>=0){
-                        temp=mDataList.get(position).getTitle()+"-"+data.getSonTitle().get(pos2);
+                    if(position>=0&&pos>=0){
+                        temp=mDataList.get(position).getTitle()+"-"+data.getSonTitle().get(pos);
                     }else{
                         temp="全部课程";
                     }

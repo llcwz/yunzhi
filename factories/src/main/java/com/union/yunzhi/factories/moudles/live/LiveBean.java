@@ -46,8 +46,8 @@ public class LiveBean {
             }
         };
         this.context=context;
-        Glide.with(context).load(imageUrl).asBitmap().into(target);
         Id=-1;
+        Glide.with(context).load(imageUrl).asBitmap().into(target);
     }
 
     public int getId() {
