@@ -3,18 +3,16 @@
           package="com.union.yunzhi.yunzhi">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-<<<<<<< HEAD
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-=======
+
     //读取内存权限
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     //扫码相关的权限
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    
->>>>>>> f1bcb3bb75c44785d5603a5ce02a6cece1d74118
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -30,22 +28,21 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity android:name=".activities.me.ChangePasswordActivity">
         </activity>
         <activity android:name=".activities.me.MyCourseActivity">
         </activity>
         <activity android:name=".activities.me.MyMessageActivity">
         </activity>
-=======
-<<<<<<< HEAD
+
+
         <activity android:name=".classfication.ClassCourseDetails"/>
         <activity android:name=".classfication.ClassCourseFile"/>
-=======
+
         <activity android:name=".zxing.app.PreferencesActivity"/>
         <activity android:name=".zxing.app.CaptureActivity"/>
->>>>>>> 9c6ee73733c4ae3e24fa237b777b3f00ee64ebea
->>>>>>> f1bcb3bb75c44785d5603a5ce02a6cece1d74118
+
     </application>
 
 </manifest>

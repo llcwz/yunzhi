@@ -28,19 +28,17 @@ dependencies {
     compile project(':factories')
     compile project(':lang')
 
-    //最新版本轮播组件
+    /**最新版本轮播组件**/
 
-    //图片加载框架
+    /**图片加载框架**/
 
-    //底部导航加强版
+    /**底部导航加强版**/
 
-<<<<<<< HEAD
-    //TabFlowLayout
-=======
-    compile 'com.hyman:flowlayout-lib:1.1.2'//TabFlowLayout 流式布局
+    /**TabFlowLayout**/
 
-    compile 'com.timqi.collapsibletextview:library:1.1.2'//collapsibletextview 显示详情的textView
->>>>>>> f1bcb3bb75c44785d5603a5ce02a6cece1d74118
+    compile 'com.hyman:flowlayout-lib:1.1.2' /**TabFlowLayout 流式布局*/
+
+    compile 'com.timqi.collapsibletextview:library:1.1.2' /**collapsibletextview 显示详情的textView*/
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'

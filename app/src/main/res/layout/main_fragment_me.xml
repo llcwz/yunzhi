@@ -75,7 +75,7 @@
             android:text="@string/me_my_course"/>
 
             <TextView
-                android:layout_width="@dimen/len_1"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/black_alpha_112"/>
             <TextView
