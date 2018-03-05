@@ -15,6 +15,7 @@ import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.factories.moudles.me.NavigationModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.me.MyCourseActivity;
+import com.union.yunzhi.yunzhi.activities.me.MyMessageActivity;
 import com.union.yunzhi.yunzhi.adapter.MeNavigationAdapter;
 import com.union.yunzhi.yunzhi.fragment.me.PersonDialogFragment;
 
@@ -125,6 +126,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
                 MyCourseActivity.newInstance(getContext(), mPersonModel.getAccount(), mPersonModel.getAccess());
                 break;
             case R.id.tv_my_message: // 我的消息
+                MyMessageActivity.newInstance(getContext());
                 break;
             default:
         }
