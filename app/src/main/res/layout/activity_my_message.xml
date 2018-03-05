@@ -11,8 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/len_48"
         android:background="?attr/colorPrimary"/>
+
+    <com.flyco.tablayout.SegmentTabLayout
+        android:id="@+id/segment_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_40"
+        android:layout_marginLeft="@dimen/len_60"
+        android:layout_marginRight="@dimen/len_60"
+        android:layout_marginTop="@dimen/len_6"
+        android:layout_marginBottom="@dimen/len_6"
+        app:tl_indicator_color="@color/blue_400"
+        app:tl_indicator_height="@dimen/len_36"
+        app:tl_indicator_corner_radius="@dimen/len_6"
+        app:tl_divider_color="@color/blue_800"
+        app:tl_textBold="BOTH"/>
+
     <FrameLayout
-        android:id="@+id/fragment_layout"
+        android:id="@+id/framelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
