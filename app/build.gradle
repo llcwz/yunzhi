@@ -28,11 +28,11 @@ dependencies {
     compile project(':factories')
     compile project(':lang')
 
-    //最新版本轮播组件
+    /**最新版本轮播组件**/
 
-    //图片加载框架
+    /**图片加载框架**/
 
-    //底部导航加强版
+    /**底部导航加强版**/
 
 
     //TabFlowLayout

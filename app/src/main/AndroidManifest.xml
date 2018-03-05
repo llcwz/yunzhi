@@ -4,13 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+
     //读取内存权限
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     //扫码相关的权限
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -39,6 +40,7 @@
 
         <activity android:name=".zxing.app.PreferencesActivity"/>
         <activity android:name=".zxing.app.CaptureActivity"/>
+
     </application>
 
 </manifest>
