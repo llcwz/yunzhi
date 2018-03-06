@@ -20,13 +20,18 @@ public class RequestCenter {
                 createGetRequest(url, params), new DisposeDataHandle(listener, clazz));
     }
 
+
+    
     public static void requestHomeData(String userName, String password, DisposeDataListener listener) {
 
         RequestParams params = new RequestParams();
+
         params.put("userName", userName);
         params.put("password", password);
+
         RequestCenter.postRequest(HttpConstants.HOME_URL, params, listener, BaseHomeModle.class);
     }
+
 
 
 

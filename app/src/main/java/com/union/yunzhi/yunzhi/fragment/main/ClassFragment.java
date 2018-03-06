@@ -280,6 +280,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
             @Override
             public void onItemLongClick(MyAdapter.MyViewHolder holder, Object data) {
                 //TODO 长按课程单元执行
+
             }
 
             @Override
@@ -297,15 +298,15 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
         mRecyclerView.setAdapter(adapter);
 
         //显示分类适配
-        ClassDrawerAdapter adapter1=new ClassDrawerAdapter(test1, new MyAdapter.AdapterListener() {
+        ClassDrawerAdapter adapter1=new ClassDrawerAdapter(test1, new MyAdapter.AdapterListener<TitleBean>() {
 
             @Override
-            public void onItemClick(MyAdapter.MyViewHolder holder, Object data) {
+            public void onItemClick(MyAdapter.MyViewHolder holder,TitleBean  data) {
                     //TODO 点击分类单元块执行的操作
             }
 
             @Override
-            public void onItemLongClick(MyAdapter.MyViewHolder holder, Object data) {
+            public void onItemLongClick(MyAdapter.MyViewHolder holder, TitleBean data) {
                     //TODO 长按分类单元块执行的操作
             }
 
