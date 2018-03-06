@@ -11,8 +11,15 @@ public class NavigationModel {
     private int mNavigationIcon;
     private String mNavigationName;
 
+    // 前期测试数据
     public NavigationModel(int access, int navigationIcon, String navigationName) {
         mAccess = access;
+        mNavigationIcon = navigationIcon;
+        mNavigationName = navigationName;
+    }
+
+    // 测试数据
+    public NavigationModel(int navigationIcon, String navigationName) {
         mNavigationIcon = navigationIcon;
         mNavigationName = navigationName;
     }

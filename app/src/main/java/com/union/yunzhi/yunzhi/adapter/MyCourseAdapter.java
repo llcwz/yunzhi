@@ -1,5 +1,6 @@
 package com.union.yunzhi.yunzhi.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,9 +23,10 @@ import static android.content.ContentValues.TAG;
  */
 
 public class MyCourseAdapter extends MyAdapter<MeModel> {
-
-    public MyCourseAdapter(List<MeModel> datas, AdapterListener listener) {
-        super(datas, listener);
+    private Context mContext;
+    public MyCourseAdapter(Context context, List<MeModel> data, AdapterListener listener) {
+        super(data, listener);
+        mContext = context;
     }
     @Override
     protected int getItemViewType(int position, MeModel data) {
@@ -79,8 +81,8 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
             mPractise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: 2018/3/4 跳到课程的练习区域
-                    Toast.makeText(view.getContext(), "练习", Toast.LENGTH_SHORT).show();
+                    Log.d("MyCourseClick", "onClick:  ");
+                    Toast.makeText(mContext, "练习", Toast.LENGTH_SHORT).show();
                 }
             });
             mSchedule.setText("进行至" + data.getCourseModel().getProgress() + "周，总共" + data.getCourseModel().getSchedule() + "周");
@@ -88,6 +90,7 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
             mProgress.setProgress(data.getCourseModel().getProgress());
 
         }
+
     }
 
     public class TeacherCourseViewHolder extends MyViewHolder<MeModel> {

@@ -96,7 +96,7 @@ public class MyCourseActivity extends ActivityM {
         mSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mStates);
         mSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // 设置下拉样式
 
-        mMyCourseAdapter = new MyCourseAdapter(mStudentCourses, new MyAdapter.AdapterListener<MeModel>() {
+        mMyCourseAdapter = new MyCourseAdapter(this, mStudentCourses, new MyAdapter.AdapterListener<MeModel>() {
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, MeModel data) {
                 // TODO: 2018/3/4 跳转到课程详情

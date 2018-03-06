@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/len_8"
+    android:padding="@dimen/len_8"
+    android:background="@color/black_alpha_48">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_work_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="第一单元测试"
+            android:textSize="@dimen/font_20"
+            android:textStyle="bold"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_1"
+            android:layout_marginTop="@dimen/len_6"
+            android:background="@color/black_alpha_64"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/len_6">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="所属课程："/>
+            <TextView
+                android:id="@+id/tv_course_of_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="计算机组成原理"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/len_6">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="类型："/>
+            <TextView
+                android:id="@+id/tv_work_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="单元测试"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/len_6">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="截止时间："/>
+            <TextView
+                android:id="@+id/tv_work_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2018.3.6 15:00"
+                android:textColor="@color/blue_400"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="——"
+                android:textColor="@color/blue_400"/>
+            <TextView
+                android:id="@+id/tv_work_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2018.3.6 16:00"
+                android:textColor="@color/blue_400"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/len_6">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前状态："/>
+            <TextView
+                android:id="@+id/tv_work_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="进行中"
+                android:textColor="@color/green_300"/>
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_1"
+            android:layout_marginTop="@dimen/len_6"
+            android:background="@color/black_alpha_64"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_1"
+            android:layout_marginTop="@dimen/len_6"
+            android:background="@color/black_alpha_64"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/len_6">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发布人："/>
+                <TextView
+                    android:id="@+id/tv_work_promulgator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="姜毅"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_work_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="2018.3.5 14:00"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
