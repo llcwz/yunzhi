@@ -16,4 +16,7 @@ public class HttpConstants {
     public static final String HOME_URL = ROOT_URL+"/HelloWorld";
 
 
+    public static final String LOGIN = ROOT_URL+"/HelloWorld";
+
+
 }
