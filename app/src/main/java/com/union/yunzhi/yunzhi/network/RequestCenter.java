@@ -21,7 +21,7 @@ public class RequestCenter {
     }
 
 
-    
+
     public static void requestHomeData(String userName, String password, DisposeDataListener listener) {
 
         RequestParams params = new RequestParams();
