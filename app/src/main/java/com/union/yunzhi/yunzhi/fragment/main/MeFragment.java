@@ -78,6 +78,10 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mMyCourse = (TextView) view.findViewById(R.id.tv_my_course);
         mMyMessage = (TextView) view.findViewById(R.id.tv_my_message);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rec_me);
+
+        mMe.setOnClickListener(this);
+        mMyCourse.setOnClickListener(this);
+        mMyMessage.setOnClickListener(this);
     }
 
     /**
@@ -173,14 +177,9 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initData() {
-<<<<<<< HEAD
         visitUI();
-        mMe.setOnClickListener(this);
-        mMyCourse.setOnClickListener(this);
-        mMyMessage.setOnClickListener(this);
-=======
         if (mUserManager.hasLogined()){ //假如用户登录了
-            mMe.setImageDrawable(mPersonModel.getPersonModel().getMe());
+            Glide.with(getActivity()).load(mPersonModel.getPersonModel().getMe()).into(mMe);
             mMe.setOnClickListener(this);
             mUsername.setText(mPersonModel.getPersonModel().getUsername());
             mAccount.setText(mPersonModel.getPersonModel().getAccount());
@@ -194,13 +193,6 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unregisterBroadcast();
->>>>>>> 90d2eb1c4bef2e778fb6c8e4f86aba32ed2e0178
-    }
 
     /**
      * 点击事件

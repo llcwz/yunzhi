@@ -1,5 +1,7 @@
 package com.union.yunzhi.yunzhi.network;
 
+import android.util.Log;
+
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.me.BaseMeModel;
 import com.union.yunzhi.factories.moudles.me.PersonModel;
@@ -19,7 +21,7 @@ public class RequestCenter {
     //根据参数发送所有post请求
     public static void postRequest(String url, RequestParams params, DisposeDataListener listener, Class<?> clazz) {
         CommonOkHttpClient.get(CommonRequest.
-                createGetRequest(url, params), new DisposeDataHandle(listener, clazz));
+                createPostRequest(url, params), new DisposeDataHandle(listener, clazz));
     }
 
 
@@ -47,6 +49,9 @@ public class RequestCenter {
         RequestParams params = new RequestParams();
         params.put("account", userName);
         params.put("password", passwd);
+
+        Log.d("Login", "login: " + userName + "|" + passwd);
+        Log.d("Login", "login: "+params.toString());
         RequestCenter.postRequest(HttpConstants.LOGIN_URL, params, listener, BaseMeModel.class);
     }
 

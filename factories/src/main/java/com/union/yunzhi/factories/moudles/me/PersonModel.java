@@ -8,7 +8,7 @@ import android.media.Image;
  */
 
 public class PersonModel {
-    private Drawable mMe;
+    private String mMe;
     private String mUsername; // 姓名
     private String mAccount; // 账号
     private String mPassword; // 密码
@@ -16,7 +16,7 @@ public class PersonModel {
 
     public PersonModel(){}
 
-    public PersonModel(Drawable me, String username, String account, String password, int access) {
+    public PersonModel(String me, String username, String account, String password, int access) {
         mMe = me;
         mUsername = username;
         mAccount = account;
@@ -32,11 +32,11 @@ public class PersonModel {
         mPassword = password;
     }
 
-    public Drawable getMe() {
+    public String getMe() {
         return mMe;
     }
 
-    public void setMe(Drawable me) {
+    public void setMe(String me) {
         mMe = me;
     }
 

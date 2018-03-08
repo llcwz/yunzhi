@@ -86,9 +86,9 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
                 /**
                  * 这部分可以封装起来，封装为到一个登陆流程类中
                  */
+                Log.d("Test", "onSuccess: " + responseObj.toString());
                 BaseMeModel user = (BaseMeModel) responseObj;
                 UserManager.getInstance().setUser(user);//保存当前用户单例对象
-                Log.d("Test", "onSuccess: " + responseObj.toString());
                 connectToSever();
 
                 sendLoginBroadcast();
