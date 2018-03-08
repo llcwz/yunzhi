@@ -195,7 +195,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         mRecyclerView.setAdapter(mMeNavigationAdapter);
     }
-    
+
 
     @Override
     public void onDestroy() {
