@@ -1,4 +1,4 @@
-package com.union.yunzhi.yunzhi.classfication;
+package com.union.yunzhi.yunzhi.activities.classfication;
 
 import android.content.Intent;
 import android.os.Bundle;

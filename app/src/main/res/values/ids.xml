@@ -18,5 +18,6 @@
     <item name="webview" type="id"/>
     <item name="about_version_code" type="id">false</item>
     <item name="split" type="id">false</item>
+    <item name="class_fragment_detail_test" type="id" />
 
 </resources>

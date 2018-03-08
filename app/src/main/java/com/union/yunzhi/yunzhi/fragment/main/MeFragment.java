@@ -173,10 +173,33 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initData() {
+<<<<<<< HEAD
         visitUI();
         mMe.setOnClickListener(this);
         mMyCourse.setOnClickListener(this);
         mMyMessage.setOnClickListener(this);
+=======
+        if (mUserManager.hasLogined()){ //假如用户登录了
+            mMe.setImageDrawable(mPersonModel.getPersonModel().getMe());
+            mMe.setOnClickListener(this);
+            mUsername.setText(mPersonModel.getPersonModel().getUsername());
+            mAccount.setText(mPersonModel.getPersonModel().getAccount());
+            mMyCourse.setOnClickListener(this);
+            mMyMessage.setOnClickListener(this);
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+            mRecyclerView.setAdapter(mMeNavigationAdapter);
+        } else { // 游客模式
+
+        }
+
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterBroadcast();
+>>>>>>> 90d2eb1c4bef2e778fb6c8e4f86aba32ed2e0178
     }
 
     /**

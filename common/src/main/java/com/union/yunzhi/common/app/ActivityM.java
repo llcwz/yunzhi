@@ -5,6 +5,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 
 import com.union.yunzhi.common.util.StatusBarUtil;
 
@@ -71,6 +72,22 @@ public abstract class ActivityM extends AppCompatActivity {
         StatusBarUtil.statusBarLightMode(this);
     }
 
+
+    /**
+     * 隐藏状态栏
+     */
+    public void hiddenStatusBar() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+
+    /**
+     * 设置状态栏为透明
+     */
+    public void transparencyBar(){
+        StatusBarUtil.transparencyBar(this);
+    }
 
 
     @Override

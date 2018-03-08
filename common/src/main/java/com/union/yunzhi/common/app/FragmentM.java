@@ -2,6 +2,7 @@ package com.union.yunzhi.common.app;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+
+import com.union.yunzhi.common.util.StatusBarUtil;
 
 /**
  * Created by meng on 2018/2/11.
@@ -89,5 +93,36 @@ public abstract class FragmentM extends Fragment {
      */
     public boolean onBackPressed() {
         return false;
+    }
+
+    /**
+     * 改变状态栏颜色
+     *
+     * @param color
+     */
+    public void changeStatusBarColor(@ColorRes int color) {
+        StatusBarUtil.setStatusBarColor(getActivity(), color);
+    }
+
+    /**
+     * 调整状态栏为亮模式，这样状态栏的文字颜色就为深模式了。
+     */
+    private void reverseStatusColor() {
+        StatusBarUtil.statusBarLightMode(getActivity());
+    }
+
+    /**
+     * 隐藏状态栏
+     */
+    public void hiddenStatusBar() {
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+    
+    /**
+     * 设置状态栏为透明
+     */
+    public void transparencyBar(){
+        StatusBarUtil.transparencyBar(getActivity());
     }
 }
