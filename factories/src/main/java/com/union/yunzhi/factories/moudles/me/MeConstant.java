@@ -9,6 +9,8 @@ public class MeConstant {
     // 视图
     public static final int STUDENT_COURSE_VIEW = 0;
     public static final int TEACHER_COURSE_VIEW = 1;
+    public static final int STUDENT_WORK_VIEW = 2;
+    public static final int TEACHER_WORK_VIEW = 3;
 
     // 权限
     public static final int ACCESS_STUDENT = 1;

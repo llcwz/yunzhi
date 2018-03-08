@@ -41,5 +41,7 @@ dependencies {
 
     compile 'de.hdodenhof:circleimageview:2.2.0'//圆形图片
 
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
     testCompile 'junit:junit:4.12'
 }

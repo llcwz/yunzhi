@@ -21,7 +21,7 @@ public class RequestCenter {
     }
 
 
-    
+
     public static void requestHomeData(String userName, String password, DisposeDataListener listener) {
 
         RequestParams params = new RequestParams();
@@ -33,6 +33,20 @@ public class RequestCenter {
     }
 
 
+    /**
+     * 用户登陆请求
+     *
+     * @param listener
+     * @param userName
+     * @param passwd
+     */
+    public static void login(String userName, String passwd, DisposeDataListener listener) {
+
+        RequestParams params = new RequestParams();
+        params.put("mb", userName);
+        params.put("pwd", passwd);
+        RequestCenter.postRequest(HttpConstants.LOGIN, params, listener, null);
+    }
 
 
 }

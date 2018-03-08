@@ -10,12 +10,17 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.union.yunzhi.common.app.FragmentM;
+import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
+import com.union.yunzhi.factories.moudles.me.MeModel;
 import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.factories.moudles.me.NavigationModel;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.account.AccountSingle;
 import com.union.yunzhi.yunzhi.activities.me.MyCourseActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyMessageActivity;
+import com.union.yunzhi.yunzhi.activities.me.MyWorkActivity;
+import com.union.yunzhi.yunzhi.activities.me.SearchGradeActivity;
 import com.union.yunzhi.yunzhi.adapter.MeNavigationAdapter;
 import com.union.yunzhi.yunzhi.fragment.me.PersonDialogFragment;
 
@@ -28,17 +33,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link Fragment} subclass.
  */
 public class MeFragment extends FragmentM implements View.OnClickListener {
-    private int mAccess; // 权限，根据这个来判断是学生还是教师
+    private AccountSingle mPersonSingle;
     private CircleImageView mMe;
-    private TextView mUsername;
-    private TextView mAccount;
-    private TextView mMyCourse;
-    private TextView mMyMessage;
+    private TextView mUsername; // 用户名
+    private TextView mAccount; // 账号
+    private TextView mMyCourse; // 我的课程
+    private TextView mMyMessage; // 我的消息
     private RecyclerView mRecyclerView;
     private MeNavigationAdapter mMeNavigationAdapter;
-    private PersonModel mPersonModel; // 个人测试数据
-    private List<NavigationModel> mStudentNavigations = new ArrayList<>(); // 学生导航测试数据
-    private List<NavigationModel> mTeacherNavigations = new ArrayList<>(); // 教师导航测试数据
+    private MeModel mPersonModel; // 个人测试数据
+    private List<MeModel> mStudentNavigations = new ArrayList<>(); // 学生导航测试数据
+    private List<MeModel> mTeacherNavigations = new ArrayList<>(); // 教师导航测试数据
 
     @Override
     protected int getContentLayoutId() {
@@ -52,6 +57,8 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initWidget(View view) {
+        // 实例化单例
+        mPersonSingle = AccountSingle.getInstance(getActivity());
         data();
         mMe = (CircleImageView) view.findViewById(R.id.ci_me);
         mUsername = (TextView) view.findViewById(R.id.tv_username);
@@ -67,39 +74,106 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
      */
     private void data() {
 
+        // 将用户写入单例中
+        mPersonSingle.setPerson(new PersonModel(getResources().getDrawable(R.drawable.dragon_cat),
+                "Crazy贵子",
+                "201509155064",
+                "123456",
+                MeConstant.ACCESS_TEACHER));
+
         // 初始化个人数据
-        mPersonModel = new PersonModel(getResources().getDrawable(R.drawable.dragon_cat), "Crazy贵子", "201509155064", "123456", 1);
-        mAccess = mPersonModel.getAccess();
+        mPersonModel = new MeModel(mPersonSingle.getPerson());
 
         // 初始化学生导航数据
-        mStudentNavigations.add(new NavigationModel(MeConstant.ACCESS_STUDENT,R.drawable.ri_me_navigation_comprehensive, getString(R.string.me_navigation_comprehensive)));
-        mStudentNavigations.add(new NavigationModel(MeConstant.ACCESS_STUDENT ,R.drawable.ri_me_navigation_work, getString(R.string.me_navigation_my_work)));
-        mStudentNavigations.add(new NavigationModel(MeConstant.ACCESS_STUDENT ,R.drawable.ri_me_navigation_search, getString(R.string.me_navigation_score_search)));
-        mStudentNavigations.add(new NavigationModel(MeConstant.ACCESS_STUDENT ,R.drawable.ri_me_navigation_ability, getString(R.string.me_navigation_ability)));
-        mStudentNavigations.add(new NavigationModel(MeConstant.ACCESS_STUDENT ,R.drawable.ri_me_navigation_news, getString(R.string.me_navigation_news)));
+        mStudentNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_comprehensive, getString(R.string.me_navigation_comprehensive))));
+        mStudentNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_work, getString(R.string.me_navigation_my_work))));
+        mStudentNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_search, getString(R.string.me_navigation_score_search))));
+        mStudentNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_ability, getString(R.string.me_navigation_ability))));
+        mStudentNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_news, getString(R.string.me_navigation_news))));
 
         // 初始化教师导航数据
-        mTeacherNavigations.add(new NavigationModel(MeConstant.ACCESS_TEACHER ,R.drawable.ri_me_navigation_course,getString(R.string.me_navigation_course_management)));
-        mTeacherNavigations.add(new NavigationModel(MeConstant.ACCESS_TEACHER ,R.drawable.ri_me_navigation_comprehensive,getString(R.string.me_navigation_comprehensive)));
-        mTeacherNavigations.add(new NavigationModel(MeConstant.ACCESS_TEACHER ,R.drawable.ri_me_navigation_work,getString(R.string.me_navigation_work_management)));
-        mTeacherNavigations.add(new NavigationModel(MeConstant.ACCESS_TEACHER ,R.drawable.ri_me_navigation_ability,getString(R.string.me_navigation_ability)));
-        mTeacherNavigations.add(new NavigationModel(MeConstant.ACCESS_TEACHER ,R.drawable.ri_me_navigation_analysis,getString(R.string.me_navigation_data_analysis)));
+        mTeacherNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_course,getString(R.string.me_navigation_course_management))));
+        mTeacherNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_comprehensive,getString(R.string.me_navigation_comprehensive))));
+        mTeacherNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_work,getString(R.string.me_navigation_work_management))));
+        mTeacherNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_ability,getString(R.string.me_navigation_ability))));
+        mTeacherNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_analysis,getString(R.string.me_navigation_data_analysis))));
 
         // 实例化适配器
-        if (mAccess == MeConstant.ACCESS_STUDENT) {
-            mMeNavigationAdapter = new MeNavigationAdapter(mStudentNavigations, null);
-        } else if (mAccess == MeConstant.ACCESS_TEACHER){
-            mMeNavigationAdapter = new MeNavigationAdapter(mTeacherNavigations, null);
+        if (mPersonSingle.getPerson().getAccess() == MeConstant.ACCESS_STUDENT) {
+            mMeNavigationAdapter = new MeNavigationAdapter(mStudentNavigations, new MyAdapter.AdapterListener<MeModel>() {
+                @Override
+                public void onItemClick(MyAdapter.MyViewHolder holder, MeModel data) {
+                    if (MeConstant.NAVIGATION_COMPREHENSIVE.equals(data.getNavigationModel().getNavigationName())) { // 我的实训
+
+                    } else if (MeConstant.NAVIGATION_MY_WORK.equals(data.getNavigationModel().getNavigationName())) { // 我的任务
+                        MyWorkActivity.newInstance(getActivity());
+                    } else if (MeConstant.NAVIGATION_SCORE_SEARCH.equals(data.getNavigationModel().getNavigationName())) { // 成绩查询
+                        SearchGradeActivity.newInstance(getActivity());
+                    } else if (MeConstant.NAVIGATION_ABILITY.equals(data.getNavigationModel().getNavigationName())) { //能力档案
+
+                    } else if (MeConstant.NAVIGATION_NEWS.equals(data.getNavigationModel().getNavigationName())) { // 新闻资讯
+
+                    }
+                }
+
+                @Override
+                public void onItemLongClick(MyAdapter.MyViewHolder holder, MeModel data) {
+
+                }
+
+                @Override
+                public Boolean setAddActionContinue() {
+                    return null;
+                }
+
+                @Override
+                public void updataUI(Object object) {
+
+                }
+            });
+        } else if (mPersonSingle.getPerson().getAccess() == MeConstant.ACCESS_TEACHER){
+            mMeNavigationAdapter = new MeNavigationAdapter(mTeacherNavigations, new MyAdapter.AdapterListener<MeModel>() {
+
+                @Override
+                public void onItemClick(MyAdapter.MyViewHolder holder, MeModel data) {
+                    if (MeConstant.NAVIGATION_COURSE_MANAGEMENT.equals(data.getNavigationModel().getNavigationName())) { // 课程管理
+
+                    } else if (MeConstant.NAVIGATION_MY_WORK.equals(data.getNavigationModel().getNavigationName())) { // 综合实训
+
+                    } else if (MeConstant.NAVIGATION_WORK_MANAGEMENT.equals(data.getNavigationModel().getNavigationName())) { // 任务管理
+                        MyWorkActivity.newInstance(getActivity());
+                    } else if (MeConstant.NAVIGATION_ABILITY.equals(data.getNavigationModel().getNavigationName())) { //能力档案
+
+                    } else if (MeConstant.NAVIGATION_DATA_ANALYSIS.equals(data.getNavigationModel().getNavigationName())) { // 数据分析
+
+                    }
+                }
+
+                @Override
+                public void onItemLongClick(MyAdapter.MyViewHolder holder, MeModel data) {
+
+                }
+
+                @Override
+                public Boolean setAddActionContinue() {
+                    return null;
+                }
+
+                @Override
+                public void updataUI(Object object) {
+
+                }
+            });
         }
 
     }
 
     @Override
     protected void initData() {
-        mMe.setImageDrawable(mPersonModel.getMe());
+        mMe.setImageDrawable(mPersonModel.getPersonModel().getMe());
         mMe.setOnClickListener(this);
-        mUsername.setText(mPersonModel.getUsername());
-        mAccount.setText(mPersonModel.getAccount());
+        mUsername.setText(mPersonModel.getPersonModel().getUsername());
+        mAccount.setText(mPersonModel.getPersonModel().getAccount());
         mMyCourse.setOnClickListener(this);
         mMyMessage.setOnClickListener(this);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
@@ -119,11 +193,11 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.ci_me: // 点击头像
                 FragmentManager fragmentManager = getChildFragmentManager();
-                PersonDialogFragment personDialogFragment = PersonDialogFragment.newInstance(mPersonModel.getAccount(), mPersonModel.getPassword());
+                PersonDialogFragment personDialogFragment = PersonDialogFragment.newInstance(mPersonModel.getPersonModel().getAccount(), mPersonModel.getPersonModel().getPassword());
                 personDialogFragment.show(fragmentManager, PersonDialogFragment.TAG_PERSON_DIALOG_FRAGMENT);
                 break;
             case R.id.tv_my_course: // 我的课程
-                MyCourseActivity.newInstance(getContext(), mPersonModel.getAccount(), mPersonModel.getAccess());
+                MyCourseActivity.newInstance(getActivity());
                 break;
             case R.id.tv_my_message: // 我的消息
                 MyMessageActivity.newInstance(getContext());

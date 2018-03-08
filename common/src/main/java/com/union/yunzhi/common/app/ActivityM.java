@@ -1,9 +1,12 @@
 package com.union.yunzhi.common.app;
 
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
+import com.union.yunzhi.common.util.StatusBarUtil;
 
 import java.util.List;
 
@@ -23,6 +26,7 @@ public abstract class ActivityM extends AppCompatActivity {
             setContentView(layId);
             initWidget();
             initData();
+            reverseStatusColor();
         }else{
             finish();
         }
@@ -48,6 +52,24 @@ public abstract class ActivityM extends AppCompatActivity {
 
 
     protected abstract void initData();
+
+
+    /**
+     * 改变状态栏颜色
+     *
+     * @param color
+     */
+    public void changeStatusBarColor(@ColorRes int color) {
+        StatusBarUtil.setStatusBarColor(this, color);
+    }
+
+    /**
+     * 调整状态栏为亮模式，这样状态栏的文字颜色就为深模式了。
+     */
+    private void reverseStatusColor() {
+        StatusBarUtil.statusBarLightMode(this);
+    }
+
 
 
     @Override

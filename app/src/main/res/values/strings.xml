@@ -53,5 +53,6 @@
 
     <string name="preview_msg">&#160;preview pages available,click Download for more.</string>
 
+    <string name="please_wait">加载中...</string>
 
 </resources>
