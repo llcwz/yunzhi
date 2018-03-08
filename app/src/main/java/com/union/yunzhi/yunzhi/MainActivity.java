@@ -26,11 +26,15 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     private Boolean flag = false;
     @Override
     protected int getContentLayoutId() {
+        changeStatusBarColor(R.color.blue_400);
         return R.layout.activity_main;
     }
 
     @Override
     protected void initWidget() {
+
+        //changeStatusBarColor(R.color.blue_400);
+
         bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bnve);
 
         bottomNavigationViewEx.setOnNavigationItemSelectedListener(this);
