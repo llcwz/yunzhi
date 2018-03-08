@@ -18,6 +18,7 @@ import com.union.yunzhi.factories.moudles.me.CourseModel;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.MeModel;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.account.AccountSingle;
 import com.union.yunzhi.yunzhi.adapter.MyCourseAdapter;
 
 import java.util.ArrayList;
@@ -26,18 +27,18 @@ import java.util.Random;
 
 public class MyCourseActivity extends ActivityM {
 
-    private List<String> mStates = new ArrayList<>();
+    private AccountSingle mAccountSingle; // 用户单例
+    private List<String> mStates = new ArrayList<>(); // 课程的三种状态:进行中、即将开始、已完成
     private List<MeModel> mStudentCourses = new ArrayList<>();
     private List<MeModel> mTeacherCourses = new ArrayList<>();
+
     private Spinner mCourseState; // 选择课程的状态
     private RecyclerView mRecyclerView;
     private ArrayAdapter<String> mSpinnerAdapter;
     private MyCourseAdapter mMyCourseAdapter;
 
-    public static void newInstance(Context context, String account, int access) {
+    public static void newInstance(Context context) {
         Intent intent = new Intent(context, MyCourseActivity.class);
-        intent.putExtra(MeConstant.KEY_ACCOUNT, account);
-        intent.putExtra(MeConstant.KEY_ACCESS, access);
         context.startActivity(intent);
     }
 
@@ -49,10 +50,10 @@ public class MyCourseActivity extends ActivityM {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initWidget() {
+        mAccountSingle = AccountSingle.getInstance(this);
         data();
         mCourseState = (Spinner) findViewById(R.id.spn_my_course_state);
         mRecyclerView = (RecyclerView) findViewById(R.id.rec_my_course);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -96,31 +97,56 @@ public class MyCourseActivity extends ActivityM {
         mSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mStates);
         mSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // 设置下拉样式
 
-        mMyCourseAdapter = new MyCourseAdapter(this, mStudentCourses, new MyAdapter.AdapterListener<MeModel>() {
-            @Override
-            public void onItemClick(MyAdapter.MyViewHolder holder, MeModel data) {
-                // TODO: 2018/3/4 跳转到课程详情
-                Toast.makeText(MyCourseActivity.this, "see the course's details", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemLongClick(MyAdapter.MyViewHolder holder, MeModel data) {
-
-                if (data.getViewType() == MeConstant.STUDENT_COURSE_VIEW) { // 如果是学生，长按则放弃学习该门课程
-                    // TODO: 2018/3/4 放弃学习该课程
+        // 初始化适配器
+        if (mAccountSingle.getPerson().getAccess() == MeConstant.ACCESS_STUDENT) { // 如果是学生，则加载学生的课程数据
+            mMyCourseAdapter = new MyCourseAdapter(this, mStudentCourses, new MyAdapter.AdapterListener<MeModel>() {
+                @Override
+                public void onItemClick(MyAdapter.MyViewHolder holder, MeModel data) {
+                    // TODO: 2018/3/4 跳转到课程详情
+                    Toast.makeText(MyCourseActivity.this, "see the course's details", Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            public Boolean setAddActionContinue() {
-                return null;
-            }
+                @Override
+                public void onItemLongClick(MyAdapter.MyViewHolder holder, MeModel data) {
 
-            @Override
-            public void updataUI(Object object) {
+                    if (data.getViewType() == MeConstant.STUDENT_COURSE_VIEW) { // 如果是学生，长按则放弃学习该门课程
+                        // TODO: 2018/3/4 放弃学习该课程
+                    }
+                }
 
-            }
-        });
+                @Override
+                public Boolean setAddActionContinue() {
+                    return null;
+                }
+
+                @Override
+                public void updataUI(Object object) {
+
+                }
+            });
+        } else { // 如果是教师，则加载教师的课程数据
+            mMyCourseAdapter = new MyCourseAdapter(this, mTeacherCourses, new MyAdapter.AdapterListener() {
+                @Override
+                public void onItemClick(MyAdapter.MyViewHolder holder, Object data) {
+
+                }
+
+                @Override
+                public void onItemLongClick(MyAdapter.MyViewHolder holder, Object data) {
+
+                }
+
+                @Override
+                public Boolean setAddActionContinue() {
+                    return null;
+                }
+
+                @Override
+                public void updataUI(Object object) {
+
+                }
+            });
+        }
     }
 
     @Override

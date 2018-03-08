@@ -32,8 +32,9 @@ public class MeModel {
     }
 
     // 测试任务数据
-    public MeModel(WorkModel workModel) {
+    public MeModel(WorkModel workModel, int viewType) {
         mWorkModel = workModel;
+        mViewType = viewType;
     }
 
     // 测试成绩数据

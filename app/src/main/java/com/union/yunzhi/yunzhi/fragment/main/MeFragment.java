@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
@@ -17,6 +16,7 @@ import com.union.yunzhi.factories.moudles.me.MeModel;
 import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.factories.moudles.me.NavigationModel;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.account.AccountSingle;
 import com.union.yunzhi.yunzhi.activities.me.MyCourseActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyMessageActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyWorkActivity;
@@ -33,12 +33,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link Fragment} subclass.
  */
 public class MeFragment extends FragmentM implements View.OnClickListener {
-    private int mAccess; // 权限，根据这个来判断是学生还是教师
+    private AccountSingle mPersonSingle;
     private CircleImageView mMe;
-    private TextView mUsername;
-    private TextView mAccount;
-    private TextView mMyCourse;
-    private TextView mMyMessage;
+    private TextView mUsername; // 用户名
+    private TextView mAccount; // 账号
+    private TextView mMyCourse; // 我的课程
+    private TextView mMyMessage; // 我的消息
     private RecyclerView mRecyclerView;
     private MeNavigationAdapter mMeNavigationAdapter;
     private MeModel mPersonModel; // 个人测试数据
@@ -57,6 +57,8 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initWidget(View view) {
+        // 实例化单例
+        mPersonSingle = AccountSingle.getInstance(getActivity());
         data();
         mMe = (CircleImageView) view.findViewById(R.id.ci_me);
         mUsername = (TextView) view.findViewById(R.id.tv_username);
@@ -72,9 +74,15 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
      */
     private void data() {
 
+        // 将用户写入单例中
+        mPersonSingle.setPerson(new PersonModel(getResources().getDrawable(R.drawable.dragon_cat),
+                "Crazy贵子",
+                "201509155064",
+                "123456",
+                MeConstant.ACCESS_TEACHER));
+
         // 初始化个人数据
-        mPersonModel = new MeModel(new PersonModel(getResources().getDrawable(R.drawable.dragon_cat), "Crazy贵子", "201509155064", "123456", 1));
-        mAccess = mPersonModel.getPersonModel().getAccess();
+        mPersonModel = new MeModel(mPersonSingle.getPerson());
 
         // 初始化学生导航数据
         mStudentNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_comprehensive, getString(R.string.me_navigation_comprehensive))));
@@ -91,7 +99,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mTeacherNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_analysis,getString(R.string.me_navigation_data_analysis))));
 
         // 实例化适配器
-        if (mAccess == MeConstant.ACCESS_STUDENT) {
+        if (mPersonSingle.getPerson().getAccess() == MeConstant.ACCESS_STUDENT) {
             mMeNavigationAdapter = new MeNavigationAdapter(mStudentNavigations, new MyAdapter.AdapterListener<MeModel>() {
                 @Override
                 public void onItemClick(MyAdapter.MyViewHolder holder, MeModel data) {
@@ -123,7 +131,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
                 }
             });
-        } else if (mAccess == MeConstant.ACCESS_TEACHER){
+        } else if (mPersonSingle.getPerson().getAccess() == MeConstant.ACCESS_TEACHER){
             mMeNavigationAdapter = new MeNavigationAdapter(mTeacherNavigations, new MyAdapter.AdapterListener<MeModel>() {
 
                 @Override
@@ -133,7 +141,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
                     } else if (MeConstant.NAVIGATION_MY_WORK.equals(data.getNavigationModel().getNavigationName())) { // 综合实训
 
                     } else if (MeConstant.NAVIGATION_WORK_MANAGEMENT.equals(data.getNavigationModel().getNavigationName())) { // 任务管理
-
+                        MyWorkActivity.newInstance(getActivity());
                     } else if (MeConstant.NAVIGATION_ABILITY.equals(data.getNavigationModel().getNavigationName())) { //能力档案
 
                     } else if (MeConstant.NAVIGATION_DATA_ANALYSIS.equals(data.getNavigationModel().getNavigationName())) { // 数据分析
@@ -189,7 +197,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
                 personDialogFragment.show(fragmentManager, PersonDialogFragment.TAG_PERSON_DIALOG_FRAGMENT);
                 break;
             case R.id.tv_my_course: // 我的课程
-                MyCourseActivity.newInstance(getContext(), mPersonModel.getPersonModel().getAccount(), mPersonModel.getPersonModel().getAccess());
+                MyCourseActivity.newInstance(getActivity());
                 break;
             case R.id.tv_my_message: // 我的消息
                 MyMessageActivity.newInstance(getContext());

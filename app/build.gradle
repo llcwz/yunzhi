@@ -43,7 +43,7 @@ dependencies {
     // searchbox 搜索栏
 
     // nice-spinner 下拉栏
-    
+
     compile 'com.hyman:flowlayout-lib:1.1.2'
     compile 'com.timqi.collapsibletextview:library:1.1.2'
     compile 'com.nineoldandroids:library:2.4.0'

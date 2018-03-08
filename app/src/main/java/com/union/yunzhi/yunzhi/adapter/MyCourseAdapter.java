@@ -8,15 +8,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.MeModel;
 import com.union.yunzhi.yunzhi.R;
 
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by CrazyGZ on 2018/3/3.
@@ -97,7 +94,7 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
         private TextView mTitle;
         private ImageView mIcon;
         private TextView mSchool;
-        private TextView mTeacher;
+        private TextView mCollege;
         private TextView mSchedule;
         private ProgressBar mProgress;
 
@@ -106,7 +103,7 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
             mTitle = (TextView) itemView.findViewById(R.id.tv_course_title);
             mIcon = (ImageView) itemView.findViewById(R.id.iv_course_icon);
             mSchool = (TextView) itemView.findViewById(R.id.tv_school_of_course);
-            mTeacher = (TextView) itemView.findViewById(R.id.tv_teacher_of_course);
+            mCollege = (TextView) itemView.findViewById(R.id.tv_college_of_course);
             mSchedule = (TextView) itemView.findViewById(R.id.tv_course_schedule);
             mProgress = (ProgressBar) itemView.findViewById(R.id.proBar_course_progress);
         }
@@ -116,7 +113,7 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
             mTitle.setText(data.getCourseModel().getName());
             mIcon.setImageDrawable(data.getCourseModel().getIcon());
             mSchool.setText(data.getCourseModel().getSchool());
-            mTeacher.setText(data.getCourseModel().getTeacher());
+            mCollege.setText(data.getCourseModel().getCollege());
             mSchedule.setText("进行至" + data.getCourseModel().getProgress() + "周，总共" + data.getCourseModel().getSchedule() + "周");
             mProgress.setMax(data.getCourseModel().getSchedule());
             mProgress.setProgress(data.getCourseModel().getProgress());

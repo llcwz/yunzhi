@@ -50,7 +50,7 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
 
     private void data() {
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             List<UnitGradeModel> unitGradeModels = new ArrayList<>();
             for (int j = 0; j < new Random().nextInt(4) + 1; j++) {
                 unitGradeModels.add(new UnitGradeModel(j, "单元测试" + j, "" + new Random().nextInt(50)));
