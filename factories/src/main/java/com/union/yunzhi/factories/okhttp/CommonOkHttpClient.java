@@ -1,5 +1,6 @@
 package com.union.yunzhi.factories.okhttp;
 
+import com.union.yunzhi.factories.okhttp.cookie.SimpleCookieJar;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataHandle;
 import com.union.yunzhi.factories.okhttp.response.CommonJsonCallback;
 
@@ -30,6 +31,7 @@ public class CommonOkHttpClient {
 
         //为构建在填充参数
         okhttpBuilder
+                .cookieJar(new SimpleCookieJar())
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT,TimeUnit.SECONDS)
                 .writeTimeout(TIME_OUT,TimeUnit.SECONDS)
