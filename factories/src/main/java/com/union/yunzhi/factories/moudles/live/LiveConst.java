@@ -5,4 +5,5 @@ package com.union.yunzhi.factories.moudles.live;
  */
 
 public class LiveConst {
+
 }

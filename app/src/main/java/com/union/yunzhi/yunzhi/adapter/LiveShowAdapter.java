@@ -76,11 +76,17 @@ public  class LiveShowAdapter extends MyAdapter<LiveBean> {
             mImageView.setLayoutParams(params1);
 
 
-            //TODO 此处处理直播模块recycleView图片加载
             mImageView.setImageResource(data.Id);
-            courseName.setText(data.courseName);
-            teacherName.setText(data.teacherName);
-            lineCount.setText(data.lineCount);
+            courseName.setText("见算计组成原理");
+            teacherName.setText("张三老师");
+            lineCount.setText(String.valueOf("12306"));
+
+            //TODO 此处处理直播模块recycleView信息加载
+            //Glide.with(context).load(data.imageUrl).into(mImageView);
+            //courseName.setText(data.courseName);
+            //teacherName.setText(data.teacherName);
+            //lineCount.setText(String.valueOf(data.lineCount));
+
             mImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
