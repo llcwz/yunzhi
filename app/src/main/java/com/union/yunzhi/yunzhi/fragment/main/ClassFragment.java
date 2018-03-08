@@ -27,7 +27,7 @@ import com.union.yunzhi.factories.moudles.classfication.beans.TitleBean;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.ClassCourseAdapter;
 import com.union.yunzhi.yunzhi.adapter.ClassDrawerAdapter;
-import com.union.yunzhi.yunzhi.classfication.ClassCourseDetails;
+import com.union.yunzhi.yunzhi.activities.classfication.ClassCourseDetails;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;

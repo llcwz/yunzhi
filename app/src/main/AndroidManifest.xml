@@ -32,8 +32,8 @@
         </activity>
         <activity android:name=".activities.me.MyWorkActivity">
         </activity>
-        <activity android:name=".classfication.ClassCourseDetails"/>
-        <activity android:name=".classfication.ClassCourseFile"/>
+        <activity android:name=".activities.classfication.ClassCourseDetails"/>
+        <activity android:name=".activities.classfication.ClassCourseFile"/>
         <activity android:name=".zxing.app.PreferencesActivity"/>
         <activity android:name=".zxing.app.CaptureActivity"/>
         <activity android:name=".activities.me.SearchGradeActivity">

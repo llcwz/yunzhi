@@ -115,15 +115,15 @@ public class LiveFragment extends FragmentM {
         mRecycleView.addItemDecoration(decoration);
         mRecycleView.setLayoutManager(mStaggeredGridLayoutManager);
 
-        LiveShowAdapter adapter=new LiveShowAdapter(getContext(),list, new MyAdapter.AdapterListener() {
+        LiveShowAdapter adapter=new LiveShowAdapter(getContext(),list, new MyAdapter.AdapterListener<LiveBean>() {
 
             @Override
-            public void onItemClick(MyAdapter.MyViewHolder holder, Object data) {
+            public void onItemClick(MyAdapter.MyViewHolder holder, LiveBean data) {
 
             }
 
             @Override
-            public void onItemLongClick(MyAdapter.MyViewHolder holder, Object data) {
+            public void onItemLongClick(MyAdapter.MyViewHolder holder, LiveBean data) {
 
             }
 
