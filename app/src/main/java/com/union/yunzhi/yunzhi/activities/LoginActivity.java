@@ -9,9 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.union.yunzhi.common.app.ActivityM;
+import com.union.yunzhi.factories.moudles.me.BaseMeModel;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.network.mina.MinaService;
 
@@ -84,6 +86,8 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
                 /**
                  * 这部分可以封装起来，封装为到一个登陆流程类中
                  */
+                BaseMeModel user = (BaseMeModel) responseObj;
+                UserManager.getInstance().setUser(user);//保存当前用户单例对象
                 connectToSever();
 
                 sendLoginBroadcast();
