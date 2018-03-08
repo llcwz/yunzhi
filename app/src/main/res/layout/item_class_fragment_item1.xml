@@ -40,7 +40,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:id="@+id/tv_smallTitle"
-                android:textSize="@dimen/font_10"
+                android:textSize="@dimen/font_14"
                 android:maxLines="2"
                 android:gravity="left|center_vertical"
                 android:text="精品课程系列"/>

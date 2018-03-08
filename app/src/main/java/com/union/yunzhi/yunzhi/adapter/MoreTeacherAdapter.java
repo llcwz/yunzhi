@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.classfication.TeacherBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.TeacherBean;
 import com.union.yunzhi.yunzhi.R;
 
 import java.util.List;
