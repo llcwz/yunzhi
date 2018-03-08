@@ -1,5 +1,7 @@
 package com.union.yunzhi.factories.okhttp;
 
+import android.util.Log;
+
 import com.union.yunzhi.factories.okhttp.cookie.SimpleCookieJar;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataHandle;
 import com.union.yunzhi.factories.okhttp.response.CommonJsonCallback;
@@ -77,6 +79,9 @@ public class CommonOkHttpClient {
      */
     public static Call get(Request request, DisposeDataHandle handle) {
         Call call = mOkHttpClient.newCall(request);
+
+
+        Log.i("TTGGAA",request.toString());
 
         call.enqueue(new CommonJsonCallback(handle));
 

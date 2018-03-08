@@ -71,6 +71,7 @@ public class RequestParams {
         }
     }
 
+
     public boolean hasParams() {
         if(urlParams.size() > 0 || fileParams.size() > 0){
 
