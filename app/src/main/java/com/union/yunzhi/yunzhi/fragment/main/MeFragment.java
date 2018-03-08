@@ -40,6 +40,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link Fragment} subclass.
  */
 public class MeFragment extends FragmentM implements View.OnClickListener {
+
+    private UserManager mUserManager;
     private AccountSingle mPersonSingle;
     private CircleImageView mMe;
     private TextView mUsername; // 用户名
@@ -186,14 +188,19 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        mMe.setImageDrawable(mPersonModel.getPersonModel().getMe());
-        mMe.setOnClickListener(this);
-        mUsername.setText(mPersonModel.getPersonModel().getUsername());
-        mAccount.setText(mPersonModel.getPersonModel().getAccount());
-        mMyCourse.setOnClickListener(this);
-        mMyMessage.setOnClickListener(this);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        mRecyclerView.setAdapter(mMeNavigationAdapter);
+        if (mUserManager.hasLogined()){ //假如用户登录了
+            mMe.setImageDrawable(mPersonModel.getPersonModel().getMe());
+            mMe.setOnClickListener(this);
+            mUsername.setText(mPersonModel.getPersonModel().getUsername());
+            mAccount.setText(mPersonModel.getPersonModel().getAccount());
+            mMyCourse.setOnClickListener(this);
+            mMyMessage.setOnClickListener(this);
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+            mRecyclerView.setAdapter(mMeNavigationAdapter);
+        } else { // 游客模式
+
+        }
+
     }
 
 

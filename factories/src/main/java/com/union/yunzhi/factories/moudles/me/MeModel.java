@@ -37,6 +37,10 @@ public class MeModel {
         mViewType = viewType;
     }
 
+    public MeModel(WorkModel workModel) {
+        mWorkModel = workModel;
+    }
+
     // 测试成绩数据
     public MeModel(GradeModel gradeModel) {
         mGradeModel = gradeModel;

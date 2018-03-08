@@ -82,13 +82,13 @@
             android:id="@+id/tv_work_date_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="请选择日期"/>
+            android:text="请选择日期"/>
         <TextView
             android:id="@+id/tv_work_time_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/len_16"
-            android:hint="请选择时间"/>
+            android:text="请选择时间"/>
     </LinearLayout>
 
     <LinearLayout
@@ -113,14 +113,14 @@
             android:id="@+id/tv_work_date_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="请选择日期"/>
+            android:text="请选择日期"/>
 
         <TextView
             android:id="@+id/tv_work_time_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/len_16"
-            android:hint="请选择时间"/>
+            android:text="请选择时间"/>
     </LinearLayout>
 
     <Button

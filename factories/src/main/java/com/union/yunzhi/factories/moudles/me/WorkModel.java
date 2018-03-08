@@ -100,4 +100,19 @@ public class WorkModel {
     public void setTime(String time) {
         mTime = time;
     }
+
+    @Override
+    public String toString() {
+        return "WorkModel{" +
+                "mId=" + mId +
+                ", mName='" + mName + '\'' +
+                ", mCourse='" + mCourse + '\'' +
+                ", mType='" + mType + '\'' +
+                ", mStart='" + mStart + '\'' +
+                ", mEnd='" + mEnd + '\'' +
+                ", mState='" + mState + '\'' +
+                ", mPromulgator='" + mPromulgator + '\'' +
+                ", mTime='" + mTime + '\'' +
+                '}';
+    }
 }

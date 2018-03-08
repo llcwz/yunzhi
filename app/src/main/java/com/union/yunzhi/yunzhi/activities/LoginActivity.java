@@ -1,5 +1,6 @@
 package com.union.yunzhi.yunzhi.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
@@ -28,6 +29,11 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
     private EditText mAccount;
     private EditText mPasswordView;
     private TextView mLoginView;
+
+    public static void newInstance(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_login_layout;

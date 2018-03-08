@@ -2,6 +2,7 @@ package com.union.yunzhi.yunzhi.fragment.main;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.union.yunzhi.common.app.FragmentM;
@@ -12,7 +13,7 @@ import com.union.yunzhi.yunzhi.R;
  */
 public class CommunicationFragment extends FragmentM {
 
-
+    private Toolbar mToolbar;
 
     @Override
     protected int getContentLayoutId() {
@@ -21,6 +22,7 @@ public class CommunicationFragment extends FragmentM {
 
     @Override
     protected void initWidget(View view) {
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
     }
 
