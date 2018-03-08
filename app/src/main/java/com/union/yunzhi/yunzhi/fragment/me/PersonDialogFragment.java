@@ -23,6 +23,7 @@ public class PersonDialogFragment extends DialogFragment implements View.OnClick
     public static final String TAG_PERSON_DIALOG_FRAGMENT = "PersonDialogFragment";
     private String mAccount;
     private String mPassword;
+
     private TextView mChangeIcon; // 更换头像
     private TextView mChangePassword; // 修改密码
     private TextView mLogOut; // 退出平台

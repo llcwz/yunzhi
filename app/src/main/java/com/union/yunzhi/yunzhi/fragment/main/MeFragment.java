@@ -23,6 +23,7 @@ import com.union.yunzhi.yunzhi.activities.me.MyWorkActivity;
 import com.union.yunzhi.yunzhi.activities.me.SearchGradeActivity;
 import com.union.yunzhi.yunzhi.adapter.MeNavigationAdapter;
 import com.union.yunzhi.yunzhi.fragment.me.PersonDialogFragment;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link Fragment} subclass.
  */
 public class MeFragment extends FragmentM implements View.OnClickListener {
+
+    private UserManager mUserManager;
     private AccountSingle mPersonSingle;
     private CircleImageView mMe;
     private TextView mUsername; // 用户名
@@ -57,6 +60,8 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initWidget(View view) {
+        // 监听广播，获取登录用户
+
         // 实例化单例
         mPersonSingle = AccountSingle.getInstance(getActivity());
         data();
@@ -170,14 +175,19 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        mMe.setImageDrawable(mPersonModel.getPersonModel().getMe());
-        mMe.setOnClickListener(this);
-        mUsername.setText(mPersonModel.getPersonModel().getUsername());
-        mAccount.setText(mPersonModel.getPersonModel().getAccount());
-        mMyCourse.setOnClickListener(this);
-        mMyMessage.setOnClickListener(this);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        mRecyclerView.setAdapter(mMeNavigationAdapter);
+        if (mUserManager.hasLogined()){ //假如用户登录了
+            mMe.setImageDrawable(mPersonModel.getPersonModel().getMe());
+            mMe.setOnClickListener(this);
+            mUsername.setText(mPersonModel.getPersonModel().getUsername());
+            mAccount.setText(mPersonModel.getPersonModel().getAccount());
+            mMyCourse.setOnClickListener(this);
+            mMyMessage.setOnClickListener(this);
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+            mRecyclerView.setAdapter(mMeNavigationAdapter);
+        } else { // 游客模式
+
+        }
+
     }
 
 
