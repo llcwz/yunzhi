@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -14,7 +15,7 @@ import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.common.widget.MyScrollView;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-import com.union.yunzhi.factories.moudles.classfication.TeacherBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.TeacherBean;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.MoreTeacherAdapter;
 
@@ -95,7 +96,6 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
         hiddenView= (FrameLayout) findViewById(R.id.lv_details_video);
         showView= (ConstraintLayout) findViewById(R.id.lv_details_head);
         showView.setVisibility(View.GONE);
-
         //mMyScrollView的滑动处理
         mMyScrollView.setOnScollChangedListener(new MyScrollView.OnScollChangedListener() {
             @Override
@@ -109,20 +109,22 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
 
                 //TODO 有待优化
                 //手指上滑
-                if(y>=hiddenView.getHeight()-300&&y-oldy>8){
+                if((y>=(hiddenView.getHeight()-200))&&y-oldy>8){
+                    Log.d("KKK","111"+scrollView.getScrollY());
                     if(hiddenView.getVisibility()==View.VISIBLE){
+                        Log.d("KKK","11111111");
                         HiddenAnimUtils.newInstance(getBaseContext(),224).closeAnimate(hiddenView);
                         HiddenAnimUtils.newInstance(getBaseContext(),48).openAnimate(showView);
                     }
                 } else if(scrollView.getScrollY()==0){//下滑到顶
+                    Log.d("KKK","222");
                     if(hiddenView.getVisibility()==View.GONE){
                         HiddenAnimUtils.newInstance(getBaseContext(),224).openAnimate(hiddenView);
                       }
                     //HiddenAnimUtils.newInstance(getBaseContext(),48).closeAnimate(showView);
                     showView.setVisibility(View.GONE);
                 }else{
-
-
+                    Log.d("KKK","333");
                 }
             }
         });
