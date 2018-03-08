@@ -16,7 +16,11 @@ public class HttpConstants {
     public static final String HOME_URL = ROOT_URL+"/HelloWorld";
 
 
-    public static final String LOGIN = ROOT_URL+"/HelloWorld";
+    // 登录请求
+    public static final String LOGIN_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+    // 请求修改密码
+    public static final String CHANGE_PASSWORD_URL = "";
 
 
 }

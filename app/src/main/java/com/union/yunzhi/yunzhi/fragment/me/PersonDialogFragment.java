@@ -21,20 +21,13 @@ import com.union.yunzhi.yunzhi.activities.me.ChangePasswordActivity;
 
 public class PersonDialogFragment extends DialogFragment implements View.OnClickListener {
     public static final String TAG_PERSON_DIALOG_FRAGMENT = "PersonDialogFragment";
-    private String mAccount;
-    private String mPassword;
 
     private TextView mChangeIcon; // 更换头像
     private TextView mChangePassword; // 修改密码
     private TextView mLogOut; // 退出平台
 
-    public static PersonDialogFragment newInstance(String account,String password) {
-        Bundle bundle = new Bundle();
-        // 传入账号和密码
-        bundle.putString(MeConstant.KEY_ACCOUNT, account);
-        bundle.putString(MeConstant.KEY_PASSWORD, password);
+    public static PersonDialogFragment newInstance() {
         PersonDialogFragment personDialogFragment = new PersonDialogFragment();
-        personDialogFragment.setArguments(bundle);
         return personDialogFragment;
     }
 
@@ -42,10 +35,6 @@ public class PersonDialogFragment extends DialogFragment implements View.OnClick
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // 获取账号和密码
-        mAccount = getArguments().getString(MeConstant.KEY_ACCOUNT);
-        mPassword = getArguments().getString(MeConstant.KEY_PASSWORD);
-
         // 创建dialog布局
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = View.inflate(getActivity(), R.layout.me_fragment_person, null);
@@ -74,7 +63,7 @@ public class PersonDialogFragment extends DialogFragment implements View.OnClick
                 break;
             case R.id.tv_person_change_password:
                 // TODO: 2018/2/26  
-                ChangePasswordActivity.newInstance(getActivity(), mAccount,mPassword);
+                ChangePasswordActivity.newInstance(getActivity());
                 break;
             case R.id.tv_person_log_out:
                 // TODO: 2018/2/25 退出平台

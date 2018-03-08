@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -75,7 +76,6 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
 
         DialogManager.getInstnce().showProgressDialog(this);
 
-
         RequestCenter.login(userName, password, new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
@@ -88,6 +88,7 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
                  */
                 BaseMeModel user = (BaseMeModel) responseObj;
                 UserManager.getInstance().setUser(user);//保存当前用户单例对象
+                Log.d("Test", "onSuccess: " + responseObj.toString());
                 connectToSever();
 
                 sendLoginBroadcast();
@@ -96,7 +97,6 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
                  * 只有用户手动退出登陆时候，将用户数据从数据库中删除。
                  */
                 insertUserInfoIntoDB();
-
 
                 finish();//销毁当前登陆页面
             }
@@ -107,6 +107,7 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
             public void onFailure(Object reasonObj) {
                 //失败的时候也要去销毁他
                 DialogManager.getInstnce().dismissProgressDialog();
+                Log.d("Test", "onFailure: " + reasonObj.toString());
             }
         });
 

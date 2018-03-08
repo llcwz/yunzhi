@@ -10,13 +10,18 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
+import com.union.yunzhi.factories.moudles.me.BaseMeModel;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
+import com.union.yunzhi.factories.moudles.me.PersonModel;
+import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.manager.DialogManager;
+import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 public class ChangePasswordActivity extends ActivityM {
 
-    private String mAccount = null;
-    private String mPassword = null;
+    private UserManager mUserManager;
     private TextInputLayout mOld;
     private TextInputLayout mNewOne;
     private TextInputLayout mNewTwo;
@@ -25,10 +30,8 @@ public class ChangePasswordActivity extends ActivityM {
     private TextInputEditText mNewPasswordTwo;
     private Button mSubmit;
 
-    public static void newInstance(Context context,String account, String password) {
+    public static void newInstance(Context context) {
         Intent intent = new Intent(context, ChangePasswordActivity.class);
-        intent.putExtra(MeConstant.KEY_ACCOUNT, account);
-        intent.putExtra(MeConstant.KEY_PASSWORD, password);
         context.startActivity(intent);
     }
     @Override
@@ -39,6 +42,8 @@ public class ChangePasswordActivity extends ActivityM {
 
     @Override
     protected void initWidget() {
+        mUserManager = UserManager.getInstance();
+
         mOld = (TextInputLayout) findViewById(R.id.til_old_password);
         mNewOne = (TextInputLayout) findViewById(R.id.til_new_password_one);
         mNewTwo = (TextInputLayout) findViewById(R.id.til_new_password_two);
@@ -51,20 +56,21 @@ public class ChangePasswordActivity extends ActivityM {
 
     @Override
     protected void initData() {
-        mAccount = getIntent().getStringExtra(MeConstant.KEY_ACCOUNT);
-        mPassword = getIntent().getStringExtra(MeConstant.KEY_PASSWORD);
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 输入的原密码
                 String passwordOld = mOldPassword.getText().toString();
+                // 输入的新密码
                 String passwordNewOne = mNewPasswordOne.getText().toString();
                 String passwordNewTwo = mNewPasswordTwo.getText().toString();
+
                 if (validateNull(passwordOld)) {
                     showError(mOld, "请输入原密码");
                 } else{
                     showError(mOld, "");
-                    if (!validateSame(mPassword, passwordOld)) {
+                    if (!validateSame(mUserManager.getPerson().getPassword(), passwordOld)) {
                         showError(mOld, "原密码不正确");
                     } else {
                         if (validateNull(passwordNewOne)) {
@@ -79,8 +85,31 @@ public class ChangePasswordActivity extends ActivityM {
                                     showError(mNewTwo, "密码不一致，请重新输入");
                                 } else {
                                     showError(mNewTwo, "");
-                                    Toast.makeText(ChangePasswordActivity.this, "密码修改成功", Toast.LENGTH_SHORT).show();
-                                    // TODO: 2018/2/26 提交新密码到服务器
+                                    if (passwordOld.equals(passwordNewOne)) {
+                                        Toast.makeText(ChangePasswordActivity.this, "原密码和新密码相同", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // 用户可以提交修改后的密码了
+                                        DialogManager.getInstnce().showProgressDialog(getApplicationContext()); // 显示等待进度
+                                        RequestCenter.requestChangePassword(mUserManager.getPerson().getAccount(), passwordNewOne, new DisposeDataListener() {
+                                            @Override
+                                            public void onSuccess(Object responseObj) {
+                                                BaseMeModel baseMeModel = (BaseMeModel) responseObj;
+                                                if (baseMeModel.ecode == 0) {
+                                                    mUserManager.getPerson().setPassword(baseMeModel.data.getPersonModel().getPassword());
+                                                    Toast.makeText(ChangePasswordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(ChangePasswordActivity.this, "" + baseMeModel.emsg, Toast.LENGTH_SHORT).show();
+                                                }
+                                                DialogManager.getInstnce().dismissProgressDialog();
+                                            }
+
+                                            @Override
+                                            public void onFailure(Object reasonObj) {
+                                                Toast.makeText(ChangePasswordActivity.this, "连接网络失败", Toast.LENGTH_SHORT).show();
+                                                DialogManager.getInstnce().dismissProgressDialog();
+                                            }
+                                        });
+                                    }
                                 }
                             }
                         }

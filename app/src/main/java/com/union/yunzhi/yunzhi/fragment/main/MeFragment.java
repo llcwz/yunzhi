@@ -13,7 +13,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
@@ -42,7 +44,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MeFragment extends FragmentM implements View.OnClickListener {
 
     private UserManager mUserManager;
-    private AccountSingle mPersonSingle;
     private CircleImageView mMe;
     private TextView mUsername; // 用户名
     private TextView mAccount; // 账号
@@ -59,24 +60,17 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
     private LoginBroadcastReceiver receiver =
             new LoginBroadcastReceiver();
 
-
     @Override
     protected int getContentLayoutId() {
         return R.layout.main_fragment_me;
     }
 
     @Override
-    protected void initArgs(Bundle bundle) {
-        super.initArgs(bundle);
-    }
-
-    @Override
     protected void initWidget(View view) {
+        // 获取用户单例
+        mUserManager = UserManager.getInstance();
         //注册广播
         registerBroadcast();
-
-        // 实例化单例
-        mPersonSingle = AccountSingle.getInstance(getActivity());
         data();
         mMe = (CircleImageView) view.findViewById(R.id.ci_me);
         mUsername = (TextView) view.findViewById(R.id.tv_username);
@@ -84,23 +78,12 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mMyCourse = (TextView) view.findViewById(R.id.tv_my_course);
         mMyMessage = (TextView) view.findViewById(R.id.tv_my_message);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rec_me);
-
     }
 
     /**
      * 初始化数据
      */
     private void data() {
-
-        // 将用户写入单例中
-        mPersonSingle.setPerson(new PersonModel(getResources().getDrawable(R.drawable.dragon_cat),
-                "Crazy贵子",
-                "201509155064",
-                "123456",
-                MeConstant.ACCESS_TEACHER));
-
-        // 初始化个人数据
-        mPersonModel = new MeModel(mPersonSingle.getPerson());
 
         // 初始化学生导航数据
         mStudentNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_comprehensive, getString(R.string.me_navigation_comprehensive))));
@@ -116,8 +99,11 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mTeacherNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_ability,getString(R.string.me_navigation_ability))));
         mTeacherNavigations.add(new MeModel(new NavigationModel(R.drawable.ri_me_navigation_analysis,getString(R.string.me_navigation_data_analysis))));
 
-        // 实例化适配器
-        if (mPersonSingle.getPerson().getAccess() == MeConstant.ACCESS_STUDENT) {
+    }
+
+    // 初始化适配器
+    private void initAdapter() {
+        if (mUserManager.getPerson().getAccess() == MeConstant.ACCESS_STUDENT) { // 如果是学生登录
             mMeNavigationAdapter = new MeNavigationAdapter(mStudentNavigations, new MyAdapter.AdapterListener<MeModel>() {
                 @Override
                 public void onItemClick(MyAdapter.MyViewHolder holder, MeModel data) {
@@ -149,7 +135,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
                 }
             });
-        } else if (mPersonSingle.getPerson().getAccess() == MeConstant.ACCESS_TEACHER){
+        } else if (mUserManager.getPerson().getAccess() == MeConstant.ACCESS_TEACHER){
             mMeNavigationAdapter = new MeNavigationAdapter(mTeacherNavigations, new MyAdapter.AdapterListener<MeModel>() {
 
                 @Override
@@ -183,31 +169,14 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
                 }
             });
         }
-
     }
 
     @Override
     protected void initData() {
-        if (mUserManager.hasLogined()){ //假如用户登录了
-            mMe.setImageDrawable(mPersonModel.getPersonModel().getMe());
-            mMe.setOnClickListener(this);
-            mUsername.setText(mPersonModel.getPersonModel().getUsername());
-            mAccount.setText(mPersonModel.getPersonModel().getAccount());
-            mMyCourse.setOnClickListener(this);
-            mMyMessage.setOnClickListener(this);
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-            mRecyclerView.setAdapter(mMeNavigationAdapter);
-        } else { // 游客模式
-
-        }
-
-    }
-    
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unregisterBroadcast();
+        visitUI();
+        mMe.setOnClickListener(this);
+        mMyCourse.setOnClickListener(this);
+        mMyMessage.setOnClickListener(this);
     }
 
     /**
@@ -219,19 +188,27 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
      */
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ci_me: // 点击头像
-                FragmentManager fragmentManager = getChildFragmentManager();
-                PersonDialogFragment personDialogFragment = PersonDialogFragment.newInstance(mPersonModel.getPersonModel().getAccount(), mPersonModel.getPersonModel().getPassword());
-                personDialogFragment.show(fragmentManager, PersonDialogFragment.TAG_PERSON_DIALOG_FRAGMENT);
-                break;
-            case R.id.tv_my_course: // 我的课程
-                MyCourseActivity.newInstance(getActivity());
-                break;
-            case R.id.tv_my_message: // 我的消息
-                MyMessageActivity.newInstance(getContext());
-                break;
-            default:
+        if (mUserManager.hasLogined()) { // 如果用户已经登录，则对应相应的点击事件
+
+            switch (view.getId()) {
+                case R.id.ci_me: // 点击头像
+                    FragmentManager fragmentManager = getChildFragmentManager();
+                    PersonDialogFragment personDialogFragment = PersonDialogFragment.newInstance();
+                    personDialogFragment.show(fragmentManager, PersonDialogFragment.TAG_PERSON_DIALOG_FRAGMENT);
+                    break;
+                case R.id.tv_my_course: // 我的课程
+                    MyCourseActivity.newInstance(getActivity());
+                    break;
+                case R.id.tv_my_message: // 我的消息
+                    MyMessageActivity.newInstance(getContext());
+                    break;
+                default:
+            }
+
+        } else if (view.getId() == R.id.ci_me) { // 如果点击头像，则跳转到登录界面
+            LoginActivity.newInstance(getActivity());
+        } else { // 如果用户未登录，则提示登录操作
+            Toast.makeText(getActivity(), "点击头像登录", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -239,16 +216,12 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
 
     private void registerBroadcast() {
-
-        IntentFilter filter =
-                new IntentFilter(LoginActivity.LOGIN_ACTION);
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(receiver, filter);
+        IntentFilter filter = new IntentFilter(LoginActivity.LOGIN_ACTION);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, filter);
     }
 
     private void unregisterBroadcast() {
-        LocalBroadcastManager.getInstance(getContext())
-                .unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
 
 
@@ -258,9 +231,41 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
     private class LoginBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (UserManager.getInstance().hasLogined()) {
-                //通知更新ui
+
+            if (mUserManager.hasLogined()) {
+                loginUI();
+            } else {
+                visitUI();
             }
         }
+    }
+
+    // 游客模式下的UI
+    private void visitUI() {
+        Glide.with(this).load(R.drawable.dragon_cat).into(mMe);
+        mUsername.setText("点击头像登录");
+        mAccount.setText("");
+        mStudentNavigations.clear();
+        mTeacherNavigations.clear();
+        mMeNavigationAdapter = null;
+    }
+
+    // 登陆后改变UI
+    private void loginUI() {
+        initAdapter();
+        // 加载头像
+        Glide.with(this).load(R.drawable.icon_wst).into(mMe);
+        //Glide.with(this).load(mUserManager.getPerson().getMe()).into(mMe);
+        mUsername.setText(mPersonModel.getPersonModel().getUsername());
+        mAccount.setText(mPersonModel.getPersonModel().getAccount());
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        mRecyclerView.setAdapter(mMeNavigationAdapter);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterBroadcast();
     }
 }

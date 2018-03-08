@@ -1,6 +1,8 @@
 package com.union.yunzhi.yunzhi.network;
 
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
+import com.union.yunzhi.factories.moudles.me.BaseMeModel;
+import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.factories.okhttp.CommonOkHttpClient;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataHandle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
@@ -43,9 +45,16 @@ public class RequestCenter {
     public static void login(String userName, String passwd, DisposeDataListener listener) {
 
         RequestParams params = new RequestParams();
-        params.put("mb", userName);
-        params.put("pwd", passwd);
-        RequestCenter.postRequest(HttpConstants.LOGIN, params, listener, null);
+        params.put("account", userName);
+        params.put("password", passwd);
+        RequestCenter.postRequest(HttpConstants.LOGIN_URL, params, listener, BaseMeModel.class);
+    }
+
+    public static void requestChangePassword(String account, String newPassword, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("account", account);
+        params.put("password", newPassword);
+        RequestCenter.postRequest(HttpConstants.CHANGE_PASSWORD_URL, params, listener, BaseMeModel.class);
     }
 
 

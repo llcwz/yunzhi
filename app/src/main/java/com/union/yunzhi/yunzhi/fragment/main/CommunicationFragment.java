@@ -23,7 +23,6 @@ public class CommunicationFragment extends FragmentM {
     @Override
     protected void initWidget(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-
     }
 
     @Override
