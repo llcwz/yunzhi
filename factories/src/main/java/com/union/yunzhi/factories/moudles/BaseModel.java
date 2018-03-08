@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author fangyan
  * @date 2015年8月1日
  */
-	public class BaseModel implements Serializable {
+public class BaseModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 }

@@ -1,9 +1,14 @@
 package com.union.yunzhi.yunzhi.fragment.main;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,16 +18,18 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.MeModel;
-import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.factories.moudles.me.NavigationModel;
+import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.account.AccountSingle;
+import com.union.yunzhi.yunzhi.activities.LoginActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyCourseActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyMessageActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyWorkActivity;
 import com.union.yunzhi.yunzhi.activities.me.SearchGradeActivity;
 import com.union.yunzhi.yunzhi.adapter.MeNavigationAdapter;
 import com.union.yunzhi.yunzhi.fragment.me.PersonDialogFragment;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +52,12 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
     private List<MeModel> mStudentNavigations = new ArrayList<>(); // 学生导航测试数据
     private List<MeModel> mTeacherNavigations = new ArrayList<>(); // 教师导航测试数据
 
+
+    //自定义了一个广播接收器
+    private LoginBroadcastReceiver receiver =
+            new LoginBroadcastReceiver();
+
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.main_fragment_me;
@@ -57,6 +70,9 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initWidget(View view) {
+        //注册广播
+        registerBroadcast();
+
         // 实例化单例
         mPersonSingle = AccountSingle.getInstance(getActivity());
         data();
@@ -179,7 +195,13 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         mRecyclerView.setAdapter(mMeNavigationAdapter);
     }
+    
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterBroadcast();
+    }
 
     /**
      * 点击事件
@@ -205,5 +227,33 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
             default:
         }
 
+    }
+
+
+
+    private void registerBroadcast() {
+
+        IntentFilter filter =
+                new IntentFilter(LoginActivity.LOGIN_ACTION);
+        LocalBroadcastManager.getInstance(getContext())
+                .registerReceiver(receiver, filter);
+    }
+
+    private void unregisterBroadcast() {
+        LocalBroadcastManager.getInstance(getContext())
+                .unregisterReceiver(receiver);
+    }
+
+
+    /**
+     * 接收mina发送来的消息，并更新UI
+     */
+    private class LoginBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (UserManager.getInstance().hasLogined()) {
+                //通知更新ui
+            }
+        }
     }
 }
