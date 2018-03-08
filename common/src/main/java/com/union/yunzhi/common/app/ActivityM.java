@@ -23,6 +23,7 @@ public abstract class ActivityM extends AppCompatActivity {
         if(initArgs(getIntent().getExtras()))
         {
             int layId=getContentLayoutId();
+
             setContentView(layId);
             initWidget();
             initData();
