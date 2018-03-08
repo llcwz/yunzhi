@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.yunzhi.R;
-import com.union.yunzhi.factories.moudles.classfication.TitleBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.TitleBean;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;

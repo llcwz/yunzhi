@@ -1,4 +1,4 @@
-package com.union.yunzhi.factories.moudles.live;
+package com.union.yunzhi.factories.moudles.live.beans;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -17,14 +17,29 @@ import java.io.InputStream;
 
 public class LiveBean {
 
-    private  int Id;
-    private String imageUrl;
-    private Bitmap bitmap;
-    private Context context;
-    private float width,heigh;
+    /**
+     * 用于测试的量
+     */
+    public int Id;
+    public Context context;
+
+    //关于封面图片的相关量
+    public String imageUrl;
+    public Bitmap bitmap;
+    public float width,heigh;
+
+    public String teacherName;
+    public String courseName;
+    public int lineCount;
+
+
 
     public LiveBean(Context context,int Id){
 
+        /**
+         * Width、Height以px为单位
+         */
+        //关于封面图片的相关量
         this.context=context;
         this.Id=Id;
         this.imageUrl=null;
@@ -48,46 +63,6 @@ public class LiveBean {
         this.context=context;
         Id=-1;
         Glide.with(context).load(imageUrl).asBitmap().into(target);
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeigh() {
-        return heigh;
-    }
-
-    public void setHeigh(float heigh) {
-        this.heigh = heigh;
     }
 
     public static Bitmap resourceToBitmap(Context context, int Id){

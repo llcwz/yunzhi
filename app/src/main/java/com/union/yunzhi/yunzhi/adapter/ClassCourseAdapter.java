@@ -1,9 +1,12 @@
 package com.union.yunzhi.yunzhi.adapter;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.classfication.beans.CourseShowBean;
 import com.union.yunzhi.yunzhi.R;
 
 import java.util.List;
@@ -12,19 +15,22 @@ import java.util.List;
  * Created by cjw on 2018/2/13 0013.
  */
 
-public class ClassCourseAdapter extends MyAdapter<String>{
+public class ClassCourseAdapter extends MyAdapter<CourseShowBean>{
 
-    public ClassCourseAdapter(List<String> datas, AdapterListener adapterListener){
+    private Context context;
+
+    public ClassCourseAdapter(Context context, List<CourseShowBean> datas, AdapterListener adapterListener){
         super(datas,adapterListener);
+        this.context=context;
     }
 
     @Override
-    protected int getItemViewType(int position, String data) {
+    protected int getItemViewType(int position, CourseShowBean data) {
         return R.layout.item_class_course_item;
     }
 
     @Override
-    protected MyViewHolder<String> onCreateViewHolder(View root, int viewType) {
+    protected MyViewHolder<CourseShowBean> onCreateViewHolder(View root, int viewType) {
         return new CouseViewHolder(root);
     }
 
@@ -35,17 +41,28 @@ public class ClassCourseAdapter extends MyAdapter<String>{
     }
 
 
-    public class CouseViewHolder extends MyViewHolder<String>{
+    public class CouseViewHolder extends MyViewHolder<CourseShowBean>{
 
-        public TextView mTextView;
+        public TextView mTextView1,mTextView2,mTextView3,mTextView4,mTextView5;
+        public ImageView mImageView;
         public CouseViewHolder(View itemView) {
             super(itemView);
-            mTextView=(TextView) itemView.findViewById(R.id.tv_smallTitle);
+            mTextView1=(TextView) itemView.findViewById(R.id.tv_largeTitle);
+            mTextView2=(TextView) itemView.findViewById(R.id.tv_smallTitle);
+            mTextView3=(TextView) itemView.findViewById(R.id.tv_upCount);
+            mTextView4=(TextView) itemView.findViewById(R.id.tv_downCount);
+            mTextView5=(TextView) itemView.findViewById(R.id.tv_pinLunCount);
+            mImageView=(ImageView) itemView.findViewById(R.id.iv_show_course);
         }
 
         @Override
-        protected void onBind(String data, int position) {
-            mTextView.setText(data);
+        protected void onBind(CourseShowBean data, int position) {
+            mTextView1.setText(data.courseName);
+            mTextView2.setText(data.teacherName);
+            mTextView3.setText(String.valueOf(data.good));
+            mTextView4.setText(String.valueOf(data.bad));
+            mTextView5.setText(String.valueOf(data.commentNum));
+            //Glide.with(context).load(data.portraitUrl).into(mImageView);
         }
     }
 }
