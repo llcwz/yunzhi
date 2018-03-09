@@ -198,7 +198,7 @@ public class HomeAdapter extends MyAdapter<homeModle> {
                 mRoundedImageView = (RoundedImageView) mVideo[i].findViewById(R.id.round_img);
                 mTitle = (TextView) mVideo[i].findViewById(R.id.tv_title);
                 mPortrait = (CircleImageView) mVideo[i].findViewById(R.id.ci_portrait);
-                
+
 
 
                 //设置背景图片

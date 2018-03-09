@@ -9,6 +9,7 @@ import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataHandle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.factories.okhttp.listener.DisposeHandleCookieListener;
+import com.union.yunzhi.factories.utils.LogUtils;
 
 import org.json.JSONObject;
 
@@ -112,7 +113,7 @@ public class CommonJsonCallback implements Callback {
 
         if (responseObj == null || responseObj.toString().trim().equals("")) {
             mListener.onFailure(new OkHttpException(NETWORK_ERROR, EMPTY_MSG));
-            Log.i(TGA,"handleResponse error 返回结果为空");
+            LogUtils.i(TGA,"handleResponse error 返回结果为空");
             return;
         }
 
@@ -124,34 +125,34 @@ public class CommonJsonCallback implements Callback {
             JSONObject result = new JSONObject(responseObj.toString());
 
 
-            Log.i(TGA,"对应的json"+result.toString());
+            LogUtils.i(TGA,"对应的json"+result.toString());
             //尝试解析json
             if(result.has(RESULT_CODE)){
-               Log.i(TGA,"返回的json格式正确尝试解析");
+                LogUtils.i(TGA,"返回的json格式正确尝试解析");
                 //判断是否正常响应
                 if(result.getInt(RESULT_CODE) == RESULT_CODE_VALUE){
                     //不需要解析
 
-                   Log.i(TGA,"返回码正确开始解析");
+                    LogUtils.i(TGA,"返回码正确开始解析");
 
                     if(mClass == null){
-                        Log.i(TGA,"不需要吧json解析成实体类");
+                        LogUtils.i(TGA,"不需要吧json解析成实体类");
                         mListener.onSuccess(responseObj);
                     }else{//需要解析
                         //将我们的json转为我们的实体对象
-                        Log.i(TGA,"尝试将json转化为实体类");
+                        LogUtils.i(TGA,"尝试将json转化为实体类");
                        Object obj = JSON.parseObject(result.toString(),mClass);
                         if(obj !=null){
                             //成功的转化成我们的实体对象
-                            Log.i(TGA,"成功的转化成我们的实体对象");
+                            LogUtils.i(TGA,"成功的转化成我们的实体对象");
                             mListener.onSuccess(obj);
                         }else {
-                            Log.i(TGA,"解析异常");
+                            LogUtils.i(TGA,"解析异常");
                             mListener.onFailure(new OkHttpException(JSON_ERROR,EMPTY_MSG));
                         }
                     }//end else
                 }else {
-                    Log.i(TGA,"未知错误");
+                    LogUtils.i(TGA,"未知错误");
                     mListener.onFailure(new OkHttpException(OTHER_ERROR,result.get(RESULT_CODE)));
                 }
             }//end if
