@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.me.BaseMeModel;
-import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.factories.okhttp.CommonOkHttpClient;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataHandle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
@@ -22,20 +21,20 @@ public class RequestCenter {
     public static void postRequest(String url, RequestParams params, DisposeDataListener listener, Class<?> clazz) {
         CommonOkHttpClient.get(CommonRequest.
                 createPostRequest(url, params), new DisposeDataHandle(listener, clazz));
+
     }
 
 
 
     public static void requestHomeData(String userName, String password, DisposeDataListener listener) {
 
-        RequestParams params = new RequestParams();
+        //RequestParams params = new RequestParams();
 
-        params.put("userName", userName);
-        params.put("password", password);
+       // params.put("userName", userName);
+       // params.put("password", password);
 
-        RequestCenter.postRequest(HttpConstants.HOME_URL, params, listener, BaseHomeModle.class);
+        RequestCenter.postRequest(HttpConstants.HOME_URL, null, listener, BaseHomeModle.class);
     }
-
 
     /**
      * 用户登陆请求

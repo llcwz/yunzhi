@@ -43,5 +43,7 @@ dependencies {
 
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 
+    compile 'pub.devrel:easypermissions:0.4.2'//动态权限
+
     testCompile 'junit:junit:4.12'
 }

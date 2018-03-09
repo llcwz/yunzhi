@@ -1,8 +1,5 @@
 package com.union.yunzhi.factories.moudles.me;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-
 /**
  * Created by CrazyGZ on 2018/2/24.
  */

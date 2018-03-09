@@ -20,6 +20,7 @@ import com.union.yunzhi.yunzhi.network.mina.MinaService;
 
 /**
  * Created by meng on 2018/3/7.
+ * @function 登陆界面逻辑处理
  */
 
 public class LoginActivity extends ActivityM implements View.OnClickListener{

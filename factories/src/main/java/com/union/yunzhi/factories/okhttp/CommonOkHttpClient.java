@@ -80,6 +80,9 @@ public class CommonOkHttpClient {
     public static Call get(Request request, DisposeDataHandle handle) {
         Call call = mOkHttpClient.newCall(request);
 
+
+        Log.i("TTGGAA",request.toString());
+
         call.enqueue(new CommonJsonCallback(handle));
 
         Log.d("Login", "get: " + request.toString());
