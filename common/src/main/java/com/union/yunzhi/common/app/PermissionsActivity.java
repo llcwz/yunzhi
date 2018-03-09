@@ -2,10 +2,15 @@ package com.union.yunzhi.common.app;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.R;
+import com.union.yunzhi.common.constant.Constant;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -18,6 +23,16 @@ import pub.devrel.easypermissions.EasyPermissions;
 public abstract class PermissionsActivity extends ActivityM {
     //权限回调标志
     private static final int RC = 0x0100;
+
+
+    /******************************************************************
+     *
+     *
+     * 动态权限，没有该权限不能进入程序。
+     *
+     *
+     ******************************************************************/
+
 
     /**
      * 检查是否有读写录音的权限
@@ -89,6 +104,70 @@ public abstract class PermissionsActivity extends ActivityM {
             EasyPermissions.requestPermissions(this,getString(R.string.permision),
                     RC,perms);
         }
+    }
+
+
+    /****************************************************************
+     *
+     * 触发式权限，程序进入可以不提前申请，但当用户触发时必须申请
+     *
+     *****************************************************************/
+
+    /****************************************************************
+     *
+     * 触发式权限，程序进入可以不提前申请，但当用户触发时必须申请
+     *
+     *****************************************************************/
+
+    /**
+     * 申请指定的权限.
+     */
+    public void requestPermission(int code, String... permissions) {
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(permissions, code);
+        }
+    }
+
+    /**
+     * 判断是否有指定的权限
+     */
+    public boolean hasPermission(String... permissions) {
+
+        for (String permisson : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permisson)
+                    != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * @function 权限回掉的部分
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Constant.HARDWEAR_CAMERA_CODE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    doOpenCamera();
+                }
+                break;
+        }
+
+    }
+
+    /**
+     * 业务逻辑处理方法
+     */
+    public void doOpenCamera() {
+
     }
 
 }
