@@ -85,6 +85,8 @@ public class CommonOkHttpClient {
 
         call.enqueue(new CommonJsonCallback(handle));
 
+        Log.d("Login", "get: " + request.toString());
+
         return call;
     }
 
