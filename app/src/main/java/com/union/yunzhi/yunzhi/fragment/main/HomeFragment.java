@@ -14,8 +14,10 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.factories.moudles.home.homeModle;
 import com.union.yunzhi.factories.moudles.home.videoClassModle;
 import com.union.yunzhi.factories.moudles.home.videoModle;
+import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.HomeAdapter;
+import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.zxing.app.CaptureActivity;
 
 import java.util.ArrayList;
@@ -53,6 +55,17 @@ public class HomeFragment extends FragmentM implements View.OnClickListener{
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
         mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
         mQRcode.setOnClickListener(this);
+        RequestCenter.requestHomeData("", "", new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                Log.i("onSuccess",responseObj.toString());
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Log.i("onFailure","error");
+            }
+        });
     }
 
     @Override

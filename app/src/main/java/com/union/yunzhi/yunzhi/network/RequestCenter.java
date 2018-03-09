@@ -28,12 +28,12 @@ public class RequestCenter {
 
     public static void requestHomeData(String userName, String password, DisposeDataListener listener) {
 
-        RequestParams params = new RequestParams();
+        //RequestParams params = new RequestParams();
 
-        params.put("userName", userName);
-        params.put("password", password);
+       // params.put("userName", userName);
+       // params.put("password", password);
 
-        RequestCenter.postRequest(HttpConstants.HOME_URL, params, listener, BaseHomeModle.class);
+        RequestCenter.postRequest(HttpConstants.HOME_URL, null, listener, BaseHomeModle.class);
     }
 
     /**

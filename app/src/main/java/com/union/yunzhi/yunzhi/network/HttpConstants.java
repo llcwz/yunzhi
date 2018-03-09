@@ -13,7 +13,7 @@ public class HttpConstants {
     public static final String ROOT_URL = "http://192.168.1.100:8080/TomCat";
 
 
-    public static final String HOME_URL = ROOT_URL+"/HelloWorld";
+    public static final String HOME_URL = "http://dennisallan.top/dennis_allan/index.php/Home/Homepg/homepg";
 
 
     // 登录请求
@@ -21,6 +21,8 @@ public class HttpConstants {
 
     // 请求修改密码
     public static final String CHANGE_PASSWORD_URL = "";
+
+
 
 
 }
