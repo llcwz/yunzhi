@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.union.yunzhi.common.app.AdBrowserActivity;
 import com.union.yunzhi.common.app.FragmentM;
+import com.union.yunzhi.common.app.PermissionsFragment;
+import com.union.yunzhi.common.constant.Constant;
 import com.union.yunzhi.factories.moudles.home.homeModle;
 import com.union.yunzhi.factories.moudles.home.videoClassModle;
 import com.union.yunzhi.factories.moudles.home.videoModle;
@@ -29,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link FragmentM} subclass.
  *
  */
-public class HomeFragment extends FragmentM implements View.OnClickListener{
+public class HomeFragment extends PermissionsFragment implements View.OnClickListener{
 
     private static final int REQUEST_QRCODE = 0x01;
 
@@ -111,8 +114,12 @@ public class HomeFragment extends FragmentM implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.cv_qrcode:
-                Intent intent = new Intent(getContext(),CaptureActivity.class);
-                startActivity(intent);
+                if(hasPermission(Constant.HARDWEAR_CAMERA_PERMISSION)){
+                    doOpenCamera();
+                }
+                else {
+                    requestPermission(Constant.HARDWEAR_CAMERA_CODE, Constant.HARDWEAR_CAMERA_PERMISSION);
+                }
                 break;
         }
     }
@@ -125,11 +132,22 @@ public class HomeFragment extends FragmentM implements View.OnClickListener{
                     String code = data.getStringExtra("SCAN_RESULT");
                     if (code.contains("http") || code.contains("https")) {
                       //跳转到相应的地方
+                        Intent intent = new Intent(getContext(), AdBrowserActivity.class);
+                        intent.putExtra(AdBrowserActivity.KEY_URL, code);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), code, Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
         }//end switch
+    }
+
+
+    @Override
+    public void doOpenCamera() {
+        super.doOpenCamera();
+        Intent intent = new Intent(getContext(),CaptureActivity.class);
+        startActivityForResult(intent, REQUEST_QRCODE);
     }
 }
