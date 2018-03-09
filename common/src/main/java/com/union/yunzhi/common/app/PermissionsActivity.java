@@ -48,6 +48,14 @@ public abstract class PermissionsActivity extends ActivityM {
         return EasyPermissions.hasPermissions(context, perms);
     }
 
+    @Override
+    protected void initWindows() {
+        super.initWindows();
+        if(Build.VERSION.SDK_INT >= 23){
+            haveAllPerm(this,getSupportFragmentManager());
+        }
+    }
+
     /**
      * 检查是否有写的权限
      *
