@@ -1,7 +1,6 @@
 package com.union.yunzhi.yunzhi.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -28,6 +27,8 @@ public class HomeAdapter extends MyAdapter<homeModle> {
 
     private int size;
 
+    private final String TGA ="HomeAdapter";
+
     public HomeAdapter(){
 
     }
@@ -39,20 +40,16 @@ public class HomeAdapter extends MyAdapter<homeModle> {
 
     @Override
     protected int getItemViewType(int position, homeModle data) {
-        if(data!=null){
-            Log.i("getItemViewType",data.viewType+"a");
-        }else
-            Log.i("getItemViewType","null");
 
         if(data.viewType == Constant.BANNER_VIEW)
         {
-            Log.i("item_home","BANNER_VIEW");
+
             return R.layout.item_home_fragment_page_two;
 
         }
 
         else if(data.viewType == Constant.VIDEO_VIEW){
-            Log.i("item_home","VIDEO_VIEW");
+
             return R.layout.item_home_fragment_page_one;
         }
 
@@ -64,17 +61,17 @@ public class HomeAdapter extends MyAdapter<homeModle> {
     protected MyAdapter.MyViewHolder<homeModle> onCreateViewHolder(View root, int viewType) {
         if(viewType == R.layout.item_home_fragment_page_one)
         {
-            Log.i("onCreateViewHolder","VIDEO_VIEW"+viewType);
+
             return new videoViewHodler(root);
         }
 
 
         else if(viewType == Constant.BANNER_VIEW){
-            Log.i("onCreateViewHolder","BANNER_VIEW");
+
             return new bannerViewHolder(root);
         }
         else{
-            Log.i("onCreateViewHolder","null"+viewType);
+
             return null;//没有这个布局
         }
 
@@ -197,14 +194,11 @@ public class HomeAdapter extends MyAdapter<homeModle> {
              */
             for(int i=0;i<size;i++){
 
-                Log.i("for",i+"");
+
                 mRoundedImageView = (RoundedImageView) mVideo[i].findViewById(R.id.round_img);
                 mTitle = (TextView) mVideo[i].findViewById(R.id.tv_title);
                 mPortrait = (CircleImageView) mVideo[i].findViewById(R.id.ci_portrait);
-
-                Log.i("ssssss",data.mVideoClassModle.videoModle.size()+"");
-
-
+                
 
 
                 //设置背景图片

@@ -38,6 +38,7 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
     }
     @Override
     protected int getContentLayoutId() {
+        transparencyBar();
         return R.layout.activity_login_layout;
     }
 
