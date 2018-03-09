@@ -2,16 +2,12 @@ package com.union.yunzhi.yunzhi.activities.me;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
-import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.GradeModel;
 import com.union.yunzhi.factories.moudles.me.MeModel;
 import com.union.yunzhi.factories.moudles.me.UnitGradeModel;

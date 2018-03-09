@@ -26,7 +26,6 @@ public abstract class FragmentM extends Fragment {
         super.onAttach(context);
         // 初始化参数
         initArgs(getArguments());
-
     }
 
     @Override
