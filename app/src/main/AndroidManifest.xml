@@ -26,29 +26,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.me.ChangePasswordActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activities.me.MyCourseActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activities.me.MyMessageActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activities.me.MyWorkActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activities.classfication.ClassCourseDetails" />
-        <activity android:name=".activities.classfication.ClassCourseFile" />
-        <activity android:name=".zxing.app.PreferencesActivity" />
-        <activity android:name=".zxing.app.CaptureActivity" />
-        <activity android:name=".activities.me.SearchGradeActivity"></activity>
-        <activity
-            android:name=".activities.me.NewWorkActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activities.LoginActivity"/>
+        <activity android:name=".activities.me.ChangePasswordActivity">
+        </activity>
+        <activity android:name=".activities.me.MyCourseActivity">
+        </activity>
+        <activity android:name=".activities.me.MyMessageActivity">
+        </activity>
+        <activity android:name=".activities.me.MyWorkActivity">
+        </activity>
+        <activity android:name=".activities.classfication.ClassCourseDetails"/>
+        <activity android:name=".activities.classfication.ClassCourseFile"/>
+        <activity android:name=".zxing.app.PreferencesActivity"/>
+        <activity android:name=".zxing.app.CaptureActivity"/>
+        <activity android:name=".activities.me.SearchGradeActivity">
+        </activity>
+        <activity android:name=".activities.me.NewWorkActivity">
+        </activity>
+        <activity android:name=".activities.communication.PostDetailsActivity">
+        </activity>
     </application>
 
 </manifest>

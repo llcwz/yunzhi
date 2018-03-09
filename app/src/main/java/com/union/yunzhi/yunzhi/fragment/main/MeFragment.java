@@ -51,7 +51,6 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
     private TextView mMyMessage; // 我的消息
     private RecyclerView mRecyclerView;
     private MeNavigationAdapter mMeNavigationAdapter;
-    private MeModel mPersonModel; // 个人测试数据
     private List<MeModel> mStudentNavigations = new ArrayList<>(); // 学生导航测试数据
     private List<MeModel> mTeacherNavigations = new ArrayList<>(); // 教师导航测试数据
 
@@ -105,7 +104,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     }
 
-    // 初始化适配器
+    // 初始化适配器，并且监听导航栏的点击事件
     private void initAdapter() {
         if (mUserManager.getPerson().getAccess() == MeConstant.ACCESS_STUDENT) { // 如果是学生登录
             mMeNavigationAdapter = new MeNavigationAdapter(mStudentNavigations, new MyAdapter.AdapterListener<MeModel>() {
@@ -177,18 +176,18 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        visitUI();
+
         if (mUserManager.hasLogined()){ //假如用户登录了
-            Glide.with(getActivity()).load(mPersonModel.getPersonModel().getMe()).into(mMe);
+            Glide.with(getActivity()).load(mUserManager.getPerson().getMe()).into(mMe);
             mMe.setOnClickListener(this);
-            mUsername.setText(mPersonModel.getPersonModel().getUsername());
-            mAccount.setText(mPersonModel.getPersonModel().getAccount());
+            mUsername.setText(mUserManager.getPerson().getUsername());
+            mAccount.setText(mUserManager.getPerson().getAccount());
             mMyCourse.setOnClickListener(this);
             mMyMessage.setOnClickListener(this);
             mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
             mRecyclerView.setAdapter(mMeNavigationAdapter);
         } else { // 游客模式
-
+            visitUI();
         }
 
     }
@@ -255,9 +254,10 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         }
     }
 
+
     // 游客模式下的UI
     private void visitUI() {
-        Glide.with(this).load(R.drawable.dragon_cat).into(mMe);
+        Glide.with(this).load("http://img.zcool.cn/community/0173a755ba4cf332f87528a16a73cf.jpg").into(mMe);
         mUsername.setText("点击头像登录");
         mAccount.setText("");
         mStudentNavigations.clear();
@@ -265,14 +265,14 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mMeNavigationAdapter = null;
     }
 
+
     // 登陆后改变UI
     private void loginUI() {
         initAdapter();
         // 加载头像
         Glide.with(this).load(R.drawable.icon_wst).into(mMe);
-        //Glide.with(this).load(mUserManager.getPerson().getMe()).into(mMe);
-        mUsername.setText(mPersonModel.getPersonModel().getUsername());
-        mAccount.setText(mPersonModel.getPersonModel().getAccount());
+        mUsername.setText(mUserManager.getPerson().getUsername());
+        mAccount.setText(mUserManager.getPerson().getAccount());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         mRecyclerView.setAdapter(mMeNavigationAdapter);
     }
