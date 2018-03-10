@@ -12,6 +12,7 @@ import java.util.List;
 
 public class PostModel implements Parcelable {
     private int mId; // id
+    private int mTag; // 标记类型，由此可知是哪一个模块的帖子
     private String mIcon; // 头像
     private String mAuthor; // 作者
     private String mTime; // 时间
@@ -19,8 +20,9 @@ public class PostModel implements Parcelable {
     private String mContent; // 内容
     private List<CommentModel> mCommentModels; // 评论
 
-    public PostModel(int id, String icon, String author, String time, String title, String content, List<CommentModel> commentModels) {
+    public PostModel(int id, int tag, String icon, String author, String time, String title, String content, List<CommentModel> commentModels) {
         mId = id;
+        mTag = tag;
         mIcon = icon;
         mAuthor = author;
         mTime = time;
@@ -31,12 +33,30 @@ public class PostModel implements Parcelable {
 
     protected PostModel(Parcel in) {
         mId = in.readInt();
+        mTag = in.readInt();
         mIcon = in.readString();
         mAuthor = in.readString();
         mTime = in.readString();
         mTitle = in.readString();
         mContent = in.readString();
         mCommentModels = in.createTypedArrayList(CommentModel.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeInt(mTag);
+        dest.writeString(mIcon);
+        dest.writeString(mAuthor);
+        dest.writeString(mTime);
+        dest.writeString(mTitle);
+        dest.writeString(mContent);
+        dest.writeTypedList(mCommentModels);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<PostModel> CREATOR = new Creator<PostModel>() {
@@ -57,6 +77,14 @@ public class PostModel implements Parcelable {
 
     public void setId(int id) {
         mId = id;
+    }
+
+    public int getTag() {
+        return mTag;
+    }
+
+    public void setTag(int tag) {
+        mTag = tag;
     }
 
     public String getIcon() {
@@ -105,21 +133,5 @@ public class PostModel implements Parcelable {
 
     public void setCommentModels(List<CommentModel> commentModels) {
         mCommentModels = commentModels;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mId);
-        parcel.writeString(mIcon);
-        parcel.writeString(mAuthor);
-        parcel.writeString(mTime);
-        parcel.writeString(mTitle);
-        parcel.writeString(mContent);
-        parcel.writeTypedList(mCommentModels);
     }
 }

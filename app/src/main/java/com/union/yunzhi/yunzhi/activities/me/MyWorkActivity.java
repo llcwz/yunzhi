@@ -138,7 +138,7 @@ public class MyWorkActivity extends ActivityM implements Toolbar.OnMenuItemClick
     @Override
     protected void initData() {
         if (mAccountSingle.getPerson().getAccess() == MeConstant.ACCESS_TEACHER) { // 如果是老师登进，则给予权限发布新的任务
-            mToolbar.inflateMenu(R.menu.add_work_item);
+            mToolbar.inflateMenu(R.menu.me_add_work_item);
             mToolbar.setOnMenuItemClickListener(this);
         }
         mSpinner.attachDataSource(mSpinnerStates);

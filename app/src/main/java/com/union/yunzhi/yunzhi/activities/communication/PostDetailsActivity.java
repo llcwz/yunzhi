@@ -21,10 +21,12 @@ import com.union.yunzhi.factories.moudles.communication.CommunicationModel;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostDetailsActivity extends ActivityM implements View.OnClickListener {
+    private UserManager mUserManager;
     private PostModel mPostModel;
     private CommentAdapter mAdapter;
     private Toolbar mToolbar;
@@ -51,6 +53,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     @Override
     protected void initWidget() {
         mPostModel = getIntent().getParcelableExtra("post");
+        mUserManager = UserManager.getInstance();
         data();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTitle = (TextView) findViewById(R.id.tv_communication_title);
@@ -103,6 +106,12 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.tv_send_comment) {
+            // 先判断用户是否登录
+//            if (mUserManager.hasLogined()) {
+//
+//            } else {
+//                Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+//            }
             String comment = mComment.getText().toString();
             if (TextUtils.isEmpty(comment)) {
                 Toast.makeText(this, "请先评论", Toast.LENGTH_SHORT).show();
