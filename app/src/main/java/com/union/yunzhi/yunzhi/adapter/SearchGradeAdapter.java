@@ -4,41 +4,39 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.me.GradeModel;
 import com.union.yunzhi.factories.moudles.me.MeModel;
 import com.union.yunzhi.factories.moudles.me.UnitGradeModel;
 import com.union.yunzhi.yunzhi.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by CrazyGZ on 2018/3/6.
  */
 
-public class SearchGradeAdapter extends MyAdapter<MeModel> {
+public class SearchGradeAdapter extends MyAdapter<GradeModel> {
     private Context mContext;
 
-    public SearchGradeAdapter (Context context, List<MeModel> data, AdapterListener<MeModel> listener) {
+    public SearchGradeAdapter (Context context, List<GradeModel> data, AdapterListener<GradeModel> listener) {
         super(data, listener);
         mContext = context;
     }
     @Override
-    protected int getItemViewType(int position, MeModel data) {
+    protected int getItemViewType(int position, GradeModel data) {
         return R.layout.item_me_search_grade_groupitem;
     }
 
     @Override
-    protected MyViewHolder<MeModel> onCreateViewHolder(View root, int viewType) {
+    protected MyViewHolder<GradeModel> onCreateViewHolder(View root, int viewType) {
         return new GradeGroupViewHolder(root);
     }
 
-    public class GradeGroupViewHolder extends MyViewHolder<MeModel> {
+    public class GradeGroupViewHolder extends MyViewHolder<GradeModel> {
 
         private boolean mOpen = false;
         private View mView;
@@ -58,10 +56,10 @@ public class SearchGradeAdapter extends MyAdapter<MeModel> {
         }
 
         @Override
-        protected void onBind(MeModel data, int position) {
+        protected void onBind(GradeModel data, int position) {
             initData(data);
-            mCourse.setText(data.getGradeModel().getCourse());
-            mGrade.setText(data.getGradeModel().getGrade());
+            mCourse.setText(data.getCourse());
+            mGrade.setText(data.getGrade());
             mState.setImageResource(R.drawable.iv_me_search_grade_triangle_right);
             mView.setOnClickListener(new View.OnClickListener() { // 监听点击
                 @Override
@@ -86,8 +84,8 @@ public class SearchGradeAdapter extends MyAdapter<MeModel> {
         }
 
         // 二级列表的数据
-        private void initData(MeModel data) {
-            mAdapter = new UnitGradeAdapter(data.getGradeModel().getUnitGradeModels(), null);
+        private void initData(GradeModel data) {
+            mAdapter = new UnitGradeAdapter(data.getUnitGradeModels(), null);
         }
 
         private class UnitGradeAdapter extends MyAdapter<UnitGradeModel> {

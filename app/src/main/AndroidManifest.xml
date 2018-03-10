@@ -27,21 +27,21 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.me.ChangePasswordActivity">
+        <activity android:name=".activities.photourl.ChangePasswordActivity">
         </activity>
-        <activity android:name=".activities.me.MyCourseActivity">
+        <activity android:name=".activities.photourl.MyCourseActivity">
         </activity>
-        <activity android:name=".activities.me.MyMessageActivity">
+        <activity android:name=".activities.photourl.MyMessageActivity">
         </activity>
-        <activity android:name=".activities.me.MyWorkActivity">
+        <activity android:name=".activities.photourl.MyWorkActivity">
         </activity>
         <activity android:name=".activities.classfication.ClassCourseDetails"/>
         <activity android:name=".activities.classfication.ClassCourseFile"/>
         <activity android:name=".zxing.app.PreferencesActivity"/>
         <activity android:name=".zxing.app.CaptureActivity"/>
-        <activity android:name=".activities.me.SearchGradeActivity">
+        <activity android:name=".activities.photourl.SearchGradeActivity">
         </activity>
-        <activity android:name=".activities.me.NewWorkActivity">
+        <activity android:name=".activities.photourl.NewWorkActivity">
         </activity>
         <activity android:name=".activities.communication.PostDetailsActivity">
         </activity>

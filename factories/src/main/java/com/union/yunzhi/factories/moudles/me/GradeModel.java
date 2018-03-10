@@ -8,25 +8,20 @@ import java.util.List;
  */
 
 public class GradeModel {
-    private int mId; // 期末成绩的id
     private String mCourse; // 课程名称
     private String mGrade; // 期末成绩
     private List<UnitGradeModel> mUnitGradeModels; // 各个单元的成绩
 
-    public GradeModel(int id, String course, String grade, List<UnitGradeModel> unitGradeModels) {
-        mId = id;
+
+    public GradeModel() {}
+
+    public GradeModel(String course, String grade, List<UnitGradeModel> unitGradeModels) {
         mCourse = course;
         mGrade = grade;
         mUnitGradeModels = unitGradeModels;
     }
 
-    public int getId() {
-        return mId;
-    }
 
-    public void setId(int id) {
-        mId = id;
-    }
 
     public String getCourse() {
         return mCourse;

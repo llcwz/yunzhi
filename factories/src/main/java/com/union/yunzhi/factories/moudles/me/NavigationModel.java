@@ -7,32 +7,14 @@ import android.media.Image;
  */
 
 public class NavigationModel {
-    private int mAccess; // 权限，根据这个来判断是老师还是学生
     private int mNavigationIcon;
     private String mNavigationName;
 
-    // 前期测试数据
-    public NavigationModel(int access, int navigationIcon, String navigationName) {
-        mAccess = access;
-        mNavigationIcon = navigationIcon;
-        mNavigationName = navigationName;
-    }
+    public NavigationModel() {}
 
-    // 测试数据
     public NavigationModel(int navigationIcon, String navigationName) {
         mNavigationIcon = navigationIcon;
         mNavigationName = navigationName;
-    }
-
-    public NavigationModel() {
-    }
-
-    public int getAccess() {
-        return mAccess;
-    }
-
-    public void setAccess(int access) {
-        mAccess = access;
     }
 
     public int getNavigationIcon() {

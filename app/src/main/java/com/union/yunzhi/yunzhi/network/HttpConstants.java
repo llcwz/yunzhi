@@ -22,6 +22,8 @@ public class HttpConstants {
     // 请求修改密码
     public static final String CHANGE_PASSWORD_URL = "";
 
+    // 请求发布新任务
+    public static final String ADD_WORK_URL = "";
 
 
 
