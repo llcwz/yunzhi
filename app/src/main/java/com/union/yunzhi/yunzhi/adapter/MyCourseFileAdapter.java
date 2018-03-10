@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.classfication.beans.CourseFatherFileBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.CourseFileBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.CourseSonFileBean;

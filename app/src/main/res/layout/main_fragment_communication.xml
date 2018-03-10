@@ -37,13 +37,4 @@
         android:layout_marginTop="@dimen/len_48"
         android:background="@color/blue_100"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="@dimen/len_56"
-        android:layout_height="@dimen/len_56"
-        android:layout_margin="@dimen/len_24"
-        android:layout_gravity="top|left"
-        app:layout_anchor="@+id/view_pager"
-        app:layout_anchorGravity="bottom|right"/>
-
 </android.support.design.widget.CoordinatorLayout>

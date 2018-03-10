@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
@@ -87,6 +86,7 @@ public class PostFragment extends FragmentM {
     }
 
     /**
+     * 这里是网络请求数据
      * 根据tag来获取不同的数据
      * @param tag
      */
@@ -94,7 +94,7 @@ public class PostFragment extends FragmentM {
         List<PostModel> postModels = new ArrayList<>();
         List<CommentModel> commentModels = new ArrayList<>();
         switch (tag) {
-            case CommunicationConstant.POST_FRAGMENT_TAG_COLLEGE:
+            case CommunicationConstant.TAG_COLLEGE:
                 for (int i = 0; i < 10; i++) {
                     commentModels.add(new CommentModel(i,
                             "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D56%2C0%2C636%2C420%3Bc0%3Dbaike80%2C5%2C5%2C80%2C26/sign=561a042db6096b63955604103106b168/c8ea15ce36d3d539ea5cccc13287e950352ab04b.jpg",
@@ -104,6 +104,7 @@ public class PostFragment extends FragmentM {
                             new Random().nextInt(15)));
 
                     postModels.add(new PostModel(i,
+                            mTag,
                             "https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=5b81e5e30ef41bd5da53eff269e1e6f6/d439b6003af33a87cfcf02d2c65c10385243b553.jpg",
                             "张三" + i,
                             "2018.3.5 16:2" + i,
@@ -130,7 +131,7 @@ public class PostFragment extends FragmentM {
                             ));
                 }
                 break;
-            case CommunicationConstant.POST_FRAGMENT_TAG_NOTE:
+            case CommunicationConstant.TAG_NOTE:
                 for (int i = 0; i < 10; i++) {
                     commentModels.add(new CommentModel(i,
                             "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D56%2C0%2C636%2C420%3Bc0%3Dbaike80%2C5%2C5%2C80%2C26/sign=561a042db6096b63955604103106b168/c8ea15ce36d3d539ea5cccc13287e950352ab04b.jpg",
@@ -139,6 +140,7 @@ public class PostFragment extends FragmentM {
                             "不知道说什么，只好提前给大家拜个年了" + i,
                             new Random().nextInt(15)));
                     postModels.add(new PostModel(i,
+                            mTag,
                             "https://i2.sanwen.net/l/1520510319.jpg",
                             "徐军" + i,
                             "2018.3.5 16:2" + i,
