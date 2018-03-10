@@ -26,22 +26,33 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.photourl.ChangePasswordActivity">
+
+        <activity android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activities.me.ChangePasswordActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activities.photourl.MyCourseActivity">
+        <activity android:name=".activities.me.MyCourseActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activities.photourl.MyMessageActivity">
+        <activity android:name=".activities.me.MyMessageActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activities.photourl.MyWorkActivity">
+        <activity android:name=".activities.me.WorkActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activities.classfication.ClassCourseDetails"/>
-        <activity android:name=".activities.classfication.ClassCourseFile"/>
+        <activity android:name=".activities.classfication.ClassCourseDetails"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.classfication.ClassCourseFile"
+            android:screenOrientation="portrait"/>
         <activity android:name=".zxing.app.PreferencesActivity"/>
         <activity android:name=".zxing.app.CaptureActivity"/>
-        <activity android:name=".activities.photourl.SearchGradeActivity">
+        <activity android:name=".activities.me.SearchGradeActivity">
         </activity>
-        <activity android:name=".activities.photourl.NewWorkActivity">
+
+        <activity android:name=".activities.me.NewWorkActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".activities.communication.PostDetailsActivity">
         </activity>
