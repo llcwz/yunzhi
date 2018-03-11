@@ -4,6 +4,7 @@ import android.util.Log;
 
 /**
  * @function 动态的显示日志信息
+ * @author  meng
  */
 
 public class LogUtils {

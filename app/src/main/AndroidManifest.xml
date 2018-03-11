@@ -17,34 +17,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".activities.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.me.ChangePasswordActivity">
+        <activity
+            android:launchMode="singleTask"
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
+
         </activity>
-        <activity android:name=".activities.me.MyCourseActivity">
-        </activity>
-        <activity android:name=".activities.me.MyMessageActivity">
-        </activity>
-        <activity android:name=".activities.me.MyWorkActivity">
-        </activity>
-        <activity android:name=".activities.classfication.ClassCourseDetails"/>
-        <activity android:name=".activities.classfication.ClassCourseFile"/>
-        <activity android:name=".zxing.app.PreferencesActivity"/>
-        <activity android:name=".zxing.app.CaptureActivity"/>
-        <activity android:name=".activities.me.SearchGradeActivity">
-        </activity>
-        <activity android:name=".activities.me.NewWorkActivity">
-        </activity>
-        <activity android:name=".activities.communication.PostDetailsActivity">
-        </activity>
+
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.me.ChangePasswordActivity" />
+        <activity android:name=".activities.me.MyCourseActivity" />
+        <activity android:name=".activities.me.MyMessageActivity" />
+        <activity android:name=".activities.me.MyWorkActivity" />
+        <activity android:name=".activities.classfication.ClassCourseDetails" />
+        <activity android:name=".activities.classfication.ClassCourseFile" />
+        <activity android:name=".zxing.app.PreferencesActivity" />
+        <activity android:name=".zxing.app.CaptureActivity" />
+        <activity android:name=".activities.me.SearchGradeActivity" />
+        <activity android:name=".activities.me.NewWorkActivity" />
+        <activity android:name=".activities.communication.PostDetailsActivity" />
+
+        <activity android:name=".activities.GuideActivity"></activity>
     </application>
 
 </manifest>
