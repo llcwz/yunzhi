@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/item_file_chapter_item"
+        android:id="@+id/layout_file_father"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rec_course_file_son"
+        android:layout_marginLeft="@dimen/len_4"
+        android:layout_marginRight="@dimen/len_4"
+        android:layout_marginTop="@dimen/len_4"
+        android:layout_marginBottom="@dimen/len_4">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

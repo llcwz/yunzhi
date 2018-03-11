@@ -95,19 +95,13 @@
             android:textSize="@dimen/font_20"
             android:text="@string/details_jianjie"/>
 
-        <com.timqi.collapsibletextview.CollapsibleTextView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/collTv_jianjie_course"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/len_8"
-        android:layout_marginTop="@dimen/len_8"
-            android:layout_marginBottom="@dimen/len_8"
-        app:collapsedLines="3"
-        app:collapsedText="@string/details_show_all"
-        app:expandedText="@string/details_hide"
-        app:suffixColor="#0000ff"
-        app:suffixTrigger="true"/>
+        <TextView
+            android:id="@+id/tv_jianjie_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/len_8"
+            android:layout_marginTop="@dimen/len_8"
+            android:layout_marginBottom="@dimen/len_8" />
 
     </LinearLayout>
 

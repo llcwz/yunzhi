@@ -34,16 +34,11 @@
             app:layout_constraintHorizontal_bias="0.0" />
 
 
-        <com.timqi.collapsibletextview.CollapsibleTextView
+        <TextView
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/collTv_jianjie_teacher"
+            android:id="@+id/tv_jianjie_teacher"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:collapsedLines="3"
-            app:collapsedText="@string/details_show_all"
-            app:expandedText="@string/details_hide"
-            app:suffixColor="#0000ff"
-            app:suffixTrigger="true"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/tv_details_title"
             android:layout_marginLeft="8dp"
@@ -59,7 +54,7 @@
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/collTv_jianjie_teacher"
+            app:layout_constraintTop_toBottomOf="@+id/tv_jianjie_teacher"
             android:layout_marginStart="8dp" />
 
         <ImageView
@@ -71,7 +66,7 @@
             app:layout_constraintLeft_toRightOf="@+id/iv_course_show1"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/collTv_jianjie_teacher"
+            app:layout_constraintTop_toBottomOf="@+id/tv_jianjie_teacher"
             android:layout_marginStart="32dp" />
 
         <ImageView
@@ -83,7 +78,7 @@
             app:layout_constraintLeft_toRightOf="@+id/iv_course_show2"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/collTv_jianjie_teacher"
+            app:layout_constraintTop_toBottomOf="@+id/tv_jianjie_teacher"
             android:layout_marginStart="32dp" />
 
         <TextView

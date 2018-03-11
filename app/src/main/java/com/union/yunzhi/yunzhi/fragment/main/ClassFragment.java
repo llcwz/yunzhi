@@ -11,7 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,14 +22,15 @@ import android.widget.Toast;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
+import com.union.yunzhi.common.helper.ScreenUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.beans.CourseShowBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.TitleBean;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.classfication.ClassCourseDetails;
 import com.union.yunzhi.yunzhi.adapter.ClassCourseAdapter;
 import com.union.yunzhi.yunzhi.adapter.ClassDrawerAdapter;
-import com.union.yunzhi.yunzhi.activities.classfication.ClassCourseDetails;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -58,6 +61,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     private String range,state;
     private View.OnClickListener onClick;
     private View.OnLongClickListener onLongClick;
+    private LinearLayout mLinearLayout,mLinearLayout1;
 
 
     @Override
@@ -104,6 +108,9 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     protected void initWidget(View view) {
 
         //侧滑栏得抽屉
+        mLinearLayout1= (LinearLayout) view.findViewById(R.id.drawer_class);
+        //DrawerLayout.LayoutParams params=new DrawerLayout.LayoutParams((int)(5.0/6)*ScreenUtils.getScreenWidth(getContext()), ViewGroup.LayoutParams.MATCH_PARENT);
+        //mLinearLayout1.setLayoutParams(params);
         mDrawerLayout=(DrawerLayout) view.findViewById(R.id.lv_drawer);
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -157,6 +164,9 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
         mConstraintLayout.setOnClickListener(this);
 
         //轮播
+        mLinearLayout= (LinearLayout) view.findViewById(R.id.layout_carousel);
+        LinearLayout.LayoutParams params1=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)((1.0/3)*ScreenUtils.getScreenWidth(getActivity())));
+        mLinearLayout.setLayoutParams(params1);
         mBanner=(Banner)view.findViewById(R.id.banner_class);
         //初始化设置隐藏布局为不可见
         hidden_coprhsv.setVisibility(View.GONE);
@@ -288,8 +298,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
 
             }
         });
-
-
 
         mRecyclerView.setAdapter(adapter);
 

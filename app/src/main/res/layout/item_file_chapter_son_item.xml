@@ -47,7 +47,7 @@
             android:layout_marginBottom="8dp" />
 
         <ImageView
-            android:id="@+id/imgBtn_is_load"
+            android:id="@+id/img_is_load"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -60,17 +60,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imgBtn_is_finished"
+            android:id="@+id/img_is_see"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
             android:background="@color/white"
             android:src="@drawable/son_finish_learn_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/tv_chapter_title"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginLeft="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp" />
 
 
     </android.support.constraint.ConstraintLayout>

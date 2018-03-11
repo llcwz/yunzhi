@@ -1,7 +1,6 @@
 package com.union.yunzhi.yunzhi.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,11 +71,9 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
             tv2 = (TextView) sonLayout.findViewById(R.id.tv_course_show2);
             tv3 = (TextView) sonLayout.findViewById(R.id.tv_course_show3);
 
-            Log.d("SC","sonLayout的高度："+sonLayout.getHeight());
             sonLayout.post(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d("SC","sonLayout的高度(异步获取)："+sonLayout.getHeight());
                     final int height=sonLayout.getHeight();
                     sonLayout.setVisibility(View.GONE);
                     /**
