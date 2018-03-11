@@ -6,24 +6,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.factories.moudles.me.GradeModel;
-import com.union.yunzhi.factories.moudles.me.MeModel;
-import com.union.yunzhi.factories.moudles.me.UnitGradeModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.SearchGradeAdapter;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItemClickListener {
 
+    private UserManager mUserManager;
     private Toolbar mToolbar;
-    private List<MeModel> mGrades = new ArrayList<>();
+    private List<GradeModel> mGradeModels = new ArrayList<>(); // 存放服务器拉下来的成绩数据
+    private List<GradeModel> mSearchGrades = new ArrayList<>(); // 存放搜索出来的成绩数据
     private RecyclerView mRecyclerView;
     private SearchGradeAdapter mAdapter;
 
@@ -39,25 +40,18 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
 
     @Override
     protected void initWidget() {
-        data();
+        mUserManager = UserManager.getInstance();
+        mGradeModels = mUserManager.getUser().data.getGradeModels();
+        initAdapter();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
     }
 
-    private void data() {
-
-        for (int i = 0; i < 20; i++) {
-            List<UnitGradeModel> unitGradeModels = new ArrayList<>();
-            for (int j = 0; j < new Random().nextInt(4) + 1; j++) {
-                unitGradeModels.add(new UnitGradeModel(j, "单元测试" + j, "" + new Random().nextInt(50)));
-            }
-            mGrades.add(new MeModel(new GradeModel(i,
-                    "计算机组成原理" + i,
-                    "" + new Random().nextInt(100),
-                    unitGradeModels
-                    )));
-        }
-        mAdapter = new SearchGradeAdapter(this, mGrades, null);
+    /**
+     * 初始化数据和适配器
+     */
+    private void initAdapter() {
+        mAdapter = new SearchGradeAdapter(this, mGradeModels, null);
     }
 
     @Override
@@ -74,10 +68,30 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
         searchFragment.setOnSearchClickListener(new IOnSearchClickListener() {
             @Override
             public void OnSearchClick(String keyword) {
-                // TODO: 2018/3/6 关键字搜索
+                // TODO: 2018/3/10 搜索栏要改
+                if (mGradeModels != null) { // 如果有成绩
+                    for (GradeModel gradeModel : mGradeModels) {
+                        if (gradeModel.getCourse().indexOf(keyword) > 0) {
+                            mSearchGrades.add(gradeModel);
+                        }
+                    }
+                    notifyList(mSearchGrades);
+                } else {
+                    Toast.makeText(SearchGradeActivity.this, "暂时还没有成绩可查询", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         searchFragment.show(getSupportFragmentManager(), SearchFragment.TAG);
         return false;
+    }
+
+    /**
+     * 刷新表列
+     * @param searchGrades
+     */
+    private void notifyList(List<GradeModel> searchGrades) {
+        mAdapter.clear();
+        mAdapter.add(searchGrades);
+        mAdapter.notify();
     }
 }

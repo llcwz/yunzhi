@@ -8,16 +8,19 @@ import android.graphics.drawable.Drawable;
 
 public class CourseModel {
     private int mId;
-    private Drawable mIcon;
-    private String mName;
-    private String mSchool;
-    private String mCollege;
-    private String mTeacher;
+    private String mIcon; // 课程缩略图
+    private String mName; // 课程名称
+    private String mSchool; // 属于哪个学校的
+    private String mCollege; // 开设课程的学院
+    private String mTeacher; // 课程的教师
     private int mSchedule; // 课程的总进度安排
     private int mProgress; // 课程进度
     private int mState; // 课程的状态
+    private int mViewType; // 类型
 
-    public CourseModel(int id, Drawable icon, String name, String school, String college, String teacher, int schedule, int progress, int state) {
+    public CourseModel() {}
+
+    public CourseModel(int id, String icon, String name, String school, String college, String teacher, int schedule, int progress, int state, int viewType) {
         mId = id;
         mIcon = icon;
         mName = name;
@@ -27,6 +30,7 @@ public class CourseModel {
         mSchedule = schedule;
         mProgress = progress;
         mState = state;
+        mViewType = viewType;
     }
 
     public int getId() {
@@ -37,11 +41,11 @@ public class CourseModel {
         mId = id;
     }
 
-    public Drawable getIcon() {
+    public String getIcon() {
         return mIcon;
     }
 
-    public void setIcon(Drawable icon) {
+    public void setIcon(String icon) {
         mIcon = icon;
     }
 
@@ -99,5 +103,13 @@ public class CourseModel {
 
     public void setState(int state) {
         mState = state;
+    }
+
+    public int getViewType() {
+        return mViewType;
+    }
+
+    public void setViewType(int viewType) {
+        mViewType = viewType;
     }
 }

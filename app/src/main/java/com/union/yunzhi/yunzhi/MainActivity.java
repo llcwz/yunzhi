@@ -6,7 +6,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.union.yunzhi.common.app.PermissionsActivity;
+import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.helper.NavHelper;
 import com.union.yunzhi.yunzhi.fragment.main.ClassFragment;
 import com.union.yunzhi.yunzhi.fragment.main.CommunicationFragment;
@@ -14,7 +14,7 @@ import com.union.yunzhi.yunzhi.fragment.main.HomeFragment;
 import com.union.yunzhi.yunzhi.fragment.main.LiveFragment;
 import com.union.yunzhi.yunzhi.fragment.main.MeFragment;
 
-public class MainActivity extends PermissionsActivity implements NavHelper.OnTabChangedListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
+public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
 
 
     private BottomNavigationViewEx bottomNavigationViewEx;

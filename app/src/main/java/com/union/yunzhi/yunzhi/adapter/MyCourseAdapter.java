@@ -8,7 +8,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.me.CourseModel;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.MeModel;
 import com.union.yunzhi.yunzhi.R;
@@ -19,14 +21,14 @@ import java.util.List;
  * Created by CrazyGZ on 2018/3/3.
  */
 
-public class MyCourseAdapter extends MyAdapter<MeModel> {
+public class MyCourseAdapter extends MyAdapter<CourseModel> {
     private Context mContext;
-    public MyCourseAdapter(Context context, List<MeModel> data, AdapterListener listener) {
+    public MyCourseAdapter(Context context, List<CourseModel> data, AdapterListener<CourseModel> listener) {
         super(data, listener);
         mContext = context;
     }
     @Override
-    protected int getItemViewType(int position, MeModel data) {
+    protected int getItemViewType(int position, CourseModel data) {
         if (data != null) {
             Log.d( "getItemViewType", "" + data.getViewType());
         } else {
@@ -40,7 +42,7 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
     }
 
     @Override
-    protected MyViewHolder<MeModel> onCreateViewHolder(View root, int viewType) {
+    protected MyViewHolder<CourseModel> onCreateViewHolder(View root, int viewType) {
         if (viewType == MeConstant.STUDENT_COURSE_VIEW) {
             return new StudentCourseViewHolder(root);
         } else {
@@ -48,7 +50,7 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
         }
     }
 
-    public class StudentCourseViewHolder extends MyViewHolder<MeModel> {
+    public class StudentCourseViewHolder extends MyViewHolder<CourseModel> {
         private TextView mTitle;
         private ImageView mIcon;
         private TextView mSchool;
@@ -69,12 +71,12 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
         }
 
         @Override
-        protected void onBind(MeModel data, int position) {
+        protected void onBind(CourseModel data, int position) {
 
-            mTitle.setText(data.getCourseModel().getName());
-            mIcon.setImageDrawable(data.getCourseModel().getIcon());
-            mSchool.setText(data.getCourseModel().getSchool());
-            mTeacher.setText(data.getCourseModel().getTeacher());
+            mTitle.setText(data.getName());
+            Glide.with(mContext).load(data.getIcon()).into(mIcon);
+            mSchool.setText(data.getSchool());
+            mTeacher.setText(data.getTeacher());
             mPractise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -82,15 +84,15 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
                     Toast.makeText(mContext, "练习", Toast.LENGTH_SHORT).show();
                 }
             });
-            mSchedule.setText("进行至" + data.getCourseModel().getProgress() + "周，总共" + data.getCourseModel().getSchedule() + "周");
-            mProgress.setMax(data.getCourseModel().getSchedule());
-            mProgress.setProgress(data.getCourseModel().getProgress());
+            mSchedule.setText("进行至" + data.getProgress() + "周，总共" + data.getSchedule() + "周");
+            mProgress.setMax(data.getSchedule());
+            mProgress.setProgress(data.getProgress());
 
         }
 
     }
 
-    public class TeacherCourseViewHolder extends MyViewHolder<MeModel> {
+    public class TeacherCourseViewHolder extends MyViewHolder<CourseModel> {
         private TextView mTitle;
         private ImageView mIcon;
         private TextView mSchool;
@@ -109,14 +111,14 @@ public class MyCourseAdapter extends MyAdapter<MeModel> {
         }
 
         @Override
-        protected void onBind(MeModel data, int position) {
-            mTitle.setText(data.getCourseModel().getName());
-            mIcon.setImageDrawable(data.getCourseModel().getIcon());
-            mSchool.setText(data.getCourseModel().getSchool());
-            mCollege.setText(data.getCourseModel().getCollege());
-            mSchedule.setText("进行至" + data.getCourseModel().getProgress() + "周，总共" + data.getCourseModel().getSchedule() + "周");
-            mProgress.setMax(data.getCourseModel().getSchedule());
-            mProgress.setProgress(data.getCourseModel().getProgress());
+        protected void onBind(CourseModel data, int position) {
+            mTitle.setText(data.getName());
+            Glide.with(mContext).load(data.getIcon()).into(mIcon);
+            mSchool.setText(data.getSchool());
+            mCollege.setText(data.getCollege());
+            mSchedule.setText("进行至" + data.getProgress() + "周，总共" + data.getSchedule() + "周");
+            mProgress.setMax(data.getSchedule());
+            mProgress.setProgress(data.getProgress());
         }
     }
 }

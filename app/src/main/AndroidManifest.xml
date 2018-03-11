@@ -17,15 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".activities.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+
         <activity android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"/>
 
@@ -38,7 +38,7 @@
         <activity android:name=".activities.me.MyMessageActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activities.me.MyWorkActivity"
+        <activity android:name=".activities.me.WorkActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".activities.classfication.ClassCourseDetails"
@@ -49,6 +49,7 @@
         <activity android:name=".zxing.app.CaptureActivity"/>
         <activity android:name=".activities.me.SearchGradeActivity">
         </activity>
+
         <activity android:name=".activities.me.NewWorkActivity"
             android:screenOrientation="portrait">
         </activity>
