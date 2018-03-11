@@ -3,25 +3,30 @@ package com.union.yunzhi.factories.moudles.communication;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by CrazyGZ on 2018/3/9.
  */
 
 public class CommentModel implements Parcelable {
-    private int mId; // id
+    private int mId; // 该评论的id
     private String mIcon; // 头像
     private String mAuthor; // 作者
     private String mTime; // 时间
     private String mContent; // 内容
-    private int like; // 点赞数
+    private List<LikeModel> mLikeModels; // 点赞数
 
-    public CommentModel(int id, String icon, String author, String time, String content, int like) {
+    public CommentModel() {
+    }
+
+    public CommentModel(int id, String icon, String author, String time, String content, List<LikeModel> likeModels) {
         mId = id;
         mIcon = icon;
         mAuthor = author;
         mTime = time;
         mContent = content;
-        this.like = like;
+        mLikeModels = likeModels;
     }
 
     protected CommentModel(Parcel in) {
@@ -30,7 +35,22 @@ public class CommentModel implements Parcelable {
         mAuthor = in.readString();
         mTime = in.readString();
         mContent = in.readString();
-        like = in.readInt();
+        mLikeModels = in.createTypedArrayList(LikeModel.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mIcon);
+        dest.writeString(mAuthor);
+        dest.writeString(mTime);
+        dest.writeString(mContent);
+        dest.writeTypedList(mLikeModels);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<CommentModel> CREATOR = new Creator<CommentModel>() {
@@ -85,26 +105,11 @@ public class CommentModel implements Parcelable {
         mContent = content;
     }
 
-    public int getLike() {
-        return like;
+    public List<LikeModel> getLikeModels() {
+        return mLikeModels;
     }
 
-    public void setLike(int like) {
-        this.like = like;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mId);
-        parcel.writeString(mIcon);
-        parcel.writeString(mAuthor);
-        parcel.writeString(mTime);
-        parcel.writeString(mContent);
-        parcel.writeInt(like);
+    public void setLikeModels(List<LikeModel> likeModels) {
+        mLikeModels = likeModels;
     }
 }

@@ -25,6 +25,12 @@ public class HttpConstants {
     // 请求发布新任务
     public static final String ADD_WORK_URL = "";
 
+    // 请求点赞
+    public static final String LIKE_URL = "";
+
+    // 请求评论
+    public static final String ADD_COMMENT_URL = "";
+
 
 
 }

@@ -248,11 +248,11 @@ public class NewWorkActivity extends ActivityM implements View.OnClickListener {
             @Override
             public void onSuccess(Object responseObj) {
                 LogUtils.d("addWork", responseObj.toString());
-                BaseMeModel baseMeModel = (BaseMeModel) responseObj;
-                if (baseMeModel.ecode == 0) {
+                WorkModel baseMeModel = (WorkModel) responseObj;
+                if (baseMeModel != null) {
                     Toast.makeText(NewWorkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(NewWorkActivity.this, "" + baseMeModel.emsg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewWorkActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
                 }
                 DialogManager.getInstnce().dismissProgressDialog();
             }

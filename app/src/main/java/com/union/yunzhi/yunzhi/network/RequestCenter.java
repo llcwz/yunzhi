@@ -2,6 +2,8 @@ package com.union.yunzhi.yunzhi.network;
 
 import android.util.Log;
 
+import com.union.yunzhi.factories.moudles.communication.CommentModel;
+import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.me.BaseMeModel;
 import com.union.yunzhi.factories.moudles.me.WorkModel;
@@ -100,5 +102,29 @@ public class RequestCenter {
 
     }
 
+    /**
+     * @function 上传点赞
+     * @param id 点赞者的id
+     * @param icon 点赞者的头像
+     * @param author 点赞者的姓名
+     * @param time 点赞时的时间
+     */
+    public static void requestLike(String id, String icon, String author, String time, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("mId", id);
+        params.put("mIcon", icon);
+        params.put("mAuthor", author);
+        params.put("mTime", time);
+        RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, LikeModel.class);
+    }
+
+    public static void requestComment(String id, String icon, String author, String time, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("mId", id);
+        params.put("mIcon", icon);
+        params.put("mAuthor", author);
+        params.put("mTime", time);
+        RequestCenter.postRequest(HttpConstants.ADD_COMMENT_URL, params, listener, CommentModel.class);
+    }
 
 }

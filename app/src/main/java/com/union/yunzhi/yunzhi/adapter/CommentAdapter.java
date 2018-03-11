@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 
 import java.util.List;
 
@@ -39,14 +42,18 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
     }
 
     public class CommentViewHolder extends MyViewHolder<CommentModel> {
+        private UserManager mUserManager;
         private CircleImageView mIcon;
         private TextView mAuthor;
         private TextView mTime;
         private ImageView mLike;
         private TextView mLikeCount; // 点赞数
         private TextView mContent;
+
+
         public CommentViewHolder(View itemView) {
             super(itemView);
+            mUserManager = UserManager.getInstance();
             mIcon = (CircleImageView) itemView.findViewById(R.id.ci_comment_icon);
             mAuthor = (TextView) itemView.findViewById(R.id.tv_comment_author);
             mTime = (TextView) itemView.findViewById(R.id.tv_comment_time);
@@ -56,21 +63,25 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         }
 
         @Override
-        protected void onBind(CommentModel data, int position) {
+        protected void onBind(final CommentModel data, int position) {
             Glide.with(mContext).load(data.getIcon()).into(mIcon);
             mAuthor.setText(data.getAuthor());
             mTime.setText(data.getTime());
             mContent.setText(data.getContent());
+            mLikeCount.setText("" + data.getLikeModels().size()); // 获取点赞数
+            // 点赞的点击事件
             mLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Glide.with(mContext).load(R.drawable.iv_comment_like_select).into(mLike);
-                    mLikeCount.setText(Integer.parseInt(mLikeCount.getText().toString())+ 1 + "");
-                    mLike.setClickable(false);
-                    // TODO: 2018/3/9 上传点赞数据
+                    if (mUserManager.hasLogined()) { // 用户登录了
+                        LikeUtils likeUtils = LikeUtils.newInstance(mUserManager, mContext, mLike,mLikeCount);
+                        likeUtils.checkedCommentLike(data);
+                    } else { // 用户没登录
+                        Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
-            mLikeCount.setText("" + data.getLike());
+
         }
     }
 

@@ -42,10 +42,10 @@ public class PostAdapter extends MyAdapter<PostModel> {
 
         public CollegeViewHolder(View itemView) {
             super(itemView);
-            mIcon = (CircleImageView) itemView.findViewById(R.id.ci_communication_icon);
-            mTime = (TextView) itemView.findViewById(R.id.tv_communication_time);
-            mTitle = (TextView) itemView.findViewById(R.id.tv_communication_title);
-            mContent = (TextView) itemView.findViewById(R.id.tv_communication_content);
+            mIcon = (CircleImageView) itemView.findViewById(R.id.ci_post_icon);
+            mTime = (TextView) itemView.findViewById(R.id.tv_post_time);
+            mTitle = (TextView) itemView.findViewById(R.id.tv_post_title);
+            mContent = (TextView) itemView.findViewById(R.id.tv_post_content);
         }
 
         @Override

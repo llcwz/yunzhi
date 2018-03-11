@@ -23,6 +23,11 @@ public class MeConstant {
     public static final int COURSE_STATE_BEGIN = 2; // 即将开始
     public static final int COURSE_STATE_FINISH = 3; // 已完成
 
+    // 消息的fragment标记
+    public static final int  MESSAGE_FRAGMENT_TAG_COMMUNICATION = 0; // 社区消息
+    public static final int  MESSAGE_FRAGMENT_TAG_COURSE = 1; // 课程消息
+    public static final int  MESSAGE_FRAGMENT_TAG_SYSTEM = 2; // 系统消息
+
     // 导航标记
     public static final String NAVIGATION_MY_WORK = "我的任务";
     public static final String NAVIGATION_COMPREHENSIVE = "综合实训";

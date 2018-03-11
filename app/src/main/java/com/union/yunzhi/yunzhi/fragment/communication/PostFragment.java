@@ -9,6 +9,7 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
+import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationModel;
 import com.union.yunzhi.yunzhi.R;
@@ -93,17 +94,24 @@ public class PostFragment extends FragmentM {
     private void data(int tag) {
         List<PostModel> postModels = new ArrayList<>();
         List<CommentModel> commentModels = new ArrayList<>();
+        List<LikeModel> likeModels = new ArrayList<>();
         switch (tag) {
             case CommunicationConstant.TAG_COLLEGE:
                 for (int i = 0; i < 10; i++) {
+
+                    likeModels.add(new LikeModel("" + i,
+                            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520750308948&di=b68aae83d50e75960a908bb44e904d95&imgtype=0&src=http%3A%2F%2Fimg2.utuku.china.com%2F298x0%2Fent%2F20170914%2Fc2d9a577-7d96-409b-916e-a3fc6f1fab90.png",
+                            "敌人的盟友" + i,
+                            "2018.3.11 11:5" + new Random().nextInt(9)));
+
                     commentModels.add(new CommentModel(i,
                             "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D56%2C0%2C636%2C420%3Bc0%3Dbaike80%2C5%2C5%2C80%2C26/sign=561a042db6096b63955604103106b168/c8ea15ce36d3d539ea5cccc13287e950352ab04b.jpg",
                             "水军" + i,
                             "2018.3.16 12:0" + i,
                             "不知道说什么，只好提前给大家拜个年了" + i,
-                            new Random().nextInt(15)));
+                            likeModels));
 
-                    postModels.add(new PostModel(i,
+                    postModels.add(new PostModel("" + i,
                             mTag,
                             "https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=5b81e5e30ef41bd5da53eff269e1e6f6/d439b6003af33a87cfcf02d2c65c10385243b553.jpg",
                             "张三" + i,
@@ -127,19 +135,27 @@ public class PostFragment extends FragmentM {
                                     "\n" +
                                     " “敲鼓赶鱼，在某种意义上也是向大家宣布又到了一年一度吃鱼的时候。” 杨方武介绍说。周围经过的同学们也纷纷驻足观看，医学院17级学生王欣激动地表示，早就听闻学校有吃鱼的活动，盼了那么久终于能吃到鱼了。\n" +
                                     "\n",
-                            commentModels
+                            commentModels,
+                            likeModels
                             ));
                 }
                 break;
             case CommunicationConstant.TAG_NOTE:
+
                 for (int i = 0; i < 10; i++) {
+
+                    likeModels.add(new LikeModel("" + i,
+                            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520750308948&di=b68aae83d50e75960a908bb44e904d95&imgtype=0&src=http%3A%2F%2Fimg2.utuku.china.com%2F298x0%2Fent%2F20170914%2Fc2d9a577-7d96-409b-916e-a3fc6f1fab90.png",
+                            "敌人的盟友" + i,
+                            "2018.3.11 11:5" + new Random().nextInt(9)));
+
                     commentModels.add(new CommentModel(i,
                             "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D56%2C0%2C636%2C420%3Bc0%3Dbaike80%2C5%2C5%2C80%2C26/sign=561a042db6096b63955604103106b168/c8ea15ce36d3d539ea5cccc13287e950352ab04b.jpg",
                             "水军" + i,
                             "2018.3.16 12:0" + i,
                             "不知道说什么，只好提前给大家拜个年了" + i,
-                            new Random().nextInt(15)));
-                    postModels.add(new PostModel(i,
+                            likeModels));
+                    postModels.add(new PostModel("" +i,
                             mTag,
                             "https://i2.sanwen.net/l/1520510319.jpg",
                             "徐军" + i,
@@ -162,7 +178,8 @@ public class PostFragment extends FragmentM {
                                     "岁寒知松柏，患难见真情。记得二十多年前，夏日某天突患重病，发热乏力，早早就寝。恍惚间，感受到妻子用手探额试温，这天夜里，妻子数次服侍喝水，在额头上反复晾上湿毛巾，她说：“夏天体乏很干燥，你一定要多喝水，可不能这样一直干烧下去。”第二天，安然烧退，脱离危险。南国湿热，按不住病子的心，若无妻子精心照顾，宁有日后的安康？将近半个月，妻子不是熬汤辅助调养，就是煮开胃软食施予欢喜，岂能不感恩戴德？\n" +
                                     "\n" +
                                     "“贫贱之交不可忘，糟糠之妻不下堂。”是华夏民族善德恩义。人生虽无常，天地常有情。祸福只在冥冥，并非腾空而降。珍惜福报，感恩所有帮助过你的人，故当积善成流，趋吉避凶，必能广得福报，兴旺康达。",
-                            commentModels));
+                            commentModels,
+                            likeModels));
                 }
                 break;
             default:

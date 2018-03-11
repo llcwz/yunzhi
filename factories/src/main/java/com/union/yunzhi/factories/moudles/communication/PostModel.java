@@ -11,16 +11,20 @@ import java.util.List;
  */
 
 public class PostModel implements Parcelable {
-    private int mId; // id
+    private String mId; // 帖子的id
     private int mTag; // 标记类型，由此可知是哪一个模块的帖子
     private String mIcon; // 头像
     private String mAuthor; // 作者
     private String mTime; // 时间
     private String mTitle; // 标题
     private String mContent; // 内容
-    private List<CommentModel> mCommentModels; // 评论
+    private List<CommentModel> mCommentModels; // 该帖子的评论
+    private List<LikeModel> mLikeModels; // 该帖子的点赞
 
-    public PostModel(int id, int tag, String icon, String author, String time, String title, String content, List<CommentModel> commentModels) {
+    public PostModel() {
+    }
+
+    public PostModel(String id, int tag, String icon, String author, String time, String title, String content, List<CommentModel> commentModels, List<LikeModel> likeModels) {
         mId = id;
         mTag = tag;
         mIcon = icon;
@@ -29,10 +33,11 @@ public class PostModel implements Parcelable {
         mTitle = title;
         mContent = content;
         mCommentModels = commentModels;
+        mLikeModels = likeModels;
     }
 
     protected PostModel(Parcel in) {
-        mId = in.readInt();
+        mId = in.readString();
         mTag = in.readInt();
         mIcon = in.readString();
         mAuthor = in.readString();
@@ -40,11 +45,12 @@ public class PostModel implements Parcelable {
         mTitle = in.readString();
         mContent = in.readString();
         mCommentModels = in.createTypedArrayList(CommentModel.CREATOR);
+        mLikeModels = in.createTypedArrayList(LikeModel.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mId);
+        dest.writeString(mId);
         dest.writeInt(mTag);
         dest.writeString(mIcon);
         dest.writeString(mAuthor);
@@ -52,6 +58,7 @@ public class PostModel implements Parcelable {
         dest.writeString(mTitle);
         dest.writeString(mContent);
         dest.writeTypedList(mCommentModels);
+        dest.writeTypedList(mLikeModels);
     }
 
     @Override
@@ -71,11 +78,11 @@ public class PostModel implements Parcelable {
         }
     };
 
-    public int getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         mId = id;
     }
 
@@ -133,5 +140,13 @@ public class PostModel implements Parcelable {
 
     public void setCommentModels(List<CommentModel> commentModels) {
         mCommentModels = commentModels;
+    }
+
+    public List<LikeModel> getLikeModels() {
+        return mLikeModels;
+    }
+
+    public void setLikeModels(List<LikeModel> likeModels) {
+        mLikeModels = likeModels;
     }
 }
