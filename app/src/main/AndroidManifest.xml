@@ -60,6 +60,7 @@
         <activity android:name=".activities.classfication.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>
+        <activities android:name=".activities.LoadingActivity"/>
     </application>
 
 </manifest>
