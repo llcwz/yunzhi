@@ -123,30 +123,30 @@ public class NavHelper<T> {
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
         if (oldTab != null) {
-            if (oldTab.fragment != null) {
+            if (oldTab.getFragment() != null) {
                 // 从界面移除，但是还在Fragment的缓存空间中
                 Log.i(TGA,"oldTab");
-                ft.detach(oldTab.fragment);
+                ft.detach(oldTab.getFragment());
             }
         }
 
         if (newTab != null) {
 
-            if (newTab.fragment == null) {
+            if (newTab.getFragment() == null) {
                 Log.i(TGA,"newTab");
                 // 首次新建
                 Fragment fragment = Fragment.instantiate(context, newTab.clx.getName(), null);
                 // 缓存起来
-                newTab.fragment = fragment;
+                newTab.setFragment(fragment);
                 // 提交到FragmentManger
                 ft.add(containerId, fragment, newTab.clx.getName());
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("studentId",Extra);
                 //      oldTab.fragment.setArguments(bundle);
-                newTab.fragment.setArguments(bundle);
+                newTab.getFragment().setArguments(bundle);
             } else {
                 // 从FragmentManger的缓存空间中重新加载到界面中
-                ft.attach(newTab.fragment);
+                ft.attach(newTab.getFragment());
             }
         }
         // 提交事务
@@ -196,8 +196,12 @@ public class NavHelper<T> {
 
         // 内部缓存的对应的Fragment，
         // Package权限，外部无法使用
-        Fragment fragment;
-    }
+       private Fragment fragment;
+    public Fragment getFragment() {
+    return fragment;
+}public void setFragment(Fragment fragment) {
+    this.fragment = fragment;
+}}
 
     /**
      * 定义事件处理完成后的回调接口

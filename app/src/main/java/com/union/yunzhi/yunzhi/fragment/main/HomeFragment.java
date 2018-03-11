@@ -116,6 +116,8 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     public void data(){
 
 
+
+
         homeModle homeModle = new homeModle();
         homeModle.viewType = 1;
         homeModle.mVideoClassModle = new videoClassModle();

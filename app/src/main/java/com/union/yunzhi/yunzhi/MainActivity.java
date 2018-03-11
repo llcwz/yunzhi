@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.helper.NavHelper;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.yunzhi.fragment.main.ClassFragment;
 import com.union.yunzhi.yunzhi.fragment.main.CommunicationFragment;
 import com.union.yunzhi.yunzhi.fragment.main.HomeFragment;
@@ -85,9 +86,34 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     }
 
 
-
+    /**
+     * 触发双击刷新
+     * @param tab
+     */
     @Override
     public  void  notifyTabReselect(NavHelper.Tab<Integer> tab) {
+        LogUtils.i("notifyTabReselect",tab.getFragment().toString());
+       if(tab.getFragment() instanceof HomeFragment){
+
+           HomeFragment homeFragment = (HomeFragment)tab.getFragment();
+
+       }else if(tab.getFragment() instanceof ClassFragment){
+
+           ClassFragment classFragment = (ClassFragment)tab.getFragment();
+
+       }else if(tab.getFragment() instanceof CommunicationFragment){
+
+           CommunicationFragment ccommunicationFragment = (CommunicationFragment)tab.getFragment();
+
+       }else if(tab.getFragment() instanceof LiveFragment){
+
+           LiveFragment liveFragment = (LiveFragment)tab.getFragment();
+
+       }else {
+
+           MeFragment meFragment = (MeFragment) tab.getFragment();
+           
+       }
 
     }
 
