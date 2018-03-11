@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <!--  加载页面   -->
         <activity android:name=".activities.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,15 +26,19 @@
             </intent-filter>
         </activity>
 
+        <!-- 引导界面  只会出现一次 -->
         <activity
             android:name=".activities.GuideActivity"
             android:screenOrientation="portrait" />
 
 
+        <!-- 登陆界面-->
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait" />
 
+
+        <!--  -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"

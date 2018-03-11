@@ -14,7 +14,7 @@ import com.union.yunzhi.yunzhi.fragment.main.HomeFragment;
 import com.union.yunzhi.yunzhi.fragment.main.LiveFragment;
 import com.union.yunzhi.yunzhi.fragment.main.MeFragment;
 
-public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
+public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,NavHelper.OnTabReselectListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
 
 
     private BottomNavigationViewEx bottomNavigationViewEx;
@@ -22,6 +22,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     private NavHelper<Integer> mNavHelper;
 
     private FrameLayout mContainer;
+
 
     private Boolean flag = false;
     @Override
@@ -56,6 +57,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
                 R.id.lay_contianer,
                 getSupportFragmentManager(),
                 MainActivity.this,
+                MainActivity.this,
                 null);
 
         mNavHelper.add(R.id.navigation_home,new NavHelper.Tab<Integer>(HomeFragment.class,R.string.navigation_home))
@@ -81,4 +83,15 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     public void onTabChanged(NavHelper.Tab<Integer> newTab, NavHelper.Tab<Integer> oldTab) {
 
     }
+
+
+
+    @Override
+    public  void  notifyTabReselect(NavHelper.Tab<Integer> tab) {
+
+    }
+
+
+
+
 }

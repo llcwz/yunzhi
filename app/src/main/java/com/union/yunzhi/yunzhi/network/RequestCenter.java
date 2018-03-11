@@ -18,6 +18,8 @@ import com.union.yunzhi.factories.okhttp.request.RequestParams;
 
 public class RequestCenter {
 
+    private final String TGA = "RequestCenter";
+
     //根据参数发送所有post请求
     public static void postRequest(String url, RequestParams params, DisposeDataListener listener, Class<?> clazz) {
         CommonOkHttpClient.get(CommonRequest.
@@ -33,6 +35,8 @@ public class RequestCenter {
 
        // params.put("userName", userName);
        // params.put("password", password);
+
+        Log.i("requestHomeData","ok");
 
         RequestCenter.postRequest(HttpConstants.HOME_URL, null, listener, BaseHomeModle.class);
     }

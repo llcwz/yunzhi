@@ -13,7 +13,7 @@ public class HttpConstants {
     public static final String ROOT_URL = "http://192.168.1.100:8080/TomCat";
 
 
-    public static final String HOME_URL = "http://dennisallan.top/dennis_allan/index.php/Home/Homepg/homepg";
+    public static final String HOME_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Homepg/homepg";
 
 
     // 登录请求
