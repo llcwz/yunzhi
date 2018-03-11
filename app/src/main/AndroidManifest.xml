@@ -24,29 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity
-            android:launchMode="singleTask"
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
 
-        </activity>
-
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.me.ChangePasswordActivity" />
-        <activity android:name=".activities.me.MyCourseActivity" />
-        <activity android:name=".activities.me.MyMessageActivity" />
-        <activity android:name=".activities.me.MyWorkActivity" />
-        <activity android:name=".activities.classfication.ClassCourseDetails" />
-        <activity android:name=".activities.classfication.ClassCourseFile" />
-        <activity android:name=".zxing.app.PreferencesActivity" />
-        <activity android:name=".zxing.app.CaptureActivity" />
-        <activity android:name=".activities.me.SearchGradeActivity" />
-        <activity android:name=".activities.me.NewWorkActivity" />
-        <activity android:name=".activities.communication.PostDetailsActivity" />
-
-        <activity android:name=".activities.GuideActivity"></activity>
-=======
 
         <activity android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"/>
@@ -79,7 +57,6 @@
         </activity>
         <activity android:name=".activities.communication.AddPostActivity">
         </activity>
->>>>>>> 2f1005770f611f8ad24491b37b350a12be43fc75
     </application>
 
 </manifest>
