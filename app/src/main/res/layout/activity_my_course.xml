@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.union.yunzhi.yunzhi.activities.me.MyCourseActivity">
+    tools:context="com.union.yunzhi.yunzhi.activities.photourl.MyCourseActivity">
 
     <include
         layout="@layout/me_toolbar"/>

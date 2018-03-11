@@ -22,5 +22,11 @@ public final class ClassConst
     public static final int CLASS_NOT_FINISHED=6;
     public static final int CLASS_NOT_START=7;
 
+    public static final int IS_FINISHED=0;
+    public static final int NOT_FINISHED=1;
+
+    public static final int IS_LOAD=0;
+    public static final int NOT_LOAD=1;
+
 }
 

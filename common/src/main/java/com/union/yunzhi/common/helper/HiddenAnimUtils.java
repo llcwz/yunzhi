@@ -29,6 +29,8 @@ public class HiddenAnimUtils {
 
     private int mTime;//动画时间
 
+    private Context context;
+
     /**
      * 构造器(可根据自己需要修改传参)
      * @param context 上下文
@@ -46,20 +48,20 @@ public class HiddenAnimUtils {
     }
 
     public static HiddenAnimUtils newInstance(Context context, View hideView ,int mHeight,int mTime) {
-
-
         return new HiddenAnimUtils(context, hideView , mHeight, mTime);
     }
 
     private HiddenAnimUtils(Context context, View hideView, View down, int height,int mTime){
         this.hideView = hideView;
         this.down = down;
+        this.context=context;
         /**
          * 此处是将dp转化成px
          */
         float mDensity = context.getResources().getDisplayMetrics().density;
         this.mHeight = (int) (mDensity * height + 0.5);//伸展高度
         this.mTime=mTime;
+        this.context=context;
     }
 
     private HiddenAnimUtils(Context context, View hideView ,int mHeight,int mTime){
@@ -67,6 +69,12 @@ public class HiddenAnimUtils {
         this.down = null;
         this.mHeight = mHeight;
         this.mTime=mTime;
+        this.context=context;
+    }
+
+    private HiddenAnimUtils(Context context,View down){
+        this.context=context;
+        this.down=down;
     }
 
     /**
@@ -100,6 +108,21 @@ public class HiddenAnimUtils {
      * 开关旋转动画
      */
     private void startAnimation() {
+        if(down!=null){
+            if (View.VISIBLE == hideView.getVisibility()) {
+                animation = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            } else {
+                animation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            }
+            animation.setDuration(mTime);//设置动画持续时间
+            animation.setInterpolator(new LinearInterpolator());
+            animation.setRepeatMode(Animation.REVERSE);//设置反方向执行
+            animation.setFillAfter(true);//动画执行完后是否停留在执行完的状态
+            down.startAnimation(animation);
+        }
+    }
+
+    private void startAnimationLone() {
         if(down!=null){
             if (View.VISIBLE == hideView.getVisibility()) {
                 animation = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);

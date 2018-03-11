@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.MeModel;
+import com.union.yunzhi.factories.moudles.me.WorkModel;
 import com.union.yunzhi.yunzhi.R;
 
 import java.util.List;
@@ -15,15 +16,15 @@ import java.util.List;
  * Created by CrazyGZ on 2018/3/6.
  */
 
-public class MyWorkAdapter extends MyAdapter<MeModel> {
+public class MyWorkAdapter extends MyAdapter<WorkModel> {
     private Context mContext;
 
-    public MyWorkAdapter(Context context, List<MeModel> data, AdapterListener<MeModel> listener) {
+    public MyWorkAdapter(Context context, List<WorkModel> data, AdapterListener<WorkModel> listener) {
         super(data, listener);
         mContext = context;
     }
     @Override
-    protected int getItemViewType(int position, MeModel data) {
+    protected int getItemViewType(int position, WorkModel data) {
         if (data.getViewType() == MeConstant.STUDENT_WORK_VIEW) {
             return R.layout.item_me_my_work_student;
         } else {
@@ -32,7 +33,7 @@ public class MyWorkAdapter extends MyAdapter<MeModel> {
     }
 
     @Override
-    protected MyViewHolder<MeModel> onCreateViewHolder(View root, int viewType) {
+    protected MyViewHolder<WorkModel> onCreateViewHolder(View root, int viewType) {
         if (viewType == MeConstant.STUDENT_WORK_VIEW) {
             return new StudentWorkViewHolder(root);
         } else {
@@ -40,7 +41,7 @@ public class MyWorkAdapter extends MyAdapter<MeModel> {
         }
     }
 
-    public class StudentWorkViewHolder extends MyViewHolder<MeModel> {
+    public class StudentWorkViewHolder extends MyViewHolder<WorkModel> {
         private TextView mTitle;
         private TextView mCourse; // 所属课程
         private TextView mStart; // 开始时间
@@ -61,18 +62,18 @@ public class MyWorkAdapter extends MyAdapter<MeModel> {
         }
 
         @Override
-        protected void onBind(MeModel data, int position) {
-            mTitle.setText(data.getWorkModel().getName());
-            mCourse.setText(data.getWorkModel().getCourse());
-            mStart.setText(data.getWorkModel().getStart());
-            mEnd.setText(data.getWorkModel().getEnd());
-            mState.setText(data.getWorkModel().getState());
-            mPromulgator.setText(data.getWorkModel().getPromulgator());
-            mTime.setText(data.getWorkModel().getTime());
+        protected void onBind(WorkModel data, int position) {
+            mTitle.setText(data.getName());
+            mCourse.setText(data.getCourse());
+            mStart.setText(data.getStart());
+            mEnd.setText(data.getEnd());
+            mState.setText(data.getState());
+            mPromulgator.setText(data.getPromulgator());
+            mTime.setText(data.getTime());
         }
     }
 
-    public class TeacherWorkViewHolder extends MyViewHolder<MeModel> {
+    public class TeacherWorkViewHolder extends MyViewHolder<WorkModel> {
         private TextView mTitle;
         private TextView mCourse; // 所属课程
         private TextView mStart; // 开始时间
@@ -91,13 +92,13 @@ public class MyWorkAdapter extends MyAdapter<MeModel> {
         }
 
         @Override
-        protected void onBind(MeModel data, int position) {
-            mTitle.setText(data.getWorkModel().getName());
-            mCourse.setText(data.getWorkModel().getCourse());
-            mStart.setText(data.getWorkModel().getStart());
-            mEnd.setText(data.getWorkModel().getEnd());
-            mState.setText(data.getWorkModel().getState());
-            mTime.setText(data.getWorkModel().getTime());
+        protected void onBind(WorkModel data, int position) {
+            mTitle.setText(data.getName());
+            mCourse.setText(data.getCourse());
+            mStart.setText(data.getStart());
+            mEnd.setText(data.getEnd());
+            mState.setText(data.getState());
+            mTime.setText(data.getTime());
         }
     }
 }

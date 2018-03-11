@@ -1,7 +1,6 @@
 package com.union.yunzhi.yunzhi.fragment.main;
 
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,10 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
 import com.union.yunzhi.yunzhi.fragment.communication.PostFragment;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
@@ -24,16 +26,15 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CommunicationFragment extends FragmentM implements Toolbar.OnMenuItemClickListener, ViewPager.OnPageChangeListener {
+public class CommunicationFragment extends FragmentM implements ViewPager.OnPageChangeListener, Toolbar.OnMenuItemClickListener {
 
+    private int mTag=0; // 用于存放当前的viewPager页索引
     private List<String> mTabs = new ArrayList<>();
     private List<Fragment> mFragments = new ArrayList<>();
     private FragmentManager mFragmentManager;
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private FloatingActionButton mAdd; // 添加
-
 
     @Override
     protected int getContentLayoutId() {
@@ -44,10 +45,8 @@ public class CommunicationFragment extends FragmentM implements Toolbar.OnMenuIt
     protected void initWidget(View view) {
         mFragmentManager = getChildFragmentManager();
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        mToolbar.inflateMenu(R.menu.search_grade_item);
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
-        mAdd = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
         data();
     }
 
@@ -57,9 +56,10 @@ public class CommunicationFragment extends FragmentM implements Toolbar.OnMenuIt
     private void data() {
         mTabs.add("学院见闻");
         mTabs.add("学习笔记");
-        mFragments.add(PostFragment.newInstance(CommunicationConstant.POST_FRAGMENT_TAG_COLLEGE));
-        mFragments.add(PostFragment.newInstance(CommunicationConstant.POST_FRAGMENT_TAG_NOTE));
-
+        mFragments.add(PostFragment.newInstance(CommunicationConstant.TAG_COLLEGE));
+        mFragments.add(PostFragment.newInstance(CommunicationConstant.TAG_NOTE));
+        mToolbar.inflateMenu(R.menu.communication_navigation_item);
+        mToolbar.setOnMenuItemClickListener(this);
         mTabLayout.addTab(mTabLayout.newTab().setText(mTabs.get(0)));
         mTabLayout.addTab(mTabLayout.newTab().setText(mTabs.get(1)));
 
@@ -70,21 +70,7 @@ public class CommunicationFragment extends FragmentM implements Toolbar.OnMenuIt
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setAdapter(new CommunicationPagerAdapter(mFragmentManager));
-        mToolbar.setOnMenuItemClickListener(this);
         mViewPager.addOnPageChangeListener(this);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        SearchFragment searchFragment = SearchFragment.newInstance();
-        searchFragment.setOnSearchClickListener(new IOnSearchClickListener() {
-            @Override
-            public void OnSearchClick(String keyword) {
-
-            }
-        });
-        searchFragment.show(mFragmentManager, SearchFragment.TAG);
-        return false;
     }
 
     /**
@@ -100,12 +86,42 @@ public class CommunicationFragment extends FragmentM implements Toolbar.OnMenuIt
 
     @Override
     public void onPageSelected(int position) {
-
+        mTag = position; // 记录当前是哪一个fragment
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        LogUtils.d("Menu点击", "" + item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.communication_search_post: // 搜索帖子
+                SearchFragment searchFragment = SearchFragment.newInstance();
+                searchFragment.setOnSearchClickListener(new IOnSearchClickListener() {
+                    @Override
+                    public void OnSearchClick(String keyword) {
+                        // TODO: 2018/3/9 搜索帖子
+                    }
+                });
+                searchFragment.show(mFragmentManager, SearchFragment.TAG);
+                break;
+            case R.id.communication_add_post: // 发起帖子
+                addPost(mTag);
+                break;
+            default:
+        }
+        return false;
+    }
+
+    /**
+     * 用于发布帖子，根据tag来判断是哪一个fragment发出的请求
+     * @param tag fragment标签
+     */
+    private void addPost(int tag) {
+        AddPostActivity.newInstance(getActivity(), tag);
     }
 
     private class CommunicationPagerAdapter extends FragmentPagerAdapter {

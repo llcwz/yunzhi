@@ -1,5 +1,6 @@
 package com.union.yunzhi.yunzhi.fragment.classfication;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.union.yunzhi.common.app.FragmentM;
@@ -21,12 +22,24 @@ public class ClassFileFragment extends FragmentM{
     }
 
     @Override
+    protected void initArgs(Bundle bundle) {
+        super.initArgs(bundle);
+
+
+
+    }
+
+    @Override
     protected void initWidget(View view) {
+
+
 
     }
 
     @Override
     protected void initData() {
+
+
 
     }
 }

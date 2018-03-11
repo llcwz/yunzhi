@@ -8,10 +8,4 @@
         app:showAsAction="always"
         android:title="发表"/>
 
-    <item
-        android:id="@+id/communication_search_post"
-        android:icon="@drawable/ic_communication_search_post"
-        app:showAsAction="always"
-        android:title="查询"/>
-
 </menu>
