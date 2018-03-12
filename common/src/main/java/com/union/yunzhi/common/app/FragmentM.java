@@ -90,7 +90,7 @@ public abstract class FragmentM extends Fragment {
     /**
      * 触发刷新时候回掉
      */
-    protected void initRefreshData(){
+    public void initRefreshData(){
 
     }
 

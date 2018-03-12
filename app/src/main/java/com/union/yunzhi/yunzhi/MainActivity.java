@@ -96,6 +96,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
        if(tab.getFragment() instanceof HomeFragment){
 
            HomeFragment homeFragment = (HomeFragment)tab.getFragment();
+           homeFragment.initRefreshData();
 
        }else if(tab.getFragment() instanceof ClassFragment){
 
@@ -112,7 +113,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
        }else {
 
            MeFragment meFragment = (MeFragment) tab.getFragment();
-           
+
        }
 
     }

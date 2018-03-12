@@ -14,6 +14,7 @@ import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.yunzhi.MainActivity;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.fragment.guide.GuideFragment;
+import com.union.yunzhi.yunzhi.manager.SPManager;
 
 public class GuideActivity extends ActivityM {
 
@@ -92,7 +93,7 @@ public class GuideActivity extends ActivityM {
      * 动画结束的时候跳转
      */
     private void endTutorial() {
-     //   SPManager.getInstance().putBoolean(SPManager.IS_SHOW_GUIDE, true);
+        SPManager.getInstance().putBoolean(SPManager.IS_SHOW_GUIDE, true);
         startActivity(new Intent(GuideActivity.this, MainActivity.class));
         finish();
     }

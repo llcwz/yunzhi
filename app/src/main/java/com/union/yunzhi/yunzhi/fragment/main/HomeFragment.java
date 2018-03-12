@@ -207,6 +207,8 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     }
 
 
-
-
+    @Override
+    public void initRefreshData() {
+        super.initRefreshData();
+    }
 }
