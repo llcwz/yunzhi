@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -12,10 +11,11 @@ import android.widget.TextView;
 
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.common.widget.MyScrollView;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-import com.union.yunzhi.factories.moudles.classfication.beans.TeacherBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.details.TeacherBean;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.MoreTeacherAdapter;
 
@@ -69,18 +69,17 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
         mList=new ArrayList<>();
         TeacherBean teacherBean=new TeacherBean();
 
-        teacherBean.portraitUrl="portraitUrl"; teacherBean.bigTitleFather="张三";
-        teacherBean.smallTitleFather="武汉科技大学副教授"; teacherBean.good="1314";
-        teacherBean.bad="13";
-        teacherBean.mLongText="怀特森先生教我们六年级的科学课。" +
+        teacherBean.photoUrl="portraitUrl"; teacherBean.teacherName="张三";
+        teacherBean.teacherState="武汉科技大学副教授"; teacherBean.good=1314;
+        teacherBean.teacherInfo="怀特森先生教我们六年级的科学课。" +
                 "第一节课上，他问我们：“谁知道一种叫做凯蒂旺普斯的动物？”" +
                 "同学们面面相觑（qù），就连生物比赛得过奖的比利也都惊奇地瞪大了眼睛。\n" +
                 "　　“噢，没有人知道。”怀特森老师笑了笑，“那是一种夜行兽，在冰川期无法适应环境的变化而绝迹了。”"
                 +"说着，他从讲桌里拿出一件动物头骨，向我们解释起这种动物的特征来。" +
                 "讲完，他把头骨交给前排的同学，让大家轮流观察一下。我们饶有兴趣地传看，记笔记，有的同学还画了图。" +
                 "我心中暗想，这回我遇到一位博学的老师了。";
-        teacherBean.imgUrl1="imgUrl1"; teacherBean.imgUrl2="imgUrl1"; teacherBean.imgUrl3="imgUrl1";
-        teacherBean.name1="操作系统"; teacherBean.name2="算法分析"; teacherBean.name3="数据结构";
+        teacherBean.course1.courseCover="imgUrl1"; teacherBean.course2.courseCover="imgUrl1"; teacherBean.course3.courseCover="imgUrl1";
+        teacherBean.course1.courseName="操作系统"; teacherBean.course2.courseName="算法分析"; teacherBean.course3.courseName="数据结构";
         mList.add(teacherBean); mList.add(teacherBean); mList.add(teacherBean); mList.add(teacherBean);
 
         return super.initArgs(bundle);
@@ -100,6 +99,9 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
         mMyScrollView.setOnScollChangedListener(new MyScrollView.OnScollChangedListener() {
             @Override
             public void onScrollViewChanged(MyScrollView scrollView, int x, int y, int oldx, int oldy) {
+
+                //LogUtils.d("KKK","滚动监听");
+
                 /**
                  * 注意此处
                  * HiddenAnimUtils.newInstance(getBaseContext(),48).openAnimate(showView);
@@ -110,22 +112,21 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
                 //TODO 有待优化
                 //手指上滑
                 if((y>=(hiddenView.getHeight()))&&y-oldy>8){
-                    Log.d("KKK","111"+scrollView.getScrollY());
                     if(hiddenView.getVisibility()==View.VISIBLE){
-                        Log.d("KKK","11111111");
+                        LogUtils.d("KKK","执行View隐藏");
                         //HiddenAnimUtils.newInstance(getBaseContext(),224).closeAnimate(hiddenView);
                         hiddenView.setVisibility(View.GONE);
                         HiddenAnimUtils.newInstance(getBaseContext(),48).openAnimate(showView);
                     }
                 } else if(scrollView.getScrollY()==0){//下滑到顶
-                    Log.d("KKK","222");
                     if(hiddenView.getVisibility()==View.GONE){
+                        LogUtils.d("KKK","执行View显现");
                         HiddenAnimUtils.newInstance(getBaseContext(),224).openAnimate(hiddenView);
                       }
                     //HiddenAnimUtils.newInstance(getBaseContext(),48).closeAnimate(showView);
                     showView.setVisibility(View.GONE);
                 }else{
-                    Log.d("KKK","333");
+
                 }
             }
         });

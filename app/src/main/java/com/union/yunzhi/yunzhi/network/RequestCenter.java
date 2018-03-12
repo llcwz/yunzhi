@@ -88,7 +88,17 @@ public class RequestCenter {
      * @param listener  回调接口
      */
 
-    public static void requestAddWork(String id, String name, String course, String type, String start, String end, String state, String promulgator, String time, int viewType, DisposeDataListener listener){
+    public static void requestAddWork(String id,
+                                      String name,
+                                      String course,
+                                      String type,
+                                      String start,
+                                      String end,
+                                      String state,
+                                      String promulgator,
+                                      String time,
+                                      int viewType,
+                                      DisposeDataListener listener){
         RequestParams params = new RequestParams();
         params.put("mId", id);
         params.put("mName", name);
@@ -101,6 +111,10 @@ public class RequestCenter {
         params.put("mTime", time);
         params.put("mViewType", " " + viewType);
         RequestCenter.postRequest(HttpConstants.ADD_WORK_URL, params, listener, WorkModel.class);
+
+    }
+
+    public static void requestCourseDeatails(){
 
     }
 

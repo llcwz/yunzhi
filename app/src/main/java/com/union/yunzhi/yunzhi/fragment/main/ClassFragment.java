@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.helper.GlideImageLoader;
@@ -87,7 +86,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
         title.add("快乐寒假");title.add("快乐暑假");title.add("快乐春节");
 
         //课程测试数据
-        CourseShowBean bean=new CourseShowBean("操作系统","张三","index.jpg",1236,12,670);
+        CourseShowBean bean=new CourseShowBean("操作系统","张三","index.jpg",1236,670);
         test2.add(bean);test2.add(bean);test2.add(bean);test2.add(bean);
         test2.add(bean);test2.add(bean);test2.add(bean);test2.add(bean);
         test2.add(bean);test2.add(bean);test2.add(bean);test2.add(bean);
@@ -246,22 +245,11 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     @Override
     protected void initData() {
 
-        // TODO itemView 内部点击事件
+        // TODO 点击事件
         onClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                switch(v.getId()){
-
-                    case R.id.imgBtn_thumbUp:
-                        Toast.makeText(getActivity(),"点赞",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.imgBtn_thumbDown:
-                        Toast.makeText(getActivity(),"差评",Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
-                }
             }
         };
 
