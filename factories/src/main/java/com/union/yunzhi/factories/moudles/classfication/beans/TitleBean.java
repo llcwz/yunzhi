@@ -10,31 +10,37 @@ import java.util.List;
 
 public class TitleBean {
 
-    private List<String> sonTitle=new ArrayList<>();//课程名称集合
-    private List<String> sonCode=new ArrayList<>();//课程代码集合
-    private String title;//学院名称
+    private List<String> courseName =new ArrayList<>();//课程名称集合
+    private List<String> courseCode =new ArrayList<>();//课程代码集合
+    private String academicName;//学院名称
 
-    public TitleBean(String title,List<String> sonTitle,List<String> sonCode){
-        this.title=title;
-        this.sonTitle=sonTitle;
-        this.sonCode=sonCode;
+    public TitleBean(String academicName, List<String> courseName, List<String> courseCode){
+        this.academicName=academicName;
+        this.courseName = courseName;
+        this.courseCode = courseCode;
     }
 
-    public String getTitle() {
-        return title;
+    public List<String> getCourseName() {
+        return courseName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCourseName(List<String> courseName) {
+        this.courseName = courseName;
     }
 
-    public List<String> getSonTitle() {
-        return sonTitle;
+    public List<String> getCourseCode() {
+        return courseCode;
     }
 
-    public void setSonTitle(List<String> sonTitle) {
-        this.sonTitle = sonTitle;
+    public void setCourseCode(List<String> courseCode) {
+        this.courseCode = courseCode;
     }
 
+    public String getAcademicName() {
+        return academicName;
+    }
 
+    public void setAcademicName(String academicName) {
+        this.academicName = academicName;
+    }
 }
