@@ -90,7 +90,6 @@ public class SearchActivity extends ActivityM implements ViewHelper.onFinshListe
         historyListView = (RecyclerView) historyLayout
                 .findViewById(R.id.history_list_view);
 
-       ;
 
         // 空界面View
         emptyLayout = (LinearLayout) findViewById(R.id.empty_layout);
