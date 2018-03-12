@@ -60,6 +60,9 @@
         <activity
             android:name=".activities.classfication.ClassCourseFile"
             android:screenOrientation="portrait" />
+        <activity android:name=".activities.classfication.QuestionDetailsActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".zxing.app.PreferencesActivity" />
         <activity android:name=".zxing.app.CaptureActivity" />
         <activity android:name=".activities.me.SearchGradeActivity" />

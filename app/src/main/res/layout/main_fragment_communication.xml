@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-              android:orientation="vertical"
     tools:context="com.union.yunzhi.yunzhi.fragment.main.CommunicationFragment"
                                                  xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -15,14 +14,14 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/len_48"
+            android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways|snap"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/len_48"
+            android:layout_height="wrap_content"
             app:tabIndicatorHeight="@dimen/len_2"
             app:tabIndicatorColor="@color/red_500"
             app:tabTextColor="@color/white"
@@ -34,7 +33,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/len_48"
-        android:background="@color/blue_100"/>
+        android:background="@color/blue_100"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

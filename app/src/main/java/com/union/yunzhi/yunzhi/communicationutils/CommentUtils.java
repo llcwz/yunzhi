@@ -7,7 +7,6 @@ import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
-import com.union.yunzhi.yunzhi.adapter.PostAdapter;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
@@ -25,7 +24,7 @@ public class CommentUtils {
 
     private UserManager mUserManager;
     private Context mContext; // 上下文
-    private String mId; // 该帖子的id
+    private String mId; // 该帖子或者的id
     private String mContent; // 评论内容
 
 
@@ -41,7 +40,7 @@ public class CommentUtils {
     }
 
 
-    public void postComment(final CommentAdapter commentAdapter) {
+    public void addComment(final CommentAdapter commentAdapter) {
 
         DialogManager.getInstnce().showProgressDialog(mContext);
         // 当前系统时间
@@ -57,7 +56,7 @@ public class CommentUtils {
                 mContent,
                 likeModels);
 
-        RequestCenter.requestPostComment(mId,
+        RequestCenter.requestComment(mId,
                 id,
                 mUserManager.getPerson().getPhotourl(),
                 mUserManager.getPerson().getStudentname(),

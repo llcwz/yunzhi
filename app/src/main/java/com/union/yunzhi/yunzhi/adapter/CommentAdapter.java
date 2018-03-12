@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
+import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.manager.UserManager;
@@ -74,14 +75,13 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
                 @Override
                 public void onClick(View view) {
                     if (mUserManager.hasLogined()) { // 用户登录了
-                        LikeUtils likeUtils = LikeUtils.newInstance(mUserManager, mContext, mLike,mLikeCount);
+                        LikeUtils likeUtils = LikeUtils.newInstance(CommunicationConstant.LIKE_TAG_COMMENT,mUserManager, mContext, mLike,mLikeCount);
                         likeUtils.checkedCommentLike(data);
                     } else { // 用户没登录
                         Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-
         }
     }
 

@@ -1,4 +1,4 @@
-package com.union.yunzhi.yunzhi.activities.communication;
+package com.union.yunzhi.yunzhi.activities.classfication;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -18,9 +17,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
-import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
 import com.union.yunzhi.yunzhi.communicationutils.CommentUtils;
@@ -29,13 +28,13 @@ import com.union.yunzhi.yunzhi.manager.UserManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PostDetailsActivity extends ActivityM implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class QuestionDetailsActivity extends ActivityM implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+    
+    public static final String TAG = "QuestionDetailsActivity";
     private UserManager mUserManager;
-    private PostModel mPostModel;
-    private CommentAdapter mAdapter;
-    private Toolbar mToolbar;
+    private QuestionBean mQuestionBean;
+    private CommentAdapter mAdapter; // 这个虽然是在communication中的评论，但是也可以拿来用作问题的回复
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private TextView mTitle;
     private CircleImageView mIcon;
     private TextView mAuthor;
     private TextView mTime;
@@ -43,42 +42,40 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     private RecyclerView mRecyclerView;
     private ImageView mLike; // 点赞图标
     private TextView mLikeCounts; // 点赞数
-    private EditText mComment; // 自己编辑的评论内容
-    private TextView mSendComment; // 发送评论
+    private EditText mComment; // 自己编辑的回复内容
+    private TextView mSendComment; // 发送回复
 
-    public static void newInstance(Context context, PostModel postModel) {
-        Intent intent = new Intent(context, PostDetailsActivity.class);
-        intent.putExtra("post", postModel);
+    public static void newInstance(Context context, QuestionBean questionBean) {
+        Intent intent = new Intent(context, QuestionDetailsActivity.class);
+        intent.putExtra(TAG, questionBean);
         context.startActivity(intent);
     }
 
     @Override
     protected int getContentLayoutId() {
-        return R.layout.activity_communication_post_details;
+        return R.layout.activity_question_details;
     }
 
     @Override
     protected void initWidget() {
-        mPostModel = getIntent().getParcelableExtra("post");
+        mQuestionBean = getIntent().getParcelableExtra(TAG);
         mUserManager = UserManager.getInstance();
-        data();
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        mTitle = (TextView) findViewById(R.id.tv_post_title);
-        mIcon = (CircleImageView) findViewById(R.id.ci_post_icon);
-        mAuthor = (TextView) findViewById(R.id.tv_communication_author);
-        mTime = (TextView) findViewById(R.id.tv_post_time);
-        mContent = (TextView) findViewById(R.id.tv_post_content);
+        mIcon = (CircleImageView) findViewById(R.id.ci_question_icon);
+        mAuthor = (TextView) findViewById(R.id.tv_question_author);
+        mTime = (TextView) findViewById(R.id.tv_question_time);
+        mLike = (ImageView) findViewById(R.id.iv_question_like);
+        mLikeCounts = (TextView) findViewById(R.id.tv_question_like);
+        mContent = (TextView) findViewById(R.id.tv_question_content);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
-        mLike = (ImageView) findViewById(R.id.iv_post_like);
-        mLikeCounts = (TextView) findViewById(R.id.tv_post_like);
-        mComment = (EditText) findViewById(R.id.et_send_comment);
-        mSendComment = (TextView) findViewById(R.id.tv_send_comment);
+        mComment = (EditText) findViewById(R.id.et_send_reply);
+        mSendComment = (TextView) findViewById(R.id.tv_send_reply);
     }
 
     // 初始化数据
     private void data() {
-        mAdapter = new CommentAdapter(this, mPostModel.getCommentModels(),new MyAdapter.AdapterListener<CommentModel>() {
+        mAdapter = new CommentAdapter(this, mQuestionBean.commentModels, new MyAdapter.AdapterListener<CommentModel>() {
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, CommentModel data) {
 
@@ -103,16 +100,17 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
 
     @Override
     protected void initData() {
-        mTitle.setText(mPostModel.getTitle());
-        Glide.with(this).load(mPostModel.getIcon()).into(mIcon);
-        mAuthor.setText(mPostModel.getAuthor());
-        mTime.setText(mPostModel.getTime());
-        mContent.setText(mPostModel.getContent());
+        data();
+        Glide.with(this).load(mQuestionBean.iconUrl).into(mIcon);
+        mAuthor.setText(mQuestionBean.author);
+        mTime.setText(mQuestionBean.time);
+        mContent.setText(mQuestionBean.content);
         mSendComment.setOnClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
-        if (mPostModel.getLikeModels().size() > 0) {
-            mLikeCounts.setText("" + mPostModel.getLikeModels().size());
+        mRecyclerView.scrollToPosition(0);
+        if (mQuestionBean.likeModels.size() > 0) {
+            mLikeCounts.setText("" + mQuestionBean.likeModels.size());
         }
         mLike.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -124,19 +122,19 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         // 用户登录才能操作
         if (mUserManager.hasLogined()) { // 如果用户登录了
             switch (view.getId()) {
-                case R.id.tv_send_comment: // 发表评论
+                case R.id.tv_send_reply: // 回复
                     String comment = mComment.getText().toString();
                     if (TextUtils.isEmpty(comment)) {
-                        Toast.makeText(this, "请先评论", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "空内容", Toast.LENGTH_SHORT).show();
                     } else {
                         mComment.setText("");
-                        CommentUtils commentUtils =CommentUtils.newInstance(mUserManager, this, mPostModel.getId(), comment);
+                        CommentUtils commentUtils =CommentUtils.newInstance(mUserManager, this, mQuestionBean.id, comment);
                         commentUtils.addComment(mAdapter); // 刷新
                     }
                     break;
-                case R.id.iv_post_like: // 点赞帖子
-                    LikeUtils likeUtils = LikeUtils.newInstance(CommunicationConstant.LIKE_TAG_POST,mUserManager, this, mLike, mLikeCounts);
-                    likeUtils.checkedPostLike(mPostModel);
+                case R.id.iv_question_like: // 点赞问题
+                    LikeUtils likeUtils = LikeUtils.newInstance(CommunicationConstant.LIKE_TAG_QUESTION,mUserManager, this, mLike, mLikeCounts);
+                    likeUtils.checkedQuestionLike(mQuestionBean);
                     break;
                 default:
             }

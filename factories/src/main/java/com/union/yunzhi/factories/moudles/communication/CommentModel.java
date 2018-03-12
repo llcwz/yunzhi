@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class CommentModel implements Parcelable {
-    private String mId; // 该评论的id
+    private String mId; // 该评论或者问题的id
     private String mIcon; // 头像
     private String mAuthor; // 作者
     private String mTime; // 时间

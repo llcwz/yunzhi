@@ -108,14 +108,17 @@ public class RequestCenter {
 
     /**
      * @function 上传点赞
+     * @param tag 区分标记，以此区分是帖子、评论还是问题
+     * @param postOrCommentOrQuestionId 给点赞的那个东西的id
      * @param id 点赞者的id
      * @param icon 点赞者的头像
      * @param author 点赞者的姓名
      * @param time 点赞时的时间
      */
-    public static void requestLike(String commentId,String id, String icon, String author, String time, DisposeDataListener listener) {
+    public static void requestLike(int tag,String postOrCommentOrQuestionId,String id, String icon, String author, String time, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("id", commentId);
+        params.put("tag","" + tag);
+        params.put("id", postOrCommentOrQuestionId);
         params.put("mId", id);
         params.put("mIcon", icon);
         params.put("mAuthor", author);
@@ -125,7 +128,7 @@ public class RequestCenter {
 
     /**
      *
-     * @param postId
+     * @param postId 帖子或者问题的id
      * @param id
      * @param icon
      * @param author
@@ -133,9 +136,9 @@ public class RequestCenter {
      * @param content
      * @param listener
      */
-    public static void requestPostComment(String postId, String id, String icon, String author, String time,String content, DisposeDataListener listener) {
+    public static void requestComment(String postId, String id, String icon, String author, String time, String content, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("postId", postId); // 帖子的id
+        params.put("postId", postId);
         params.put("mId", id);
         params.put("mIcon", icon);
         params.put("mAuthor", author);

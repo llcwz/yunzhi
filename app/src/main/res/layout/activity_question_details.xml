@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.union.yunzhi.yunzhi.activities.classfication.QuestionDetailsActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_48"
+        />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@+id/bottom_layout">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/len_8">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/len_40"
+                        android:layout_marginTop="@dimen/len_16">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ci_question_icon"
+                            android:layout_width="@dimen/len_40"
+                            android:layout_height="@dimen/len_40"
+                            tools:background="@drawable/dragon_cat"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/len_8"
+                            android:layout_toRightOf="@+id/ci_question_icon"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_question_author"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="李德贵"/>
+
+                            <TextView
+                                android:id="@+id/tv_question_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2018.3.12 15:16"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/iv_question_like"
+                                android:layout_width="@dimen/len_24"
+                                android:layout_height="@dimen/len_24"
+                                android:layout_toLeftOf="@+id/tv_question_like"
+                                android:layout_marginRight="@dimen/len_8"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/iv_like_unselect"/>
+
+                            <TextView
+                                android:id="@+id/tv_question_like"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/len_32"
+                                android:text="0"
+                                android:textSize="@dimen/font_16"
+                                android:textStyle="bold"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/len_16"
+                        android:background="@color/black_alpha_48"/>
+
+                    <TextView
+                        android:id="@+id/tv_question_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/len_16"
+                        tools:text="前端开发并不简单，哪怕对于初级甚至中级的前端开发者来说，
+
+即使他们有一定的JavaScript代码功底，
+
+如果单纯交代他们实现一个前端功能，他们可能也可以实现出来，
+
+但他们的实现风格要么乱七八糟，要么“随心所欲”。"/>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/len_32"
+                        android:layout_marginTop="@dimen/len_16"
+                        android:background="@color/black_alpha_32"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/len_8"
+                        android:padding="@dimen/len_8"
+                        android:background="@color/green_50"/>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignTop="@+id/bottom_layout"
+        android:background="@color/black_alpha_48"/>
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/len_8"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/et_send_reply"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:ellipsize="start"
+            tools:text="日子，就在这一半清醒，一半恍惚中悄然流逝，冬去春来，又是一年。不知不觉，就是一年不见了；不知不觉，马上就是分别两年之久了。人啊，到底活的什么劲？怎么好好的，就会消失不见？你们都走了这么久了，可否想念？可否再见有期？"/>
+
+        <TextView
+            android:id="@+id/tv_send_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/len_6"
+            android:gravity="center"
+            android:text="回复"
+            android:textSize="@dimen/font_16"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</RelativeLayout>

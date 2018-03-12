@@ -6,6 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class LikeUtils {
 
+    private int mTag; // 点赞的类型：0给帖子点赞，1给评论点赞，2给问题点赞
     private UserManager mUserManager;
     private Context mContext; // 上下文
     private ImageView mLike; // 点赞图标
@@ -39,7 +41,7 @@ public class LikeUtils {
                 Glide.with(mContext).load(R.drawable.iv_like_select).into(mLike);
                 mLike.setClickable(false);
             } else {
-                loadLike(mUserManager,mContext,id,mLike, mLikeCount);
+                loadLike(mTag,mUserManager,mContext,id,mLike, mLikeCount);
             }
         }
     };
@@ -63,11 +65,12 @@ public class LikeUtils {
      * @param likeCount 点赞数
      * @return
      */
-    public static LikeUtils newInstance(UserManager userManager, Context context, ImageView like, TextView likeCount) {
-        return new LikeUtils(userManager, context, like, likeCount);
+    public static LikeUtils newInstance(int tag,UserManager userManager, Context context, ImageView like, TextView likeCount) {
+        return new LikeUtils(tag,userManager, context, like, likeCount);
     }
 
-    private LikeUtils(UserManager userManager, Context context, ImageView like, TextView likeCount) {
+    private LikeUtils(int tag,UserManager userManager, Context context, ImageView like, TextView likeCount) {
+        mTag = tag;
         mUserManager = userManager;
         mContext = context;
         mLike = like;
@@ -82,7 +85,7 @@ public class LikeUtils {
             if (commentModel.getLikeModels().size() != 0) { // 该条评论的赞不为0,那么有可能该用户赞过该条评论
                 isLike(commentModel.getId(),commentModel.getLikeModels(), mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
             } else { // 该条评论赞数为0，用户肯定可以点击
-                loadLike(mUserManager,mContext,commentModel.getId(),mLike, mLikeCount);
+                loadLike(mTag,mUserManager,mContext,commentModel.getId(),mLike, mLikeCount);
             }
     }
 
@@ -94,7 +97,19 @@ public class LikeUtils {
         if (postModel.getLikeModels().size() != 0) { // 该帖子的赞不为0,那么有可能该用户赞过该帖子
             isLike(postModel.getId(),postModel.getLikeModels(), mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
         } else { // 该帖子的赞数为0，用户肯定可以点击
-            loadLike(mUserManager,mContext,postModel.getId(),mLike, mLikeCount);
+            loadLike(mTag,mUserManager,mContext,postModel.getId(),mLike, mLikeCount);
+        }
+    }
+
+    /**
+     * @function 用户给问题点赞
+     * @param questionBean
+     */
+    public   void checkedQuestionLike(QuestionBean questionBean) {
+        if (questionBean.likeModels.size() != 0) { // 该帖子的赞不为0,那么有可能该用户赞过该帖子
+            isLike(questionBean.id,questionBean.likeModels, mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
+        } else { // 该帖子的赞数为0，用户肯定可以点击
+            loadLike(mTag,mUserManager,mContext,questionBean.id,mLike, mLikeCount);
         }
     }
 
@@ -122,12 +137,13 @@ public class LikeUtils {
     /**
      * 上传点赞
      */
-    private  void loadLike(UserManager userManager, final Context context,String id, final ImageView like, final TextView likeCount) {
+    private  void loadLike(int tag,UserManager userManager, final Context context,String id, final ImageView like, final TextView likeCount) {
 
         DialogManager.getInstnce().showProgressDialog(context);
         // 当前系统时间
         String time = new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date(System.currentTimeMillis()));
-        RequestCenter.requestLike(id,
+        RequestCenter.requestLike(tag,
+                id,
                 userManager.getPerson().getAccount(),
                 userManager.getPerson().getPhotourl(),
                 userManager.getPerson().getStudentname(),
