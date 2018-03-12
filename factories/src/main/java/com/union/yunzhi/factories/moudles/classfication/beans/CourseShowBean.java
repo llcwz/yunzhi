@@ -9,15 +9,14 @@ public class CourseShowBean {
 
     public String courseName;
     public String teacherName;
-    public String portraitUrl;//课程图像
-    public int good,bad,commentNum;
+    public String courseCover;//课程图像
+    public int good,commentNum;
 
-    public CourseShowBean(String courseName, String teacherName, String portraitUrl, int good, int bad, int commentNum){
+    public CourseShowBean(String courseName, String teacherName, String portraitUrl, int good,  int commentNum){
         this.courseName=courseName;
         this.teacherName=teacherName;
-        this.portraitUrl=portraitUrl;
+        this.courseCover=portraitUrl;
         this.good=good;
-        this.bad=bad;
         this.commentNum=commentNum;
     }
 

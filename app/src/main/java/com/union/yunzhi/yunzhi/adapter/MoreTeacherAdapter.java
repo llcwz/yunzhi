@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.classfication.beans.TeacherBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.details.TeacherBean;
 import com.union.yunzhi.yunzhi.R;
 
 import java.util.List;
@@ -94,18 +94,17 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
 
             //TODO 相关老师 模块使用框架加载头像
             //Glide.with(context).load(data.portraitUrl).into(portrait);
-            name.setText(data.bigTitleFather);
-            state.setText(data.smallTitleFather);
-            good.setText(data.good);
-            good.setText(data.bad);
-            mLongText.setText(data.mLongText);
+            name.setText(data.teacherName);
+            state.setText(data.teacherState);
+            good.setText(String.valueOf(data.good));
+            mLongText.setText(data.teacherInfo);
 
             //TODO 相关老师 模块使用框架加载其他课程的图片
-            //Glide.with(context).load(data.imgUrl1).into(img1);
+            //Glide.with(context).load(data.course1.courseCover).placeholder().into(img1);
             //Glide.with(context).load(data.imgUrl2).into(img2);
             //Glide.with(context).load(data.imgUrl3).into(img3);
-            tv1.setText(data.name1); tv2.setText(data.name2);
-            tv3.setText(data.name3);
+            tv1.setText(data.course1.courseName); tv2.setText(data.course2.courseName);
+            tv3.setText(data.course3.courseName);
 
         }
 
