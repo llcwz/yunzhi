@@ -43,15 +43,14 @@ public class ClassCourseAdapter extends MyAdapter<CourseShowBean>{
 
     public class CouseViewHolder extends MyViewHolder<CourseShowBean>{
 
-        public TextView mTextView1,mTextView2,mTextView3,mTextView4,mTextView5;
+        public TextView mTextView1,mTextView2,mTextView3,mTextView4;
         public ImageView mImageView;
         public CouseViewHolder(View itemView) {
             super(itemView);
             mTextView1=(TextView) itemView.findViewById(R.id.tv_largeTitle);
             mTextView2=(TextView) itemView.findViewById(R.id.tv_smallTitle);
             mTextView3=(TextView) itemView.findViewById(R.id.tv_upCount);
-            mTextView4=(TextView) itemView.findViewById(R.id.tv_downCount);
-            mTextView5=(TextView) itemView.findViewById(R.id.tv_pinLunCount);
+            mTextView4  =(TextView) itemView.findViewById(R.id.tv_pinLunCount);
             mImageView=(ImageView) itemView.findViewById(R.id.iv_show_course);
         }
 
@@ -60,9 +59,8 @@ public class ClassCourseAdapter extends MyAdapter<CourseShowBean>{
             mTextView1.setText(data.courseName);
             mTextView2.setText(data.teacherName);
             mTextView3.setText(String.valueOf(data.good));
-            mTextView4.setText(String.valueOf(data.bad));
-            mTextView5.setText(String.valueOf(data.commentNum));
-            //Glide.with(context).load(data.portraitUrl).into(mImageView);
+            mTextView4.setText(String.valueOf(data.commentNum));
+            //Glide.with(context).load(data.courseCover).into(mImageView);
         }
     }
 }

@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">common</string>
     <string name="permision">申请权限</string>
+    <string name="search_no_title">"抱歉,没有找到与 \""</string>
+    <string name="search_no_end">"\" 相关的课程"</string>
 </resources>

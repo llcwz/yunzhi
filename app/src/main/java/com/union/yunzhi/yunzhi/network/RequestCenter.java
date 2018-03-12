@@ -90,7 +90,17 @@ public class RequestCenter {
      * @param listener  回调接口
      */
 
-    public static void requestAddWork(String id, String name, String course, String type, String start, String end, String state, String promulgator, String time, int viewType, DisposeDataListener listener){
+    public static void requestAddWork(String id,
+                                      String name,
+                                      String course,
+                                      String type,
+                                      String start,
+                                      String end,
+                                      String state,
+                                      String promulgator,
+                                      String time,
+                                      int viewType,
+                                      DisposeDataListener listener){
         RequestParams params = new RequestParams();
         params.put("mId", id);
         params.put("mName", name);
@@ -106,6 +116,7 @@ public class RequestCenter {
 
     }
 
+<<<<<<< HEAD
     /**
      * @function 上传点赞
      * @param tag 区分标记，以此区分是帖子、评论还是问题
@@ -161,5 +172,11 @@ public class RequestCenter {
         params.put("mLikeModels","");
         RequestCenter.postRequest(HttpConstants.ADD_POST_URL, params, listener, null);
     }
+=======
+    public static void requestCourseDeatails(){
+
+    }
+
+>>>>>>> 1da5bbeceb78b9a0b105705c2ab5a07ea8c9f0f7
 
 }

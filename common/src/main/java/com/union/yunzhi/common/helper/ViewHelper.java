@@ -24,6 +24,7 @@ public class ViewHelper  {
     float x2 = 0;
     float y1 = 0;
     float y2 = 0;
+    private boolean LOCK_Y;//锁住Y方向的滑动
 
     public ViewHelper(){
 
@@ -52,13 +53,8 @@ public class ViewHelper  {
                     //当手指离开的时候
                     x2 = event.getX();
                     y2 = event.getY();
-                    if(y1-y2>50||x2-x1>50){
-                        LogUtils.i(TGA+"滑动","向上滑销毁");
-                        if(mListener!=null){
-                            mListener.toFinshView();
-                        }
-                    }else if(y2-y1>50 ||x2-x1>50){
-                        LogUtils.i(TGA+"滑动","向下滑销毁");
+                    if(x2-x1>520){
+                        LogUtils.i(TGA+"滑动","向上右滑销毁");
                         if(mListener!=null){
                             mListener.toFinshView();
                         }
@@ -71,6 +67,7 @@ public class ViewHelper  {
 
 
    public interface onFinshListener{
+       //回调通知去销毁View
         void toFinshView();
     }
 

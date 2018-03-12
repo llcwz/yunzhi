@@ -1,4 +1,4 @@
-package com.union.yunzhi.factories.moudles.classfication.beans;
+package com.union.yunzhi.factories.moudles.classfication.beans.details;
 
 import com.union.yunzhi.factories.moudles.BaseModel;
 
