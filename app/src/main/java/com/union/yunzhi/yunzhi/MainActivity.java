@@ -8,13 +8,14 @@ import android.widget.FrameLayout;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.helper.NavHelper;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.yunzhi.fragment.main.ClassFragment;
 import com.union.yunzhi.yunzhi.fragment.main.CommunicationFragment;
 import com.union.yunzhi.yunzhi.fragment.main.HomeFragment;
 import com.union.yunzhi.yunzhi.fragment.main.LiveFragment;
 import com.union.yunzhi.yunzhi.fragment.main.MeFragment;
 
-public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
+public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,NavHelper.OnTabReselectListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
 
 
     private BottomNavigationViewEx bottomNavigationViewEx;
@@ -22,6 +23,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     private NavHelper<Integer> mNavHelper;
 
     private FrameLayout mContainer;
+
 
     private Boolean flag = false;
     @Override
@@ -56,6 +58,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
                 R.id.lay_contianer,
                 getSupportFragmentManager(),
                 MainActivity.this,
+                MainActivity.this,
                 null);
 
         mNavHelper.add(R.id.navigation_home,new NavHelper.Tab<Integer>(HomeFragment.class,R.string.navigation_home))
@@ -81,4 +84,41 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     public void onTabChanged(NavHelper.Tab<Integer> newTab, NavHelper.Tab<Integer> oldTab) {
 
     }
+
+
+    /**
+     * 触发双击刷新
+     * @param tab
+     */
+    @Override
+    public  void  notifyTabReselect(NavHelper.Tab<Integer> tab) {
+        LogUtils.i("notifyTabReselect",tab.getFragment().toString());
+       if(tab.getFragment() instanceof HomeFragment){
+
+           HomeFragment homeFragment = (HomeFragment)tab.getFragment();
+           homeFragment.initRefreshData();
+
+       }else if(tab.getFragment() instanceof ClassFragment){
+
+           ClassFragment classFragment = (ClassFragment)tab.getFragment();
+
+       }else if(tab.getFragment() instanceof CommunicationFragment){
+
+           CommunicationFragment ccommunicationFragment = (CommunicationFragment)tab.getFragment();
+
+       }else if(tab.getFragment() instanceof LiveFragment){
+
+           LiveFragment liveFragment = (LiveFragment)tab.getFragment();
+
+       }else {
+
+           MeFragment meFragment = (MeFragment) tab.getFragment();
+
+       }
+
+    }
+
+
+
+
 }

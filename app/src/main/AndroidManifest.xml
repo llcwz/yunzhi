@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.union.yunzhi.yunzhi">
+    package="com.union.yunzhi.yunzhi">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     //读取内存权限
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     //扫码相关的权限
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
         android:name=".application.MyApplication"
@@ -17,51 +17,70 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoadingActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <!--  加载页面   -->
+        <activity android:name=".activities.LoadingActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- 引导界面  只会出现一次 -->
+        <activity
+            android:name=".activities.GuideActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activities.me.ChangePasswordActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activities.me.MyCourseActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activities.me.MyMessageActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activities.me.WorkActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activities.classfication.ClassCourseDetails"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.classfication.ClassCourseFile"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".zxing.app.PreferencesActivity"/>
-        <activity android:name=".zxing.app.CaptureActivity"/>
-        <activity android:name=".activities.me.SearchGradeActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <!-- 登陆界面-->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".activities.me.NewWorkActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activities.communication.PostDetailsActivity">
-        </activity>
-        <activity android:name=".activities.communication.AddPostActivity">
-        </activity>
-        <activity android:name=".activities.classfication.VideoActivity"
+
+
+        <!--  -->
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.me.ChangePasswordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.me.MyCourseActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.me.MyMessageActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.me.WorkActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.classfication.ClassCourseDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.classfication.ClassCourseFile"
+            android:screenOrientation="portrait" />
+        <activity android:name=".zxing.app.PreferencesActivity" />
+        <activity android:name=".zxing.app.CaptureActivity" />
+        <activity android:name=".activities.me.SearchGradeActivity"></activity>
+
+        <activity
+            android:name=".activities.me.NewWorkActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activities.communication.PostDetailsActivity"></activity>
+        <activity android:name=".activities.communication.AddPostActivity"></activity>
+        <activity
+            android:name=".activities.classfication.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"/>
+
+            android:screenOrientation="portrait" />
+
+        <activities android:name=".activities.LoadingActivity" />
     </application>
 
 </manifest>
