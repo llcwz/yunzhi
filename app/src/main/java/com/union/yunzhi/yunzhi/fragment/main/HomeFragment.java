@@ -24,6 +24,7 @@ import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.SearchActivity;
 import com.union.yunzhi.yunzhi.adapter.HomeAdapter;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.zxing.app.CaptureActivity;
@@ -45,6 +46,9 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     private LinearLayout toolbarLayout;
 
+    private LinearLayout mSearchLayout;
+
+
     //扫码按钮
     private CircleImageView mQRcode;
 
@@ -65,6 +69,9 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
         mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
         mQRcode.setOnClickListener(this);
+
+        mSearchLayout = (LinearLayout) view.findViewById(R.id.ll_search);
+        mSearchLayout.setOnClickListener(this);
 
 
 
@@ -175,6 +182,11 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                 else {
                     requestPermission(Constant.HARDWEAR_CAMERA_CODE, Constant.HARDWEAR_CAMERA_PERMISSION);
                 }
+                break;
+
+            case R.id.ll_search:
+                startActivity(new Intent(getContext(),
+                        SearchActivity.class));
                 break;
         }
     }

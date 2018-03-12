@@ -18,9 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--  加载页面   -->
+        <!-- 加载页面 -->
         <activity android:name=".activities.LoadingActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,32 +32,28 @@
             android:name=".activities.GuideActivity"
             android:screenOrientation="portrait" />
 
-
-        <!-- 登陆界面-->
+        <!-- 登陆界面 -->
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait" />
-
-
 
         <!--  -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.me.ChangePasswordActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.me.MyCourseActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.me.MyMessageActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.me.WorkActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.classfication.ClassCourseDetails"
             android:screenOrientation="portrait" />
@@ -67,20 +62,20 @@
             android:screenOrientation="portrait" />
         <activity android:name=".zxing.app.PreferencesActivity" />
         <activity android:name=".zxing.app.CaptureActivity" />
-        <activity android:name=".activities.me.SearchGradeActivity"></activity>
-
+        <activity android:name=".activities.me.SearchGradeActivity" />
         <activity
             android:name=".activities.me.NewWorkActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activities.communication.PostDetailsActivity"></activity>
-        <activity android:name=".activities.communication.AddPostActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.communication.PostDetailsActivity" />
+        <activity android:name=".activities.communication.AddPostActivity" />
         <activity
             android:name=".activities.classfication.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-
             android:screenOrientation="portrait" />
 
         <activities android:name=".activities.LoadingActivity" />
+
+        <activity android:name=".activities.SearchActivity"></activity>
     </application>
 
 </manifest>
