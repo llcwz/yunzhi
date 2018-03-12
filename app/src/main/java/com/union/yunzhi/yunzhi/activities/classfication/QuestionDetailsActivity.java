@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
@@ -107,8 +108,11 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
         mContent.setText(mQuestionBean.content);
         mSendComment.setOnClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getApplication());
+        linearLayoutManager.setScrollEnabled(false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.scrollToPosition(0);
+
         if (mQuestionBean.likeModels.size() > 0) {
             mLikeCounts.setText("" + mQuestionBean.likeModels.size());
         }

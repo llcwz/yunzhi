@@ -1,13 +1,12 @@
 package com.union.yunzhi.yunzhi.fragment.classfication;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
@@ -48,7 +47,8 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
     @Override
     protected void initData() {
         initAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mFloatingActionButton.setOnClickListener(this);
     }
