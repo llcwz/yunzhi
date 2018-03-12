@@ -3,6 +3,8 @@ package com.union.yunzhi.yunzhi.fragment.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,11 +16,15 @@ import com.union.yunzhi.common.app.AdBrowserActivity;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.app.PermissionsFragment;
 import com.union.yunzhi.common.constant.Constant;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.home.homeModle;
 import com.union.yunzhi.factories.moudles.home.videoClassModle;
 import com.union.yunzhi.factories.moudles.home.videoModle;
+import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
+import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.SearchActivity;
 import com.union.yunzhi.yunzhi.adapter.HomeAdapter;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.zxing.app.CaptureActivity;
@@ -32,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link FragmentM} subclass.
  *
  */
-public class HomeFragment extends PermissionsFragment implements View.OnClickListener{
+public class HomeFragment extends PermissionsFragment implements View.OnClickListener {
 
     private static final int REQUEST_QRCODE = 0x01;
 
@@ -40,12 +46,17 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     private LinearLayout toolbarLayout;
 
+    private LinearLayout mSearchLayout;
+
+
     //扫码按钮
     private CircleImageView mQRcode;
 
 
-    private HomeAdapter mHomeAdapter;
-    List<homeModle> list = new ArrayList<>();
+    private HomeAdapter mHomeAdapter ;
+    List<HomeBodyModle> list = new ArrayList<>();
+
+    private final String TGA = "HomeFragment";
 
     @Override
     protected int getContentLayoutId() {
@@ -58,10 +69,17 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
         mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
         mQRcode.setOnClickListener(this);
+
+        mSearchLayout = (LinearLayout) view.findViewById(R.id.ll_search);
+        mSearchLayout.setOnClickListener(this);
+
+
+
         RequestCenter.requestHomeData("", "", new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
                 Log.i("onSuccess",responseObj.toString());
+                datas(responseObj);
             }
 
             @Override
@@ -69,13 +87,17 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                 Log.i("onFailure","error");
             }
         });
+
     }
 
     @Override
     protected void initData() {
 
 
-        mHomeAdapter = new HomeAdapter(getContext(),4);
+        LogUtils.i(TGA,"initWidget");
+
+
+       // mHomeAdapter = new HomeAdapter(getContext(),4);
         data();
 
         recyclerView.setAdapter(mHomeAdapter);
@@ -86,7 +108,21 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     }
 
+    @Override
+    protected void initArgs(Bundle bundle) {
+        super.initArgs(bundle);
+        mHomeAdapter = new HomeAdapter(getContext(),4);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LogUtils.i(TGA,"onCreate");
+    }
+
     public void data(){
+
+
 
 
         homeModle homeModle = new homeModle();
@@ -103,10 +139,36 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         homeModle.mVideoClassModle.videoModle.add(video);
         homeModle.mVideoClassModle.videoModle.add(video);
         homeModle.mVideoClassModle.videoModle.add(video);
-        list.add(homeModle);
+     //   list.add(homeModle);
 
-        mHomeAdapter.add(list);
+        Log.i(TGA,"data"+list.size());
 
+        //mHomeAdapter.add(list);
+
+
+    }
+
+    public void datas(Object object){
+        BaseHomeModle data = (BaseHomeModle)object;
+        for(int i=0;i<data.data.list.size();i++){
+            HomeBodyModle homeBody = data.data.list.get(i);
+            list.add(homeBody);
+        }
+
+        for(int i=0;i<data.data.head.ads.size();i++){
+            LogUtils.i(TGA+"    ",data.data.head.ads.get(i).toString());
+        }
+
+        for(int i=0;i<data.data.list.size();i++){
+            LogUtils.i(TGA+" PhotoUrl   ",data.data.list.get(i).PhotoUrl);
+            LogUtils.i(TGA+" PortraitUrl   ",data.data.list.get(i).PortraitUrl);
+            LogUtils.i(TGA+" Title   ",data.data.list.get(i).Title);
+            LogUtils.i(TGA+" viewType   ",data.data.list.get(i).viewType+"");
+        }
+
+       // list.add(data);
+
+         mHomeAdapter.add(list);
 
     }
 
@@ -120,6 +182,11 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                 else {
                     requestPermission(Constant.HARDWEAR_CAMERA_CODE, Constant.HARDWEAR_CAMERA_PERMISSION);
                 }
+                break;
+
+            case R.id.ll_search:
+                startActivity(new Intent(getContext(),
+                        SearchActivity.class));
                 break;
         }
     }
@@ -149,5 +216,11 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         super.doOpenCamera();
         Intent intent = new Intent(getContext(),CaptureActivity.class);
         startActivityForResult(intent, REQUEST_QRCODE);
+    }
+
+
+    @Override
+    public void initRefreshData() {
+        super.initRefreshData();
     }
 }

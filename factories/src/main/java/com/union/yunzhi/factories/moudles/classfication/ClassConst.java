@@ -27,6 +27,9 @@ public final class ClassConst
 
     public static final int IS_LOAD=0;
     public static final int NOT_LOAD=1;
+    public static final String VIDEO_URL="video_url";
+    public static final String VIDEO_NAME="video_name";
+    public static final String VIDEO_COVER_URL="video_cover_url";
 
 }
 

@@ -66,10 +66,10 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
         @Override
         protected void onBind(final TitleBean data, final int position) {
             //适配分类父标题
-            mTextView.setText(data.getTitle());
+            mTextView.setText(data.getAcademicName());
             mImageView.setImageResource(R.drawable.ic_airplay_black_24dp);
 
-            final List<String> getData=data.getSonTitle();
+            final List<String> getData=data.getCourseName();
 
             //适配分类子标题
             mTagFlowLayout.setAdapter(new TagAdapter<String>(getData) {
@@ -100,7 +100,7 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
                     //更新文字提示
                     String temp=null;
                     if(position>=0&&pos>=0){
-                        temp=mDataList.get(position).getTitle()+"-"+data.getSonTitle().get(pos);
+                        temp=mDataList.get(position).getAcademicName()+"-"+data.getCourseName().get(pos);
                     }else{
                         temp="全部课程";
                     }
@@ -117,7 +117,7 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
                     //TODO 点击某个学院,进入某个学院的课程
                     String temp=null;
                     if(pos1>=0){
-                        temp=mDataList.get(pos1).getTitle();
+                        temp=mDataList.get(pos1).getAcademicName();
                     } else{
                         temp="全部课程";
                     }

@@ -7,7 +7,8 @@ import com.union.yunzhi.yunzhi.R;
 
 
 /**
- * Created by renzhiqiang on 16/8/15.
+ * Created by meng on
+ * @function 加载Dialog框
  */
 public class DialogManager {
 

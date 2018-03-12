@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
-import com.timqi.collapsibletextview.CollapsibleTextView;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
@@ -35,11 +35,11 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
     private ConstraintLayout showView;
 
     //课程简介
-    private CollapsibleTextView mCollapsibleTextView;
+    private TextView mCollapsibleTextView;
     private StringBuilder mLongText;
 
     //老师介绍
-    private CollapsibleTextView mCollapsibleTextView1;
+    private TextView mCollapsibleTextView1;
 
     //相关老师部分
     private RecyclerView mRecyclerView;
@@ -109,11 +109,12 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
 
                 //TODO 有待优化
                 //手指上滑
-                if((y>=(hiddenView.getHeight()-200))&&y-oldy>8){
+                if((y>=(hiddenView.getHeight()))&&y-oldy>8){
                     Log.d("KKK","111"+scrollView.getScrollY());
                     if(hiddenView.getVisibility()==View.VISIBLE){
                         Log.d("KKK","11111111");
-                        HiddenAnimUtils.newInstance(getBaseContext(),224).closeAnimate(hiddenView);
+                        //HiddenAnimUtils.newInstance(getBaseContext(),224).closeAnimate(hiddenView);
+                        hiddenView.setVisibility(View.GONE);
                         HiddenAnimUtils.newInstance(getBaseContext(),48).openAnimate(showView);
                     }
                 } else if(scrollView.getScrollY()==0){//下滑到顶
@@ -133,18 +134,16 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
         /**
          * 课程简介部分
          */
-        mCollapsibleTextView= (CollapsibleTextView) findViewById(R.id.collTv_jianjie_course);
-        mCollapsibleTextView.setFullString(mLongText.toString());
-        mCollapsibleTextView.setExpanded(false);
+        mCollapsibleTextView= (TextView) findViewById(R.id.tv_jianjie_course);
+        mCollapsibleTextView.setText(mLongText.toString());
         //TODO 课程简介部分等待添加其他的元素
 
 
         /**
          * 老师简介部分
          */
-        mCollapsibleTextView1= (CollapsibleTextView) findViewById(R.id.collTv_jianjie_teacher);
-        mCollapsibleTextView1.setFullString(mLongText.toString());
-        mCollapsibleTextView1.setExpanded(false);
+        mCollapsibleTextView1= (TextView) findViewById(R.id.tv_jianjie_teacher);
+        mCollapsibleTextView1.setText(mLongText.toString());
         //TODO 老师简介部分等待添加其他的元素
 
 
