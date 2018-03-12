@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
@@ -109,7 +109,8 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         mTime.setText(mPostModel.getTime());
         mContent.setText(mPostModel.getContent());
         mSendComment.setOnClickListener(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getApplication());
+        linearLayoutManager.setScrollEnabled(false);
         mRecyclerView.setAdapter(mAdapter);
         if (mPostModel.getLikeModels().size() > 0) {
             mLikeCounts.setText("" + mPostModel.getLikeModels().size());

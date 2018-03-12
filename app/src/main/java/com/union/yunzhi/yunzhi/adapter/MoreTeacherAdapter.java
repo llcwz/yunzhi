@@ -44,7 +44,7 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
 
         public LinearLayout headLayout;
         public CircleImageView portrait;
-        public TextView name, state, good, bad;
+        public TextView name, state, good;
 
         public LinearLayout sonLayout;
         public ImageView img1, img2, img3;
@@ -60,7 +60,6 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
             name = (TextView) headLayout.findViewById(R.id.tv_teacher_name);
             state = (TextView) headLayout.findViewById(R.id.tv_teacher_state);
             good = (TextView) headLayout.findViewById(R.id.tv_up_num);
-            bad = (TextView) headLayout.findViewById(R.id.tv_down_num);
 
             sonLayout = (LinearLayout) itemView.findViewById(R.id.item_details_son);
             mLongText = (TextView) sonLayout.findViewById(R.id.tv_jianjie_teacher);

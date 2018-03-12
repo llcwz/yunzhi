@@ -2,11 +2,8 @@ package com.union.yunzhi.yunzhi.network;
 
 import android.util.Log;
 
-import com.union.yunzhi.factories.moudles.communication.CommentModel;
-import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.me.BaseMeModel;
-import com.union.yunzhi.factories.moudles.me.WorkModel;
 import com.union.yunzhi.factories.okhttp.CommonOkHttpClient;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataHandle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
@@ -35,8 +32,8 @@ public class RequestCenter {
 
         //RequestParams params = new RequestParams();
 
-       // params.put("userName", userName);
-       // params.put("password", password);
+        // params.put("userName", userName);
+        // params.put("password", password);
 
         Log.i("requestHomeData","ok");
 
