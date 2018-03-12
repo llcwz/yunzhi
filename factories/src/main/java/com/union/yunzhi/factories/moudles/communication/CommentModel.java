@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class CommentModel implements Parcelable {
-    private int mId; // 该评论的id
+    private String mId; // 该评论的id
     private String mIcon; // 头像
     private String mAuthor; // 作者
     private String mTime; // 时间
@@ -20,7 +20,7 @@ public class CommentModel implements Parcelable {
     public CommentModel() {
     }
 
-    public CommentModel(int id, String icon, String author, String time, String content, List<LikeModel> likeModels) {
+    public CommentModel(String id, String icon, String author, String time, String content, List<LikeModel> likeModels) {
         mId = id;
         mIcon = icon;
         mAuthor = author;
@@ -30,7 +30,7 @@ public class CommentModel implements Parcelable {
     }
 
     protected CommentModel(Parcel in) {
-        mId = in.readInt();
+        mId = in.readString();
         mIcon = in.readString();
         mAuthor = in.readString();
         mTime = in.readString();
@@ -40,7 +40,7 @@ public class CommentModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mId);
+        dest.writeString(mId);
         dest.writeString(mIcon);
         dest.writeString(mAuthor);
         dest.writeString(mTime);
@@ -65,11 +65,11 @@ public class CommentModel implements Parcelable {
         }
     };
 
-    public int getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         mId = id;
     }
 

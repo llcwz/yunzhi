@@ -12,21 +12,24 @@ import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
+import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
+import com.union.yunzhi.yunzhi.fragment.main.CommunicationFragment;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 
 public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClickListener {
+    public static final int KEY_POST = 1;
+    public static final String RESULT_POST = "addPost";
+    public static final String TAG = "tag";
     private int mTag; // fragment标签
+    private Intent mIntent;
     private UserManager mUserManager;
     private Toolbar mToolbar;
     private EditText mTitle;
     private EditText mContent;
+    private PostModel mPostModel;
 
-    public static void newInstance(Context context, int tag) {
-        Intent intent = new Intent(context, AddPostActivity.class);
-        intent.putExtra(CommunicationConstant.KEY_TAG, tag);
-        context.startActivity(intent);
-    }
 
     @Override
     protected int getContentLayoutId() {
@@ -35,7 +38,8 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
 
     @Override
     protected void initWidget() {
-        mTag = getIntent().getIntExtra(CommunicationConstant.KEY_TAG, -1);
+        mIntent = getIntent();
+        mTag = mIntent.getIntExtra(CommunicationConstant.KEY_TAG, -1);
         mUserManager = UserManager.getInstance();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.inflateMenu(R.menu.communication_add_post_item);
@@ -51,27 +55,24 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        // 这里需要加上是否登录了，不登录的话不给发表
-//        if (mUserManager.hasLogined()) {
-//
-//        } else {
-//            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
-//        }
-        String title = mTitle.getText().toString();
-        String content = mContent.getText().toString();
-
-        if (TextUtils.isEmpty(title)) {
-            Toast.makeText(this, "嘿，你的标题呢", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(content)) {
-            Toast.makeText(this, "快写些话吧", Toast.LENGTH_SHORT).show();
-        } else {
-            // TODO: 2018/3/10 处理发帖逻辑
-            Toast.makeText(this, "发布成功" + mTag, Toast.LENGTH_SHORT).show();
-        }
+            String title = mTitle.getText().toString();
+            String content = mContent.getText().toString();
+            if (TextUtils.isEmpty(title)) {
+                Toast.makeText(this, "嘿，你的标题呢", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(content)) {
+                Toast.makeText(this, "快写些话吧", Toast.LENGTH_SHORT).show();
+            } else {
+                OpinionUtils opinionUtils = OpinionUtils.newInstance(mUserManager, this, title,content);
+                opinionUtils.postComment(mTag, new OpinionUtils.NotifyPostListener() {
+                    @Override
+                    public void getPost(PostModel postModel) {
+                        mPostModel = postModel;
+                        mIntent.putExtra(TAG, mTag);
+                        mIntent.putExtra(RESULT_POST, postModel);
+                        setResult(RESULT_OK, mIntent);
+                    }
+                });
+            }
         return false;
-    }
-
-    private String getTime() {
-        return null;
     }
 }

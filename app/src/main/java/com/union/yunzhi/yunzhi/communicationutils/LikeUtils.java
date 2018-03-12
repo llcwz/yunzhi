@@ -34,12 +34,12 @@ public class LikeUtils {
     // 回调接口，利用它来实现如果用户没点过赞就点赞，然后上传点赞数据的功能
     private  OnLikeListener mOnLikeListener = new OnLikeListener() {
         @Override
-        public void isLike(boolean result) {
+        public void isLike(String id, boolean result) {
             if (result) {
                 Glide.with(mContext).load(R.drawable.iv_like_select).into(mLike);
                 mLike.setClickable(false);
             } else {
-                loadLike(mUserManager,mContext,mLike, mLikeCount);
+                loadLike(mUserManager,mContext,id,mLike, mLikeCount);
             }
         }
     };
@@ -49,11 +49,20 @@ public class LikeUtils {
     private interface OnLikeListener {
         /**
          * @function 根据参数的真假处理相应的逻辑
+         * @param id 帖子或者评论的id
          * @param result 得到的结果,真表示用户点过赞，假则没有
          */
-        void isLike(boolean result);
+        void isLike(String id,boolean result);
     }
 
+    /**
+     *
+     * @param userManager 用户
+     * @param context 上下文
+     * @param like 点赞图标
+     * @param likeCount 点赞数
+     * @return
+     */
     public static LikeUtils newInstance(UserManager userManager, Context context, ImageView like, TextView likeCount) {
         return new LikeUtils(userManager, context, like, likeCount);
     }
@@ -71,9 +80,9 @@ public class LikeUtils {
      */
     public void checkedCommentLike(CommentModel commentModel) {
             if (commentModel.getLikeModels().size() != 0) { // 该条评论的赞不为0,那么有可能该用户赞过该条评论
-                isLike(commentModel.getLikeModels(), mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
+                isLike(commentModel.getId(),commentModel.getLikeModels(), mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
             } else { // 该条评论赞数为0，用户肯定可以点击
-                loadLike(mUserManager,mContext,mLike, mLikeCount);
+                loadLike(mUserManager,mContext,commentModel.getId(),mLike, mLikeCount);
             }
     }
 
@@ -83,28 +92,29 @@ public class LikeUtils {
      */
     public   void checkedPostLike(PostModel postModel) {
         if (postModel.getLikeModels().size() != 0) { // 该帖子的赞不为0,那么有可能该用户赞过该帖子
-            isLike(postModel.getLikeModels(), mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
+            isLike(postModel.getId(),postModel.getLikeModels(), mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
         } else { // 该帖子的赞数为0，用户肯定可以点击
-            loadLike(mUserManager,mContext,mLike, mLikeCount);
+            loadLike(mUserManager,mContext,postModel.getId(),mLike, mLikeCount);
         }
     }
 
     /**
      *  @fuunction 查看当前用户是否赞了这条评论
+     *  @param id 帖子或者评论的id
      * @param data 这条评论或帖子的所有点赞人集合
      * @param account 当前用户的id
      */
-    private   void isLike(final List<LikeModel> data, final String account) {
+    private   void isLike(final String id, final List<LikeModel> data, final String account) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 for (LikeModel likeModel : data) { // 遍历赞的集合，匹配当前用户
                     if (likeModel.getId().equals(account)) {
-                        mOnLikeListener.isLike(true);
+                        mOnLikeListener.isLike(id,true);
                         return;
                     }
                 }
-                mOnLikeListener.isLike(false);
+                mOnLikeListener.isLike(id,false);
             }
         }).start();
     }
@@ -112,12 +122,13 @@ public class LikeUtils {
     /**
      * 上传点赞
      */
-    private  void loadLike(UserManager userManager, final Context context, final ImageView like, final TextView likeCount) {
+    private  void loadLike(UserManager userManager, final Context context,String id, final ImageView like, final TextView likeCount) {
 
         DialogManager.getInstnce().showProgressDialog(context);
         // 当前系统时间
         String time = new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date(System.currentTimeMillis()));
-        RequestCenter.requestLike(userManager.getPerson().getAccount(),
+        RequestCenter.requestLike(id,
+                userManager.getPerson().getAccount(),
                 userManager.getPerson().getPhotourl(),
                 userManager.getPerson().getStudentname(),
                 time,

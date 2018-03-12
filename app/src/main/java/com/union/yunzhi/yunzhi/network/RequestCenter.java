@@ -98,7 +98,7 @@ public class RequestCenter {
         params.put("mState", state);
         params.put("mTime", time);
         params.put("mViewType", " " + viewType);
-        RequestCenter.postRequest(HttpConstants.ADD_WORK_URL, params, listener, WorkModel.class);
+        RequestCenter.postRequest(HttpConstants.ADD_WORK_URL, params, listener, null);
 
     }
 
@@ -109,22 +109,50 @@ public class RequestCenter {
      * @param author 点赞者的姓名
      * @param time 点赞时的时间
      */
-    public static void requestLike(String id, String icon, String author, String time, DisposeDataListener listener) {
+    public static void requestLike(String commentId,String id, String icon, String author, String time, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
+        params.put("id", commentId);
         params.put("mId", id);
         params.put("mIcon", icon);
         params.put("mAuthor", author);
         params.put("mTime", time);
-        RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, LikeModel.class);
+        RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, null);
     }
 
-    public static void requestComment(String id, String icon, String author, String time, DisposeDataListener listener) {
+    /**
+     *
+     * @param postId
+     * @param id
+     * @param icon
+     * @param author
+     * @param time
+     * @param content
+     * @param listener
+     */
+    public static void requestPostComment(String postId, String id, String icon, String author, String time,String content, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
+        params.put("postId", postId); // 帖子的id
         params.put("mId", id);
         params.put("mIcon", icon);
         params.put("mAuthor", author);
         params.put("mTime", time);
-        RequestCenter.postRequest(HttpConstants.ADD_COMMENT_URL, params, listener, CommentModel.class);
+        params.put("mContent", content);
+        RequestCenter.postRequest(HttpConstants.ADD_COMMENT_URL, params, listener, null);
+    }
+
+
+    public static void requestAddPost( String id,int tag, String icon, String author, String time,String title, String content, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("mId", id);
+        params.put("mTag", "" + tag);
+        params.put("mIcon", icon);
+        params.put("mAuthor", author);
+        params.put("mTime", time);
+        params.put("mTitle", title);
+        params.put("mContent", content);
+        params.put("mCommentModels","");
+        params.put("mLikeModels","");
+        RequestCenter.postRequest(HttpConstants.ADD_POST_URL, params, listener, null);
     }
 
 }

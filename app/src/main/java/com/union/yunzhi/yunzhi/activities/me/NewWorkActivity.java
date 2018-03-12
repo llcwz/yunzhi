@@ -247,13 +247,12 @@ public class NewWorkActivity extends ActivityM implements View.OnClickListener {
         RequestCenter.requestAddWork(id, name, course, type, start, end, state, promulgator, time, viewType, new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
-                LogUtils.d("addWork", responseObj.toString());
-                WorkModel baseMeModel = (WorkModel) responseObj;
-                if (baseMeModel != null) {
-                    Toast.makeText(NewWorkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(NewWorkActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
-                }
+//                LogUtils.d("addWork", responseObj.toString());
+//                if (baseMeModel != null) {
+//                    Toast.makeText(NewWorkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(NewWorkActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+//                }
                 DialogManager.getInstnce().dismissProgressDialog();
             }
 

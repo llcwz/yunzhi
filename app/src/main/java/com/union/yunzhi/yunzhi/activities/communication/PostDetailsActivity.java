@@ -23,6 +23,7 @@ import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
+import com.union.yunzhi.yunzhi.communicationutils.CommentUtils;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 
@@ -128,7 +129,8 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
                     if (TextUtils.isEmpty(comment)) {
                         Toast.makeText(this, "请先评论", Toast.LENGTH_SHORT).show();
                     } else {
-                        sendComment(mUserManager.getPerson(), comment);
+                        CommentUtils commentUtils =CommentUtils.newInstance(mUserManager, this, mPostModel.getId(), comment);
+                        commentUtils.postComment(mAdapter); // 刷新
                     }
                     break;
                 case R.id.iv_post_like: // 点赞帖子
@@ -142,14 +144,6 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         }
     }
 
-    /**
-     * @function 上传评论
-     * @param person
-     * @param comment
-     */
-    private void sendComment(PersonModel person, String comment) {
-
-    }
 
     Handler mHandler = new Handler(new Handler.Callback() {
         @Override

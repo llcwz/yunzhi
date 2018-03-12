@@ -1,6 +1,8 @@
 package com.union.yunzhi.yunzhi.fragment.main;
 
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,14 +16,18 @@ import android.widget.Toast;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
+import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
 import com.union.yunzhi.yunzhi.fragment.communication.PostFragment;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,8 +35,9 @@ import java.util.List;
 public class CommunicationFragment extends FragmentM implements ViewPager.OnPageChangeListener, Toolbar.OnMenuItemClickListener {
 
     private int mTag=0; // 用于存放当前的viewPager页索引
+    private UserManager mUserManager;
     private List<String> mTabs = new ArrayList<>();
-    private List<Fragment> mFragments = new ArrayList<>();
+    private List<PostFragment> mFragments = new ArrayList<>();
     private FragmentManager mFragmentManager;
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -43,6 +50,7 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
 
     @Override
     protected void initWidget(View view) {
+        mUserManager = UserManager.getInstance();
         mFragmentManager = getChildFragmentManager();
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
@@ -121,7 +129,27 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
      * @param tag fragment标签
      */
     private void addPost(int tag) {
-        AddPostActivity.newInstance(getActivity(), tag);
+        if (mUserManager.hasLogined()) {
+            Intent intent = new Intent(getActivity(), AddPostActivity.class);
+            intent.putExtra(AddPostActivity.TAG, tag);
+            startActivityForResult(intent, AddPostActivity.KEY_POST);
+        } else {
+            Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case AddPostActivity.KEY_POST:
+                if (resultCode == RESULT_OK) {
+                    int tag =data.getIntExtra(AddPostActivity.TAG,0);
+                    PostModel postModel = data.getParcelableExtra(AddPostActivity.RESULT_POST);
+                    mFragments.get(tag).notifyList(postModel);
+                }
+                break;
+            default:
+        }
     }
 
     private class CommunicationPagerAdapter extends FragmentPagerAdapter {

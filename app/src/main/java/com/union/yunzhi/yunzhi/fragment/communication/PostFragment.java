@@ -40,6 +40,12 @@ public class PostFragment extends FragmentM {
         return fragment;
     }
 
+    // 用于添加帖子后的刷新
+    public void notifyList (PostModel postModel) {
+        mAdapter.add(postModel);
+        mAdapter.notify();
+    }
+
 
     @Override
     protected void initArgs(Bundle bundle) {
@@ -104,7 +110,7 @@ public class PostFragment extends FragmentM {
                             "敌人的盟友" + i,
                             "2018.3.11 11:5" + new Random().nextInt(9)));
 
-                    commentModels.add(new CommentModel(i,
+                    commentModels.add(new CommentModel("" + i,
                             "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D56%2C0%2C636%2C420%3Bc0%3Dbaike80%2C5%2C5%2C80%2C26/sign=561a042db6096b63955604103106b168/c8ea15ce36d3d539ea5cccc13287e950352ab04b.jpg",
                             "水军" + i,
                             "2018.3.16 12:0" + i,
@@ -149,7 +155,7 @@ public class PostFragment extends FragmentM {
                             "敌人的盟友" + i,
                             "2018.3.11 11:5" + new Random().nextInt(9)));
 
-                    commentModels.add(new CommentModel(i,
+                    commentModels.add(new CommentModel("" +i,
                             "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D56%2C0%2C636%2C420%3Bc0%3Dbaike80%2C5%2C5%2C80%2C26/sign=561a042db6096b63955604103106b168/c8ea15ce36d3d539ea5cccc13287e950352ab04b.jpg",
                             "水军" + i,
                             "2018.3.16 12:0" + i,

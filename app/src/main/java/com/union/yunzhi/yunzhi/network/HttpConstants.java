@@ -31,6 +31,9 @@ public class HttpConstants {
     // 请求评论
     public static final String ADD_COMMENT_URL = "";
 
+    // 请求发帖
+    public static final String ADD_POST_URL = "";
+
 
 
 }
