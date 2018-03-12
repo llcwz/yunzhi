@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.me.BaseMeModel;
+import com.union.yunzhi.factories.moudles.me.PersonModel;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.manager.DialogManager;

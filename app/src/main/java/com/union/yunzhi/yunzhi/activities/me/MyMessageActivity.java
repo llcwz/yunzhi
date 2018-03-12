@@ -7,14 +7,18 @@ import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
+import com.union.yunzhi.factories.moudles.me.MessageModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.fragment.me.MessageFragment;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 
 import java.util.ArrayList;
 
 public class MyMessageActivity extends ActivityM {
 
+    private UserManager mUserManager;
     private SegmentTabLayout mTabLayout;
+    private MessageModel mMessageModel;
     private String[] mTitles;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
@@ -29,17 +33,19 @@ public class MyMessageActivity extends ActivityM {
 
     @Override
     protected void initWidget() {
+        mUserManager = UserManager.getInstance();
+        mMessageModel = (MessageModel) mUserManager.getUser().data.getMessageModels();
         data();
         mTabLayout = (SegmentTabLayout) findViewById(R.id.segment_tab_layout);
 
     }
 
     private void data() {
+        mTitles = new String[]{"回复","赞","通知"};
+        mFragments.add(MessageFragment.newInstance(MeConstant.MESSAGE_FRAGMENT_TAG_COMMENT, mMessageModel));
+        mFragments.add(MessageFragment.newInstance(MeConstant.MESSAGE_FRAGMENT_TAG_LIKE, mMessageModel));
+        mFragments.add(MessageFragment.newInstance(MeConstant.MESSAGE_FRAGMENT_TAG_INFORM, mMessageModel));
 
-        mTitles = new String[]{"社区","课堂","通知"};
-        mFragments.add(MessageFragment.newInstance(MeConstant.MESSAGE_FRAGMENT_TAG_COMMUNICATION));
-        mFragments.add(MessageFragment.newInstance(MeConstant.MESSAGE_FRAGMENT_TAG_COURSE));
-        mFragments.add(MessageFragment.newInstance(MeConstant.MESSAGE_FRAGMENT_TAG_SYSTEM));
     }
 
     @Override

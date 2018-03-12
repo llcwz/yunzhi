@@ -22,6 +22,7 @@
             android:layout_alignParentLeft="true"/>
 
         <TextView
+            android:id="@+id/tv_system_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/ci_system_icon"

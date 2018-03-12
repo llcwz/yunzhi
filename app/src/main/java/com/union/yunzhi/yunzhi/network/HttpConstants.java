@@ -17,7 +17,7 @@ public class HttpConstants {
 
 
     // 登录请求
-    public static final String LOGIN_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+    public static final String LOGIN_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/checkstudent";
 
     // 请求修改密码
     public static final String CHANGE_PASSWORD_URL = "";

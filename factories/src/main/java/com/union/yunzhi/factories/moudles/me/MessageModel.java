@@ -1,5 +1,8 @@
 package com.union.yunzhi.factories.moudles.me;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
@@ -10,10 +13,65 @@ import java.util.List;
  * Created by CrazyGZ on 2018/3/10.
  */
 
-public class MessageModel {
+public class MessageModel implements Parcelable{
+    private List<CommentMeModel> mCommentMeModels;
+    private List<LikeMeModel> mLikeMeModels;
+    private List<SystemInformModel> mSystemInformModels;
 
-    private List<PostModel> mPostModels; // 自己发的帖子，属于交流区模块，从中可以查看谁评论了我和赞了我
-    private List<QuestionBean> mQuestionBeen; // 自己发的问题，属于课程底下的模块，从中可以看出是谁回复了我和赞了我
-    private List<CommentModel> mCommentModels; // 自己发的评论，交流区和课程下的讨论区都可以用
+    public MessageModel() {
+    }
 
+    public MessageModel(List<CommentMeModel> commentMeModels, List<LikeMeModel> likeMeModels, List<SystemInformModel> systemInformModels) {
+        mCommentMeModels = commentMeModels;
+        mLikeMeModels = likeMeModels;
+        mSystemInformModels = systemInformModels;
+    }
+
+    protected MessageModel(Parcel in) {
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MessageModel> CREATOR = new Creator<MessageModel>() {
+        @Override
+        public MessageModel createFromParcel(Parcel in) {
+            return new MessageModel(in);
+        }
+
+        @Override
+        public MessageModel[] newArray(int size) {
+            return new MessageModel[size];
+        }
+    };
+
+    public List<CommentMeModel> getCommentMeModels() {
+        return mCommentMeModels;
+    }
+
+    public void setCommentMeModels(List<CommentMeModel> commentMeModels) {
+        mCommentMeModels = commentMeModels;
+    }
+
+    public List<LikeMeModel> getLikeMeModels() {
+        return mLikeMeModels;
+    }
+
+    public void setLikeMeModels(List<LikeMeModel> likeMeModels) {
+        mLikeMeModels = likeMeModels;
+    }
+
+    public List<SystemInformModel> getSystemInformModels() {
+        return mSystemInformModels;
+    }
+
+    public void setSystemInformModels(List<SystemInformModel> systemInformModels) {
+        mSystemInformModels = systemInformModels;
+    }
 }

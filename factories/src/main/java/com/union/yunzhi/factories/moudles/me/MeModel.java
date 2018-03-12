@@ -13,9 +13,15 @@ public class MeModel {
     private List<WorkModel> mWorkModels; // 任务
     private List<GradeModel> mGradeModels; // 成绩
 
-    private int mViewType;
-
     public MeModel() {}
+
+    public MeModel(PersonModel personModel, List<CourseModel> courseModels, List<MessageModel> messageModels, List<WorkModel> workModels, List<GradeModel> gradeModels) {
+        mPersonModel = personModel;
+        mCourseModels = courseModels;
+        mMessageModels = messageModels;
+        mWorkModels = workModels;
+        mGradeModels = gradeModels;
+    }
 
     public PersonModel getPersonModel() {
         return mPersonModel;
@@ -55,13 +61,5 @@ public class MeModel {
 
     public void setMessageModels(List<MessageModel> messageModels) {
         mMessageModels = messageModels;
-    }
-
-    public int getViewType() {
-        return mViewType;
-    }
-
-    public void setViewType(int viewType) {
-        mViewType = viewType;
     }
 }

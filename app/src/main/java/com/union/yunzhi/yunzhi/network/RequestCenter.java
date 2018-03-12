@@ -6,6 +6,7 @@ import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.me.BaseMeModel;
+import com.union.yunzhi.factories.moudles.me.BaseUserModel;
 import com.union.yunzhi.factories.moudles.me.WorkModel;
 import com.union.yunzhi.factories.okhttp.CommonOkHttpClient;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataHandle;
@@ -58,7 +59,7 @@ public class RequestCenter {
 
         Log.d("Login", "login: " + userName + "|" + passwd);
         Log.d("Login", "login: "+params.toString());
-        RequestCenter.postRequest(HttpConstants.LOGIN_URL, params, listener, BaseMeModel.class);
+        RequestCenter.postRequest(HttpConstants.LOGIN_URL, params, listener, BaseUserModel.class);
     }
 
     /**

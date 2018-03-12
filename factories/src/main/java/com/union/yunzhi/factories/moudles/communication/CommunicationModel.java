@@ -11,10 +11,13 @@ import java.util.List;
  */
 
 public class CommunicationModel{
-    private List<PostModel> mPostModels; // 学院讯息
-    private int mViewType;
+    private List<PostModel> mPostModels; // 帖子
 
     public CommunicationModel() {}
+
+    public CommunicationModel(List<PostModel> postModels) {
+        mPostModels = postModels;
+    }
 
     public List<PostModel> getPostModels() {
         return mPostModels;
