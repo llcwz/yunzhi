@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#efeff4"
     android:orientation="vertical"
-    android:id="@+id/test"
+    android:id="@+id/searchview"
     tools:context="com.union.yunzhi.yunzhi.activities.SearchActivity">
 
 

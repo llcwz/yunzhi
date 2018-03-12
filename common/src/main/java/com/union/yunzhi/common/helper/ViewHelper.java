@@ -53,12 +53,12 @@ public class ViewHelper  {
                     x2 = event.getX();
                     y2 = event.getY();
                     if(y1-y2>50||x2-x1>50){
-                        LogUtils.i(TGA+"滑动","向上滑销毁");
+                        LogUtils.i(TGA+"滑动","向上右滑销毁");
                         if(mListener!=null){
                             mListener.toFinshView();
                         }
                     }else if(y2-y1>50 ||x2-x1>50){
-                        LogUtils.i(TGA+"滑动","向下滑销毁");
+                        LogUtils.i(TGA+"滑动","向下右滑销毁");
                         if(mListener!=null){
                             mListener.toFinshView();
                         }
@@ -71,6 +71,7 @@ public class ViewHelper  {
 
 
    public interface onFinshListener{
+       //回调通知去销毁View
         void toFinshView();
     }
 
