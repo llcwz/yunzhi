@@ -26,7 +26,7 @@ import java.util.List;
  * Created by cjw on 2018/2/25 0025.
  */
 
-public class ClassCourseDetails extends ActivityM implements View.OnClickListener {
+public class ClassCourseDetailsActivity extends ActivityM implements View.OnClickListener {
 
 
     //课程简介视频
@@ -78,8 +78,8 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
                 +"说着，他从讲桌里拿出一件动物头骨，向我们解释起这种动物的特征来。" +
                 "讲完，他把头骨交给前排的同学，让大家轮流观察一下。我们饶有兴趣地传看，记笔记，有的同学还画了图。" +
                 "我心中暗想，这回我遇到一位博学的老师了。";
-        teacherBean.course1.courseCover="imgUrl1"; teacherBean.course2.courseCover="imgUrl1"; teacherBean.course3.courseCover="imgUrl1";
-        teacherBean.course1.courseName="操作系统"; teacherBean.course2.courseName="算法分析"; teacherBean.course3.courseName="数据结构";
+        teacherBean.course1.coursecover="imgUrl1"; teacherBean.course2.coursecover="imgUrl1"; teacherBean.course3.coursecover="imgUrl1";
+        teacherBean.course1.coursename="操作系统"; teacherBean.course2.coursename="算法分析"; teacherBean.course3.coursename="数据结构";
         mList.add(teacherBean); mList.add(teacherBean); mList.add(teacherBean); mList.add(teacherBean);
 
         return super.initArgs(bundle);
@@ -198,7 +198,7 @@ public class ClassCourseDetails extends ActivityM implements View.OnClickListene
         switch (v.getId()){
 
             case R.id.btn_enter_course:
-                Intent intent=new Intent(ClassCourseDetails.this,ClassCourseFile.class);
+                Intent intent=new Intent(ClassCourseDetailsActivity.this,ClassCourseFileActivity.class);
                 startActivity(intent);
                 break;
             default:

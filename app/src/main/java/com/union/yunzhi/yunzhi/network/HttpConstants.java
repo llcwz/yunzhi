@@ -34,6 +34,6 @@ public class HttpConstants {
     // 请求发帖
     public static final String ADD_POST_URL = "";
 
-
-
+    //请求学院及其课程列表
+    public static final String ACADEMY_COURSE = "http://60.205.207.177/dennis_allan/index.php/Home/Index/allCourse";
 }

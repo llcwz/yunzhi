@@ -1,4 +1,4 @@
-package com.union.yunzhi.factories.moudles.classfication.beans;
+package com.union.yunzhi.factories.moudles.classfication.beans.classfication;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ClassBean {
 
-    public List<String> carouselImageUrl;
+    public List<String> carouselimageurl;
     public List<CourseShowBean> list;
 
 }

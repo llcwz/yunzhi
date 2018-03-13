@@ -7,7 +7,7 @@ import android.view.View;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.yunzhi.R;
