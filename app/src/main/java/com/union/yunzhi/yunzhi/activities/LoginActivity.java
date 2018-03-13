@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.util.LogUtils;
+import com.union.yunzhi.factories.moudles.jpush.PushMessage;
 import com.union.yunzhi.factories.moudles.me.BaseMeModel;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.jpush.PushMessageActivity;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
@@ -32,6 +34,12 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
     private EditText mAccount;
     private EditText mPasswordView;
     private TextView mLoginView;
+
+    /**
+     * data
+     */
+    private PushMessage mPushMessage; // 推送过来的消息
+    private boolean fromPush; // 是否从推送到此页面
 
     public static void newInstance(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -53,7 +61,11 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
 
     @Override
     protected void initData() {
-
+        Intent intent = getIntent();
+        if (intent.hasExtra("pushMessage")) {
+            mPushMessage = (PushMessage) intent.getSerializableExtra("pushMessage");
+        }
+        fromPush = intent.getBooleanExtra("fromPush", false);
     }
 
     @Override
@@ -100,7 +112,12 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
                  * 只有用户手动退出登陆时候，将用户数据从数据库中删除。
                  */
                 insertUserInfoIntoDB();
-
+                if (fromPush) {
+                    Intent intent = new Intent(LoginActivity.this, PushMessageActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("pushMessage", mPushMessage);
+                    startActivity(intent);
+                }
                 finish();//销毁当前登陆页面
             }
 
