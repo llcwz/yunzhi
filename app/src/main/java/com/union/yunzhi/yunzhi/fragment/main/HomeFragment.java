@@ -136,6 +136,14 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     }
 
     public void datas(Object object) {
+
+        String s = "{\"data\":[{\"academicid\":\"academicid\",\"academicname\":\"academicname\",\"course\":[{\"coursecover\":\"coursecover\",\"courseid\":\"courseid\",\"coursename\":\"coursename\"},{\"coursecover\":\"coursecover\",\"courseid\":\"courseid\",\"coursename\":\"coursename\"},{\"coursecover\":\"coursecover\",\"courseid\":\"courseid\",\"coursename\":\"coursename\"}]}],\"ecode\":0,\"emsg\":\"msg\"}";
+
+        Log.i("datas",s);
+
+      //  Object obj = JSON.parseObject(s.toString(),mClass);
+
+
         BaseHomeModle data = (BaseHomeModle) object;
 
         HomeHeadModle head = data.data.head;

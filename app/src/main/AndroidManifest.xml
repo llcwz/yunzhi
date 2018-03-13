@@ -28,7 +28,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -80,9 +79,9 @@
         <activity
             android:name=".activities.classfication.ClassCourseFile"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.classfication.QuestionDetailsActivity"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".activities.classfication.QuestionDetailsActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".zxing.app.PreferencesActivity" />
         <activity android:name=".zxing.app.CaptureActivity" />
         <activity android:name=".activities.me.SearchGradeActivity" />
@@ -99,26 +98,37 @@
         <activities android:name=".activities.LoadingActivity" />
 
         <activity android:name=".activities.SearchActivity" />
-        <activity android:name=".jpush.PushMessageActivity"></activity>
+        <activity android:name=".jpush.PushMessageActivity" />
 
         <receiver android:name=".jpush.JPushRecevier">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.union.yunzhi.yunzhi" />
             </intent-filter>
         </receiver>
 
-        <!-- Rich push 核心功能 since 2.0.6-->
+        <receiver android:name=".jpush.JActivity$jrecevier">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.union.yunzhi.yunzhi" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Rich push 核心功能 since 2.0.6 -->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
-            android:theme="@style/MyDialogStyle"></activity>
+            android:theme="@style/MyDialogStyle" />
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -132,7 +142,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Required SDK 核心功能-->
+        <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -145,7 +155,7 @@
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
-        <!-- since 3.0.9 Required SDK 核心功能-->
+        <!-- since 3.0.9 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DataProvider"
             android:authorities="com.union.yunzhi.yunzhi.DataProvider"
@@ -159,22 +169,22 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
+
                 <category android:name="com.union.yunzhi.yunzhi" />
             </intent-filter>
-
         </service>
-        <!-- since 3.1.0 Required SDK 核心功能-->
+        <!-- since 3.1.0 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DownloadProvider"
             android:authorities="com.union.yunzhi.yunzhi.DownloadProvider"
             android:exported="true" />
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
                 <category android:name="com.union.yunzhi.yunzhi" />
             </intent-filter>
             <intent-filter>
@@ -190,11 +200,10 @@
             </intent-filter>
         </receiver>
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
             android:exported="false" />
-
 
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
@@ -202,9 +211,9 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="65ec5fff18cbf59fc15e2e4e" /> <!--  </>值来自开发者平台取得的AppKey-->
+            android:value="65ec5fff18cbf59fc15e2e4e" /> <!-- </>值来自开发者平台取得的AppKey -->
 
-
+        <activity android:name=".jpush.JActivity"></activity>
     </application>
 
 </manifest>
