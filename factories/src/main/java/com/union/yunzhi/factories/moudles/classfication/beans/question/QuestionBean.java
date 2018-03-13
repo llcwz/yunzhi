@@ -1,4 +1,4 @@
-package com.union.yunzhi.factories.moudles.classfication.beans;
+package com.union.yunzhi.factories.moudles.classfication.beans.question;
 
 import android.os.Parcel;
 import android.os.Parcelable;

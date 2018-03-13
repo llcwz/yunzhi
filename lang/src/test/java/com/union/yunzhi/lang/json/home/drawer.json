@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "academicid": "01",
+      "academicname": "计算机学院",
+      "course": [
+        {
+          "courseid": "01001",
+          "coursename": "数据结构",
+          "coursecover": "2"
+        },
+        {
+          "courseid": "01002",
+          "coursename": "软件工程",
+          "coursecover": "1"
+        },
+        {
+          "courseid": "01003",
+          "coursename": "计算机组成原理",
+          "coursecover": "1"
+        }
+      ]
+    },
+    {
+      "academicid": "02",
+      "academicname": "外国语学院",
+      "course": [
+        {
+          "courseid": "02001",
+          "coursename": "商务英语",
+          "coursecover": "1"
+        },
+        {
+          "courseid": "02002",
+          "coursename": "小说翻译",
+          "coursecover": "1"
+        }
+      ]
+    },
+    {
+      "academicid": "03",
+      "academicname": "文法学院",
+      "course": [
+        {
+          "courseid": "03001",
+          "coursename": "国际商务与贸易",
+          "coursecover": "1"
+        },
+        {
+          "courseid": "03002",
+          "coursename": "金融学",
+          "coursecover": "1"
+        }
+      ]
+    }
+  ],
+  "ecode": 0,
+  "emsg": "ok"
+}

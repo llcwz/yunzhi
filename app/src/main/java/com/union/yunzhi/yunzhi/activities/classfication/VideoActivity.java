@@ -22,8 +22,6 @@ public class VideoActivity extends AppCompatActivity{
     protected JZVideoPlayerStandard mplayer;
     protected String videoUrl,videoName,videCoverUrl;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

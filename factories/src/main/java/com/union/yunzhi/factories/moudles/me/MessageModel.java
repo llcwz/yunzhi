@@ -1,6 +1,6 @@
 package com.union.yunzhi.factories.moudles.me;
 
-import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
 

@@ -7,9 +7,9 @@ import android.view.View;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.classfication.beans.CourseFatherFileBean;
-import com.union.yunzhi.factories.moudles.classfication.beans.CourseFileBean;
-import com.union.yunzhi.factories.moudles.classfication.beans.CourseSonFileBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.file.CourseFatherFileBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.file.CourseFileBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.file.CourseSonFileBean;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.ClassFileAdapter;
 

@@ -11,8 +11,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-import com.union.yunzhi.factories.moudles.classfication.beans.CourseFileBean;
-import com.union.yunzhi.factories.moudles.classfication.beans.CourseSonFileBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.file.CourseFileBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.file.CourseSonFileBean;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.utils.VideoUtils;
 
@@ -67,9 +67,9 @@ public class ClassFileAdapter extends MyAdapter<CourseFileBean>{
 
         @Override
         protected void onBind(CourseFileBean data, int position) {
-            textNum.setText(String.valueOf(data.father.chapterNum));
-            textName.setText(data.father.chapterName);
-            mRecyclerView.setAdapter(new CourseFileSonAdapter(context, data.sons, data.father.chapterNum, new AdapterListener<CourseSonFileBean>() {
+            textNum.setText(String.valueOf(data.tittleParent.chapterNum));
+            textName.setText(data.tittleParent.chapterName);
+            mRecyclerView.setAdapter(new CourseFileSonAdapter(context, data.tittleSons, data.tittleParent.chapterNum, new AdapterListener<CourseSonFileBean>() {
                 @Override
                 public void onItemClick(MyViewHolder holder, CourseSonFileBean data) {
                     //TODO 课程文件子项目点击事件

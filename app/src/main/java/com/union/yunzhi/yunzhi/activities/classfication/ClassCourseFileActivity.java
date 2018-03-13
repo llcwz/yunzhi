@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by cjw on 2018/3/1 0001.
  */
 
-public class ClassCourseFile extends ActivityM {
+public class ClassCourseFileActivity extends ActivityM {
 
     private CommonTabLayout mTabLayout;
     private ArrayList<CustomTabEntity> mList=new ArrayList<>();

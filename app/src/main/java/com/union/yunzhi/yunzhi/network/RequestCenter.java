@@ -2,6 +2,7 @@ package com.union.yunzhi.yunzhi.network;
 
 import android.util.Log;
 
+import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerBean;
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.me.BaseMeModel;
 import com.union.yunzhi.factories.okhttp.CommonOkHttpClient;
@@ -168,6 +169,12 @@ public class RequestCenter {
         params.put("mCommentModels","");
         params.put("mLikeModels","");
         RequestCenter.postRequest(HttpConstants.ADD_POST_URL, params, listener, null);
+    }
+
+    //侧滑栏抽屉请求
+    public static void requestDrawer(String requestUrl, DisposeDataListener listener){
+
+        RequestCenter.postRequest(HttpConstants.ACADEMY_COURSE,null,listener, BaseDrawerBean.class);
     }
 
     public static void requestCourseDeatails(){

@@ -75,10 +75,10 @@
             android:name=".activities.me.WorkActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.classfication.ClassCourseDetails"
+            android:name=".activities.classfication.ClassCourseDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.classfication.ClassCourseFile"
+            android:name=".activities.classfication.ClassCourseFileActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.classfication.QuestionDetailsActivity"
             android:screenOrientation="portrait"/>
