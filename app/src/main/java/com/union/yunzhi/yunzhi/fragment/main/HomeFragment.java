@@ -4,6 +4,7 @@ package com.union.yunzhi.yunzhi.fragment.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.union.yunzhi.common.app.AdBrowserActivity;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.app.PermissionsFragment;
@@ -39,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * A simple {@link FragmentM} subclass.
  */
-public class HomeFragment extends PermissionsFragment implements View.OnClickListener {
+public class HomeFragment extends PermissionsFragment implements View.OnClickListener ,OnRefreshListener,OnLoadMoreListener{
 
     private static final int REQUEST_QRCODE = 0x01;
 
@@ -48,6 +53,8 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     private LinearLayout toolbarLayout;
 
     private LinearLayout mSearchLayout;
+
+    private SmartRefreshLayout mRefreshLayout;
 
 
     private Banner mBanner;
@@ -77,9 +84,13 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         mQRcode.setOnClickListener(this);
         Test = (CircleImageView) view.findViewById(R.id.test);
         Test.setOnClickListener(this);
+        mRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.refresh);
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnLoadMoreListener(this);
 
 
-        mBanner = (Banner) view.findViewById(R.id.banner);
+
+      //  mBanner = (Banner) view.findViewById(R.id.banner);
 
 
         mSearchLayout = (LinearLayout) view.findViewById(R.id.ll_search);
@@ -137,39 +148,19 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     public void datas(Object object) {
 
-        String s = "{\"data\":[{\"academicid\":\"academicid\",\"academicname\":\"academicname\",\"course\":[{\"coursecover\":\"coursecover\",\"courseid\":\"courseid\",\"coursename\":\"coursename\"},{\"coursecover\":\"coursecover\",\"courseid\":\"courseid\",\"coursename\":\"coursename\"},{\"coursecover\":\"coursecover\",\"courseid\":\"courseid\",\"coursename\":\"coursename\"}]}],\"ecode\":0,\"emsg\":\"msg\"}";
 
-        Log.i("datas",s);
-
-      //  Object obj = JSON.parseObject(s.toString(),mClass);
 
 
         BaseHomeModle data = (BaseHomeModle) object;
 
         HomeHeadModle head = data.data.head;
 
+        mHomeAdapter.add(data.data.list);
 
-        initBanner(head.ads);
-
-        for (int i = 0; i < data.data.list.size(); i++) {
-            HomeBodyModle homeBody = data.data.list.get(i);
-            list.add(homeBody);
-        }
-
-        for (int i = 0; i < data.data.head.ads.size(); i++) {
-            LogUtils.i(TGA + "    ", data.data.head.ads.get(i).toString());
-        }
-
-        for (int i = 0; i < data.data.list.size(); i++) {
-            LogUtils.i(TGA + " PhotoUrl   ", data.data.list.get(i).PhotoUrl);
-            LogUtils.i(TGA + " PortraitUrl   ", data.data.list.get(i).PortraitUrl);
-            LogUtils.i(TGA + " Title   ", data.data.list.get(i).Title);
-            LogUtils.i(TGA + " viewType   ", data.data.list.get(i).viewType + "");
-        }
 
         // list.add(data);
 
-        mHomeAdapter.add(list);
+       // mHomeAdapter.add(list);
 
     }
 
@@ -262,5 +253,59 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
 
         mBanner.start();
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        RequestCenter.requestHomeData("", "", new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                    RequestCenter.requestHomeData("", "", new DisposeDataListener() {
+                        @Override
+                        public void onSuccess(Object responseObj) {
+                            BaseHomeModle data = (BaseHomeModle) responseObj;
+                            if(data!=null){
+                               // mHomeAdapter.clear();
+                                mHomeAdapter.add(data.data.list);
+                                mRefreshLayout.finishLoadMore(true);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Object reasonObj) {
+
+                        }
+                    });
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+        Log.i("onRefresh","onRefresh");
+
+        RequestCenter.requestHomeData("", "", new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                BaseHomeModle data = (BaseHomeModle) responseObj;
+                if(data!=null){
+                    mHomeAdapter.clear();
+                    mHomeAdapter.add(data.data.list);
+                    mRefreshLayout.finishRefresh(2000,true);//传入false表示刷新失败
+                }
+
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+
+            }
+        });
     }
 }
