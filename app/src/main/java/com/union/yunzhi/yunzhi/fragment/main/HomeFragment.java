@@ -28,6 +28,7 @@ import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.SearchActivity;
 import com.union.yunzhi.yunzhi.adapter.HomeAdapter;
+import com.union.yunzhi.yunzhi.manager.MyQrCodeDialog;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.zxing.app.CaptureActivity;
 import com.youth.banner.Banner;
@@ -53,11 +54,14 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
 
 
+
     private Banner mBanner;
 
 
     //扫码按钮
     private CircleImageView mQRcode;
+
+    private CircleImageView Test;
 
 
     private HomeAdapter mHomeAdapter ;
@@ -76,6 +80,8 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
         mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
         mQRcode.setOnClickListener(this);
+        Test = (CircleImageView) view.findViewById(R.id.test);
+        Test.setOnClickListener(this);
 
 
         mBanner = (Banner) view.findViewById(R.id.banner);
@@ -205,6 +211,12 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                 startActivity(new Intent(getContext(),
                         SearchActivity.class));
                 break;
+
+            case R.id.test:
+                MyQrCodeDialog dialog = new MyQrCodeDialog(getContext());
+                dialog.show();
+
+                break;
         }
     }
 
@@ -214,6 +226,9 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
             case REQUEST_QRCODE:
                 if (resultCode == Activity.RESULT_OK) {
                     String code = data.getStringExtra("SCAN_RESULT");
+
+                    Log.i("REQUEST_QRCODE",code);
+
                     if (code.contains("http") || code.contains("https")) {
                       //跳转到相应的地方
                         Intent intent = new Intent(getContext(), AdBrowserActivity.class);
@@ -245,11 +260,5 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         mBanner.setImageLoader(new GlideImageLoader());
             mBanner.setImages(list);
             mBanner.start();
-//        for(String url:list){
-//            Log.i("initBanner",url.toString());
-//            mBanner.setImageLoader(new GlideImageLoader());
-//            mBanner.setImages(url);
-//            mBanner.start();
-//        }
     }
 }
