@@ -27,7 +27,7 @@
             >
 
             <ImageView
-                android:padding="10dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_search"
                 android:layout_width="40dp"
                 android:layout_height="match_parent" />
@@ -36,7 +36,7 @@
                 android:id="@+id/tv_serach"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:text="恋爱先生"
+                android:text="输入搜索课程"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 

@@ -30,6 +30,9 @@ public class JPushRecevier extends BroadcastReceiver {
 
     private final String TGA = "JPushRecevier";
 
+    //自定义登陆广播Action
+    public static final String JPUSH_ACTION = "com.union.yunzhi.JPUSH_ACTION";
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -179,6 +182,16 @@ public class JPushRecevier extends BroadcastReceiver {
             }
         }
         return false;
+    }
+
+
+
+    private void sendJPushBroadcast(){
+
+        Intent intent = new Intent(JPUSH_ACTION);
+
+
+       // LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(JPUSH_ACTION));
     }
 
 }

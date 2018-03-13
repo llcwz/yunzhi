@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.home.Constant;
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
 import com.union.yunzhi.yunzhi.R;
@@ -42,14 +41,14 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
     @Override
     protected int getItemViewType(int position, HomeBodyModle data) {
 
-        if(data.viewType == Constant.BANNER_VIEW)
+        if(data.viewType == 0)
         {
 
             return R.layout.item_home_fragment_page_two;
 
         }
 
-        else if(data.viewType == Constant.VIDEO_VIEW){
+        else if(data.viewType == 1){
 
             return R.layout.item_home_fragment_page_one;
         }
@@ -67,7 +66,7 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
         }
 
 
-        else if(viewType == Constant.BANNER_VIEW){
+        else if(viewType ==0){
 
             return null;
         }
