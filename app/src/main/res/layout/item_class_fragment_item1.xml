@@ -10,7 +10,7 @@
         android:layout_height="100dp"
         android:layout_weight="1"
         android:id="@+id/iv_show_course"
-        android:src="@mipmap/tiger"/>
+        android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,7 +33,7 @@
                 android:textSize="@dimen/font_20"
                 android:gravity="left|center_vertical"
                 android:maxLines="1"
-                android:text="计算机组成原理"/>
+                android:text="云智课程"/>
 
             <TextView
                 android:layout_width="match_parent"
