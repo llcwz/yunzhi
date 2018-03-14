@@ -102,8 +102,8 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
             //Glide.with(context).load(data.course1.courseCover).placeholder().into(img1);
             //Glide.with(context).load(data.imgUrl2).into(img2);
             //Glide.with(context).load(data.imgUrl3).into(img3);
-            tv1.setText(data.course1.courseName); tv2.setText(data.course2.courseName);
-            tv3.setText(data.course3.courseName);
+            tv1.setText(data.course1.coursename); tv2.setText(data.course2.coursename);
+            tv3.setText(data.course3.coursename);
 
         }
 

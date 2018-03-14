@@ -2,10 +2,14 @@ package com.union.yunzhi.yunzhi.network;
 
 import android.util.Log;
 
+
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseQuestionBean;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.BaseCommunicationModel;
+
+import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerBean;
+
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 
 import com.union.yunzhi.factories.moudles.me.BaseCourseModel;
@@ -263,6 +267,12 @@ public class RequestCenter {
         RequestParams params = new RequestParams();
         params.put("courseId","" + id);
         RequestCenter.postRequest(HttpConstants.QUESTION_URL, params, listener, BaseQuestionBean.class);
+    }
+
+    //侧滑栏抽屉请求
+    public static void requestDrawer(String requestUrl, DisposeDataListener listener){
+
+        RequestCenter.postRequest(HttpConstants.ACADEMY_COURSE,null,listener, BaseDrawerBean.class);
     }
 
     public static void requestCourseDeatails(){

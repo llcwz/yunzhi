@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_all"
+            android:maxLines="1"
             android:textSize="@dimen/font_16"
             android:text="@string/class_all"
             android:layout_gravity="center_vertical"

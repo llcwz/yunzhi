@@ -6,7 +6,16 @@ package com.union.yunzhi.factories.moudles.classfication.beans.details;
 
 public class CourseBean {
 
-    public String courseName;
-    public String courseCover;
-    public String courseId;
+    public String courseid;
+    public String coursename;
+    public String coursecover;
+
+    public CourseBean(String coursename,String coursecover,String courseid){
+        this.coursename=coursename;
+        this.courseid=courseid;
+        this.coursecover=coursecover;
+    }
+    public CourseBean(){
+
+    }
 }

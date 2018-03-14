@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.classfication.beans.CourseShowBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.classfication.CourseShowBean;
 import com.union.yunzhi.yunzhi.R;
 
 import java.util.List;
@@ -56,10 +56,10 @@ public class ClassCourseAdapter extends MyAdapter<CourseShowBean>{
 
         @Override
         protected void onBind(CourseShowBean data, int position) {
-            mTextView1.setText(data.courseName);
-            mTextView2.setText(data.teacherName);
+            mTextView1.setText(data.coursename);
+            mTextView2.setText(data.teachername);
             mTextView3.setText(String.valueOf(data.good));
-            mTextView4.setText(String.valueOf(data.commentNum));
+            mTextView4.setText(String.valueOf(data.commentnum));
             //Glide.with(context).load(data.courseCover).into(mImageView);
         }
     }

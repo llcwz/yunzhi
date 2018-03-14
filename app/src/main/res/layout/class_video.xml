@@ -10,4 +10,7 @@
 
     </cn.jzvd.JZVideoPlayerStandard>
 
+    <include layout="@layout/activity_video_comment"
+        android:id="@+id/layout_video_comment"/>
+
 </LinearLayout>

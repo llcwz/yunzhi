@@ -6,7 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.moudles.communication.PostModel;

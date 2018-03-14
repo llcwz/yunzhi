@@ -9,35 +9,36 @@ import android.widget.Toast;
 
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.yunzhi.R;
-import com.union.yunzhi.factories.moudles.classfication.beans.TitleBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.drawer.DrawerBean;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by cjw on 2018/2/19 0019.
  */
 
-public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
+public class ClassDrawerAdapter extends MyAdapter<DrawerBean> {
 
     //用于动态构建textView
     private TextView tv;
     private int  pos1=-1,pos2=-1;
 
-    public ClassDrawerAdapter(List<TitleBean> datas, AdapterListener adapterListener){
+    public ClassDrawerAdapter(List<DrawerBean> datas, AdapterListener adapterListener){
 
         super(datas,adapterListener);
     }
 
     @Override
-    protected int getItemViewType(int position, TitleBean data) {
+    protected int getItemViewType(int position, DrawerBean data) {
         return R.layout.item_class_drawer_item;
     }
 
     @Override
-    protected MyViewHolder<TitleBean> onCreateViewHolder(View root, int viewType) {
+    protected MyViewHolder<DrawerBean> onCreateViewHolder(View root, int viewType) {
         return new DrawerViewHolder(root);
     }
 
@@ -46,7 +47,7 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
         return false;
     }
 
-    public class DrawerViewHolder extends MyViewHolder<TitleBean>{
+    public class DrawerViewHolder extends MyViewHolder<DrawerBean>{
 
         private TextView mTextView;
         private TagFlowLayout mTagFlowLayout;
@@ -64,12 +65,15 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
         }
 
         @Override
-        protected void onBind(final TitleBean data, final int position) {
+        protected void onBind(final DrawerBean data, final int position) {
             //适配分类父标题
-            mTextView.setText(data.getAcademicName());
+            mTextView.setText(data.academicname);
             mImageView.setImageResource(R.drawable.ic_airplay_black_24dp);
 
-            final List<String> getData=data.getCourseName();
+            final List<String> getData=new ArrayList<>();
+            for(int i=0;i<data.course.size();i++){
+                getData.add(data.course.get(i).coursename);
+            }
 
             //适配分类子标题
             mTagFlowLayout.setAdapter(new TagAdapter<String>(getData) {
@@ -100,7 +104,7 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
                     //更新文字提示
                     String temp=null;
                     if(position>=0&&pos>=0){
-                        temp=mDataList.get(position).getAcademicName()+"-"+data.getCourseName().get(pos);
+                        temp=  data.course.get(pos).coursename;
                     }else{
                         temp="全部课程";
                     }
@@ -117,7 +121,7 @@ public class ClassDrawerAdapter extends MyAdapter<TitleBean> {
                     //TODO 点击某个学院,进入某个学院的课程
                     String temp=null;
                     if(pos1>=0){
-                        temp=mDataList.get(pos1).getAcademicName();
+                        temp=mDataList.get(pos1).academicname;
                     } else{
                         temp="全部课程";
                     }

@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
 import com.union.yunzhi.yunzhi.R;
 
 import java.util.List;

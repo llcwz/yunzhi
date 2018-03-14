@@ -11,8 +11,10 @@ import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
+
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseQuestionBean;
+
+import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
