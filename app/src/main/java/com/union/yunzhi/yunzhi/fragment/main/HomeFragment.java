@@ -136,11 +136,6 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         mHomeAdapter = new HomeAdapter(getContext(), 4);
     }
 
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        LogUtils.i(TGA, "onCreate");
-//    }
 
     public void data() {
 
@@ -304,7 +299,6 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
             @Override
             public void onFailure(Object reasonObj) {
-
             }
         });
     }
