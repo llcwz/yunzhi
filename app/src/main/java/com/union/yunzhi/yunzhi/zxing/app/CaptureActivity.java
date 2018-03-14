@@ -55,6 +55,9 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.LoginActivity;
+import com.union.yunzhi.yunzhi.activities.MyQRCodeActivity;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.zxing.camera.CameraManager;
 import com.union.yunzhi.yunzhi.zxing.decode.BeepManager;
 import com.union.yunzhi.yunzhi.zxing.decode.CaptureActivityHandler;
@@ -203,10 +206,16 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 startActivityForResult(wrapperIntent, REQUEST_CODE);
             } else if (id == R.id.qrcode_btn) {
                 // 跳转到生成二维码页面
-                Bitmap b = createQRCode();
-                Intent intent = getIntent();
-                intent.putExtra("QR_CODE", b);
-                setResult(200, intent);
+//                Bitmap b = createQRCode();
+//                Intent intent = getIntent();
+//                intent.putExtra("QR_CODE", b);
+//                setResult(200, intent);
+                if(UserManager.getInstance().hasLogined()){
+                    startActivity(new Intent(getApplicationContext(), MyQRCodeActivity.class));
+                }else{
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }
+
                 finish();
             }
 

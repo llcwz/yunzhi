@@ -34,7 +34,7 @@ public class CommonJsonCallback implements Callback {
     protected final int RESULT_CODE_VALUE = 0;
     protected final int RESULT_CODE_ERROR = 1;
     protected final int NOT_BACK = 100;
-    protected final String ERROR_MSG = "emsg";
+    protected final String BACK_MSG = "emsg";
     protected final String EMPTY_MSG = "";
     private final String TGA = "CommonJsonCallback";
     protected final String COOKIE_STORE = "Set-Cookie"; // decide the server it
@@ -141,6 +141,13 @@ public class CommonJsonCallback implements Callback {
                     //不需要解析
                     if(mClass == null){
                         LogUtils.i(TGA,"不需要吧json解析成实体类");
+
+                        if(result.length() == 2){
+                            LogUtils.i(TGA,"特殊请求，不需要返回数据");
+                            mListener.onSuccess(new NotCallBackData((Integer) result.get(RESULT_CODE),result.get(BACK_MSG)));
+
+                        }
+
                         mListener.onSuccess(responseObj);
                     }else{//需要解析 144---156
                         //将我们的json转为我们的实体对象
@@ -157,12 +164,10 @@ public class CommonJsonCallback implements Callback {
                     }//end else
                 }else if(result.getInt(RESULT_CODE) == RESULT_CODE_ERROR) {
                     LogUtils.i(TGA,"ecode为1，请求失败");
-                    mListener.onFailure(new OkHttpException(WEB_ERROR,result.get(RESULT_CODE)));
+                    mListener.onFailure(new OkHttpException((Integer) result.get(RESULT_CODE),result.get(BACK_MSG)));
                 }else if(result.getInt(RESULT_CODE) == NOT_BACK){
                     //请求还是成功的
                     LogUtils.i(TGA,"ecode为"+NOT_BACK+"  "+"不需要返回解析数据");
-//                    mListener.onFailure(new OkHttpException(WEB_ERROR,result.get(RESULT_CODE)));
-                 //   mListener.onSuccess();
                 }
             }//end if
         } catch (Exception e) {
