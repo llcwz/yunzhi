@@ -48,6 +48,25 @@ public class CommonRequest {
 
     }
 
+
+    public static Request createPostRequestO(String url,RequestParams params){
+        FormBody.Builder mFormBodyBuild = new FormBody.Builder();
+
+        StringBuilder value = new StringBuilder();
+
+        if(params != null){
+            for(Map.Entry<String,String> entry:params.urlParams.entrySet()){
+                //将请求参数逐一遍历添加到我们的请求构建中
+                //mFormBodyBuild.add(entry.getKey(),entry.getValue());
+                value.append(entry.getValue());
+            }
+            mFormBodyBuild.add("data",value.toString());
+
+        }
+
+        return null;
+    }
+
     /**
      *
      * @param url
