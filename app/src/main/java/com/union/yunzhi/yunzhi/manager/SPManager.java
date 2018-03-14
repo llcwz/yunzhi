@@ -29,6 +29,12 @@ public class SPManager {
     //是否显示引导界面
     public static final String IS_SHOW_GUIDE = "is_show_guide";
 
+    public static final String IS_REMMEBER_ACCOUNT = "is_remmeber_account";
+    public static final String IS_REMMEBER_PASSWORD = "is_remmeber_password";
+
+    public static final String REMMEBER_ACCOUNT = "remmeber_account";
+    public static final String REMMEBER_PASSWORD = "remmeber_password";
+
     private SPManager() {
         sp = MyApplication.getInstance().getSharedPreferences(SHARE_PREFREENCE_NAME, Context.MODE_PRIVATE);
         editor = sp.edit();
