@@ -245,11 +245,11 @@ public class RequestCenter {
     public static void requestAddPost(String account, String id,int tag, String icon, String author, String time,String title, String content, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
         params.put("account", account);
-        params.put("mId", id);
+        params.put("mId", id); // 不要
         params.put("mTag", "" + tag);
         params.put("mIcon", icon);
         params.put("mAuthor", author);
-        params.put("mTime", time);
+        params.put("mTime", time); // 不要
         params.put("mTitle", title);
         params.put("mContent", content);
         params.put("mCommentModels","");
