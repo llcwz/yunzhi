@@ -90,6 +90,7 @@ public class MyCourseActivity extends ActivityM {
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
                         DialogManager.getInstnce().dismissProgressDialog();
                         Toast.makeText(MyCourseActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                        
                     }
                 });
     }
