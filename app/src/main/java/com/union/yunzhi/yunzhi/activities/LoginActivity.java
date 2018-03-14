@@ -2,19 +2,17 @@ package com.union.yunzhi.yunzhi.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.IdRes;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
+import com.union.yunzhi.common.helper.ViewHelper;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.jpush.PushMessage;
 import com.union.yunzhi.factories.moudles.me.BaseUserModel;
@@ -33,7 +31,7 @@ import com.union.yunzhi.yunzhi.network.mina.MinaService;
  * @function 登陆界面逻辑处理
  */
 
-public class LoginActivity extends ActivityM implements View.OnClickListener,RadioGroup.OnCheckedChangeListener,CompoundButton.OnCheckedChangeListener {
+public class LoginActivity extends ActivityM implements View.OnClickListener, ViewHelper.onFinshListener{
 
     //自定义登陆广播Action
     public static final String LOGIN_ACTION = "com.union.yunzhi.LOGIN_ACTION";
@@ -65,6 +63,11 @@ public class LoginActivity extends ActivityM implements View.OnClickListener,Rad
 
     @Override
     protected void initWidget() {
+        View root = findViewById(R.id.root);
+        if (root != null) {
+            ViewHelper viewHelper = new ViewHelper(root, this, this);
+            viewHelper.listener();
+        }
         mAccount = (EditText) findViewById(R.id.associate_email_input);
         mPasswordView = (EditText) findViewById(R.id.login_input_password);
         mLoginView = (TextView) findViewById(R.id.login_button);
@@ -209,13 +212,9 @@ public class LoginActivity extends ActivityM implements View.OnClickListener,Rad
     }
 
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-
-    }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+    public void toFinshView() {
+        finish();
     }
 }
