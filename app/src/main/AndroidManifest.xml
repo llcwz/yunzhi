@@ -54,7 +54,8 @@
         <!-- 登陆界面 -->
         <activity
             android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <!--  -->
         <activity
@@ -110,8 +111,6 @@
                 <category android:name="com.union.yunzhi.yunzhi" />
             </intent-filter>
         </receiver>
-
-
 
 
         <!-- Rich push 核心功能 since 2.0.6 -->
