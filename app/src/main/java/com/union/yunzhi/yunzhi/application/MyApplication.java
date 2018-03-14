@@ -1,7 +1,8 @@
 package com.union.yunzhi.yunzhi.application;
 
 import android.app.Application;
-import android.util.Log;
+
+import com.union.yunzhi.common.util.LogUtils;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -10,6 +11,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 
 public class MyApplication extends Application{
+    private final String TGA = "MyApplication";
     private static MyApplication myApplication = null;
 
     @Override
@@ -25,7 +27,7 @@ public class MyApplication extends Application{
 
 
     private void initJPush() {
-        Log.i("MyApplication","MyApplication");
+        LogUtils.i(TGA,"初始化JPush");
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
     }
