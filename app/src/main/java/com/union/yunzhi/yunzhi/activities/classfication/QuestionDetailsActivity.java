@@ -17,14 +17,17 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
+import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
 import com.union.yunzhi.yunzhi.communicationutils.CommentUtils;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -32,6 +35,7 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
     
     public static final String TAG = "QuestionDetailsActivity";
     private UserManager mUserManager;
+    private UserModel mUser;
     private QuestionBean mQuestionBean;
     private CommentAdapter mAdapter; // 这个虽然是在communication中的评论，但是也可以拿来用作问题的回复
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -60,6 +64,7 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
     protected void initWidget() {
         mQuestionBean = getIntent().getParcelableExtra(TAG);
         mUserManager = UserManager.getInstance();
+        mUser = MeUtils.getUser();
         
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         mIcon = (CircleImageView) findViewById(R.id.ci_question_icon);
@@ -107,8 +112,11 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
         mContent.setText(mQuestionBean.content);
         mSendComment.setOnClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getApplication());
+        linearLayoutManager.setScrollEnabled(false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.scrollToPosition(0);
+
         if (mQuestionBean.likeModels.size() > 0) {
             mLikeCounts.setText("" + mQuestionBean.likeModels.size());
         }
@@ -128,12 +136,12 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
                         Toast.makeText(this, "空内容", Toast.LENGTH_SHORT).show();
                     } else {
                         mComment.setText("");
-                        CommentUtils commentUtils =CommentUtils.newInstance(mUserManager, this, mQuestionBean.id, comment);
-                        commentUtils.addComment(mAdapter); // 刷新
+                        CommentUtils commentUtils =CommentUtils.newInstance(mUser, this, mQuestionBean.id, comment);
+                        commentUtils.addComment(CommunicationConstant.COMMENT_TAG_QUESTION,mAdapter); // 刷新
                     }
                     break;
                 case R.id.iv_question_like: // 点赞问题
-                    LikeUtils likeUtils = LikeUtils.newInstance(CommunicationConstant.LIKE_TAG_QUESTION,mUserManager, this, mLike, mLikeCounts);
+                    LikeUtils likeUtils = LikeUtils.newInstance(mQuestionBean.id,mUser, this, mLike, mLikeCounts);
                     likeUtils.checkedQuestionLike(mQuestionBean);
                     break;
                 default:

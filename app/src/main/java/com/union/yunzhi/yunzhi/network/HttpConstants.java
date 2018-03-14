@@ -17,22 +17,48 @@ public class HttpConstants {
 
 
     // 登录请求
-    public static final String LOGIN_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/checkstudent";
+    public static final String LOGIN_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
 
     // 请求修改密码
-    public static final String CHANGE_PASSWORD_URL = "";
+    public static final String CHANGE_PASSWORD_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+    // 请求获取我的课程
+    public static final String MY_COURSE_URL="http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+    // 请求获取我的信息
+    public static final String MY_MESSAGE_URL="http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+    // 请求获取我的任务
+    public static final String MY_WORK_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+    // 请求获取学生成绩
+    public static final String MY_GRADE_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+    //请求获取
+    public static final String POST_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+    //请求获取
+    public static final String QUESTION_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+//    //请求获取
+//    public static final String  = "";
+//
+//    //请求获取
+//    public static final String  = "";
+
+
 
     // 请求发布新任务
-    public static final String ADD_WORK_URL = "";
+    public static final String ADD_WORK_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
 
     // 请求点赞
-    public static final String LIKE_URL = "";
+    public static final String LIKE_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
 
     // 请求评论
-    public static final String ADD_COMMENT_URL = "";
+    public static final String ADD_COMMENT_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
 
     // 请求发帖
-    public static final String ADD_POST_URL = "";
+    public static final String ADD_POST_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
 
 
 

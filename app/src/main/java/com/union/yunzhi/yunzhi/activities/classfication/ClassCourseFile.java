@@ -36,7 +36,7 @@ public class ClassCourseFile extends ActivityM {
     private void data() {
 
         mFragments.add(ClassFileFragment.newInstance());
-        mFragments.add(ClassQuestionFragment.newInstance());
+        mFragments.add(ClassQuestionFragment.newInstance("这里传入课程的id"));
         mFragments.add(ClassTestFragment.newInstance());
         mList.add(getCustomTabEntity("课程",R.drawable.select_24dp,R.drawable.unselect_24dp));
         mList.add(getCustomTabEntity("交流",R.drawable.select_24dp,R.drawable.unselect_24dp));

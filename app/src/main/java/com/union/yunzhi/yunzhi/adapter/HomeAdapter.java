@@ -97,7 +97,7 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
         protected void onBind(BaseHomeModle data, int postion) {
             banner.setImageLoader(new GlideImageLoader());
 
-          //  banner.setImages(data.mBannerModle.iamgUrl);
+         //  banner.setImages(data.mBannerModle.iamgUrl);
 
             banner.start();
         }

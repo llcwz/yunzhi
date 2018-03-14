@@ -9,7 +9,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+
         <include android:id="@+id/toolbar_layout" layout="@layout/toolbar"/>
+
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"></com.youth.banner.Banner>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"

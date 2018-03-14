@@ -18,6 +18,7 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.NavigationModel;
+import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.LoginActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyCourseActivity;
@@ -27,6 +28,7 @@ import com.union.yunzhi.yunzhi.activities.me.SearchGradeActivity;
 import com.union.yunzhi.yunzhi.adapter.MeNavigationAdapter;
 import com.union.yunzhi.yunzhi.fragment.me.PersonDialogFragment;
 import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MeFragment extends FragmentM implements View.OnClickListener {
 
     private UserManager mUserManager; // 用户单例
+    private UserModel mUser;
     private CircleImageView mMe; // 用户头像
     private TextView mUsername; // 用户名
     private TextView mAccount; // 账号
@@ -75,6 +78,10 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mMyMessage = (TextView) view.findViewById(R.id.tv_my_message);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rec_me);
 
+        mMe.setOnClickListener(this);
+        mMyCourse.setOnClickListener(this);
+        mMyMessage.setOnClickListener(this);
+
     }
 
     // 初始化导航数据
@@ -99,7 +106,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
     // 初始化适配器，并且监听导航栏的点击事件
     private void initAdapter() {
         initNavigationData();
-        if (mUserManager.getPerson().getPriority() == MeConstant.PRIORITY_STUDENT) { // 如果是学生登录
+        if (mUser.getPriority() == MeConstant.PRIORITY_STUDENT) { // 如果是学生登录
             mMeNavigationAdapter = new MeNavigationAdapter(getActivity() ,mStudentNavigations, new MyAdapter.AdapterListener<NavigationModel>() {
                 @Override
                 public void onItemClick(MyAdapter.MyViewHolder holder, NavigationModel data) {
@@ -131,7 +138,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
                 }
             });
-        } else if (mUserManager.getPerson().getPriority() == MeConstant.PRIORITY_TEACHER){
+        } else if (mUser.getPriority() == MeConstant.PRIORITY_TEACHER){
             mMeNavigationAdapter = new MeNavigationAdapter(getActivity(), mTeacherNavigations, new MyAdapter.AdapterListener<NavigationModel>() {
 
                 @Override
@@ -175,9 +182,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
             visitUI();
         }
 
-        mMe.setOnClickListener(this);
-        mMyCourse.setOnClickListener(this);
-        mMyMessage.setOnClickListener(this);
+
 
     }
 
@@ -242,6 +247,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         public void onReceive(Context context, Intent intent) {
 
             if (mUserManager.hasLogined()) {
+                mUser = MeUtils.getUser();
                 loginUI();
             }
         }
@@ -269,7 +275,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         if (mMeNavigationAdapter != null) { // 如果是用户选择注销，则清除已经加载的导航数据
             mStudentNavigations.clear();
             mTeacherNavigations.clear();
-            mMeNavigationAdapter.notify();
+            mMeNavigationAdapter.clear();
             mMeNavigationAdapter = null;
         }
     }
@@ -282,9 +288,9 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         // 加载导航数据以及初始化适配器
         initAdapter();
         // 加载头像
-        Glide.with(this).load(R.drawable.icon_wst).into(mMe);
-        mUsername.setText(mUserManager.getPerson().getStudentname());
-        mAccount.setText(mUserManager.getPerson().getAccount());
+        Glide.with(this).load(mUser.getPhotourl()).into(mMe);
+        mUsername.setText(mUser.getName());
+        mAccount.setText(mUser.getAccount());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         mRecyclerView.setAdapter(mMeNavigationAdapter);
     }

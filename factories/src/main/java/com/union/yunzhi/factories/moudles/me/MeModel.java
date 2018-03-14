@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class MeModel {
-    private PersonModel mPersonModel; // 个人账号
+    private UserModel mUserModel; // 个人账号
     private List<CourseModel> mCourseModels; // 我的课程
     private List<MessageModel> mMessageModels; // 我的消息
     private List<WorkModel> mWorkModels; // 任务
@@ -15,20 +15,20 @@ public class MeModel {
 
     public MeModel() {}
 
-    public MeModel(PersonModel personModel, List<CourseModel> courseModels, List<MessageModel> messageModels, List<WorkModel> workModels, List<GradeModel> gradeModels) {
-        mPersonModel = personModel;
+    public MeModel(UserModel userModel, List<CourseModel> courseModels, List<MessageModel> messageModels, List<WorkModel> workModels, List<GradeModel> gradeModels) {
+        mUserModel = userModel;
         mCourseModels = courseModels;
         mMessageModels = messageModels;
         mWorkModels = workModels;
         mGradeModels = gradeModels;
     }
 
-    public PersonModel getPersonModel() {
-        return mPersonModel;
+    public UserModel getUserModel() {
+        return mUserModel;
     }
 
-    public void setPersonModel(PersonModel personModel) {
-        mPersonModel = personModel;
+    public void setUserModel(UserModel userModel) {
+        mUserModel = userModel;
     }
 
     public List<CourseModel> getCourseModels() {

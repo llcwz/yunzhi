@@ -11,59 +11,12 @@ import java.util.List;
 
 public class CommentModel implements Parcelable {
     private String mId; // 该评论或者问题的id
+    private int mTag; // 该评论的类型，是属于帖子的评论还是问题的评论
     private String mIcon; // 头像
     private String mAuthor; // 作者
     private String mTime; // 时间
     private String mContent; // 内容
     private List<LikeModel> mLikeModels; // 点赞数
-
-    public CommentModel() {
-    }
-
-    public CommentModel(String id, String icon, String author, String time, String content, List<LikeModel> likeModels) {
-        mId = id;
-        mIcon = icon;
-        mAuthor = author;
-        mTime = time;
-        mContent = content;
-        mLikeModels = likeModels;
-    }
-
-    protected CommentModel(Parcel in) {
-        mId = in.readString();
-        mIcon = in.readString();
-        mAuthor = in.readString();
-        mTime = in.readString();
-        mContent = in.readString();
-        mLikeModels = in.createTypedArrayList(LikeModel.CREATOR);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mId);
-        dest.writeString(mIcon);
-        dest.writeString(mAuthor);
-        dest.writeString(mTime);
-        dest.writeString(mContent);
-        dest.writeTypedList(mLikeModels);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<CommentModel> CREATOR = new Creator<CommentModel>() {
-        @Override
-        public CommentModel createFromParcel(Parcel in) {
-            return new CommentModel(in);
-        }
-
-        @Override
-        public CommentModel[] newArray(int size) {
-            return new CommentModel[size];
-        }
-    };
 
     public String getId() {
         return mId;
@@ -71,6 +24,14 @@ public class CommentModel implements Parcelable {
 
     public void setId(String id) {
         mId = id;
+    }
+
+    public int getTag() {
+        return mTag;
+    }
+
+    public void setTag(int tag) {
+        mTag = tag;
     }
 
     public String getIcon() {
@@ -112,4 +73,46 @@ public class CommentModel implements Parcelable {
     public void setLikeModels(List<LikeModel> likeModels) {
         mLikeModels = likeModels;
     }
+
+    public static Creator<CommentModel> getCREATOR() {
+        return CREATOR;
+    }
+
+    protected CommentModel(Parcel in) {
+        mId = in.readString();
+        mTag = in.readInt();
+        mIcon = in.readString();
+        mAuthor = in.readString();
+        mTime = in.readString();
+        mContent = in.readString();
+        mLikeModels = in.createTypedArrayList(LikeModel.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mId);
+        dest.writeInt(mTag);
+        dest.writeString(mIcon);
+        dest.writeString(mAuthor);
+        dest.writeString(mTime);
+        dest.writeString(mContent);
+        dest.writeTypedList(mLikeModels);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CommentModel> CREATOR = new Creator<CommentModel>() {
+        @Override
+        public CommentModel createFromParcel(Parcel in) {
+            return new CommentModel(in);
+        }
+
+        @Override
+        public CommentModel[] newArray(int size) {
+            return new CommentModel[size];
+        }
+    };
 }

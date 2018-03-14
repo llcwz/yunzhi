@@ -6,6 +6,8 @@ package com.union.yunzhi.factories.moudles.me;
 
 public class MeConstant {
 
+    public static final int ECODE = 0; // success
+
     // 视图
     public static final int STUDENT_COURSE_VIEW = 0;
     public static final int TEACHER_COURSE_VIEW = 1;
@@ -21,7 +23,7 @@ public class MeConstant {
     public static final int PRIORITY_TEACHER = 2;
 
     // 课程的状态
-    public static final int COURSE_STATE_ALL = 0;
+    public static final int COURSE_STATE_ALL = 0; // 全部状态的课程
     public static final int COURSE_STATE_UNDERWAY = 1; // 进行时
     public static final int COURSE_STATE_BEGIN = 2; // 即将开始
     public static final int COURSE_STATE_FINISH = 3; // 已完成

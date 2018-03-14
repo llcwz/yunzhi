@@ -17,10 +17,12 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
+import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
 import com.union.yunzhi.yunzhi.fragment.communication.PostFragment;
 import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
 
@@ -34,7 +36,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class CommunicationFragment extends FragmentM implements ViewPager.OnPageChangeListener, Toolbar.OnMenuItemClickListener {
 
-    private int mTag=0; // 用于存放当前的viewPager页索引
+    private int mTag=0; // 用于存放当前的viewPager页索引,同时也对应帖子里面的tag
     private UserManager mUserManager;
     private List<String> mTabs = new ArrayList<>();
     private List<PostFragment> mFragments = new ArrayList<>();
@@ -55,8 +57,9 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
-        data();
+
     }
+
 
     /**
      * 初始化fragment和tabs数据
@@ -66,8 +69,6 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
         mTabs.add("学习笔记");
         mFragments.add(PostFragment.newInstance(CommunicationConstant.TAG_COLLEGE));
         mFragments.add(PostFragment.newInstance(CommunicationConstant.TAG_NOTE));
-        mToolbar.inflateMenu(R.menu.communication_navigation_item);
-        mToolbar.setOnMenuItemClickListener(this);
         mTabLayout.addTab(mTabLayout.newTab().setText(mTabs.get(0)));
         mTabLayout.addTab(mTabLayout.newTab().setText(mTabs.get(1)));
 
@@ -75,6 +76,9 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
 
     @Override
     protected void initData() {
+        data();
+        mToolbar.inflateMenu(R.menu.communication_navigation_item);
+        mToolbar.setOnMenuItemClickListener(this);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setAdapter(new CommunicationPagerAdapter(mFragmentManager));
@@ -143,9 +147,11 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
         switch (requestCode) {
             case AddPostActivity.KEY_POST:
                 if (resultCode == RESULT_OK) {
-                    int tag =data.getIntExtra(AddPostActivity.TAG,0);
-                    PostModel postModel = data.getParcelableExtra(AddPostActivity.RESULT_POST);
-                    mFragments.get(tag).notifyList(postModel);
+                    if (data != null) {
+                        int tag =data.getIntExtra(AddPostActivity.TAG,0);
+                        PostModel postModel = data.getParcelableExtra(AddPostActivity.RESULT_POST);
+                        mFragments.get(tag).notifyList(postModel);
+                    }
                 }
                 break;
             default:

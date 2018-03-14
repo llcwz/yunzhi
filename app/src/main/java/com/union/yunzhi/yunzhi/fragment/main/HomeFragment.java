@@ -16,18 +16,21 @@ import com.union.yunzhi.common.app.AdBrowserActivity;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.app.PermissionsFragment;
 import com.union.yunzhi.common.constant.Constant;
+import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.home.homeModle;
 import com.union.yunzhi.factories.moudles.home.videoClassModle;
 import com.union.yunzhi.factories.moudles.home.videoModle;
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
+import com.union.yunzhi.factories.moudles.hometest.HomeHeadModle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.SearchActivity;
 import com.union.yunzhi.yunzhi.adapter.HomeAdapter;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.zxing.app.CaptureActivity;
+import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +50,10 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     private LinearLayout toolbarLayout;
 
     private LinearLayout mSearchLayout;
+
+
+
+    private Banner mBanner;
 
 
     //扫码按钮
@@ -69,6 +76,10 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
         mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
         mQRcode.setOnClickListener(this);
+
+
+        mBanner = (Banner) view.findViewById(R.id.banner);
+
 
         mSearchLayout = (LinearLayout) view.findViewById(R.id.ll_search);
         mSearchLayout.setOnClickListener(this);
@@ -150,6 +161,12 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     public void datas(Object object){
         BaseHomeModle data = (BaseHomeModle)object;
+
+        HomeHeadModle head = data.data.head;
+
+
+        initBanner(head.ads);
+
         for(int i=0;i<data.data.list.size();i++){
             HomeBodyModle homeBody = data.data.list.get(i);
             list.add(homeBody);
@@ -222,5 +239,17 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     @Override
     public void initRefreshData() {
         super.initRefreshData();
+    }
+
+    public void initBanner(ArrayList<String> list){
+        mBanner.setImageLoader(new GlideImageLoader());
+            mBanner.setImages(list);
+            mBanner.start();
+//        for(String url:list){
+//            Log.i("initBanner",url.toString());
+//            mBanner.setImageLoader(new GlideImageLoader());
+//            mBanner.setImages(url);
+//            mBanner.start();
+//        }
     }
 }

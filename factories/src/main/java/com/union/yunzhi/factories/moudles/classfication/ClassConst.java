@@ -7,6 +7,7 @@ package com.union.yunzhi.factories.moudles.classfication;
 public final class ClassConst
 {
 
+    public static final int ECODE = 0;
     /**
      * 排序方式
      */

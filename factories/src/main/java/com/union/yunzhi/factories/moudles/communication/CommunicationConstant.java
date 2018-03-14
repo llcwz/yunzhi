@@ -6,6 +6,8 @@ package com.union.yunzhi.factories.moudles.communication;
 
 public class CommunicationConstant {
 
+    public static final int ECODE = 0;
+
     public static final String KEY_TAG = "tag";
 
     // 标记所建立的fragment

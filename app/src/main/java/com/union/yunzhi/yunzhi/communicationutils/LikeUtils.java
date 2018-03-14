@@ -10,10 +10,10 @@ import com.union.yunzhi.factories.moudles.classfication.beans.QuestionBean;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
+import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
-import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.text.SimpleDateFormat;
@@ -27,8 +27,8 @@ import java.util.List;
 
 public class LikeUtils {
 
-    private int mTag; // 点赞的类型：0给帖子点赞，1给评论点赞，2给问题点赞
-    private UserManager mUserManager;
+    private String mId; // 点赞的类型：0给帖子点赞，1给评论点赞，2给问题点赞
+    private UserModel mUser;
     private Context mContext; // 上下文
     private ImageView mLike; // 点赞图标
     private TextView mLikeCount; // 点赞数
@@ -41,7 +41,7 @@ public class LikeUtils {
                 Glide.with(mContext).load(R.drawable.iv_like_select).into(mLike);
                 mLike.setClickable(false);
             } else {
-                loadLike(mTag,mUserManager,mContext,id,mLike, mLikeCount);
+                loadLike(mId,mUser,mContext,mLike, mLikeCount);
             }
         }
     };
@@ -59,19 +59,19 @@ public class LikeUtils {
 
     /**
      *
-     * @param userManager 用户
+     * @param user  用户
      * @param context 上下文
      * @param like 点赞图标
      * @param likeCount 点赞数
      * @return
      */
-    public static LikeUtils newInstance(int tag,UserManager userManager, Context context, ImageView like, TextView likeCount) {
-        return new LikeUtils(tag,userManager, context, like, likeCount);
+    public static LikeUtils newInstance(String id,UserModel user, Context context, ImageView like, TextView likeCount) {
+        return new LikeUtils(id,user, context, like, likeCount);
     }
 
-    private LikeUtils(int tag,UserManager userManager, Context context, ImageView like, TextView likeCount) {
-        mTag = tag;
-        mUserManager = userManager;
+    private LikeUtils(String id, UserModel user, Context context, ImageView like, TextView likeCount) {
+        mId = id;
+        mUser = user;
         mContext = context;
         mLike = like;
         mLikeCount = likeCount;
@@ -83,9 +83,9 @@ public class LikeUtils {
      */
     public void checkedCommentLike(CommentModel commentModel) {
             if (commentModel.getLikeModels().size() != 0) { // 该条评论的赞不为0,那么有可能该用户赞过该条评论
-                isLike(commentModel.getId(),commentModel.getLikeModels(), mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
+                isLike(commentModel.getId(),commentModel.getLikeModels(), mUser.getAccount()); // 判断该用户是否点赞了该条评论
             } else { // 该条评论赞数为0，用户肯定可以点击
-                loadLike(mTag,mUserManager,mContext,commentModel.getId(),mLike, mLikeCount);
+                loadLike(mId,mUser,mContext,mLike, mLikeCount);
             }
     }
 
@@ -95,9 +95,9 @@ public class LikeUtils {
      */
     public   void checkedPostLike(PostModel postModel) {
         if (postModel.getLikeModels().size() != 0) { // 该帖子的赞不为0,那么有可能该用户赞过该帖子
-            isLike(postModel.getId(),postModel.getLikeModels(), mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
+            isLike(postModel.getId(),postModel.getLikeModels(), mUser.getAccount()); // 判断该用户是否点赞了该条评论
         } else { // 该帖子的赞数为0，用户肯定可以点击
-            loadLike(mTag,mUserManager,mContext,postModel.getId(),mLike, mLikeCount);
+            loadLike(mId,mUser,mContext,mLike, mLikeCount);
         }
     }
 
@@ -107,9 +107,9 @@ public class LikeUtils {
      */
     public   void checkedQuestionLike(QuestionBean questionBean) {
         if (questionBean.likeModels.size() != 0) { // 该帖子的赞不为0,那么有可能该用户赞过该帖子
-            isLike(questionBean.id,questionBean.likeModels, mUserManager.getPerson().getAccount()); // 判断该用户是否点赞了该条评论
+            isLike(questionBean.id,questionBean.likeModels, mUser.getAccount()); // 判断该用户是否点赞了该条评论
         } else { // 该帖子的赞数为0，用户肯定可以点击
-            loadLike(mTag,mUserManager,mContext,questionBean.id,mLike, mLikeCount);
+            loadLike(mId,mUser,mContext,mLike, mLikeCount);
         }
     }
 
@@ -124,7 +124,7 @@ public class LikeUtils {
             @Override
             public void run() {
                 for (LikeModel likeModel : data) { // 遍历赞的集合，匹配当前用户
-                    if (likeModel.getId().equals(account)) {
+                    if (likeModel.getAccount().equals(account)) {
                         mOnLikeListener.isLike(id,true);
                         return;
                     }
@@ -137,16 +137,15 @@ public class LikeUtils {
     /**
      * 上传点赞
      */
-    private  void loadLike(int tag,UserManager userManager, final Context context,String id, final ImageView like, final TextView likeCount) {
+    private  void loadLike(String id,UserModel userModel, final Context context, final ImageView like, final TextView likeCount) {
 
         DialogManager.getInstnce().showProgressDialog(context);
         // 当前系统时间
         String time = new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date(System.currentTimeMillis()));
-        RequestCenter.requestLike(tag,
-                id,
-                userManager.getPerson().getAccount(),
-                userManager.getPerson().getPhotourl(),
-                userManager.getPerson().getStudentname(),
+        RequestCenter.requestLike(mId,
+                userModel.getAccount(),
+                userModel.getPhotourl(),
+                userModel.getName(),
                 time,
                 new DisposeDataListener() {
                     @Override

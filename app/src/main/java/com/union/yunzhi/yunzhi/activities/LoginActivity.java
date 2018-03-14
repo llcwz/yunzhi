@@ -8,13 +8,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.util.LogUtils;
-import com.union.yunzhi.factories.moudles.me.BaseMeModel;
-import com.union.yunzhi.factories.moudles.me.PersonModel;
+import com.union.yunzhi.factories.moudles.jpush.PushMessage;
+import com.union.yunzhi.factories.moudles.me.BaseUserModel;
+import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.jpush.PushMessageActivity;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
@@ -33,6 +36,12 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
     private EditText mAccount;
     private EditText mPasswordView;
     private TextView mLoginView;
+
+    /**
+     * data
+     */
+    private PushMessage mPushMessage; // 推送过来的消息
+    private boolean fromPush; // 是否从推送到此页面
 
     public static void newInstance(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -54,7 +63,11 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
 
     @Override
     protected void initData() {
-
+        Intent intent = getIntent();
+        if (intent.hasExtra("pushMessage")) {
+            mPushMessage = (PushMessage) intent.getSerializableExtra("pushMessage");
+        }
+        fromPush = intent.getBooleanExtra("fromPush", false);
     }
 
     @Override
@@ -86,23 +99,32 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
 
                 //取消加载框
                 DialogManager.getInstnce().dismissProgressDialog();
+                BaseUserModel baseUserModel = (BaseUserModel) responseObj;
+                if (baseUserModel.ecode == MeConstant.ECODE) {
+/**
+ * 这部分可以封装起来，封装为到一个登陆流程类中
+ */
+                    LogUtils.d("login", "onSuccess: " + responseObj.toString());
+                    UserManager.getInstance().setUser(baseUserModel.data);//保存当前用户单例对象
+                    connectToSever();
 
-                /**
-                 * 这部分可以封装起来，封装为到一个登陆流程类中
-                 */
-                LogUtils.d("login", "onSuccess: " + responseObj.toString());
-                BaseMeModel user = (BaseMeModel) responseObj;
-                UserManager.getInstance().setUser(user);//保存当前用户单例对象
-                connectToSever();
+                    sendLoginBroadcast();
+                    /**
+                     * 还应该将用户信息存入数据库，这样可以保证用户打开应用后总是登陆状态
+                     * 只有用户手动退出登陆时候，将用户数据从数据库中删除。
+                     */
+                    insertUserInfoIntoDB();
+                    if (fromPush) {
+                        Intent intent = new Intent(LoginActivity.this, PushMessageActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("pushMessage", mPushMessage);
+                        startActivity(intent);
+                    }
+                    finish();//销毁当前登陆页面
+                } else {
+                    Toast.makeText(LoginActivity.this, "" + baseUserModel.emsg, Toast.LENGTH_SHORT).show();
+                }
 
-                sendLoginBroadcast();
-                /**
-                 * 还应该将用户信息存入数据库，这样可以保证用户打开应用后总是登陆状态
-                 * 只有用户手动退出登陆时候，将用户数据从数据库中删除。
-                 */
-                insertUserInfoIntoDB();
-
-                finish();//销毁当前登陆页面
             }
 
 

@@ -44,7 +44,9 @@ public class MessageFragment extends FragmentM {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_TAG,tag);
         bundle.putParcelable(FRAGMENT_DATA, messageModel);
-        return new MessageFragment();
+        MessageFragment messageFragment =new MessageFragment();
+        messageFragment.setArguments(bundle);
+        return messageFragment;
     }
 
     @Override
@@ -52,9 +54,13 @@ public class MessageFragment extends FragmentM {
         super.initArgs(bundle);
         mTag = bundle.getInt(FRAGMENT_TAG);
         mMessageModel = bundle.getParcelable(FRAGMENT_DATA);
-        mCommentMeModelList = mMessageModel.getCommentMeModels();
-        mLikeMeModels = mMessageModel.getLikeMeModels();
-        mSystemInformModels = mMessageModel.getSystemInformModels();
+
+        // 这些数据在MyMessageActivity中已经请求好了
+        if (mMessageModel != null) {
+            mCommentMeModelList = mMessageModel.getCommentMeModels();
+            mLikeMeModels = mMessageModel.getLikeMeModels();
+            mSystemInformModels = mMessageModel.getSystemInformModels();
+        }
 
     }
 
@@ -72,6 +78,8 @@ public class MessageFragment extends FragmentM {
 
     @Override
     protected void initData() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // 根据tag来为recyclerView加载相应的适配器
         switch (mTag) {
             case MeConstant.MESSAGE_FRAGMENT_TAG_COMMENT:
                 if (mCommentMeModelList == null) {
@@ -79,6 +87,7 @@ public class MessageFragment extends FragmentM {
                 } else {
                     mNoMessage.setVisibility(View.GONE);
                     initCommentMeAdapter();
+                    mRecyclerView.setAdapter(mCommentMeAdapter);
                 }
                 break;
             case MeConstant.MESSAGE_FRAGMENT_TAG_LIKE:
@@ -87,6 +96,7 @@ public class MessageFragment extends FragmentM {
                 } else {
                     mNoMessage.setVisibility(View.GONE);
                     initLikeAdapter();
+                    mRecyclerView.setAdapter(mLikeMeAdapter);
                 }
                 break;
             case MeConstant.MESSAGE_FRAGMENT_TAG_INFORM:
@@ -95,14 +105,14 @@ public class MessageFragment extends FragmentM {
                 } else {
                     mNoMessage.setVisibility(View.GONE);
                     initSystemAdapter();
+                    mRecyclerView.setAdapter(mSystemInformAdapter);
                 }
                 break;
             default:
         }
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+    // 初始化系统通知适配器
     private void initSystemAdapter() {
         mSystemInformAdapter = new SystemInformAdapter(getActivity(), mSystemInformModels, new MyAdapter.AdapterListener<SystemInformModel>() {
             @Override
@@ -125,9 +135,9 @@ public class MessageFragment extends FragmentM {
 
             }
         });
-        mRecyclerView.setAdapter(mSystemInformAdapter);
     }
 
+    // 初始化赞我适配器
     private void initLikeAdapter() {
         mLikeMeAdapter = new LikeMeAdapter(getActivity(), mLikeMeModels, new MyAdapter.AdapterListener<LikeMeModel>() {
             @Override
@@ -150,9 +160,8 @@ public class MessageFragment extends FragmentM {
 
             }
         });
-        mRecyclerView.setAdapter(mSystemInformAdapter);
     }
-
+    // 初始化评论我适配器
     private void initCommentMeAdapter() {
         mCommentMeAdapter = new CommentMeAdapter(getActivity(), mCommentMeModelList, new MyAdapter.AdapterListener<CommentMeModel>() {
             @Override
@@ -175,6 +184,5 @@ public class MessageFragment extends FragmentM {
 
             }
         });
-        mRecyclerView.setAdapter(mSystemInformAdapter);
     }
 }

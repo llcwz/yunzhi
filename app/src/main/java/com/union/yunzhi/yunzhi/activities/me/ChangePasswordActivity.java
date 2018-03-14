@@ -10,18 +10,19 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
-import com.union.yunzhi.factories.moudles.me.BaseMeModel;
-import com.union.yunzhi.factories.moudles.me.MeConstant;
-import com.union.yunzhi.factories.moudles.me.PersonModel;
+import com.union.yunzhi.factories.moudles.me.BaseUserModel;
+import com.union.yunzhi.factories.moudles.me.UserModel;
+import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 public class ChangePasswordActivity extends ActivityM {
 
-    private UserManager mUserManager;
+    private UserModel mUser;
     private TextInputLayout mOld;
     private TextInputLayout mNewOne;
     private TextInputLayout mNewTwo;
@@ -42,8 +43,7 @@ public class ChangePasswordActivity extends ActivityM {
 
     @Override
     protected void initWidget() {
-        mUserManager = UserManager.getInstance();
-
+        mUser = MeUtils.getUser();
         mOld = (TextInputLayout) findViewById(R.id.til_old_password);
         mNewOne = (TextInputLayout) findViewById(R.id.til_new_password_one);
         mNewTwo = (TextInputLayout) findViewById(R.id.til_new_password_two);
@@ -70,7 +70,7 @@ public class ChangePasswordActivity extends ActivityM {
                     showError(mOld, "请输入原密码");
                 } else{
                     showError(mOld, "");
-                    if (!validateSame(mUserManager.getPerson().getPassword(), passwordOld)) {
+                    if (!validateSame(mUser.getPassword(), passwordOld)) {
                         showError(mOld, "原密码不正确");
                     } else {
                         if (validateNull(passwordNewOne)) {
@@ -86,16 +86,18 @@ public class ChangePasswordActivity extends ActivityM {
                                 } else {
                                     showError(mNewTwo, "");
                                     if (passwordOld.equals(passwordNewOne)) {
-                                        Toast.makeText(ChangePasswordActivity.this, "原密码和新密码相同", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ChangePasswordActivity.this, "新密码和原密码相同", Toast.LENGTH_SHORT).show();
                                     } else {
                                         // 用户可以提交修改后的密码了
-                                        DialogManager.getInstnce().showProgressDialog(getApplicationContext()); // 显示等待进度
-                                        RequestCenter.requestChangePassword(mUserManager.getPerson().getAccount(), passwordNewOne, new DisposeDataListener() {
+                                        DialogManager.getInstnce().showProgressDialog(ChangePasswordActivity.this); // 显示等待进度
+                                        RequestCenter.requestChangePassword(mUser.getPriority(),
+                                                mUser.getAccount(),
+                                                passwordNewOne, new DisposeDataListener() {
                                             @Override
                                             public void onSuccess(Object responseObj) {
-                                                BaseMeModel baseMeModel = (BaseMeModel) responseObj;
+                                                BaseUserModel baseMeModel = (BaseUserModel) responseObj;
                                                 if (baseMeModel.ecode == 0) {
-                                                    mUserManager.getPerson().setPassword(baseMeModel.data.getPersonModel().getPassword());
+                                                    mUser.setPassword(baseMeModel.data.getPassword());
                                                     Toast.makeText(ChangePasswordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Toast.makeText(ChangePasswordActivity.this, "" + baseMeModel.emsg, Toast.LENGTH_SHORT).show();
@@ -105,8 +107,17 @@ public class ChangePasswordActivity extends ActivityM {
 
                                             @Override
                                             public void onFailure(Object reasonObj) {
-                                                Toast.makeText(ChangePasswordActivity.this, "连接网络失败", Toast.LENGTH_SHORT).show();
                                                 DialogManager.getInstnce().dismissProgressDialog();
+                                                OkHttpException okHttpException = (OkHttpException) reasonObj;
+                                                if (okHttpException.getEcode() == 1) {
+                                                    Toast.makeText(ChangePasswordActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                                                } else if (okHttpException.getEcode() == -1){
+                                                    Toast.makeText(ChangePasswordActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
+                                                } else if (okHttpException.getEcode() == -2) {
+                                                    Toast.makeText(ChangePasswordActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
+                                                } else if (okHttpException.getEcode() == -3) {
+                                                    Toast.makeText(ChangePasswordActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
                                         });
                                     }
