@@ -65,7 +65,6 @@ public class RequestCenter {
         RequestParams params = new RequestParams();
         params.put("account", userName);
         params.put("password", passwd);
-
         LogUtils.d("Login", "login: " + userName + "|" + passwd);
         RequestCenter.postRequest(HttpConstants.LOGIN_URL, params, listener, BaseUserModel.class);
     }

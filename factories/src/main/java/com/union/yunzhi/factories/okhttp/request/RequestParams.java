@@ -13,6 +13,8 @@ public class RequestParams {
 
     public ConcurrentHashMap<String, String> urlParams = new ConcurrentHashMap<String, String>();
 
+    public ConcurrentHashMap<String,Object> urlObjectParams = new ConcurrentHashMap<String, Object>();
+
 
     public ConcurrentHashMap<String, Object> fileParams = new ConcurrentHashMap<String, Object>();
 
@@ -34,6 +36,13 @@ public class RequestParams {
             for (Map.Entry<String, String> entry : source.entrySet()) {
                 put(entry.getKey(), entry.getValue());
             }
+        }
+    }
+    public RequestParams(Map<String, Object> source,int a) {
+        if (source != null) {
+//            for (Map.Entry<String, String> entry : source.entrySet()) {
+//                put(entry.getKey(), entry.getValue());
+//            }
         }
     }
 
@@ -67,7 +76,7 @@ public class RequestParams {
     public void put(String key, Object object) throws FileNotFoundException {
 
         if (key != null) {
-            fileParams.put(key, object);
+            urlObjectParams.put(key, object);
         }
     }
 
