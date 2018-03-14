@@ -32,6 +32,8 @@ public class CommonJsonCallback implements Callback {
      */
     protected final String RESULT_CODE = "ecode"; // 有返回则对于http请求来说是成功的，但还有可能是业务逻辑上的错误
     protected final int RESULT_CODE_VALUE = 0;
+    protected final int RESULT_CODE_ERROR = 1;
+    protected final int NOT_BACK = 100;
     protected final String ERROR_MSG = "emsg";
     protected final String EMPTY_MSG = "";
     private final String TGA = "CommonJsonCallback";
@@ -47,6 +49,8 @@ public class CommonJsonCallback implements Callback {
     protected final int NETWORK_ERROR = -1; // the network relative error
     protected final int JSON_ERROR = -2; // the JSON relative error
     protected final int OTHER_ERROR = -3; // the unknow error
+    protected final int WEB_ERROR = 1; //请求失败
+
 
     /**
      * 将其它线程的数据转发到UI线程
@@ -131,14 +135,14 @@ public class CommonJsonCallback implements Callback {
                 LogUtils.i(TGA,"返回的json格式正确尝试解析");
                 //判断是否正常响应
                 if(result.getInt(RESULT_CODE) == RESULT_CODE_VALUE){
-                    //不需要解析
+
 
                     LogUtils.i(TGA,"返回码正确开始解析");
-
+                    //不需要解析
                     if(mClass == null){
                         LogUtils.i(TGA,"不需要吧json解析成实体类");
                         mListener.onSuccess(responseObj);
-                    }else{//需要解析
+                    }else{//需要解析 144---156
                         //将我们的json转为我们的实体对象
                         LogUtils.i(TGA,"尝试将json转化为实体类");
                        Object obj = JSON.parseObject(result.toString(),mClass);
@@ -151,9 +155,14 @@ public class CommonJsonCallback implements Callback {
                             mListener.onFailure(new OkHttpException(JSON_ERROR,EMPTY_MSG));
                         }
                     }//end else
-                }else {
-                    LogUtils.i(TGA,"未知错误");
-                    mListener.onFailure(new OkHttpException(OTHER_ERROR,result.get(RESULT_CODE)));
+                }else if(result.getInt(RESULT_CODE) == RESULT_CODE_ERROR) {
+                    LogUtils.i(TGA,"ecode为1，请求失败");
+                    mListener.onFailure(new OkHttpException(WEB_ERROR,result.get(RESULT_CODE)));
+                }else if(result.getInt(RESULT_CODE) == NOT_BACK){
+                    //请求还是成功的
+                    LogUtils.i(TGA,"ecode为"+NOT_BACK+"  "+"不需要返回解析数据");
+//                    mListener.onFailure(new OkHttpException(WEB_ERROR,result.get(RESULT_CODE)));
+                 //   mListener.onSuccess();
                 }
             }//end if
         } catch (Exception e) {
