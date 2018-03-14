@@ -284,6 +284,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
         Log.i("onRefresh","onRefresh");
+        refreshLayout.autoRefresh();
 
         RequestCenter.requestHomeData("", "", new DisposeDataListener() {
             @Override
@@ -302,4 +303,11 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
             }
         });
     }
+
+
+    public void RefreshData(){
+        LogUtils.i("initRefreshData","initRefreshData");
+        onRefresh(mRefreshLayout);
+    }
+
 }

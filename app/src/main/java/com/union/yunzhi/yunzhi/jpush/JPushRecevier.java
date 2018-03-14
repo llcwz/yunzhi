@@ -195,7 +195,7 @@ public class JPushRecevier extends BroadcastReceiver {
 
         LocalBroadcastManager.getInstance(MyApplication.getInstance()).sendBroadcast(intent);
 
-        // LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(JPUSH_ACTION));
+
     }
 
 }

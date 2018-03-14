@@ -6,11 +6,13 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
+import com.union.yunzhi.common.helper.ViewHelper;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.jpush.PushMessage;
 import com.union.yunzhi.factories.moudles.me.BaseUserModel;
@@ -20,6 +22,7 @@ import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.jpush.PushMessageActivity;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
+import com.union.yunzhi.yunzhi.manager.SPManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.network.mina.MinaService;
@@ -29,7 +32,7 @@ import com.union.yunzhi.yunzhi.network.mina.MinaService;
  * @function 登陆界面逻辑处理
  */
 
-public class LoginActivity extends ActivityM implements View.OnClickListener{
+public class LoginActivity extends ActivityM implements View.OnClickListener, ViewHelper.onFinshListener{
 
     //自定义登陆广播Action
     public static final String LOGIN_ACTION = "com.union.yunzhi.LOGIN_ACTION";
@@ -37,6 +40,11 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
     private EditText mAccount;
     private EditText mPasswordView;
     private TextView mLoginView;
+
+    private CheckBox mRemAccount;
+    private CheckBox mRemPassword;
+
+
 
     /**
      * data
@@ -56,10 +64,19 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
 
     @Override
     protected void initWidget() {
+        View root = findViewById(R.id.root);
+        if (root != null) {
+            ViewHelper viewHelper = new ViewHelper(root, this, this);
+            viewHelper.listener();
+        }
         mAccount = (EditText) findViewById(R.id.associate_email_input);
         mPasswordView = (EditText) findViewById(R.id.login_input_password);
         mLoginView = (TextView) findViewById(R.id.login_button);
         mLoginView.setOnClickListener(this);
+        mRemAccount = (CheckBox) findViewById(R.id.cb_remaccount);
+        mRemAccount.setOnClickListener(this);
+        mRemPassword = (CheckBox) findViewById(R.id.cb_rempassword);
+        mRemPassword.setOnClickListener(this);
     }
 
     @Override
@@ -69,6 +86,19 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
             mPushMessage = (PushMessage) intent.getSerializableExtra("pushMessage");
         }
         fromPush = intent.getBooleanExtra("fromPush", false);
+
+
+
+        //如果记住了账号和密码则直接获取
+        if(SPManager.getInstance().getBoolean(SPManager.IS_REMMEBER_ACCOUNT,false)){
+            mAccount.setText(SPManager.getInstance().getString(SPManager.REMMEBER_ACCOUNT,""));
+            mRemAccount.setChecked(true);
+        }
+        if(SPManager.getInstance().getBoolean(SPManager.IS_REMMEBER_PASSWORD,false)){
+            mPasswordView.setText(SPManager.getInstance().getString(SPManager.REMMEBER_PASSWORD,""));
+            mRemPassword.setOnClickListener(this);
+            mRemPassword.setChecked(true);
+        }
     }
 
     @Override
@@ -77,12 +107,38 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
             case R.id.login_button:
                 login();
                 break;
+
+            case R.id.cb_remaccount:
+                //选中则记住账号，反选则清除账号
+               if(mRemAccount.isChecked()){
+                 //  Toast.makeText(this,"点击勾选了",Toast.LENGTH_SHORT).show();
+                   SPManager.getInstance().putBoolean(SPManager.IS_REMMEBER_ACCOUNT, true);
+                   SPManager.getInstance().putString(SPManager.REMMEBER_ACCOUNT,mAccount.getText().toString().trim());
+               }else{
+                   //Toast.makeText(this,"点击反勾选了",Toast.LENGTH_SHORT).show();
+                   SPManager.getInstance().putBoolean(SPManager.IS_REMMEBER_ACCOUNT, false);
+                   SPManager.getInstance().putString(SPManager.REMMEBER_ACCOUNT,"");
+               }
+                break;
+
+            case R.id.cb_rempassword:
+                //选中则记住密码，反选则清除密码
+                if(mRemPassword.isChecked()){
+
+                    SPManager.getInstance().putBoolean(SPManager.IS_REMMEBER_PASSWORD, true);
+                    SPManager.getInstance().putString(SPManager.REMMEBER_PASSWORD,mPasswordView.getText().toString().trim());
+                }else{
+                    SPManager.getInstance().putBoolean(SPManager.IS_REMMEBER_PASSWORD, false);
+                    SPManager.getInstance().putString(SPManager.REMMEBER_PASSWORD,"");
+                }
+                break;
         }
     }
 
     private void login() {
-        String userName = mAccount.getText().toString().trim();
-        String password = mPasswordView.getText().toString().trim();
+
+         String userName = mAccount.getText().toString().trim();
+         String password = mPasswordView.getText().toString().trim();
 
         if (TextUtils.isEmpty(userName)) {
             return;
@@ -164,5 +220,12 @@ public class LoginActivity extends ActivityM implements View.OnClickListener{
     //启动长连接
     private void connectToSever() {
         startService(new Intent(LoginActivity.this, MinaService.class));
+    }
+
+
+
+    @Override
+    public void toFinshView() {
+        finish();
     }
 }

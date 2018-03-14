@@ -10,12 +10,4 @@ public class CourseBean {
     public String coursename;
     public String coursecover;
 
-    public CourseBean(String coursename,String coursecover,String courseid){
-        this.coursename=coursename;
-        this.courseid=courseid;
-        this.coursecover=coursecover;
-    }
-    public CourseBean(){
-
-    }
 }

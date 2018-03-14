@@ -2,7 +2,6 @@ package com.union.yunzhi.factories.moudles.classfication.beans.drawer;
 
 import com.union.yunzhi.factories.moudles.classfication.beans.details.CourseBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,13 +13,8 @@ public class DrawerBean {
 
     public String academicid; //学院Id
     public String academicname;//学院名称
+    public String icon;//学院图标
     public List<CourseBean> course;//课程集合
 
-    public DrawerBean(List<CourseBean> course, String academicname, String academicid){
-        course=new ArrayList<>();
-        this.course=course;
-        this.academicname = academicname;
-        this.academicid = academicid;
-    }
 
 }
