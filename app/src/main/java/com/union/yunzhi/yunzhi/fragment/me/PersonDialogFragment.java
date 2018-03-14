@@ -60,7 +60,6 @@ public class PersonDialogFragment extends DialogFragment implements View.OnClick
         switch (view.getId()) {
             case R.id.tv_person_change_icon:
                 dismiss();
-                Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
                 FragmentManager fragmentManager = getChildFragmentManager();
                 ChangeIconDialogFragment.newInstance().show(fragmentManager, ChangeIconDialogFragment.TAG);
                 break;

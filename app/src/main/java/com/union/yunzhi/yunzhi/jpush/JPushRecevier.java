@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -12,6 +13,7 @@ import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.jpush.PushMessage;
 import com.union.yunzhi.yunzhi.MainActivity;
 import com.union.yunzhi.yunzhi.activities.LoginActivity;
+import com.union.yunzhi.yunzhi.application.MyApplication;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 
 import org.json.JSONException;
@@ -191,7 +193,9 @@ public class JPushRecevier extends BroadcastReceiver {
         Intent intent = new Intent(JPUSH_ACTION);
 
 
-       // LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(JPUSH_ACTION));
+        LocalBroadcastManager.getInstance(MyApplication.getInstance()).sendBroadcast(intent);
+
+        // LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(JPUSH_ACTION));
     }
 
 }

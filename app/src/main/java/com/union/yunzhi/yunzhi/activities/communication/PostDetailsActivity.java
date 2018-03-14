@@ -21,16 +21,20 @@ import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManage
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
+import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
 import com.union.yunzhi.yunzhi.communicationutils.CommentUtils;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostDetailsActivity extends ActivityM implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+    private static final String TAG = "PostDetailsActivity";
     private UserManager mUserManager;
+    private UserModel mUser;
     private PostModel mPostModel;
     private CommentAdapter mAdapter;
     private Toolbar mToolbar;
@@ -48,7 +52,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
 
     public static void newInstance(Context context, PostModel postModel) {
         Intent intent = new Intent(context, PostDetailsActivity.class);
-        intent.putExtra("post", postModel);
+        intent.putExtra(TAG, postModel);
         context.startActivity(intent);
     }
 
@@ -59,9 +63,12 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
 
     @Override
     protected void initWidget() {
-        mPostModel = getIntent().getParcelableExtra("post");
+
         mUserManager = UserManager.getInstance();
-        data();
+        mUser = MeUtils.getUser();
+
+        mPostModel = getIntent().getParcelableExtra(TAG);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         mTitle = (TextView) findViewById(R.id.tv_post_title);
@@ -77,7 +84,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     }
 
     // 初始化数据
-    private void data() {
+    private void initAdapter() {
         mAdapter = new CommentAdapter(this, mPostModel.getCommentModels(),new MyAdapter.AdapterListener<CommentModel>() {
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, CommentModel data) {
@@ -103,6 +110,8 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
 
     @Override
     protected void initData() {
+        initAdapter();
+
         mTitle.setText(mPostModel.getTitle());
         Glide.with(this).load(mPostModel.getIcon()).into(mIcon);
         mAuthor.setText(mPostModel.getAuthor());
@@ -112,7 +121,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getApplication());
         linearLayoutManager.setScrollEnabled(false);
         mRecyclerView.setAdapter(mAdapter);
-        if (mPostModel.getLikeModels().size() > 0) {
+        if (mPostModel.getLikeModels().size() > 0) { // 如果点赞数大于0，那么就显示赞数
             mLikeCounts.setText("" + mPostModel.getLikeModels().size());
         }
         mLike.setOnClickListener(this);
@@ -131,12 +140,12 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
                         Toast.makeText(this, "请先评论", Toast.LENGTH_SHORT).show();
                     } else {
                         mComment.setText("");
-                        CommentUtils commentUtils =CommentUtils.newInstance(mUserManager, this, mPostModel.getId(), comment);
-                        commentUtils.addComment(mAdapter); // 刷新
+                        CommentUtils commentUtils =CommentUtils.newInstance(mUser, this, mPostModel.getId(), comment);
+                        commentUtils.addComment(CommunicationConstant.COMMENT_TAG_POST,mAdapter); // 刷新
                     }
                     break;
                 case R.id.iv_post_like: // 点赞帖子
-                    LikeUtils likeUtils = LikeUtils.newInstance(CommunicationConstant.LIKE_TAG_POST,mUserManager, this, mLike, mLikeCounts);
+                    LikeUtils likeUtils = LikeUtils.newInstance(mPostModel.getId(),mUser, this, mLike, mLikeCounts);
                     likeUtils.checkedPostLike(mPostModel);
                     break;
                 default:

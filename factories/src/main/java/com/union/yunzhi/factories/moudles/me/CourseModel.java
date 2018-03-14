@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
  */
 
 public class CourseModel {
-    private int mId;
+    private String mId;
     private String mIcon; // 课程缩略图
     private String mName; // 课程名称
     private String mSchool; // 属于哪个学校的
@@ -20,7 +20,7 @@ public class CourseModel {
 
     public CourseModel() {}
 
-    public CourseModel(int id, String icon, String name, String school, String college, String teacher, int schedule, int progress, int state, int viewType) {
+    public CourseModel(String id, String icon, String name, String school, String college, String teacher, int schedule, int progress, int state, int viewType) {
         mId = id;
         mIcon = icon;
         mName = name;
@@ -33,11 +33,11 @@ public class CourseModel {
         mViewType = viewType;
     }
 
-    public int getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         mId = id;
     }
 

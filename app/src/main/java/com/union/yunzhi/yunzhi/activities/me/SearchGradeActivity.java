@@ -6,13 +6,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
+import com.union.yunzhi.common.util.LogUtils;
+import com.union.yunzhi.factories.moudles.me.BaseGradeModel;
 import com.union.yunzhi.factories.moudles.me.GradeModel;
+import com.union.yunzhi.factories.moudles.me.MeConstant;
+import com.union.yunzhi.factories.moudles.me.UserModel;
+import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.SearchGradeAdapter;
+import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
+import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
 
@@ -21,10 +31,11 @@ import java.util.List;
 
 public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItemClickListener {
 
-    private UserManager mUserManager;
+    private UserModel mUser;
     private Toolbar mToolbar;
     private List<GradeModel> mGradeModels = new ArrayList<>(); // 存放服务器拉下来的成绩数据
     private List<GradeModel> mSearchGrades = new ArrayList<>(); // 存放搜索出来的成绩数据
+    private TextView mNoGrade;
     private RecyclerView mRecyclerView;
     private SearchGradeAdapter mAdapter;
 
@@ -40,11 +51,38 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
 
     @Override
     protected void initWidget() {
-        mUserManager = UserManager.getInstance();
-        mGradeModels = mUserManager.getUser().data.getGradeModels();
-        initAdapter();
+        mUser = MeUtils.getUser();
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mNoGrade = (TextView) findViewById(R.id.tv_no_grade);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+
+        getData();
+    }
+
+    // 获取成绩
+    private void getData() {
+        DialogManager.getInstnce().showProgressDialog(this);
+        RequestCenter.requestGrade(mUser.getAccount(),
+                new DisposeDataListener() {
+                    @Override
+                    public void onSuccess(Object responseObj) {
+                        DialogManager.getInstnce().dismissProgressDialog();
+                        LogUtils.d("getGradeData", responseObj.toString());
+                        BaseGradeModel baseGradeModel = (BaseGradeModel) responseObj;
+                        if (baseGradeModel.ecode == MeConstant.ECODE) {
+                            mGradeModels = baseGradeModel.data;
+                        } else {
+                            Toast.makeText(SearchGradeActivity.this, "" + baseGradeModel.emsg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Object reasonObj) {
+                        DialogManager.getInstnce().dismissProgressDialog();
+                        Toast.makeText(SearchGradeActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     /**
@@ -56,8 +94,14 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
 
     @Override
     protected void initData() {
+        initAdapter();
         mToolbar.inflateMenu(R.menu.search_grade_item);
         mToolbar.setOnMenuItemClickListener(this);
+        if (mGradeModels.size() == 0) {
+            mNoGrade.setVisibility(View.VISIBLE);
+        } else {
+            mNoGrade.setVisibility(View.GONE);
+        }
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
     }

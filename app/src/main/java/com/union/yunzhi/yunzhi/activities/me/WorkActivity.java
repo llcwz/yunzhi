@@ -11,13 +11,20 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.me.BaseWorkModel;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
-import com.union.yunzhi.factories.moudles.me.MeModel;
+import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.factories.moudles.me.WorkModel;
+import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
 import com.union.yunzhi.yunzhi.adapter.MyWorkAdapter;
+import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
+import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import org.angmarch.views.NiceSpinner;
 
@@ -32,13 +39,15 @@ import java.util.List;
 
 public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickListener {
 
-    private UserManager mUserManager;
-    private MeModel mMeModel;
+    private UserModel mUser;
+    private List<WorkModel> mWorkModels = new ArrayList<>();
     private List<String> mSpinnerStates = new LinkedList<>(Arrays.asList("进行中" , "已完成")); // spinner的填充内容
     private Toolbar mToolbar;
     private NiceSpinner mSpinner;
     private RecyclerView mRecyclerView;
     private MyWorkAdapter mAdapter;
+
+
     public static void newInstance(Context context) {
         Intent intent = new Intent(context, WorkActivity.class);
         context.startActivity(intent);
@@ -51,17 +60,43 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
 
     @Override
     protected void initWidget() {
-        mUserManager = UserManager.getInstance();
-        mMeModel = mUserManager.getUser().data;
-        data();
+        mUser = MeUtils.getUser();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+
+        getData();
+
+    }
+
+    // 获取网络数据
+    private void getData() {
+        DialogManager.getInstnce().showProgressDialog(this);
+        RequestCenter.requestMyWork(mUser.getAccount(),
+                new DisposeDataListener() {
+                    @Override
+                    public void onSuccess(Object responseObj) {
+                        DialogManager.getInstnce().dismissProgressDialog();
+                        LogUtils.d("getMyWorkData", responseObj.toString());
+                        BaseWorkModel baseWorkModel = (BaseWorkModel) responseObj;
+                        if (baseWorkModel.ecode == MeConstant.ECODE) {
+                            mWorkModels = baseWorkModel.data;
+                        } else {
+                            Toast.makeText(WorkActivity.this, "" + baseWorkModel.emsg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Object reasonObj) {
+                        DialogManager.getInstnce().dismissProgressDialog();
+                        Toast.makeText(WorkActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     // 初始化适配器
-    private void data() {
-            mAdapter = new MyWorkAdapter(this, mMeModel.getWorkModels(), new MyAdapter.AdapterListener<WorkModel>() {
+    private void initAdapter() {
+            mAdapter = new MyWorkAdapter(this, mWorkModels, new MyAdapter.AdapterListener<WorkModel>() {
                 @Override
                 public void onItemClick(MyAdapter.MyViewHolder holder, WorkModel data) {
                     // TODO: 2018/3/6 跳到课程下的单元测试
@@ -87,7 +122,8 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
 
     @Override
     protected void initData() {
-        if (mUserManager.getPerson().getPriority() == MeConstant.PRIORITY_TEACHER) { // 如果是老师登进，则给予权限发布新的任务
+        initAdapter();
+        if (mUser.getPriority() == MeConstant.PRIORITY_TEACHER) { // 如果是老师登进，则给予权限发布新的任务
             mToolbar.inflateMenu(R.menu.me_add_work_item);
             mToolbar.setOnMenuItemClickListener(this);
         }
@@ -112,14 +148,45 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
      */
     private void notifyList(int i) {
         List<WorkModel> workModels = new ArrayList<>();
-        if (mMeModel.getWorkModels() != null) { // 如果有任务
-            for (WorkModel workModel : mMeModel.getWorkModels()) {
+        if (mWorkModels != null) { // 如果有任务
+            for (WorkModel workModel : mWorkModels) {
                 if (workModel.getState().equals(mSpinnerStates.get(i).toString())) {
                     workModels.add(workModel);
                 }
             }
         }
+        notifyList(workModels);
+    }
+
+    /**
+     * @function 更新列表
+     * @param workModels
+     */
+    private void notifyList(List<WorkModel> workModels) {
         mAdapter.clear();
+        mAdapter.add(workModels);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case NewWorkActivity.REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    WorkModel workModel = data.getParcelableExtra(NewWorkActivity.TAG);
+                    if (workModel != null) {
+                        addWork(workModel);
+                    }
+                }
+                break;
+            default:
+        }
+    }
+
+    /**
+     * 有新的任务
+     * @param workModels
+     */
+    private void addWork(WorkModel workModels) {
         mAdapter.add(workModels);
         mAdapter.notify();
     }
@@ -131,7 +198,9 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
      */
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        NewWorkActivity.newInstance(this);
+        startActivityForResult(new Intent(this, NewWorkActivity.class), NewWorkActivity.REQUEST_CODE);
         return false;
     }
+
+
 }

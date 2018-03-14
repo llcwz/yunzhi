@@ -1,6 +1,8 @@
 package com.union.yunzhi.yunzhi;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -14,6 +16,13 @@ import com.union.yunzhi.yunzhi.fragment.main.CommunicationFragment;
 import com.union.yunzhi.yunzhi.fragment.main.HomeFragment;
 import com.union.yunzhi.yunzhi.fragment.main.LiveFragment;
 import com.union.yunzhi.yunzhi.fragment.main.MeFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,NavHelper.OnTabReselectListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
 
@@ -119,6 +128,43 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     }
 
 
+
+    // 打印所有的 intent extra 数据
+    private static String printBundle(Bundle bundle) {
+        StringBuilder sb = new StringBuilder();
+        for (String key : bundle.keySet()) {
+            if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
+                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
+            } else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
+                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
+            } else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
+                if (bundle.getString(JPushInterface.EXTRA_EXTRA).isEmpty()) {
+                    Log.i("printBundle", "This message has no Extra data");
+                    continue;
+                }
+
+                try {
+
+                    /**
+                     * 先将JSON字符串转化为对象，再取其中的字段
+                     */
+                    JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
+                    Iterator<String> it = json.keys();
+
+                    while (it.hasNext()) {
+                        String myKey = it.next().toString();
+                        sb.append("\nkey:" + key + ", value: [" + myKey + " - " + json.optString(myKey) + "]");
+                    }
+                } catch (JSONException e) {
+                    Log.e("printBundle", "Get message extra JSON error!");
+                }
+
+            } else {
+                sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
+            }
+        }
+        return sb.toString();
+    }
 
 
 }

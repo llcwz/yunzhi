@@ -7,22 +7,28 @@ import java.util.List;
  */
 
 public class MeModel {
-    private PersonModel mPersonModel; // 个人账号
+    private UserModel mUserModel; // 个人账号
     private List<CourseModel> mCourseModels; // 我的课程
     private List<MessageModel> mMessageModels; // 我的消息
     private List<WorkModel> mWorkModels; // 任务
     private List<GradeModel> mGradeModels; // 成绩
 
-    private int mViewType;
-
     public MeModel() {}
 
-    public PersonModel getPersonModel() {
-        return mPersonModel;
+    public MeModel(UserModel userModel, List<CourseModel> courseModels, List<MessageModel> messageModels, List<WorkModel> workModels, List<GradeModel> gradeModels) {
+        mUserModel = userModel;
+        mCourseModels = courseModels;
+        mMessageModels = messageModels;
+        mWorkModels = workModels;
+        mGradeModels = gradeModels;
     }
 
-    public void setPersonModel(PersonModel personModel) {
-        mPersonModel = personModel;
+    public UserModel getUserModel() {
+        return mUserModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        mUserModel = userModel;
     }
 
     public List<CourseModel> getCourseModels() {
@@ -55,13 +61,5 @@ public class MeModel {
 
     public void setMessageModels(List<MessageModel> messageModels) {
         mMessageModels = messageModels;
-    }
-
-    public int getViewType() {
-        return mViewType;
-    }
-
-    public void setViewType(int viewType) {
-        mViewType = viewType;
     }
 }

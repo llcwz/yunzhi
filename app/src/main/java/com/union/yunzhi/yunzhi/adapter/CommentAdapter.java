@@ -75,7 +75,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
                 @Override
                 public void onClick(View view) {
                     if (mUserManager.hasLogined()) { // 用户登录了
-                        LikeUtils likeUtils = LikeUtils.newInstance(CommunicationConstant.LIKE_TAG_COMMENT,mUserManager, mContext, mLike,mLikeCount);
+                        LikeUtils likeUtils = LikeUtils.newInstance(data.getId(),mUserManager.getUser(), mContext, mLike,mLikeCount);
                         likeUtils.checkedCommentLike(data);
                     } else { // 用户没登录
                         Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();

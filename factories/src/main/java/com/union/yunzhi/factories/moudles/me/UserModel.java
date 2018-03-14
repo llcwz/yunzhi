@@ -4,18 +4,18 @@ package com.union.yunzhi.factories.moudles.me;
  * Created by CrazyGZ on 2018/2/24.
  */
 
-public class PersonModel {
+public class UserModel {
     private String photourl; // 头像地址
-    private String studentname; // 姓名
+    private String name; // 姓名
     private String account; // 账号
     private String password; // 密码
     private int priority; // 权限，根据相应的权限载入不同的布局
 
-    public PersonModel(){}
+    public UserModel(){}
 
-    public PersonModel(String photourl, String studentname, String account, String password, int priority) {
+    public UserModel(String photourl, String name, String account, String password, int priority) {
         this.photourl = photourl;
-        this.studentname = studentname;
+        this.name = name;
         this.account = account;
         this.password = password;
         this.priority = priority;
@@ -29,12 +29,12 @@ public class PersonModel {
         this.photourl = photourl;
     }
 
-    public String getStudentname() {
-        return studentname;
+    public String getName() {
+        return name;
     }
 
-    public void setStudentname(String studentname) {
-        this.studentname = studentname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAccount() {

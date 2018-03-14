@@ -15,6 +15,7 @@ import android.widget.TimePicker;
 import com.union.yunzhi.yunzhi.R;
 
 /**
+ * @function 提供时间选择
  * Created by CrazyGZ on 2018/3/8.
  */
 

@@ -22,18 +22,6 @@ public class QuestionBean implements Parcelable {
     public List<CommentModel> commentModels; // 该问题的评论
     public List<LikeModel> likeModels; // 该问题的点赞
 
-    public QuestionBean() {}
-
-    public QuestionBean(String courseId, String id, String iconUrl, String author, String time, String content, List<CommentModel> commentModels, List<LikeModel> likeModels) {
-        this.courseId = courseId;
-        this.id = id;
-        this.iconUrl = iconUrl;
-        this.author = author;
-        this.time = time;
-        this.content = content;
-        this.commentModels = commentModels;
-        this.likeModels = likeModels;
-    }
 
     protected QuestionBean(Parcel in) {
         courseId = in.readString();

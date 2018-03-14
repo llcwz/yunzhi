@@ -33,13 +33,18 @@ public class CommonRequest {
         //通过请求构建的bulid方法来构建我们的请求体
         FormBody mFormBody = mFormBodyBuild.build();
 
+        if(url !=null){
+            //返回我们的请求对象
+            return new Request
+                    .Builder()
+                    .url(url)
+                    .post(mFormBody)
+                    .build();
+        }
 
-        //返回我们的请求对象
-        return new Request
-                .Builder()
-                .url(url)
-                .post(mFormBody)
-                .build();
+
+
+        return null;
 
     }
 
@@ -66,12 +71,17 @@ public class CommonRequest {
 
         }
 
-        //返回一个get请求
-        return new Request
-                .Builder()
-                .url(urlBuilder.substring(0,urlBuilder.length()-1))//去掉末尾的&符号
-                .get()
-                .build();
+        if(url !=null){
+            //返回一个get请求
+            return new Request
+                    .Builder()
+                    .url(urlBuilder.substring(0,urlBuilder.length()-1))//去掉末尾的&符号
+                    .get()
+                    .build();
+        }
+
+        return null;
+
 
     }
 }

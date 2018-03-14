@@ -13,7 +13,7 @@ import java.util.List;
 public class PostModel implements Parcelable {
     private String mId; // 帖子的id
     private int mTag; // 标记类型，由此可知是哪一个模块的帖子
-    private String mIcon; // 头像
+    private String mIcon; // 作者头像
     private String mAuthor; // 作者
     private String mTime; // 时间
     private String mTitle; // 标题
