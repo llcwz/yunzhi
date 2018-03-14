@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.factories.moudles.classfication.beans.drawer.DrawerBean;
@@ -68,8 +69,7 @@ public class ClassDrawerAdapter extends MyAdapter<DrawerBean> {
         protected void onBind(final DrawerBean data, final int position) {
             //适配分类父标题
             mTextView.setText(data.academicname);
-            mImageView.setImageResource(R.drawable.ic_airplay_black_24dp);
-
+            Glide.with(context).load(data.icon).placeholder(R.drawable.ic_airplay_black_24dp).into(mImageView);
             final List<String> getData=new ArrayList<>();
             for(int i=0;i<data.course.size();i++){
                 getData.add(data.course.get(i).coursename);
