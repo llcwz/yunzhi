@@ -28,6 +28,7 @@ import com.union.yunzhi.factories.moudles.hometest.HomeHeadModle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.SearchActivity;
+import com.union.yunzhi.yunzhi.activities.classfication.ClassCourseDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.HomeAdapter;
 import com.union.yunzhi.yunzhi.manager.MyQrCodeDialog;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
@@ -198,6 +199,23 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                         intent.putExtra(AdBrowserActivity.KEY_URL, code);
                         startActivity(intent);
                     } else {
+                        if(code.contains("&")){
+                            String courseId;
+                            courseId = code.substring(0,code.indexOf("&"));
+
+                            String teacherId;
+
+                            teacherId = code.substring(code.indexOf("&")+1,code.length());
+
+                            Intent intent = new Intent(getContext(),ClassCourseDetailsActivity.class);
+
+                            intent.putExtra("courseId",courseId);
+                            intent.putExtra("teacherId",teacherId);
+
+                            startActivity(intent);
+
+
+                        }
                         Toast.makeText(getContext(), code, Toast.LENGTH_SHORT).show();
                     }
                 }
