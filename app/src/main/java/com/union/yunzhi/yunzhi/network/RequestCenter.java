@@ -39,6 +39,15 @@ public class RequestCenter {
 
     }
 
+    //根据参数发送所有post请求，直接拼接整体
+    public static void postRequestO(String url, RequestParams params, DisposeDataListener listener, Class<?> clazz) {
+        CommonOkHttpClient.get(CommonRequest.
+                createPostRequestO(url, params), new DisposeDataHandle(listener, clazz));
+
+    }
+
+
+
 
 
     public static void requestHomeData(String userName, String password, DisposeDataListener listener) {

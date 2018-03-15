@@ -60,7 +60,7 @@ public class MyQrCodeDialog extends Dialog {
         mQrCodeView.setImageBitmap(Util.createQRCode(
                 Utils.dip2px(mContext, 200),
                 Utils.dip2px(mContext, 200),
-                name));
+                "123456&0034"));
         mTickView.setText(name +"hellow");
 
     }

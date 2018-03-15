@@ -70,7 +70,9 @@ public class LoginActivity extends ActivityM implements View.OnClickListener, Vi
             viewHelper.listener();
         }
         mAccount = (EditText) findViewById(R.id.associate_email_input);
+       // mAccount.clearFocus();
         mPasswordView = (EditText) findViewById(R.id.login_input_password);
+
         mLoginView = (TextView) findViewById(R.id.login_button);
         mLoginView.setOnClickListener(this);
         mRemAccount = (CheckBox) findViewById(R.id.cb_remaccount);
@@ -99,6 +101,8 @@ public class LoginActivity extends ActivityM implements View.OnClickListener, Vi
             mRemPassword.setOnClickListener(this);
             mRemPassword.setChecked(true);
         }
+
+        mRemAccount.clearFocus();
     }
 
     @Override

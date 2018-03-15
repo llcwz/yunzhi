@@ -19,13 +19,17 @@ public class LoadingActivity extends PermissionsActivity implements View.OnClick
     private RelativeLayout mCopyLayout;
     private TextView skipButton;
 
+    private Boolean permissions = false;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (SPManager.getInstance().
                     getBoolean(SPManager.IS_SHOW_GUIDE, false)) {
-                startActivity(new Intent(LoadingActivity.this,
-                        MainActivity.class));
+                    startActivity(new Intent(LoadingActivity.this,
+                            MainActivity.class));
+
+
             } else {
              //   SPManager.getInstance().putBoolean(SPManager.IS_SHOW_GUIDE, true);
                 startActivity(new Intent(LoadingActivity.this,
@@ -54,7 +58,10 @@ public class LoadingActivity extends PermissionsActivity implements View.OnClick
          * 预留广告加载
          */
 
-        mHandler.sendEmptyMessageDelayed(0, 3000);
+            mHandler.sendEmptyMessageDelayed(0, 3000);
+
+
+
     }
 
     @Override
@@ -78,4 +85,6 @@ public class LoadingActivity extends PermissionsActivity implements View.OnClick
                 break;
         }
     }
+
+
 }
