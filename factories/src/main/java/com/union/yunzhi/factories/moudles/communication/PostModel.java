@@ -11,13 +11,13 @@ import java.util.List;
  */
 
 public class PostModel implements Parcelable {
-    private String mId; // 帖子的id  不要
-    private int mTag; // 标记类型，由此可知是哪一个模块的帖子
+    private String id; // 帖子的id  不要
+    private int tag; // 标记类型，由此可知是哪一个模块的帖子
     private String mIcon; // 作者头像
     private String mAuthor; // 作者
-    private String mTime; // 时间
-    private String mTitle; // 标题
-    private String mContent; // 内容
+    private String time; // 时间
+    private String title; // 标题
+    private String content; // 内容
     private List<CommentModel> mCommentModels; // 该帖子的评论
     private List<LikeModel> mLikeModels; // 该帖子的点赞
 
@@ -25,38 +25,38 @@ public class PostModel implements Parcelable {
     }
 
     public PostModel(String id, int tag, String icon, String author, String time, String title, String content, List<CommentModel> commentModels, List<LikeModel> likeModels) {
-        mId = id;
-        mTag = tag;
+        this.id = id;
+        this.tag = tag;
         mIcon = icon;
         mAuthor = author;
-        mTime = time;
-        mTitle = title;
-        mContent = content;
+        this.time = time;
+        this.title = title;
+        this.content = content;
         mCommentModels = commentModels;
         mLikeModels = likeModels;
     }
 
     protected PostModel(Parcel in) {
-        mId = in.readString();
-        mTag = in.readInt();
+        id = in.readString();
+        tag = in.readInt();
         mIcon = in.readString();
         mAuthor = in.readString();
-        mTime = in.readString();
-        mTitle = in.readString();
-        mContent = in.readString();
+        time = in.readString();
+        title = in.readString();
+        content = in.readString();
         mCommentModels = in.createTypedArrayList(CommentModel.CREATOR);
         mLikeModels = in.createTypedArrayList(LikeModel.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mId);
-        dest.writeInt(mTag);
+        dest.writeString(id);
+        dest.writeInt(tag);
         dest.writeString(mIcon);
         dest.writeString(mAuthor);
-        dest.writeString(mTime);
-        dest.writeString(mTitle);
-        dest.writeString(mContent);
+        dest.writeString(time);
+        dest.writeString(title);
+        dest.writeString(content);
         dest.writeTypedList(mCommentModels);
         dest.writeTypedList(mLikeModels);
     }
@@ -79,19 +79,19 @@ public class PostModel implements Parcelable {
     };
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public int getTag() {
-        return mTag;
+        return tag;
     }
 
     public void setTag(int tag) {
-        mTag = tag;
+        this.tag = tag;
     }
 
     public String getIcon() {
@@ -111,27 +111,27 @@ public class PostModel implements Parcelable {
     }
 
     public String getTime() {
-        return mTime;
+        return time;
     }
 
     public void setTime(String time) {
-        mTime = time;
+        this.time = time;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public void setTitle(String title) {
-        mTitle = title;
+        this.title = title;
     }
 
     public String getContent() {
-        return mContent;
+        return content;
     }
 
     public void setContent(String content) {
-        mContent = content;
+        this.content = content;
     }
 
     public List<CommentModel> getCommentModels() {

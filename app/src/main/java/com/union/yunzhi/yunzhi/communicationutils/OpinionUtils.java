@@ -48,11 +48,7 @@ public class OpinionUtils {
         String id = mUser.getAccount() + time; // 利用用户的账号的当前时间生成id
 
         RequestCenter.requestAddPost(mUser.getAccount(),
-                id,
                 tag,
-                mUser.getPhotourl(),
-                mUser.getName(),
-                time,
                 title,
                 content, new DisposeDataListener() {
                     @Override
