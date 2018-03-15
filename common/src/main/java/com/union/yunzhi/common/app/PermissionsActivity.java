@@ -52,6 +52,7 @@ public abstract class PermissionsActivity extends ActivityM {
     protected void initWindows() {
         super.initWindows();
         if(Build.VERSION.SDK_INT >= 23){
+            //Log.i("initWindows","initWindows");
             haveAllPerm(this,getSupportFragmentManager());
         }
     }
@@ -81,13 +82,22 @@ public abstract class PermissionsActivity extends ActivityM {
     public  boolean haveAllPerm(Context context, FragmentManager manager) {
         //检查是否全部权限
         boolean haveAll =
-                haveWritePrem(context)
-                        && haveRecordAudioPerm(context);
+                haveWritePrem(context);
+                       // && haveRecordAudioPerm(context);
 
         //如果没有则显示当前申请权限的界面
         if (!haveAll) {
             requestPerm();
+        }else {
+           // Toast.makeText(this,"成功s",Toast.LENGTH_SHORT).show();
         }
+        return haveAll;
+    }
+
+    public  boolean haveAllPerm(Context context) {
+        //检查是否全部权限
+        boolean haveAll =
+                haveWritePrem(context);
         return haveAll;
     }
 
@@ -96,12 +106,10 @@ public abstract class PermissionsActivity extends ActivityM {
      * 申请权限的方法
      */
     @AfterPermissionGranted(RC)
-    private  void requestPerm() {
+    public   void requestPerm() {
         String[] perms = new String[]{
-                Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.RECORD_AUDIO
-
+              //  Manifest.permission.RECORD_AUDIO
         };
 
         if(EasyPermissions.hasPermissions(this,perms)){
@@ -111,6 +119,7 @@ public abstract class PermissionsActivity extends ActivityM {
             //动态的申请权限
             EasyPermissions.requestPermissions(this,getString(R.string.permision),
                     RC,perms);
+            Toast.makeText(this,"申请",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -177,5 +186,6 @@ public abstract class PermissionsActivity extends ActivityM {
     public void doOpenCamera() {
 
     }
+
 
 }

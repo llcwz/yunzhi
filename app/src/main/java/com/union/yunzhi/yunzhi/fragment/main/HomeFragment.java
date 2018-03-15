@@ -199,8 +199,10 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                         intent.putExtra(AdBrowserActivity.KEY_URL, code);
                         startActivity(intent);
                     } else {
+                        //视频界面二维码跳转逻辑
                         if(code.contains("&")){
                             String courseId;
+
                             courseId = code.substring(0,code.indexOf("&"));
 
                             String teacherId;
