@@ -16,6 +16,7 @@ import com.union.yunzhi.factories.moudles.me.BaseGradeModel;
 import com.union.yunzhi.factories.moudles.me.GradeModel;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.UserModel;
+import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.SearchGradeAdapter;
@@ -80,7 +81,17 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
                     @Override
                     public void onFailure(Object reasonObj) {
                         DialogManager.getInstnce().dismissProgressDialog();
-                        Toast.makeText(SearchGradeActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+                        OkHttpException okHttpException = (OkHttpException) reasonObj;
+                        if (okHttpException.getEcode() == 1) {
+                            Toast.makeText(SearchGradeActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -1){
+                            Toast.makeText(SearchGradeActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -2) {
+                            Toast.makeText(SearchGradeActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -3) {
+                            Toast.makeText(SearchGradeActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
     }

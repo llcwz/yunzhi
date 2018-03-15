@@ -3,10 +3,6 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -14,11 +10,12 @@
 
             <TextView
                 android:id="@+id/tv_no_message"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/len_16"
-                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
                 android:text="暂无消息"
+                android:textSize="@dimen/font_16"
                 android:textStyle="bold"
                 android:visibility="gone"/>
 
@@ -28,6 +25,5 @@
                 android:layout_height="match_parent"
                 android:padding="@dimen/len_8"/>
         </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

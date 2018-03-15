@@ -17,6 +17,7 @@ import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.jpush.PushMessage;
 import com.union.yunzhi.factories.moudles.me.BaseUserModel;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
+import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.jpush.PushMessageActivity;
@@ -192,8 +193,18 @@ public class LoginActivity extends ActivityM implements View.OnClickListener, Vi
             @Override
             public void onFailure(Object reasonObj) {
                 //失败的时候也要去销毁他
-                DialogManager.getInstnce().dismissProgressDialog();
                 Log.d("Test", "onFailure: " + reasonObj.toString());
+                DialogManager.getInstnce().dismissProgressDialog();
+                OkHttpException okHttpException = (OkHttpException) reasonObj;
+                if (okHttpException.getEcode() == 1) {
+                    Toast.makeText(LoginActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                } else if (okHttpException.getEcode() == -1){
+                    Toast.makeText(LoginActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
+                } else if (okHttpException.getEcode() == -2) {
+                    Toast.makeText(LoginActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
+                } else if (okHttpException.getEcode() == -3) {
+                    Toast.makeText(LoginActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
