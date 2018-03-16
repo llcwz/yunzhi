@@ -24,9 +24,8 @@ import com.union.yunzhi.common.constant.Constant;
 import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
-import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
+import com.union.yunzhi.factories.moudles.home.homeBaseModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
-import com.union.yunzhi.factories.moudles.hometest.HomeHeadModle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.SearchActivity;
@@ -154,11 +153,27 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
 
 
-        BaseHomeModle data = (BaseHomeModle) object;
+        homeBaseModle data = (homeBaseModle) object;
 
-        HomeHeadModle head = data.data.head;
+
+            for(int j=0;j<data.data.list.get(1).coursecover.size();j++){
+                LogUtils.i("homeBaseModle",data.data.list.get(1).coursecover.get(j));
+            }
+
+            for(int i=0;i<data.data.list.size();i++){
+                LogUtils.i("homeBaseModle",data.data.list.get(i).viewType+"");
+            }
+
+
+
 
         mHomeAdapter.add(data.data.list);
+
+
+
+
+
+        //mHomeAdapter.add(data.data.list);
 
 
         // list.add(data);
@@ -279,32 +294,32 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        RequestCenter.requestHomeData("", "", new DisposeDataListener() {
-            @Override
-            public void onSuccess(Object responseObj) {
-                    RequestCenter.requestHomeData("", "", new DisposeDataListener() {
-                        @Override
-                        public void onSuccess(Object responseObj) {
-                            BaseHomeModle data = (BaseHomeModle) responseObj;
-                            if(data!=null){
-                               // mHomeAdapter.clear();
-                                mHomeAdapter.add(data.data.list);
-                                mRefreshLayout.finishLoadMore(true);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Object reasonObj) {
-
-                        }
-                    });
-            }
-
-            @Override
-            public void onFailure(Object reasonObj) {
-
-            }
-        });
+//        RequestCenter.requestHomeData("", "", new DisposeDataListener() {
+//            @Override
+//            public void onSuccess(Object responseObj) {
+//                    RequestCenter.requestHomeData("", "", new DisposeDataListener() {
+//                        @Override
+//                        public void onSuccess(Object responseObj) {
+//                            BaseHomeModle data = (BaseHomeModle) responseObj;
+//                            if(data!=null){
+//                               // mHomeAdapter.clear();
+//                                mHomeAdapter.add(data.data.list);
+//                                mRefreshLayout.finishLoadMore(true);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Object reasonObj) {
+//
+//                        }
+//                    });
+//            }
+//
+//            @Override
+//            public void onFailure(Object reasonObj) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -313,22 +328,22 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         Log.i("onRefresh","onRefresh");
         refreshLayout.autoRefresh();
 
-        RequestCenter.requestHomeData("", "", new DisposeDataListener() {
-            @Override
-            public void onSuccess(Object responseObj) {
-                BaseHomeModle data = (BaseHomeModle) responseObj;
-                if(data!=null){
-                    mHomeAdapter.clear();
-                    mHomeAdapter.add(data.data.list);
-                    mRefreshLayout.finishRefresh(2000,true);//传入false表示刷新失败
-                }
-
-            }
-
-            @Override
-            public void onFailure(Object reasonObj) {
-            }
-        });
+//        RequestCenter.requestHomeData("", "", new DisposeDataListener() {
+//            @Override
+//            public void onSuccess(Object responseObj) {
+//                BaseHomeModle data = (BaseHomeModle) responseObj;
+//                if(data!=null){
+//                    mHomeAdapter.clear();
+//                    mHomeAdapter.add(data.data.list);
+//                    mRefreshLayout.finishRefresh(2000,true);//传入false表示刷新失败
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Object reasonObj) {
+//            }
+//        });
     }
 
 

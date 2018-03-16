@@ -2,18 +2,14 @@ package com.union.yunzhi.yunzhi.network;
 
 import android.util.Log;
 
-
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseCourseShowBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.details.BaseDetailsBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.question.BaseQuestionBean;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.BaseCommunicationModel;
-
-import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerBean;
-
-import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
-
+import com.union.yunzhi.factories.moudles.home.homeBaseModle;
 import com.union.yunzhi.factories.moudles.me.BaseCourseModel;
 import com.union.yunzhi.factories.moudles.me.BaseGradeModel;
 import com.union.yunzhi.factories.moudles.me.BaseMessageModel;
@@ -61,7 +57,7 @@ public class RequestCenter {
 
         Log.i("requestHomeData","ok");
 
-        RequestCenter.postRequest(HttpConstants.HOME_URL, null, listener, BaseHomeModle.class);
+        RequestCenter.postRequest(HttpConstants.HOME_URL, null, listener, homeBaseModle.class);
     }
 
     /**
