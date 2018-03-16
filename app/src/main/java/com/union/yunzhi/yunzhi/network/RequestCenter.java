@@ -193,6 +193,17 @@ public class RequestCenter {
     }
 
     /**
+     * @function 获取评论
+     * @param id 帖子的id
+     * @param listener
+     */
+    public static void requestComment(String id, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("id",id);
+        RequestCenter.postRequest(HttpConstants.COMMENT_URL, params, listener, BaseCommentModel.class);
+    }
+
+    /**
      * @function 上传点赞
      * @param postOrCommentOrQuestionId 给点赞的那个东西的id
      * @param account 点赞者的id

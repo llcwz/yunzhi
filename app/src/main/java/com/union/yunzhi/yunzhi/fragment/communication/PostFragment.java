@@ -19,6 +19,7 @@ import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.PostDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.PostAdapter;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.ArrayList;
@@ -78,6 +79,7 @@ public class PostFragment extends FragmentM {
                         BaseCommunicationModel baseCommunicationModel = (BaseCommunicationModel) responseObj;
                         if (baseCommunicationModel.ecode == CommunicationConstant.ECODE) {
                             mPostModels = baseCommunicationModel.data;
+                            MeUtils.showNoMessage(mPostModels.size(),mNoPost, "暂无帖子，快来占领地盘吧");
                             initAdapter(mPostModels);
                             for (PostModel postModel : mPostModels) {
                                 LogUtils.d("postMessage", postModel.toString());
@@ -138,12 +140,6 @@ public class PostFragment extends FragmentM {
     @Override
     protected void initData() {
 
-//        if (mPostModels.size() == 0) {
-//            mNoPost.setVisibility(View.VISIBLE); // 没有帖子显示
-//        } else {
-//            mNoPost.setVisibility(View.GONE); // 有帖子隐藏
-//        }
-//
     }
 
 

@@ -23,20 +23,14 @@ public final class ClassConst
     public static final int CLASS_NOT_FINISHED=6;
     public static final int CLASS_NOT_START=7;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 132fbb6d71f91a5fd6216d6a9f9bdfeabf23928d
     /**
      * 课程考核
      */
 
     public static final int TSET_VIEW_TITLE=1;
     public static final int TSET_VIEW_CONTENT=2;
-<<<<<<< HEAD
-=======
 
->>>>>>> 132fbb6d71f91a5fd6216d6a9f9bdfeabf23928d
     public static final int IS_FINISHED=0;
     public static final int NOT_FINISHED=1;
 
@@ -46,11 +40,10 @@ public final class ClassConst
     public static final String VIDEO_NAME="video_name";
     public static final String VIDEO_COVER_URL="video_cover_url";
 
-<<<<<<< HEAD
-=======
+
     public static final String COURSEID="course_id";
     public static final String TEACHERID="teacher_id";
 
->>>>>>> 132fbb6d71f91a5fd6216d6a9f9bdfeabf23928d
+
 }
 

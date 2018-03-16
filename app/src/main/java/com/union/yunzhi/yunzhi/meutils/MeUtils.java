@@ -3,6 +3,9 @@ package com.union.yunzhi.yunzhi.meutils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.graphics.Palette;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -37,7 +40,7 @@ public class MeUtils {
     }
 
     // 网络图片的地址
-    public void showPallete(Context context, String url, final OnShowPalleteListener listener) {
+    public static void showPalette(Context context, String url, final OnShowPalleteListener listener) {
         Glide.with(context)
                 .load(url)
                 .asBitmap()
@@ -67,5 +70,14 @@ public class MeUtils {
                         }
                     }
                 });
+    }
+
+    public static void showNoMessage(int size,TextView noMessage, String hint) {
+        if (size == 0) {
+            noMessage.setText(hint);
+            noMessage.setVisibility(View.VISIBLE);
+        } else {
+            noMessage.setVisibility(View.GONE);
+        }
     }
 }

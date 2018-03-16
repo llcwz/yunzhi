@@ -34,11 +34,14 @@ public class HttpConstants {
     // 请求获取学生成绩
     public static final String MY_GRADE_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
 
-    //请求获取
+    //请求获取帖子
     public static final String POST_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/allNote";
 
     //请求获取
     public static final String QUESTION_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+
+    //请求获取评论
+    public static final String COMMENT_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/allNote";
 
 //    //请求获取
 //    public static final String  = "";
