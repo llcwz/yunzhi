@@ -23,6 +23,7 @@ import com.union.yunzhi.common.app.PermissionsFragment;
 import com.union.yunzhi.common.constant.Constant;
 import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.util.LogUtils;
+import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeHeadModle;
@@ -217,8 +218,8 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
                             Intent intent = new Intent(getContext(),ClassCourseDetailsActivity.class);
 
-                            //intent.putExtra(ClassConst.CO,courseId);
-                            //intent.putExtra("teacherId",teacherId);
+                            intent.putExtra(ClassConst.COURSEID,courseId);
+                            intent.putExtra(ClassConst.TEACHERID,teacherId);
 
                             startActivity(intent);
 

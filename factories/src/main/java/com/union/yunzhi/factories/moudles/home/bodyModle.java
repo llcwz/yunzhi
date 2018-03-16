@@ -7,5 +7,11 @@ import java.util.List;
  */
 
 public class bodyModle {
-    List<bodyValue> list;
+    public List<String> titles;
+    public List<String> photos;
+    public List<String> portraits;
+    public List<String> courseids;
+    public List<String> teacherids;
+    public List<String> ads;
+    public int viewType;
 }

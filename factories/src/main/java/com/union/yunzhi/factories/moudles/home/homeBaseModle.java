@@ -9,6 +9,6 @@ import com.union.yunzhi.factories.moudles.BaseModel;
 public class homeBaseModle extends BaseModel {
     public int ecode;
     public String emsg;
-    public bodyValue data;
+    public body data;
 
 }
