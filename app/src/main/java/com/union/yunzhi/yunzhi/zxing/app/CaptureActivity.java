@@ -54,6 +54,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.LoginActivity;
 import com.union.yunzhi.yunzhi.activities.MyQRCodeActivity;
@@ -539,10 +540,14 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     if (result == null) {
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(), "图片格式有误", Toast.LENGTH_SHORT).show();
+                        LogUtils.i("getApplicationContext","NO");
                         Looper.loop();
                     } else {
+
                         // 数据返回，在这里去处理扫码结果
                         String recode = (result.toString());
+                        Toast.makeText(getBaseContext(),recode,Toast.LENGTH_SHORT).show();
+
                         Intent data = new Intent();
                         data.putExtra("result", recode);
                         setResult(300, data);

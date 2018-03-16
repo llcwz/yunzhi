@@ -25,6 +25,8 @@ import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 import com.union.yunzhi.factories.moudles.classfication.beans.details.BaseDetailsBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.details.TeacherBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.video.VideoBean;
+import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.MoreTeacherAdapter;
@@ -50,7 +52,8 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
     private TextView mLikeCount,courseName,courseTeacher;
     private ImageButton mLike;
     private ImageView videoCover;
-    private String videocoverurl,videourl,coursename;
+    private VideoBean videoBean;
+    private BaseCommentModel commentModel;
 
 
     //课程简介
@@ -204,9 +207,15 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
 
                 BaseDetailsBean bean= (BaseDetailsBean) responseObj;
                 mList=bean.data.teacher;
-                videocoverurl=bean.data.introimgUrl;
-                videourl=bean.data.introvideoUrl;
-                coursename=bean.data.coursename;
+
+                videoBean=new VideoBean();
+                videoBean.coverurl=bean.data.introimgurl;
+                videoBean.videourl=bean.data.introvideourl;
+                videoBean.videoid=bean.data.videoid;
+                videoBean.videotitle=bean.data.videoid;
+
+
+
                 String courseteacher=bean.data.teachername;
                 String courseinfo=bean.data.courseinfo;
                 String teacherinfo=bean.data.teacherinfo;
@@ -214,10 +223,10 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
 
                 mCollapsibleTextView.setText(courseinfo);
                 mCollapsibleTextView1.setText(teacherinfo);
-                courseName.setText(coursename);
+                courseName.setText(videoBean.videotitle);
                 courseTeacher.setText(courseteacher);
 
-                Glide.with(getBaseContext()).load(videocoverurl).placeholder(R.mipmap.ic_launcher).into(videoCover);
+                Glide.with(getBaseContext()).load(videoBean.coverurl).placeholder(R.mipmap.ic_launcher).into(videoCover);
                 if(cover.size()==0){
                     img1.setVisibility(View.GONE);
                     img2.setVisibility(View.GONE);
@@ -295,7 +304,8 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
             case R.id.rImagV_share:
                 break;
             case R.id.rImagV_play:
-                VideoUtils.newInstance(getBaseContext(),coursename,videourl,videocoverurl).startVideo();
+                com.union.yunzhi.factories.utils.LogUtils.d("URL","aASAd  "+videoBean.videourl+"---"+videoBean.coverurl);
+                VideoUtils.newInstance(getBaseContext(),videoBean,commentModel).startVideo();
                 break;
             default:
                 break;

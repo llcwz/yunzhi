@@ -21,12 +21,11 @@ import com.union.yunzhi.common.app.AdBrowserActivity;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.app.PermissionsFragment;
 import com.union.yunzhi.common.constant.Constant;
-import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
-import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
+import com.union.yunzhi.factories.moudles.home.bodyModle;
+import com.union.yunzhi.factories.moudles.home.homeBaseModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
-import com.union.yunzhi.factories.moudles.hometest.HomeHeadModle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.SearchActivity;
@@ -36,8 +35,6 @@ import com.union.yunzhi.yunzhi.manager.MyQrCodeDialog;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.zxing.app.CaptureActivity;
 import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,11 +151,27 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
 
 
-        BaseHomeModle data = (BaseHomeModle) object;
+        homeBaseModle data = (homeBaseModle) object;
 
-        HomeHeadModle head = data.data.head;
+
+            for(int j=0;j<data.data.list.get(1).coursecover.size();j++){
+                LogUtils.i("homeBaseModle",data.data.list.get(1).coursecover.get(j));
+            }
+
+            for(int i=0;i<data.data.list.size();i++){
+                LogUtils.i("homeBaseModle",data.data.list.get(i).viewType+"");
+            }
+
+
+
 
         mHomeAdapter.add(data.data.list);
+
+
+
+
+
+        //mHomeAdapter.add(data.data.list);
 
 
         // list.add(data);
@@ -246,36 +259,6 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         super.initRefreshData();
     }
 
-    public void initBanner(ArrayList<String> list) {
-        mBanner.setImageLoader(new GlideImageLoader());
-        mBanner.setImages(list);
-
-        //设置banner样式
-        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-
-        //设置banner动画效果
-        mBanner.setBannerAnimation(Transformer.DepthPage);
-
-        ArrayList<String> tilles = new ArrayList<>();
-        tilles.add("aa");
-        tilles.add("bb");
-        tilles.add("cc");
-        tilles.add("dd");
-
-        //设置标题集合（当banner样式有显示title时）
-        mBanner.setBannerTitles(tilles);
-
-        //设置自动轮播，默认为true
-        mBanner.isAutoPlay(true);
-        //设置轮播时间
-        mBanner.setDelayTime(1500);
-
-        //设置指示器位置（当banner模式中有指示器时）
-        mBanner.setIndicatorGravity(BannerConfig.CENTER);
-
-
-        mBanner.start();
-    }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -285,10 +268,15 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                     RequestCenter.requestHomeData("", "", new DisposeDataListener() {
                         @Override
                         public void onSuccess(Object responseObj) {
-                            BaseHomeModle data = (BaseHomeModle) responseObj;
+                            homeBaseModle data = (homeBaseModle) responseObj;
                             if(data!=null){
                                // mHomeAdapter.clear();
-                                mHomeAdapter.add(data.data.list);
+                                ArrayList<bodyModle> lists = new ArrayList<bodyModle>();
+                                for(int i=1;i<data.data.list.size();i++){
+                                    lists.add(data.data.list.get(i));
+                                }
+                                mHomeAdapter.add(lists);
+                                //mHomeAdapter.add(data.data.list);
                                 mRefreshLayout.finishLoadMore(true);
                             }
                         }
@@ -316,7 +304,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         RequestCenter.requestHomeData("", "", new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
-                BaseHomeModle data = (BaseHomeModle) responseObj;
+                homeBaseModle data = (homeBaseModle) responseObj;
                 if(data!=null){
                     mHomeAdapter.clear();
                     mHomeAdapter.add(data.data.list);
