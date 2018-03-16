@@ -31,8 +31,8 @@ import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.LoginActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyCourseActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyMessageActivity;
-import com.union.yunzhi.yunzhi.activities.me.WorkActivity;
 import com.union.yunzhi.yunzhi.activities.me.SearchGradeActivity;
+import com.union.yunzhi.yunzhi.activities.me.WorkActivity;
 import com.union.yunzhi.yunzhi.adapter.MeNavigationAdapter;
 import com.union.yunzhi.yunzhi.fragment.me.PersonDialogFragment;
 import com.union.yunzhi.yunzhi.manager.UserManager;
@@ -237,6 +237,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
      * 注册广播，监听用户登录状态
      */
     private void registerBroadcast() {
+        LogUtils.i("registerBroadcast","registerBroadcast");
         IntentFilter loginFilter = new IntentFilter(LoginActivity.LOGIN_ACTION);
         IntentFilter logoutFilter = new IntentFilter(PersonDialogFragment.LOGOUT_ACTION);
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
@@ -384,4 +385,5 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         super.onDestroy();
         unregisterBroadcast();
     }
+
 }

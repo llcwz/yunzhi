@@ -99,9 +99,17 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Menu menu = bottomNavigationViewEx.getMenu();
 
         menu.performIdentifierAction(R.id.navigation_home,0);
+
+
     }
 
     @Override
@@ -111,7 +119,6 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
 
     @Override
     public void onTabChanged(NavHelper.Tab<Integer> newTab, NavHelper.Tab<Integer> oldTab) {
-
     }
 
 
@@ -130,6 +137,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
        }else if(tab.getFragment() instanceof ClassFragment){
 
            ClassFragment classFragment = (ClassFragment)tab.getFragment();
+           classFragment.initRefreshData();
 
        }else if(tab.getFragment() instanceof CommunicationFragment){
 
@@ -185,6 +193,8 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
         }
         return sb.toString();
     }
+
+
 
 
 }

@@ -36,8 +36,12 @@ w
                     <include layout="@layout/class_carousel"
                         android:id="@+id/layout_carousel"/>
 
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/amber_400"/>
                     <!--显示课程-->
+
                     <include layout="@layout/class_course"/>
 
                 </LinearLayout>

@@ -5,18 +5,21 @@ import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.factories.moudles.classfication.beans.drawer.DrawerBean;
+import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.contant.Constant;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cjw on 2018/2/19 0019.
@@ -98,18 +101,13 @@ public class ClassDrawerAdapter extends MyAdapter<DrawerBean> {
                 public boolean onTagClick(View view, int pos, FlowLayout parent) {
 
                     //pos1为RecycleView的当前位置，position为子项目的位置
-                    Toast.makeText(context, "当前位置:"+position+","+getData.get(pos), Toast.LENGTH_SHORT).show();
-
+                    //Toast.makeText(context, "当前位置:"+position+","+getData.get(pos), Toast.LENGTH_SHORT).show()
                     //TODO 点击Drawer里面的某个子项实现的操作
-                    //更新文字提示
-                    String temp=null;
-                    if(position>=0&&pos>=0){
-                        temp=  data.course.get(pos).coursename;
-                    }else{
-                        temp="全部课程";
-                    }
 
-                    mListener.updataUI(temp);
+                    Map<String,String> map=new HashMap<String, String>();
+                    map.put(Constant.TEXT_SHOW,mDataList.get(position).course.get(pos).coursename);
+                    map.put(Constant.ID,mDataList.get(position).course.get(pos).courseid);
+                    mListener.updataUI(map);
 
                     return true;
                 }
@@ -119,13 +117,17 @@ public class ClassDrawerAdapter extends MyAdapter<DrawerBean> {
                 @Override
                 public void onClick(View v) {
                     //TODO 点击某个学院,进入某个学院的课程
-                    String temp=null;
-                    if(pos1>=0){
-                        temp=mDataList.get(pos1).academicname;
-                    } else{
-                        temp="全部课程";
-                    }
-                    mListener.updataUI(temp);
+//                    LogUtils.d("KK","点击了！！！");
+//                    String temp;
+//                    if(position>=0){
+//                        temp=mDataList.get(position).academicname;
+//                    } else{
+//                        temp="全部课程";
+//                    }
+//                    Map<String,String> map=new HashMap<String, String>();
+//                    map.put(Constant.TEXT_SHOW,temp);
+//                    map.put(Constant.ID,mDataList.get(position).academicid);
+//                    mListener.updataUI(map);
                 }
             });
         }

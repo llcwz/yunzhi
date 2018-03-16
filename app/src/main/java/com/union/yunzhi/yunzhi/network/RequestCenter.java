@@ -4,7 +4,9 @@ import android.util.Log;
 
 
 import com.union.yunzhi.common.util.LogUtils;
-import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseQuestionBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseCourseShowBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.details.BaseDetailsBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.question.BaseQuestionBean;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.BaseCommunicationModel;
 
@@ -269,13 +271,55 @@ public class RequestCenter {
         RequestCenter.postRequest(HttpConstants.QUESTION_URL, params, listener, BaseQuestionBean.class);
     }
 
-    //侧滑栏抽屉请求
+    /**
+     *  侧滑栏抽屉请求
+     */
     public static void requestDrawer(String requestUrl, DisposeDataListener listener){
 
         RequestCenter.postRequest(HttpConstants.ACADEMY_COURSE,null,listener, BaseDrawerBean.class);
     }
 
-    public static void requestCourseDeatails(){
+    /**
+     * 请求分类轮播图
+     */
+    public static void requestRecycle(){
+
+
+    }
+
+    /**
+     * 请求课程列表
+     */
+    public static void requestCourse(String courseId,DisposeDataListener listener){
+
+        RequestParams params=new RequestParams();
+        params.put("courseid",courseId);
+        RequestCenter.postRequest(HttpConstants.GET_COURSE_TITLE,params,listener, BaseCourseShowBean.class);
+    }
+
+    /**
+     * 请求课程详情信息
+     */
+    public static void requestCourseDeatails(String courseid,String teacherid,DisposeDataListener listener){
+
+        RequestParams params=new RequestParams();
+        params.put("courseid",courseid);
+        params.put("teacherid",teacherid);
+
+        RequestCenter.postRequest(HttpConstants.GET_ALL_DETAILS_MSG,params,listener, BaseDetailsBean.class);
+    }
+
+    /**
+     * 请求视频
+     */
+    public static void requestVideo(){
+
+    }
+
+    /**
+     * 请求视频评论
+     */
+    public static void requestVideoComment(){
 
     }
 

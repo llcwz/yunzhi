@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_48"
+        android:background="@color/black_alpha_192">
+
+        <ImageView
+            android:layout_width="@dimen/len_28"
+            android:layout_height="@dimen/len_28"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_arrow_back_white_36dp" />
+
+        <TextView
+            android:id="@+id/test_content_current"
+            android:layout_width="@dimen/len_80"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/len_28"
+            android:gravity="center"
+            android:text="题目：1/12"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_examine_submit"
+            android:layout_width="@dimen/len_76"
+            android:layout_height="@dimen/len_40"
+            android:layout_gravity="end|center_vertical"
+            android:text="提交" />
+    </FrameLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/testViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+</LinearLayout>

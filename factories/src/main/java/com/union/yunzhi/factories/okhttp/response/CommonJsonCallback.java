@@ -155,7 +155,7 @@ public class CommonJsonCallback implements Callback {
                     }else{//需要解析 144---156
                         //将我们的json转为我们的实体对象
                         LogUtils.i(TGA,"尝试将json转化为实体类");
-                       Object obj = JSON.parseObject(result.toString(),mClass);
+                        Object obj = JSON.parseObject(result.toString(),mClass);
                         if(obj !=null){
                             //成功的转化成我们的实体对象
                             LogUtils.i(TGA,"成功的转化成我们的实体对象");
