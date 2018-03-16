@@ -39,7 +39,7 @@ public class OpinionUtils {
     }
 
 
-    public void postComment(int tag, String title, String content, final NotifyPostListener listener) {
+    public void addPost(int tag, String title, String content, final NotifyPostListener listener) {
 
         DialogManager.getInstnce().showProgressDialog(mContext);
         // 当前系统时间
@@ -47,7 +47,10 @@ public class OpinionUtils {
         // 利用用户的id和当前时间生成帖子的id
         String id = mUser.getAccount() + time; // 利用用户的账号的当前时间生成id
 
+        LogUtils.d("addPost", "" + mUser.getAccount() +
+                "," + title + "," + content + "," + tag);
         RequestCenter.requestAddPost(mUser.getAccount(),
+                mUser.getPriority(),
                 tag,
                 title,
                 content, new DisposeDataListener() {
@@ -57,7 +60,7 @@ public class OpinionUtils {
                         LogUtils.d("addPostRequest", responseObj.toString());
                         BaseCommunicationModel baseCommunicationModel = (BaseCommunicationModel) responseObj;
                         if (baseCommunicationModel.ecode == CommunicationConstant.ECODE) {
-                            listener.getPost(baseCommunicationModel.data.get(0));
+//                            listener.getPost(baseCommunicationModel.data.get(0));
                             Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(mContext, "" + responseObj, Toast.LENGTH_SHORT).show();

@@ -8,15 +8,16 @@
     android:orientation="vertical"
     tools:context="com.union.yunzhi.yunzhi.activities.communication.AddPostActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/len_48"
-        android:background="?attr/colorPrimary"/>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/len_48"
+                android:background="?attr/colorPrimary"/>
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,19 +40,22 @@
                 android:layout_height="1dp"
                 android:background="@color/black_alpha_48"/>
 
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <EditText
                 android:id="@+id/et_post_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:height="648dp"
                 android:padding="@dimen/len_8"
                 android:gravity="start"
                 android:hint="内容"
                 android:lineSpacingExtra="@dimen/len_2"
                 android:lineSpacingMultiplier="1.2"
                 android:background="@null"/>
+            </android.support.v4.widget.NestedScrollView>
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+
 
 </LinearLayout>

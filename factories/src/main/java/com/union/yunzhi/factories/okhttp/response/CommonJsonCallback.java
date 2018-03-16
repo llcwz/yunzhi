@@ -126,6 +126,9 @@ public class CommonJsonCallback implements Callback {
             /**
              * 协议确定后看这里如何修改
              */
+
+            LogUtils.i(TGA,"对应的json---"+responseObj.toString());
+
             JSONObject result = new JSONObject(responseObj.toString());
 
 
