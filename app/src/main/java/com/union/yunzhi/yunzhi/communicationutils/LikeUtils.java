@@ -94,13 +94,13 @@ public class LikeUtils {
      *  @function 用户给帖子点赞
      * @param postModel
      */
-    public   void checkedPostLike(PostModel postModel) {
-        if (postModel.getLikeModels().size() != 0) { // 该帖子的赞不为0,那么有可能该用户赞过该帖子
-            isLike(postModel.getId(),postModel.getLikeModels(), mUser.getAccount()); // 判断该用户是否点赞了该条评论
-        } else { // 该帖子的赞数为0，用户肯定可以点击
-            loadLike(mId,mUser,mContext,mLike, mLikeCount);
-        }
-    }
+//    public   void checkedPostLike(PostModel postModel) {
+//        if (!postModel.getFavour().equals("0")) { // 该帖子的赞不为0,那么有可能该用户赞过该帖子
+//            isLike(postModel.getId(),postModel.getLikeModels(), mUser.getAccount()); // 判断该用户是否点赞了该条评论
+//        } else { // 该帖子的赞数为0，用户肯定可以点击
+//            loadLike(mId,mUser,mContext,mLike, mLikeCount);
+//        }
+//    }
 
     /**
      * @function 用户给问题点赞

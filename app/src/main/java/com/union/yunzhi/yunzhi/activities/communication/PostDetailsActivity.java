@@ -29,6 +29,8 @@ import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
 
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostDetailsActivity extends ActivityM implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -36,6 +38,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     private UserManager mUserManager;
     private UserModel mUser;
     private PostModel mPostModel;
+    private List<CommentModel> mCommentModels; // 评论
     private CommentAdapter mAdapter;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -85,7 +88,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
 
     // 初始化数据
     private void initAdapter() {
-        mAdapter = new CommentAdapter(this, mPostModel.getCommentModels(),new MyAdapter.AdapterListener<CommentModel>() {
+        mAdapter = new CommentAdapter(this, mCommentModels,new MyAdapter.AdapterListener<CommentModel>() {
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, CommentModel data) {
 
@@ -113,17 +116,15 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         initAdapter();
 
         mTitle.setText(mPostModel.getTitle());
-        Glide.with(this).load(mPostModel.getIcon()).into(mIcon);
-        mAuthor.setText(mPostModel.getAuthor());
+        Glide.with(this).load(mPostModel.getPhotoUrl()).into(mIcon);
+        mAuthor.setText(mPostModel.getName());
         mTime.setText(mPostModel.getTime());
         mContent.setText(mPostModel.getContent());
         mSendComment.setOnClickListener(this);
         CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getApplication());
         linearLayoutManager.setScrollEnabled(false);
         mRecyclerView.setAdapter(mAdapter);
-        if (mPostModel.getLikeModels().size() > 0) { // 如果点赞数大于0，那么就显示赞数
-            mLikeCounts.setText("" + mPostModel.getLikeModels().size());
-        }
+        mLikeCounts.setText("" + mPostModel.getFavour());
         mLike.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
@@ -146,7 +147,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
                     break;
                 case R.id.iv_post_like: // 点赞帖子
                     LikeUtils likeUtils = LikeUtils.newInstance(mPostModel.getId(),mUser, this, mLike, mLikeCounts);
-                    likeUtils.checkedPostLike(mPostModel);
+//                    likeUtils.checkedPostLike(mPostModel);
                     break;
                 default:
             }
