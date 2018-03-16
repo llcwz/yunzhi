@@ -8,8 +8,8 @@ import com.union.yunzhi.factories.moudles.BaseModel;
 
 public class VideoBean extends BaseModel{
 
-    private String coverurl;
-    private String videourl;
-    private String videoid;
-    private String videotitle;
+    public String coverurl;
+    public String videourl;
+    public String videoid;
+    public String videotitle;
 }

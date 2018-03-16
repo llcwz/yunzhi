@@ -10,8 +10,9 @@ import java.util.List;
 
 public class DetailsBean extends BaseModel{
 
-    public String introimgUrl;
-    public String introvideoUrl;
+    public String introimgurl;
+    public String introvideourl;
+    public String videoid;
     //public int allElementNum;//课程总章数
     //public int finishNum;//已经更新到的章数字
     //public String academicName;
