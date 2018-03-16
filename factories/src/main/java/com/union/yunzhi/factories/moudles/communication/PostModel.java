@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PostModel implements Parcelable {
     private String id; // 帖子的id
-    private int tag; // 标记类型，由此可知是哪一个模块的帖子
+//    private int tag; // 标记类型，由此可知是哪一个模块的帖子
     private String userId; // 作者id
     private String photoUrl; // 作者头像
     private String name; // 作者
@@ -33,13 +33,7 @@ public class PostModel implements Parcelable {
         this.id = id;
     }
 
-    public int getTag() {
-        return tag;
-    }
 
-    public void setTag(int tag) {
-        this.tag = tag;
-    }
 
     public String getUserId() {
         return userId;
@@ -111,7 +105,6 @@ public class PostModel implements Parcelable {
 
     protected PostModel(Parcel in) {
         id = in.readString();
-        tag = in.readInt();
         userId = in.readString();
         photoUrl = in.readString();
         name = in.readString();
@@ -125,7 +118,6 @@ public class PostModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
-        dest.writeInt(tag);
         dest.writeString(userId);
         dest.writeString(photoUrl);
         dest.writeString(name);
