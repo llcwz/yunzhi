@@ -11,7 +11,6 @@
         <TextView
             android:textColor="@color/white"
             android:layout_marginLeft="@dimen/len_10"
-            android:text="最近一周学习趋势"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="@dimen/len_32" />

@@ -1,5 +1,6 @@
 package com.union.yunzhi.yunzhi.fragment.me;
 
+import android.graphics.Color;
 import android.view.View;
 
 import com.union.yunzhi.common.app.FragmentM;
@@ -20,7 +21,7 @@ import lecho.lib.hellocharts.view.PieChartView;
 public class AbilityCapacityFragment extends FragmentM {
     private PieChartView  chart;
     private List<SliceValue> values;
-    private String[] xdatas = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};
+    private String[] xdatas = {"专业能力", "英文水平", "管理能力", "实战能力", "政策水平"};
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_my_ability_capacity;
@@ -52,6 +53,7 @@ public class AbilityCapacityFragment extends FragmentM {
         data.setHasCenterCircle(true);
         data.setSlicesSpacing(2);
         data.setCenterText1("知识评估");
+        data.setCenterText1Color(Color.parseColor("#ffffff"));
         chart.setPieChartData(data);
     }
 }

@@ -44,14 +44,10 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
         classQuestionFragment.setArguments(bundle);
         return classQuestionFragment;
     }
-
-<<<<<<< HEAD
     public static ClassQuestionFragment newInstance() {
 
         return new ClassQuestionFragment();
     }
-=======
->>>>>>> 132fbb6d71f91a5fd6216d6a9f9bdfeabf23928d
     @Override
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
