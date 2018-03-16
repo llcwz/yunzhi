@@ -192,7 +192,9 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
 //                    .into(mIcon);
 
             //data.mVideoClassModle.videoClass
-            mTitles.setText("test1");
+            String[] titles = context.getResources().getStringArray(R.array.titles);
+            int id = (int) (Math.random()*(titles.length-1));//随机产生一个index索引
+            mTitles.setText(titles[id]);
 
 
             /**
@@ -234,12 +236,14 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
 
     public class videoOneViewHodler extends MyViewHolder<bodyModle>{
 
+        private TextView mShow;
         private RoundedImageView mRoundedImageView;
         private TextView mTitle;
         private CircleImageView mPortrait;
 
         public videoOneViewHodler(View itemView) {
             super(itemView);
+            mShow = (TextView) itemView.findViewById(R.id.tv_introduce);
             mRoundedImageView = (RoundedImageView)itemView.findViewById(R.id.round_img);
             mTitle = (TextView)itemView.findViewById(R.id.tv_title);
             mPortrait = (CircleImageView) itemView.findViewById(R.id.ci_portrait);
@@ -247,6 +251,12 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
 
         @Override
         protected void onBind(bodyModle data, int position) {
+
+            String[] titles = context.getResources().getStringArray(R.array.introduce);
+            int id = (int) (Math.random()*(titles.length-1));//随机产生一个index索引
+            mShow.setText(titles[id]);
+
+
             //设置背景图片
             Glide.with(context)
                     //.load(data.mVideoClassModle.videoModle.get(i).PhotoUrl)
