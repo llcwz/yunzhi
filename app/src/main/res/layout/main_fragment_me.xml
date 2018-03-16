@@ -5,34 +5,29 @@
     android:orientation="vertical"
     tools:context="com.union.yunzhi.yunzhi.fragment.main.MeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/len_48"
-        android:background="@color/blue_400"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-       android:background="@color/blue_400">
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/layout_me"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/len_100"
+            android:layout_height="wrap_content"
             android:paddingLeft="@dimen/len_16"
             android:paddingRight="@dimen/len_16"
-            android:paddingTop="@dimen/len_8"
+            android:paddingTop="@dimen/len_56"
             android:paddingBottom="@dimen/len_8">
 
             <RelativeLayout
-                android:layout_width="@dimen/len_88"
-                android:layout_height="match_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ci_me"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/len_88"
+                    android:layout_height="@dimen/len_88"
                     tools:background="@drawable/dragon_cat"/>
             </RelativeLayout>
 
@@ -63,6 +58,7 @@
     </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_course_and_message"
             android:layout_width="match_parent"
             android:layout_height="@dimen/len_36">
 
@@ -72,10 +68,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:background="@color/black_alpha_32"
             android:text="@string/me_my_course"/>
 
-            <TextView
+            <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/black_alpha_112"/>
@@ -85,10 +80,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@color/black_alpha_32"
                 android:text="@string/me_my_message"/>
 
         </LinearLayout>
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/black_alpha_112"/>-->
 
     </LinearLayout>
 

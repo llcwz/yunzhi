@@ -43,7 +43,6 @@
                 android:id="@+id/et_post_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:height="648dp"
                 android:padding="@dimen/len_8"
                 android:gravity="start"
                 android:hint="内容"

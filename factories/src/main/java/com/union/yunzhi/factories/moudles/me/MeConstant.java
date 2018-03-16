@@ -19,8 +19,8 @@ public class MeConstant {
     public static final int QUESTION_COMMENT_VIEW = 1;
 
     // 权限
-    public static final int PRIORITY_STUDENT = 1;
-    public static final int PRIORITY_TEACHER = 2;
+    public static final int PRIORITY_STUDENT = 0;
+    public static final int PRIORITY_TEACHER = 1;
 
     // 课程的状态
     public static final int COURSE_STATE_ALL = 0; // 全部状态的课程

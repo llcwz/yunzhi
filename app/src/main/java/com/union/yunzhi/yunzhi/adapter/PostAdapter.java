@@ -58,10 +58,10 @@ public class PostAdapter extends MyAdapter<PostModel> {
 
         @Override
         protected void onBind(PostModel data, int position) {
-            Glide.with(mContext).load(data.getIcon()).into(mIcon);
-            mAuthor.setText(data.getAuthor());
-            mLike.setText("" + data.getLikeModels().size());
-            mComment.setText("" + data.getCommentModels().size());
+            Glide.with(mContext).load(data.getPhotoUrl()).into(mIcon);
+            mAuthor.setText(data.getName());
+            mLike.setText(data.getFavour());
+            mComment.setText(data.getMsgNum());
             mTime.setText(data.getTime());
             mTitle.setText(data.getTitle());
             mContent.setText(data.getContent());

@@ -11,72 +11,19 @@ import java.util.List;
  */
 
 public class PostModel implements Parcelable {
-    private String id; // 帖子的id  不要
+    private String id; // 帖子的id
     private int tag; // 标记类型，由此可知是哪一个模块的帖子
-    private String mIcon; // 作者头像
-    private String mAuthor; // 作者
-    private String time; // 时间
+    private String userId; // 作者id
+    private String photoUrl; // 作者头像
+    private String name; // 作者
     private String title; // 标题
     private String content; // 内容
-    private List<CommentModel> mCommentModels; // 该帖子的评论
-    private List<LikeModel> mLikeModels; // 该帖子的点赞
+    private String time; // 时间
+    private String msgNum; // 评论数
+    private String favour; // 赞数
 
     public PostModel() {
     }
-
-    public PostModel(String id, int tag, String icon, String author, String time, String title, String content, List<CommentModel> commentModels, List<LikeModel> likeModels) {
-        this.id = id;
-        this.tag = tag;
-        mIcon = icon;
-        mAuthor = author;
-        this.time = time;
-        this.title = title;
-        this.content = content;
-        mCommentModels = commentModels;
-        mLikeModels = likeModels;
-    }
-
-    protected PostModel(Parcel in) {
-        id = in.readString();
-        tag = in.readInt();
-        mIcon = in.readString();
-        mAuthor = in.readString();
-        time = in.readString();
-        title = in.readString();
-        content = in.readString();
-        mCommentModels = in.createTypedArrayList(CommentModel.CREATOR);
-        mLikeModels = in.createTypedArrayList(LikeModel.CREATOR);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeInt(tag);
-        dest.writeString(mIcon);
-        dest.writeString(mAuthor);
-        dest.writeString(time);
-        dest.writeString(title);
-        dest.writeString(content);
-        dest.writeTypedList(mCommentModels);
-        dest.writeTypedList(mLikeModels);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<PostModel> CREATOR = new Creator<PostModel>() {
-        @Override
-        public PostModel createFromParcel(Parcel in) {
-            return new PostModel(in);
-        }
-
-        @Override
-        public PostModel[] newArray(int size) {
-            return new PostModel[size];
-        }
-    };
 
     public String getId() {
         return id;
@@ -94,28 +41,28 @@ public class PostModel implements Parcelable {
         this.tag = tag;
     }
 
-    public String getIcon() {
-        return mIcon;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setIcon(String icon) {
-        mIcon = icon;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getAuthor() {
-        return mAuthor;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setAuthor(String author) {
-        mAuthor = author;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public String getTime() {
-        return time;
+    public String getName() {
+        return name;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTitle() {
@@ -134,19 +81,75 @@ public class PostModel implements Parcelable {
         this.content = content;
     }
 
-    public List<CommentModel> getCommentModels() {
-        return mCommentModels;
+    public String getTime() {
+        return time;
     }
 
-    public void setCommentModels(List<CommentModel> commentModels) {
-        mCommentModels = commentModels;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public List<LikeModel> getLikeModels() {
-        return mLikeModels;
+    public String getMsgNum() {
+        return msgNum;
     }
 
-    public void setLikeModels(List<LikeModel> likeModels) {
-        mLikeModels = likeModels;
+    public void setMsgNum(String msgNum) {
+        this.msgNum = msgNum;
     }
+
+    public String getFavour() {
+        return favour;
+    }
+
+    public void setFavour(String favour) {
+        this.favour = favour;
+    }
+
+    public static Creator<PostModel> getCREATOR() {
+        return CREATOR;
+    }
+
+    protected PostModel(Parcel in) {
+        id = in.readString();
+        tag = in.readInt();
+        userId = in.readString();
+        photoUrl = in.readString();
+        name = in.readString();
+        title = in.readString();
+        content = in.readString();
+        time = in.readString();
+        msgNum = in.readString();
+        favour = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeInt(tag);
+        dest.writeString(userId);
+        dest.writeString(photoUrl);
+        dest.writeString(name);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(time);
+        dest.writeString(msgNum);
+        dest.writeString(favour);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<PostModel> CREATOR = new Creator<PostModel>() {
+        @Override
+        public PostModel createFromParcel(Parcel in) {
+            return new PostModel(in);
+        }
+
+        @Override
+        public PostModel[] newArray(int size) {
+            return new PostModel[size];
+        }
+    };
 }

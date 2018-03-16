@@ -5,16 +5,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.union.yunzhi.common.app.FragmentM;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.NavigationModel;
@@ -42,6 +50,8 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
     private UserManager mUserManager; // 用户单例
     private UserModel mUser;
+    private LinearLayout mMutedBackground; // 背景柔和颜色
+    private LinearLayout mVibrantBackground; // 背景活力颜色
     private CircleImageView mMe; // 用户头像
     private TextView mUsername; // 用户名
     private TextView mAccount; // 账号
@@ -70,6 +80,9 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mUserManager = UserManager.getInstance();
         //注册广播
         registerBroadcast();
+
+        mMutedBackground = (LinearLayout) view.findViewById(R.id.layout_me);
+        mVibrantBackground = (LinearLayout) view.findViewById(R.id.layout_course_and_message);
 
         mMe = (CircleImageView) view.findViewById(R.id.ci_me);
         mUsername = (TextView) view.findViewById(R.id.tv_username);
@@ -106,6 +119,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
     // 初始化适配器，并且监听导航栏的点击事件
     private void initAdapter() {
         initNavigationData();
+        LogUtils.d("priority", "" + mUser.getPriority());
         if (mUser.getPriority() == MeConstant.PRIORITY_STUDENT) { // 如果是学生登录
             mMeNavigationAdapter = new MeNavigationAdapter(getActivity() ,mStudentNavigations, new MyAdapter.AdapterListener<NavigationModel>() {
                 @Override
@@ -177,6 +191,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
     @Override
     protected void initData() {
         if (mUserManager.hasLogined()){ //假如用户登录了
+            mUser = MeUtils.getUser();
             loginUI();
         } else { // 游客模式
             visitUI();
@@ -248,6 +263,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
 
             if (mUserManager.hasLogined()) {
                 mUser = MeUtils.getUser();
+                LogUtils.d("userMessage", mUser.getPriority()+ "");
                 loginUI();
             }
         }
@@ -269,7 +285,8 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mUserManager.removeUser(); // 清除用户的数据
         // TODO: 2018/3/10 更改数据库用户的数据
         // 加载默认头像
-        Glide.with(this).load("http://img.zcool.cn/community/0173a755ba4cf332f87528a16a73cf.jpg").into(mMe);
+        String defaultPhotoUrl = "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3693357268,602549071&fm=27&gp=0.jpg";
+        setBackground(defaultPhotoUrl);
         mUsername.setText("点击头像登录");
         mAccount.setText("");
         if (mMeNavigationAdapter != null) { // 如果是用户选择注销，则清除已经加载的导航数据
@@ -288,12 +305,78 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         // 加载导航数据以及初始化适配器
         initAdapter();
         // 加载头像
-        Glide.with(this).load(mUser.getPhotourl()).into(mMe);
+        setBackground(mUser.getPhotourl());
         mUsername.setText(mUser.getName());
         mAccount.setText(mUser.getAccount());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         mRecyclerView.setAdapter(mMeNavigationAdapter);
     }
+
+    private void setBackground(String url) {
+        Glide.with(this)
+                .load(url)
+                .asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                mMe.setImageBitmap(resource);
+                Palette palette = Palette.from(resource).generate();
+                if (palette != null) {
+                    
+                    Palette.Swatch vibrant = palette.getVibrantSwatch();//有活力的
+                    Palette.Swatch vibrantDark = palette.getDarkVibrantSwatch();//有活力的，暗色
+                    Palette.Swatch vibrantLight = palette.getLightVibrantSwatch();//有活力的，亮色
+                    Palette.Swatch muted = palette.getMutedSwatch();//柔和的
+                    Palette.Swatch mutedDark = palette.getDarkMutedSwatch();//柔和的，暗色
+                    Palette.Swatch mutedLight = palette.getLightMutedSwatch();//柔和的,亮色
+
+                    // 这里做颜色取样判断，以防取不到颜色
+                    if (muted != null) {
+                        showMutedBackground(muted);
+                    } else if (mutedLight != null) {
+                        showMutedBackground(mutedLight);
+                    } else if (mutedDark != null) {
+                        showMutedBackground(mutedDark);
+                    } else { // 如果取不到颜色则设置默认的颜色背景
+                        mMutedBackground.setBackgroundColor(getResources().getColor(R.color.blue_400));
+                        mVibrantBackground.setBackgroundColor(getResources().getColor(R.color.blue_500));
+                        changeStatusBarColor(R.color.blue_400);
+                    }
+
+                    if (vibrant != null) {
+                        showVibrantBackground(vibrant);
+                    } else if (vibrantDark != null) {
+                        showVibrantBackground(vibrantDark);
+                    } else if (vibrantLight != null) {
+                        showVibrantBackground(vibrantLight);
+                    } else { // 如果取不到颜色则设置默认的颜色背景
+                        mMutedBackground.setBackgroundColor(getResources().getColor(R.color.blue_400));
+                        mVibrantBackground.setBackgroundColor(getResources().getColor(R.color.blue_500));
+                        changeStatusBarColor(R.color.blue_400);
+                    }
+                }
+            }
+        });
+
+    }
+
+    // 设置头像布局的背景颜色
+    private void showMutedBackground(Palette.Swatch swatch) {
+        mMutedBackground.setBackgroundColor(swatch.getRgb());
+        mUsername.setTextColor(swatch.getTitleTextColor());
+        mAccount.setTextColor(swatch.getTitleTextColor());
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getActivity().getWindow();
+            window.setStatusBarColor(swatch.getRgb());
+        }
+    }
+    // 设置我的课程和消息的背景颜色
+    private void showVibrantBackground(Palette.Swatch swatch) {
+        mVibrantBackground.setBackgroundColor(swatch.getRgb());
+        mMyCourse.setTextColor(swatch.getTitleTextColor());
+        mMyMessage.setTextColor(swatch.getTitleTextColor());
+    }
+
 
 
     @Override
