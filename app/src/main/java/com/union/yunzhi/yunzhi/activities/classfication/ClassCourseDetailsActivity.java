@@ -48,10 +48,11 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
     private FrameLayout hiddenView;
     private LinearLayout mLinearLayout;
     private ConstraintLayout showView;
-    private RoundedImageView back,share,play;
+    private RoundedImageView back,share,play,xback,xshare;
     private TextView mLikeCount,courseName,courseTeacher;
     private ImageButton mLike;
     private ImageView videoCover;
+    private String videocoverurl,videourl,coursename,videoid;
     private VideoBean videoBean;
     private BaseCommentModel commentModel;
 
@@ -108,7 +109,9 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
         courseTeacher= (TextView) findViewById(R.id.tv_small_title);
         play= (RoundedImageView) findViewById(R.id.rImagV_play);
         back= (RoundedImageView) findViewById(R.id.rImagV_back);
-        share= (RoundedImageView) findViewById(R.id.rImgV_share);
+        share= (RoundedImageView) findViewById(R.id.rImagV_share);
+        xback= (RoundedImageView) findViewById(R.id.rImgV_back_hidden);
+        xshare= (RoundedImageView) findViewById(R.id.rImgV_share_hidden);
         back.setOnClickListener(this);
         share.setOnClickListener(this);
         play.setOnClickListener(this);
@@ -167,7 +170,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
 
                 //LogUtils.d("KKK","滚动监听");
                 //手指上滑
-                if((y>=(hiddenView.getHeight()))&&y-oldy>8){
+                if((y>=(hiddenView.getHeight()-200))&&y-oldy>8){
                     if(hiddenView.getVisibility()==View.VISIBLE){
                         LogUtils.d("KKK","执行View隐藏");
                         //HiddenAnimUtils.newInstance(getBaseContext(),224).closeAnimate(hiddenView);
@@ -207,12 +210,17 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
 
                 BaseDetailsBean bean= (BaseDetailsBean) responseObj;
                 mList=bean.data.teacher;
+                videocoverurl=bean.data.introimgurl;
+                videourl=bean.data.introvideourl;
+                coursename=bean.data.coursename;
+                videoid=bean.data.videoid;
 
+                commentModel=new BaseCommentModel();
                 videoBean=new VideoBean();
-                videoBean.coverurl=bean.data.introimgurl;
-                videoBean.videourl=bean.data.introvideourl;
-                videoBean.videoid=bean.data.videoid;
-                videoBean.videotitle=bean.data.videoid;
+                videoBean.coverurl=videocoverurl;
+                videoBean.videourl=videourl;
+                videoBean.videoid=videoid;
+                videoBean.videotitle=coursename;
 
 
 
@@ -223,10 +231,10 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
 
                 mCollapsibleTextView.setText(courseinfo);
                 mCollapsibleTextView1.setText(teacherinfo);
-                courseName.setText(videoBean.videotitle);
+                courseName.setText(coursename);
                 courseTeacher.setText(courseteacher);
 
-                Glide.with(getBaseContext()).load(videoBean.coverurl).placeholder(R.mipmap.ic_launcher).into(videoCover);
+                Glide.with(getBaseContext()).load(videocoverurl).placeholder(R.mipmap.ic_launcher).into(videoCover);
                 if(cover.size()==0){
                     img1.setVisibility(View.GONE);
                     img2.setVisibility(View.GONE);
@@ -291,6 +299,12 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
 
@@ -299,12 +313,14 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
                 startActivity(intent);
                 break;
             case R.id.rImagV_back:
+            case R.id.rImgV_back_hidden:
                 finish();
                 break;
             case R.id.rImagV_share:
+            case R.id.rImgV_share_hidden:
                 break;
             case R.id.rImagV_play:
-                com.union.yunzhi.factories.utils.LogUtils.d("URL","aASAd  "+videoBean.videourl+"---"+videoBean.coverurl);
+                com.union.yunzhi.factories.utils.LogUtils.d("URL","aASAd  "+videourl+"---"+videocoverurl);
                 VideoUtils.newInstance(getBaseContext(),videoBean,commentModel).startVideo();
                 break;
             default:
