@@ -78,6 +78,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     private LinearLayout mLinearLayout,mLinearLayout1,mToor;
     private CircleImageView load,qrcode;
     private String courseId="";
+    private ClassCourseAdapter adapter;
 
 
     //轮播图数据集合
@@ -285,7 +286,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     @Override
     public void initRefreshData() {
         super.initRefreshData();
-        requestCourse(courseId);
     }
 
     /**
@@ -421,7 +421,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     void requestCourse(String courseId){
         //TODO 请求或刷新当前课程
         RequestCenter.requestCourse(courseId, new DisposeDataListener() {
-            ClassCourseAdapter adapter =null;
             @Override
             public void onSuccess(Object responseObj) {
                 BaseCourseShowBean temp= (BaseCourseShowBean) responseObj;
@@ -476,7 +475,19 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
      */
     void requestMoreCouse(){
         //TODO 请求加载更多课程（用于下拉刷新）
+        RequestCenter.requestCourse(courseId, new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
 
+                BaseCourseShowBean temp= (BaseCourseShowBean) responseObj;
+                List<CourseShowBean> list=temp.data;
+                adapter.add(list);
+            }
+            @Override
+            public void onFailure(Object reasonObj) {
+
+            }
+        });
     }
 
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+        <TextView
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/len_10"
+            android:text="每科成绩"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_32" />
+        <lecho.lib.hellocharts.view.ColumnChartView
+            android:layout_marginLeft="@dimen/len_10"
+            android:id="@+id/chart_ability_score"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.7">
+        <TextView
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/len_10"
+            android:text="本学期统计"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_32" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/len_44"
+            android:paddingTop="@dimen/len_20"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_ability_score_sum"
+                    android:text="考试总次数
+ss"
+                    android:lineSpacingExtra="@dimen/len_10"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="@dimen/len_60" />
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:lineSpacingExtra="@dimen/len_10"
+                android:id="@+id/tv_ability_score_avg"
+                android:layout_marginLeft="@dimen/len_44"
+                android:text=""
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_height="@dimen/len_60" />
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_weight="0.5"
+        android:layout_height="0dp">
+    </FrameLayout>
+
+</LinearLayout>

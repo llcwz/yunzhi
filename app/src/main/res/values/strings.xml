@@ -59,4 +59,20 @@
 
     <string name="please_wait">加载中...</string>
 
+
+
+    <string-array name="titles">
+        <item>热门推荐</item>
+        <item>最强男神</item>
+        <item>实力老师</item>
+        <item>最佳推荐</item>
+    </string-array>
+
+    <string-array name="introduce">
+        <item>万利教授亲自莅临</item>
+        <item>萌哥潇洒讲课</item>
+        <item>陈老师分享经验</item>
+        <item>萌哥讲课</item>
+    </string-array>
+
 </resources>

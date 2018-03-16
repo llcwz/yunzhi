@@ -131,14 +131,33 @@
                 <category android:name="com.union.yunzhi.yunzhi" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.classfication.CourseTestActivity">
+
+        </activity>
+
 
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <!-- Required. AppKey copied from Portal -->
         <meta-data android:name="JPUSH_APPKEY" android:value="65ec5fff18cbf59fc15e2e4e"/>
 
-        <activity android:name=".activities.classfication.CourseTestActivity">
 
-        </activity>
+
+
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
+
+        <!-- Required  . Enable it you can get statistics data with channel -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="65ec5fff18cbf59fc15e2e4e" /> <!-- </>值来自开发者平台取得的AppKey -->
+
+        <activity android:name=".activities.MyQRCodeActivity"></activity>
+        <activity android:name=".activities.me.MyAbilityActivity"></activity>
 
     </application>
 

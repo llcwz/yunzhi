@@ -72,7 +72,7 @@
                     android:layout_height="@dimen/len_56"
                     android:id="@+id/btn_enter_course"
                     android:layout_marginTop="@dimen/len_60"
-                    android:layout_marginBottom="@dimen/len_80"
+                    android:layout_marginBottom="@dimen/len_156"
                     android:layout_marginLeft="@dimen/len_40"
                     android:layout_marginRight="@dimen/len_40"
                     android:text="@string/details_enter"
