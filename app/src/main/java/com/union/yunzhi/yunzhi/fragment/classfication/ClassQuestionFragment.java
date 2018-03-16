@@ -12,6 +12,7 @@ import com.union.yunzhi.yunzhi.R;
 public class ClassQuestionFragment extends FragmentM{
 
     public static ClassQuestionFragment newInstance() {
+
         return new ClassQuestionFragment();
     }
 

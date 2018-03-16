@@ -23,6 +23,8 @@
     <string name="details_hide">隐藏</string>
     <string name="details_enter">进入课程</string>
 
+    <string name="class_examine">评分标准</string>
+
     <!-- QR_Code -->
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the

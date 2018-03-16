@@ -4,7 +4,6 @@
     android:layout_height="@dimen/len_48"
     android:background="@color/blue_300">
 
-
     <!--头部控制条布局-->
     <LinearLayout
         android:layout_weight="0.5"
@@ -31,7 +30,6 @@
             android:textColor="@color/black"/>
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_weight="0.5"
         android:layout_height="match_parent"

@@ -22,5 +22,11 @@ public final class ClassConst
     public static final int CLASS_NOT_FINISHED=6;
     public static final int CLASS_NOT_START=7;
 
+    /**
+     * 课程考核
+     */
+
+    public static final int TSET_VIEW_TITLE=1;
+    public static final int TSET_VIEW_CONTENT=2;
 }
 

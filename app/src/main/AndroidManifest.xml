@@ -41,6 +41,9 @@
         </activity>
         <activity android:name=".activities.me.NewWorkActivity">
         </activity>
+        <activity android:name=".activities.classfication.CourseTestActivity">
+
+        </activity>
     </application>
 
 </manifest>
