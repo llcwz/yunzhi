@@ -21,6 +21,7 @@ import com.union.yunzhi.factories.moudles.me.NavigationModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.LoginActivity;
+import com.union.yunzhi.yunzhi.activities.me.MyAbilityActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyCourseActivity;
 import com.union.yunzhi.yunzhi.activities.me.MyMessageActivity;
 import com.union.yunzhi.yunzhi.activities.me.WorkActivity;
@@ -117,6 +118,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
                     } else if (MeConstant.NAVIGATION_SCORE_SEARCH.equals(data.getNavigationName())) { // 成绩查询
                         SearchGradeActivity.newInstance(getActivity());
                     } else if (MeConstant.NAVIGATION_ABILITY.equals(data.getNavigationName())) { //能力档案
+                        MyAbilityActivity.newInstance(getActivity());
                         // TODO: 2018/3/10 学生：能力档案
                     } else if (MeConstant.NAVIGATION_NEWS.equals(data.getNavigationName())) { // 新闻资讯
                         // TODO: 2018/3/10 学生：新闻资讯
@@ -151,6 +153,7 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
                         WorkActivity.newInstance(getActivity());
                     } else if (MeConstant.NAVIGATION_ABILITY.equals(data.getNavigationName())) { //能力档案
                         // TODO: 2018/3/10 教师：能力档案
+                        MyAbilityActivity.newInstance(getActivity());
                     } else if (MeConstant.NAVIGATION_DATA_ANALYSIS.equals(data.getNavigationName())) { // 数据分析
                         // TODO: 2018/3/10 教师：数据分析
                     }
@@ -279,8 +282,6 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
             mMeNavigationAdapter = null;
         }
     }
-
-
     /**
      * 登录状态下的UI
      */
@@ -294,8 +295,6 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         mRecyclerView.setAdapter(mMeNavigationAdapter);
     }
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();

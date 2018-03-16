@@ -23,14 +23,13 @@ public final class ClassConst
     public static final int CLASS_NOT_FINISHED=6;
     public static final int CLASS_NOT_START=7;
 
-<<<<<<< HEAD
+
     /**
      * 课程考核
      */
 
     public static final int TSET_VIEW_TITLE=1;
     public static final int TSET_VIEW_CONTENT=2;
-=======
     public static final int IS_FINISHED=0;
     public static final int NOT_FINISHED=1;
 
@@ -40,6 +39,5 @@ public final class ClassConst
     public static final String VIDEO_NAME="video_name";
     public static final String VIDEO_COVER_URL="video_cover_url";
 
->>>>>>> 64bc90b1d7835572cb61b7b0449728fc6397c64b
 }
 

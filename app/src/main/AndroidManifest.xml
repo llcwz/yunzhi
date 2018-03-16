@@ -131,11 +131,10 @@
                 <category android:name="com.union.yunzhi.yunzhi" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity android:name=".activities.classfication.CourseTestActivity">
 
         </activity>
-=======
 
         <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
@@ -209,7 +208,7 @@
             android:value="65ec5fff18cbf59fc15e2e4e" /> <!-- </>值来自开发者平台取得的AppKey -->
 
         <activity android:name=".activities.MyQRCodeActivity"></activity>
->>>>>>> 64bc90b1d7835572cb61b7b0449728fc6397c64b
+        <activity android:name=".activities.me.MyAbilityActivity"></activity>
     </application>
 
 </manifest>
