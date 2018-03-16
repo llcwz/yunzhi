@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="课程"/>
+        android:layout_height="match_parent"
+        android:id="@+id/rec_course_file_father">
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

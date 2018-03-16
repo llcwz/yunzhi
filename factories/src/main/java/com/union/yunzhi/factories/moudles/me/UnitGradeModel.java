@@ -6,24 +6,14 @@ package com.union.yunzhi.factories.moudles.me;
  */
 
 public class UnitGradeModel {
-    private int mId;
     private String mName; // 单元名字
     private String mGrade; // 单元成绩
 
     public UnitGradeModel() {}
 
-    public UnitGradeModel(int id, String name, String grade) {
-        mId = id;
+    public UnitGradeModel(String name, String grade) {
         mName = name;
         mGrade = grade;
-    }
-
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        mId = id;
     }
 
     public String getName() {
@@ -41,6 +31,5 @@ public class UnitGradeModel {
     public void setGrade(String grade) {
         mGrade = grade;
     }
-
 
 }

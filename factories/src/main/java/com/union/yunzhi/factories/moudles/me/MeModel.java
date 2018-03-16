@@ -1,96 +1,65 @@
 package com.union.yunzhi.factories.moudles.me;
 
+import java.util.List;
+
 /**
  * Created by CrazyGZ on 2018/3/3.
  */
 
 public class MeModel {
-    private PersonModel mPersonModel;
-    private CourseModel mCourseModel;
-    private NavigationModel mNavigationModel;
-    private WorkModel mWorkModel;
-    private GradeModel mGradeModel;
-
-    private int mViewType;
+    private UserModel mUserModel; // 个人账号
+    private List<CourseModel> mCourseModels; // 我的课程
+    private List<MessageModel> mMessageModels; // 我的消息
+    private List<WorkModel> mWorkModels; // 任务
+    private List<GradeModel> mGradeModels; // 成绩
 
     public MeModel() {}
 
-    // 测试个人数据
-    public MeModel(PersonModel personModel) {
-        mPersonModel = personModel;
+    public MeModel(UserModel userModel, List<CourseModel> courseModels, List<MessageModel> messageModels, List<WorkModel> workModels, List<GradeModel> gradeModels) {
+        mUserModel = userModel;
+        mCourseModels = courseModels;
+        mMessageModels = messageModels;
+        mWorkModels = workModels;
+        mGradeModels = gradeModels;
     }
 
-    // 测试课程数据
-    public MeModel(CourseModel courseModel, int viewType) {
-        mCourseModel = courseModel;
-        mViewType = viewType;
+    public UserModel getUserModel() {
+        return mUserModel;
     }
 
-    // 测试导航数据
-    public MeModel(NavigationModel navigationModel) {
-        mNavigationModel = navigationModel;
+    public void setUserModel(UserModel userModel) {
+        mUserModel = userModel;
     }
 
-    // 测试任务数据
-    public MeModel(WorkModel workModel, int viewType) {
-        mWorkModel = workModel;
-        mViewType = viewType;
+    public List<CourseModel> getCourseModels() {
+        return mCourseModels;
     }
 
-    public MeModel(WorkModel workModel) {
-        mWorkModel = workModel;
+    public void setCourseModels(List<CourseModel> courseModels) {
+        mCourseModels = courseModels;
     }
 
-    // 测试成绩数据
-    public MeModel(GradeModel gradeModel) {
-        mGradeModel = gradeModel;
+    public List<WorkModel> getWorkModels() {
+        return mWorkModels;
     }
 
-    public PersonModel getPersonModel() {
-        return mPersonModel;
+    public void setWorkModels(List<WorkModel> workModels) {
+        mWorkModels = workModels;
     }
 
-    public void setPersonModel(PersonModel personModel) {
-        mPersonModel = personModel;
+    public List<GradeModel> getGradeModels() {
+        return mGradeModels;
     }
 
-    public CourseModel getCourseModel() {
-        return mCourseModel;
+    public void setGradeModels(List<GradeModel> gradeModels) {
+        mGradeModels = gradeModels;
     }
 
-    public void setCourseModel(CourseModel courseModel) {
-        mCourseModel = courseModel;
+    public List<MessageModel> getMessageModels() {
+        return mMessageModels;
     }
 
-    public NavigationModel getNavigationModel() {
-        return mNavigationModel;
-    }
-
-    public void setNavigationModel(NavigationModel navigationModel) {
-        mNavigationModel = navigationModel;
-    }
-
-    public WorkModel getWorkModel() {
-        return mWorkModel;
-    }
-
-    public void setWorkModel(WorkModel workModel) {
-        mWorkModel = workModel;
-    }
-
-    public GradeModel getGradeModel() {
-        return mGradeModel;
-    }
-
-    public void setGradeModel(GradeModel gradeModel) {
-        mGradeModel = gradeModel;
-    }
-
-    public int getViewType() {
-        return mViewType;
-    }
-
-    public void setViewType(int viewType) {
-        mViewType = viewType;
+    public void setMessageModels(List<MessageModel> messageModels) {
+        mMessageModels = messageModels;
     }
 }

@@ -1,17 +1,18 @@
 package com.union.yunzhi.yunzhi.fragment.me;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.union.yunzhi.factories.moudles.me.MeConstant;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.me.ChangePasswordActivity;
 
@@ -20,7 +21,9 @@ import com.union.yunzhi.yunzhi.activities.me.ChangePasswordActivity;
  */
 
 public class PersonDialogFragment extends DialogFragment implements View.OnClickListener {
-    public static final String TAG_PERSON_DIALOG_FRAGMENT = "PersonDialogFragment";
+    public static final String TAG = "PersonDialogFragment";
+    //自定义注销广播Action
+    public static final String LOGOUT_ACTION = "com.union.yunzhi.LOGOUT_ACTION";
 
     private TextView mChangeIcon; // 更换头像
     private TextView mChangePassword; // 修改密码
@@ -53,23 +56,23 @@ public class PersonDialogFragment extends DialogFragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
-        Log.d("PersonDialogClick", "onClick: ");
+        LogUtils.d("PersonDialogClick", "onClick: ");
         switch (view.getId()) {
             case R.id.tv_person_change_icon:
-                // TODO: 2018/2/25 更换头像
-                Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
+                dismiss();
                 FragmentManager fragmentManager = getChildFragmentManager();
-                ChangeIconDialogFragment.newInstance().show(fragmentManager, ChangeIconDialogFragment.TAG_CHANGE_ICON_DIALOG_FRAGMENT);
+                ChangeIconDialogFragment.newInstance().show(fragmentManager, ChangeIconDialogFragment.TAG);
                 break;
             case R.id.tv_person_change_password:
-                // TODO: 2018/2/26  
                 ChangePasswordActivity.newInstance(getActivity());
+                dismiss();
                 break;
             case R.id.tv_person_log_out:
-                // TODO: 2018/2/25 退出平台
+                // 发送注销广播
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(LOGOUT_ACTION));
+                dismiss();
                 break;
             default:
         }
-        dismiss();
     }
 }

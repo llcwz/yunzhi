@@ -11,7 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,14 +22,21 @@ import android.widget.Toast;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
+import com.union.yunzhi.common.helper.ScreenUtils;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
-import com.union.yunzhi.factories.moudles.classfication.beans.CourseShowBean;
-import com.union.yunzhi.factories.moudles.classfication.beans.TitleBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.classfication.CourseShowBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.details.CourseBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.drawer.DrawerBean;
+import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.classfication.ClassCourseDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.ClassCourseAdapter;
 import com.union.yunzhi.yunzhi.adapter.ClassDrawerAdapter;
-import com.union.yunzhi.yunzhi.activities.classfication.ClassCourseDetails;
+import com.union.yunzhi.yunzhi.network.HttpConstants;
+import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -45,10 +54,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     private View hidden_coprhsv;
     private DrawerLayout mDrawerLayout;
     private Banner mBanner;
-    private List<Integer> image;
     private List<String> title;
-    private List<CourseShowBean> test2;
-    private List<TitleBean> test1;
     private List<String> test;
     private RecyclerView mRecyclerView,mRecycleView2;
     private ConstraintLayout mConstraintLayout;
@@ -58,6 +64,16 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     private String range,state;
     private View.OnClickListener onClick;
     private View.OnLongClickListener onLongClick;
+    private LinearLayout mLinearLayout,mLinearLayout1;
+
+    //轮播图数据集合
+    private List<Integer> image;
+
+    //侧滑栏数据集合
+    private List<DrawerBean> drawerBeanList=new ArrayList<>();
+
+    private List<CourseBean> test1;
+    private List<CourseShowBean> test2;
 
 
     @Override
@@ -70,11 +86,12 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
 
+        test2=new ArrayList<>();
+        test1=new ArrayList<>();
         image=new ArrayList<>();
         title=new ArrayList<>();
         test=new ArrayList<>();
-        test1=new ArrayList<>();
-        test2=new ArrayList<>();
+        drawerBeanList =new ArrayList<>();
 
         //轮播测试数据
         image.add(R.mipmap.aa);
@@ -83,7 +100,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
         title.add("快乐寒假");title.add("快乐暑假");title.add("快乐春节");
 
         //课程测试数据
-        CourseShowBean bean=new CourseShowBean("操作系统","张三","index.jpg",1236,12,670);
+        CourseShowBean bean=new CourseShowBean("操作系统","张三","index.jpg",1236,670);
         test2.add(bean);test2.add(bean);test2.add(bean);test2.add(bean);
         test2.add(bean);test2.add(bean);test2.add(bean);test2.add(bean);
         test2.add(bean);test2.add(bean);test2.add(bean);test2.add(bean);
@@ -94,16 +111,16 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
         test.add("计算机网络");test.add("操作系统");test.add("嵌入式系统设计");test.add("人工智能与算法");
         test.add("软件工程");test.add("数值计算");test.add("Linux系统");test.add("Java程序设计");
 
-        TitleBean kiss=new TitleBean("计算机学院",test,null);
-        test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);
-        test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);
-        test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);test1.add(kiss);
+
     }
 
     @Override
     protected void initWidget(View view) {
 
         //侧滑栏得抽屉
+        mLinearLayout1= (LinearLayout) view.findViewById(R.id.drawer_class);
+        //DrawerLayout.LayoutParams params=new DrawerLayout.LayoutParams((int)(5.0/6)*ScreenUtils.getScreenWidth(getContext()), ViewGroup.LayoutParams.MATCH_PARENT);
+        //mLinearLayout1.setLayoutParams(params);
         mDrawerLayout=(DrawerLayout) view.findViewById(R.id.lv_drawer);
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -157,26 +174,12 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
         mConstraintLayout.setOnClickListener(this);
 
         //轮播
+        mLinearLayout= (LinearLayout) view.findViewById(R.id.layout_carousel);
+        LinearLayout.LayoutParams params1=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)((1.0/3)*ScreenUtils.getScreenWidth(getActivity())));
+        mLinearLayout.setLayoutParams(params1);
         mBanner=(Banner)view.findViewById(R.id.banner_class);
         //初始化设置隐藏布局为不可见
         hidden_coprhsv.setVisibility(View.GONE);
-
-        /**
-         * 设置轮播风格
-         * 设置图片加载器 设置图片集合 设置标题集合 设置动画效果
-         * 设置自动播放 设置轮播时间 设置指示器位置
-         */
-        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
-                .setImageLoader(new GlideImageLoader())
-                .setImages(image)
-                .setBannerTitles(title)
-                .setBannerAnimation(Transformer.DepthPage)
-                .isAutoPlay(true)
-                .setDelayTime(1000)
-                .setIndicatorGravity(BannerConfig.CENTER)
-                .start();
-        //开始渲染
-        mBanner.start();
 
         //显示课程
         mRecyclerView=(RecyclerView) view.findViewById(R.id.rec_course);
@@ -236,32 +239,70 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
     @Override
     protected void initData() {
 
-        // TODO itemView 内部点击事件
-        onClick=new View.OnClickListener() {
+        /**
+         * 侧滑栏请求并加载数据
+         */
+        RequestCenter.requestDrawer(HttpConstants.ACADEMY_COURSE, new DisposeDataListener() {
             @Override
-            public void onClick(View v) {
+            public void onSuccess(Object responseObj) {
 
-                switch(v.getId()){
+                BaseDrawerBean temp= (BaseDrawerBean) responseObj;
+                if(temp.ecode==0){
+                    drawerBeanList=temp.data;
+                    LogUtils.d("My","----------"+drawerBeanList.size());
+                    //显示分类适配
+                    ClassDrawerAdapter adapter1=new ClassDrawerAdapter(drawerBeanList, new MyAdapter.AdapterListener<DrawerBean>() {
 
-                    case R.id.imgBtn_thumbUp:
-                        Toast.makeText(getActivity(),"点赞",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.imgBtn_thumbDown:
-                        Toast.makeText(getActivity(),"差评",Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
+                        @Override
+                        public void onItemClick(MyAdapter.MyViewHolder holder,DrawerBean data) {
+                            //TODO 点击分类单元块执行的操作
+                        }
+
+                        @Override
+                        public void onItemLongClick(MyAdapter.MyViewHolder holder, DrawerBean data) {
+                            //TODO 长按分类单元块执行的操作
+                        }
+
+                        @Override
+                        public Boolean setAddActionContinue() {
+                            return false;
+                        }
+
+                        @Override
+                        public void updataUI(Object object) {
+                            String temp=object.toString();
+                            mTextView1.setText(temp);
+                        }
+                    });
+                    mRecycleView2.setAdapter(adapter1);
+                }else{
+                    //TODO 请求失败显示窗口
+                    Toast.makeText(getContext(),"网络链接失败",Toast.LENGTH_SHORT).show();
                 }
             }
-        };
 
-        // TODO itemView 内部长按点击事件
-        onLongClick=new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                return false;
+            public void onFailure(Object reasonObj) {
+                //TODO 请求失败显示窗口
+                Toast.makeText(getContext(),"网络链接失败",Toast.LENGTH_SHORT).show();
             }
-        };
+        });
+
+        /**
+         * 设置轮播风格
+         * 设置图片加载器 设置图片集合 设置标题集合 设置动画效果
+         * 设置自动播放 设置轮播时间 设置指示器位置
+         */
+        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
+                .setImageLoader(new GlideImageLoader())
+                .setImages(image)
+                .setBannerTitles(title)
+                .setBannerAnimation(Transformer.DepthPage)
+                .isAutoPlay(true)
+                .setDelayTime(3000)
+                .setIndicatorGravity(BannerConfig.CENTER)
+                .start();
+        mBanner.start();//开始渲染
 
 
         //显示课程的适配
@@ -270,7 +311,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, CourseShowBean data) {
                 //TODO 课程单元点击
-                startActivity(new Intent(getContext(), ClassCourseDetails.class));
+                startActivity(new Intent(getContext(), ClassCourseDetailsActivity.class));
             }
 
             @Override
@@ -289,36 +330,24 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
             }
         });
 
-
-
         mRecyclerView.setAdapter(adapter);
 
-        //显示分类适配
-        ClassDrawerAdapter adapter1=new ClassDrawerAdapter(test1, new MyAdapter.AdapterListener<TitleBean>() {
 
+        // TODO 点击事件
+        onClick=new View.OnClickListener() {
             @Override
-            public void onItemClick(MyAdapter.MyViewHolder holder,TitleBean  data) {
-                    //TODO 点击分类单元块执行的操作
+            public void onClick(View v) {
+
             }
+        };
 
+        // TODO itemView 内部长按点击事件
+        onLongClick=new View.OnLongClickListener() {
             @Override
-            public void onItemLongClick(MyAdapter.MyViewHolder holder, TitleBean data) {
-                    //TODO 长按分类单元块执行的操作
-            }
-
-            @Override
-            public Boolean setAddActionContinue() {
+            public boolean onLongClick(View v) {
                 return false;
             }
-
-            @Override
-            public void updataUI(Object object) {
-                String temp=object.toString();
-                mTextView1.setText(temp);
-            }
-        });
-
-        mRecycleView2.setAdapter(adapter1);
+        };
 
     }
 
@@ -395,6 +424,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener{
 
         return temp;
     }
+
 
     @Override
     public void onClick(View v) {

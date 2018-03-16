@@ -4,17 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/black_alpha_16">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/len_8"
-        android:layout_marginLeft="@dimen/len_8"
-        android:layout_marginRight="@dimen/len_8"
-        android:layout_marginBottom="@dimen/len_8"
+
         android:background="@color/white_alpha_112">
 
         <TextView
@@ -32,7 +29,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/rec_more_teacher"
             android:layout_marginLeft="@dimen/len_8"
             android:layout_marginTop="@dimen/len_8"

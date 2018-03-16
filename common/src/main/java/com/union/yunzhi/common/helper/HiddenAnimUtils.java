@@ -29,15 +29,11 @@ public class HiddenAnimUtils {
 
     private int mTime;//动画时间
 
-    /**
-     * 构造器(可根据自己需要修改传参)
-     * @param context 上下文
-     * @param hideView 需要隐藏或显示的布局view
-     * @param down 按钮开关的view
-     * @param height 布局展开的高度(根据实际需要传)
-     */
-    public static HiddenAnimUtils newInstance(Context context, View hideView, View down, int height,int time){
-        return new HiddenAnimUtils(context,hideView,down,height,time);
+    private Context context;
+
+    public static HiddenAnimUtils newInstance(Context context,View hideView ,View down) {
+
+        return new HiddenAnimUtils(context,hideView,down);
     }
 
     public static HiddenAnimUtils newInstance(Context context,int height) {
@@ -45,21 +41,33 @@ public class HiddenAnimUtils {
         return new HiddenAnimUtils(context,height);
     }
 
+    /**
+     * 构造器(可根据自己需要修改传参)
+     * @param context 上下文
+     * @param hideView 需要隐藏或显示的布局view
+     * @param down 按钮开关的view
+     * @param height 布局展开的高度(根据实际需要传)
+     */
+
+    public static HiddenAnimUtils newInstance(Context context, View hideView, View down, int height,int time){
+        return new HiddenAnimUtils(context,hideView,down,height,time);
+    }
+
     public static HiddenAnimUtils newInstance(Context context, View hideView ,int mHeight,int mTime) {
-
-
         return new HiddenAnimUtils(context, hideView , mHeight, mTime);
     }
 
     private HiddenAnimUtils(Context context, View hideView, View down, int height,int mTime){
         this.hideView = hideView;
         this.down = down;
+        this.context=context;
         /**
          * 此处是将dp转化成px
          */
         float mDensity = context.getResources().getDisplayMetrics().density;
         this.mHeight = (int) (mDensity * height + 0.5);//伸展高度
         this.mTime=mTime;
+        this.context=context;
     }
 
     private HiddenAnimUtils(Context context, View hideView ,int mHeight,int mTime){
@@ -67,6 +75,13 @@ public class HiddenAnimUtils {
         this.down = null;
         this.mHeight = mHeight;
         this.mTime=mTime;
+        this.context=context;
+    }
+
+    private HiddenAnimUtils(Context context,View hideView,View down){
+        this.context=context;
+        this.down=down;
+        this.hideView=hideView;
     }
 
     /**
@@ -99,7 +114,22 @@ public class HiddenAnimUtils {
      * 这个函数是给控制按钮设置动画的
      * 开关旋转动画
      */
-    private void startAnimation() {
+    public void startAnimation() {
+        if(down!=null){
+            if (View.VISIBLE == hideView.getVisibility()) {
+                animation = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            } else {
+                animation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            }
+            animation.setDuration(mTime);//设置动画持续时间
+            animation.setInterpolator(new LinearInterpolator());
+            animation.setRepeatMode(Animation.REVERSE);//设置反方向执行
+            animation.setFillAfter(true);//动画执行完后是否停留在执行完的状态
+            down.startAnimation(animation);
+        }
+    }
+
+    private void startAnimationLone() {
         if(down!=null){
             if (View.VISIBLE == hideView.getVisibility()) {
                 animation = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);

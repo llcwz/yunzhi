@@ -9,12 +9,29 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+
         <include android:id="@+id/toolbar_layout" layout="@layout/toolbar"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent">
+
+            <!--<com.youth.banner.Banner-->
+                <!--android:id="@+id/banner"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="140dp"></com.youth.banner.Banner>-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>

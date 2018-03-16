@@ -17,42 +17,43 @@
             android:orientation="vertical">
 
             <!-- TODO: 分类预留搜索栏的位置 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/len_40">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="预留搜索栏位置"
-                    android:gravity="center"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
+            <include layout="@layout/toolbar"
+                android:id="@+id/toor"/>
 
             <!--头部的控制条-->
             <include layout="@layout/class_head"/>
-
+w
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <!--轮播推荐-->
-                <include layout="@layout/class_carousel"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--轮播推荐-->
+                    <include layout="@layout/class_carousel"
+                        android:id="@+id/layout_carousel"/>
+
+
+                    <!--显示课程-->
+                    <include layout="@layout/class_course"/>
+
+                </LinearLayout>
 
                 <!--综合排序布局(此布局可以隐藏)-->
                 <include layout="@layout/class_comprehensive"/>
 
             </FrameLayout>
 
-            <!--显示课程-->
-            <include layout="@layout/class_course"/>
-
         </LinearLayout>
 
     </FrameLayout>
 
     <!--左边侧滑显示分类的抽屉-->
-    <include layout="@layout/class_drawer"/>
+    <include layout="@layout/class_drawer"
+        android:id="@+id/drawer_class"/>
 
 </android.support.v4.widget.DrawerLayout>
 

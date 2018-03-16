@@ -1,9 +1,11 @@
 package com.union.yunzhi.yunzhi.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
@@ -17,19 +19,21 @@ import java.util.List;
  * Created by CrazyGZ on 2018/2/24.
  */
 
-public class MeNavigationAdapter extends MyAdapter<MeModel>{
+public class MeNavigationAdapter extends MyAdapter<NavigationModel>{
 
-    public MeNavigationAdapter(List<MeModel> dataList, AdapterListener listener) {
+    private Context mContext;
+    public MeNavigationAdapter(Context context, List<NavigationModel> dataList, AdapterListener<NavigationModel> listener) {
         super(dataList, listener);
+        mContext = context;
     }
 
     @Override
-    protected int getItemViewType(int position, MeModel data) {
+    protected int getItemViewType(int position, NavigationModel data) {
         return R.layout.item_me_navigation;
     }
 
     @Override
-    protected MyViewHolder<MeModel> onCreateViewHolder(View root, int viewType) {
+    protected MyViewHolder<NavigationModel> onCreateViewHolder(View root, int viewType) {
         return new NavigationViewHolder(root);
     }
 
@@ -38,7 +42,7 @@ public class MeNavigationAdapter extends MyAdapter<MeModel>{
         return false;
     }
 
-    public class NavigationViewHolder extends MyViewHolder<MeModel>  {
+    public class NavigationViewHolder extends MyViewHolder<NavigationModel>  {
         private RoundedImageView mNavigationIcon;
         private TextView mNavigationName;
         public NavigationViewHolder(final View itemView) {
@@ -48,9 +52,9 @@ public class MeNavigationAdapter extends MyAdapter<MeModel>{
         }
 
         @Override
-        protected void onBind(final MeModel data, int position) {
-            mNavigationIcon.setImageResource(data.getNavigationModel().getNavigationIcon());
-            mNavigationName.setText(data.getNavigationModel().getNavigationName());
+        protected void onBind(final NavigationModel data, int position) {
+            Glide.with(mContext).load(data.getNavigationIcon()).into(mNavigationIcon);
+            mNavigationName.setText(data.getNavigationName());
         }
     }
 }

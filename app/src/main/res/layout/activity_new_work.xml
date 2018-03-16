@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/cyan_100"
-    tools:context="com.union.yunzhi.yunzhi.activities.me.NewWorkActivity">
+    tools:context="com.union.yunzhi.yunzhi.activities.photourl.NewWorkActivity">
 
     <include
         layout="@layout/me_toolbar"/>

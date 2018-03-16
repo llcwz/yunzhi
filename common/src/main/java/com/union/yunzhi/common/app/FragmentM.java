@@ -6,12 +6,12 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.util.StatusBarUtil;
 
 /**
@@ -19,6 +19,8 @@ import com.union.yunzhi.common.util.StatusBarUtil;
  */
 
 public abstract class FragmentM extends Fragment {
+
+    private final String TGA = "FragmentM";
     protected View mRoot;
 
     @Override
@@ -26,18 +28,20 @@ public abstract class FragmentM extends Fragment {
         super.onAttach(context);
         // 初始化参数
         initArgs(getArguments());
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i("TTGGAA","ok");
         if (mRoot == null) {
             int layId = getContentLayoutId();
             // 初始化当前的跟布局，但是不在创建时就添加到container里边
             View root = inflater.inflate(layId, container, false);
-            Log.i("TTGGAA","ok");
+           if(root !=null)
+           {
+               LogUtils.i(TGA,"onCreateView"+"布局转化成功");
+           }
             initWidget(root);
+            initData();
             mRoot = root;
         } else {
             if (mRoot.getParent() != null) {
@@ -45,7 +49,6 @@ public abstract class FragmentM extends Fragment {
                 ((ViewGroup) mRoot.getParent()).removeView(mRoot);
             }
         }
-        Log.i("TTGGAA","ok");
         return mRoot;
 
     }
@@ -54,7 +57,7 @@ public abstract class FragmentM extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // 当View创建完成后初始化数据
-        initData();
+        initRefreshData();
     }
 
     /**
@@ -83,6 +86,17 @@ public abstract class FragmentM extends Fragment {
      */
     protected abstract void initData();
 
+
+    /**
+     * 触发刷新时候回掉
+     */
+    public void initRefreshData(){
+
+    }
+
+    public void RefreshData(){
+
+    }
 
 
     /**
@@ -125,4 +139,7 @@ public abstract class FragmentM extends Fragment {
     public void transparencyBar(){
         StatusBarUtil.transparencyBar(getActivity());
     }
+
+
+
 }

@@ -20,6 +20,9 @@ import java.util.List;
 public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.MyViewHolder<Datas>>
         implements AdapterCallback<Datas>,View.OnClickListener,View.OnLongClickListener{
 
+
+    private final String TGA = "MyAdapter";
+
     @Override
     public void onViewRecycled(MyViewHolder<Datas> holder) {
         super.onViewRecycled(holder);
@@ -128,12 +131,12 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder<Datas> holder, final int position) {
         Datas data = mDataList.get(position);
-        Log.i("postin",position+"    +"+data);
         // 触发Holder的绑定方法\
         if(data!=null)
         {
             holder.bind(data,position);
-
+        }else{
+            Log.i(TGA,"data数据为空");
         }
     }
 

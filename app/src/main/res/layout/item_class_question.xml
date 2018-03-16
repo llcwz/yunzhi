@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/len_8"
+        android:background="@color/green_50">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/len_64">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ci_question_icon"
+                android:layout_width="@dimen/len_48"
+                android:layout_height="@dimen/len_48"
+                android:layout_margin="@dimen/len_8"
+                tools:background="@color/amber_100"
+                android:layout_alignParentLeft="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@+id/ci_question_icon"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/tv_question_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="WUST第一吃货王"
+                    android:textSize="@dimen/font_16"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_question_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018.3.9 10:21"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/len_8">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/len_4"
+                    android:layout_marginRight="@dimen/len_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="赞"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="回复"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/len_4"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_question_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="218000"/>
+
+                    <TextView
+                        android:id="@+id/tv_question_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2018"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/black_alpha_64"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/len_8">
+
+
+            <TextView
+                android:id="@+id/tv_question_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/len_8"
+                android:ellipsize="end"
+                android:lines="2"
+                android:maxLines="2"
+                android:textSize="@dimen/font_16"
+                tools:text="哈哈哈，大家快来吃鱼啊。你看，有红烧的、清蒸的、油炸的……全是和新鲜出炉的耶。中午，南苑食堂门前摆上了"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="交流"/>
+        android:layout_height="match_parent"
+        android:padding="@dimen/len_8"
+        android:id="@+id/rec_question"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/float_action_button"
+        android:layout_width="@dimen/len_48"
+        android:layout_height="@dimen/len_48"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/len_16"
+        android:elevation="@dimen/len_8"/>
+
+</android.support.design.widget.CoordinatorLayout>

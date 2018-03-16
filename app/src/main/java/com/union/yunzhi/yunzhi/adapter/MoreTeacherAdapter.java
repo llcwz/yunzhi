@@ -1,7 +1,6 @@
 package com.union.yunzhi.yunzhi.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,7 +8,7 @@ import android.widget.TextView;
 
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.classfication.beans.TeacherBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.details.TeacherBean;
 import com.union.yunzhi.yunzhi.R;
 
 import java.util.List;
@@ -45,7 +44,7 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
 
         public LinearLayout headLayout;
         public CircleImageView portrait;
-        public TextView name, state, good, bad;
+        public TextView name, state, good;
 
         public LinearLayout sonLayout;
         public ImageView img1, img2, img3;
@@ -61,7 +60,6 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
             name = (TextView) headLayout.findViewById(R.id.tv_teacher_name);
             state = (TextView) headLayout.findViewById(R.id.tv_teacher_state);
             good = (TextView) headLayout.findViewById(R.id.tv_up_num);
-            bad = (TextView) headLayout.findViewById(R.id.tv_down_num);
 
             sonLayout = (LinearLayout) itemView.findViewById(R.id.item_details_son);
             mLongText = (TextView) sonLayout.findViewById(R.id.tv_jianjie_teacher);
@@ -72,11 +70,9 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
             tv2 = (TextView) sonLayout.findViewById(R.id.tv_course_show2);
             tv3 = (TextView) sonLayout.findViewById(R.id.tv_course_show3);
 
-            Log.d("SC","sonLayout的高度："+sonLayout.getHeight());
             sonLayout.post(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d("SC","sonLayout的高度(异步获取)："+sonLayout.getHeight());
                     final int height=sonLayout.getHeight();
                     sonLayout.setVisibility(View.GONE);
                     /**
@@ -97,18 +93,17 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
 
             //TODO 相关老师 模块使用框架加载头像
             //Glide.with(context).load(data.portraitUrl).into(portrait);
-            name.setText(data.bigTitleFather);
-            state.setText(data.smallTitleFather);
-            good.setText(data.good);
-            good.setText(data.bad);
-            mLongText.setText(data.mLongText);
+            name.setText(data.teacherName);
+            state.setText(data.teacherState);
+            good.setText(String.valueOf(data.good));
+            mLongText.setText(data.teacherInfo);
 
             //TODO 相关老师 模块使用框架加载其他课程的图片
-            //Glide.with(context).load(data.imgUrl1).into(img1);
+            //Glide.with(context).load(data.course1.courseCover).placeholder().into(img1);
             //Glide.with(context).load(data.imgUrl2).into(img2);
             //Glide.with(context).load(data.imgUrl3).into(img3);
-            tv1.setText(data.name1); tv2.setText(data.name2);
-            tv3.setText(data.name3);
+            tv1.setText(data.course1.coursename); tv2.setText(data.course2.coursename);
+            tv3.setText(data.course3.coursename);
 
         }
 

@@ -1,20 +1,35 @@
 package com.union.yunzhi.yunzhi;
 
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.helper.NavHelper;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.yunzhi.fragment.main.ClassFragment;
 import com.union.yunzhi.yunzhi.fragment.main.CommunicationFragment;
 import com.union.yunzhi.yunzhi.fragment.main.HomeFragment;
 import com.union.yunzhi.yunzhi.fragment.main.LiveFragment;
 import com.union.yunzhi.yunzhi.fragment.main.MeFragment;
 
-public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+
+import cn.jpush.android.api.JPushInterface;
+
+public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,NavHelper.OnTabReselectListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
 
 
     private BottomNavigationViewEx bottomNavigationViewEx;
@@ -22,6 +37,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     private NavHelper<Integer> mNavHelper;
 
     private FrameLayout mContainer;
+
 
     private Boolean flag = false;
     @Override
@@ -32,6 +48,21 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
 
     @Override
     protected void initWidget() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this,"a",Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("缺失读取sd卡权限")
+                    .setMessage("没有权限，主体功能无法实现")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(MainActivity.this,"asdasd",Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+            builder.create().show();
+        }
 
         //changeStatusBarColor(R.color.blue_400);
 
@@ -55,6 +86,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
         mNavHelper = new NavHelper<>(MainActivity.this,
                 R.id.lay_contianer,
                 getSupportFragmentManager(),
+                MainActivity.this,
                 MainActivity.this,
                 null);
 
@@ -81,4 +113,78 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     public void onTabChanged(NavHelper.Tab<Integer> newTab, NavHelper.Tab<Integer> oldTab) {
 
     }
+
+
+    /**
+     * 触发双击刷新
+     * @param tab
+     */
+    @Override
+    public  void  notifyTabReselect(NavHelper.Tab<Integer> tab) {
+        LogUtils.i("notifyTabReselect",tab.getFragment().toString());
+       if(tab.getFragment() instanceof HomeFragment){
+
+           HomeFragment homeFragment = (HomeFragment)tab.getFragment();
+           homeFragment.RefreshData();
+
+       }else if(tab.getFragment() instanceof ClassFragment){
+
+           ClassFragment classFragment = (ClassFragment)tab.getFragment();
+
+       }else if(tab.getFragment() instanceof CommunicationFragment){
+
+           CommunicationFragment ccommunicationFragment = (CommunicationFragment)tab.getFragment();
+
+       }else if(tab.getFragment() instanceof LiveFragment){
+
+           LiveFragment liveFragment = (LiveFragment)tab.getFragment();
+
+       }else {
+
+           MeFragment meFragment = (MeFragment) tab.getFragment();
+
+       }
+
+    }
+
+
+
+    // 打印所有的 intent extra 数据
+    private static String printBundle(Bundle bundle) {
+        StringBuilder sb = new StringBuilder();
+        for (String key : bundle.keySet()) {
+            if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
+                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
+            } else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
+                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
+            } else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
+                if (bundle.getString(JPushInterface.EXTRA_EXTRA).isEmpty()) {
+                    Log.i("printBundle", "This message has no Extra data");
+                    continue;
+                }
+
+                try {
+
+                    /**
+                     * 先将JSON字符串转化为对象，再取其中的字段
+                     */
+                    JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
+                    Iterator<String> it = json.keys();
+
+                    while (it.hasNext()) {
+                        String myKey = it.next().toString();
+                        sb.append("\nkey:" + key + ", value: [" + myKey + " - " + json.optString(myKey) + "]");
+                    }
+                } catch (JSONException e) {
+                    Log.e("printBundle", "Get message extra JSON error!");
+                }
+
+            } else {
+                sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
+            }
+        }
+        return sb.toString();
+    }
+
+
 }

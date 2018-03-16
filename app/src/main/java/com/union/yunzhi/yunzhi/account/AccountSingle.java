@@ -2,7 +2,7 @@ package com.union.yunzhi.yunzhi.account;
 
 import android.content.Context;
 
-import com.union.yunzhi.factories.moudles.me.PersonModel;
+import com.union.yunzhi.factories.moudles.me.UserModel;
 
 /**
  * Created by CrazyGZ on 2018/3/7.
@@ -10,7 +10,7 @@ import com.union.yunzhi.factories.moudles.me.PersonModel;
 
 public class AccountSingle {
     private static AccountSingle sAccountSingle = null;
-    private PersonModel mPerson;
+    private UserModel mPerson;
     private Context mContext;
     public static AccountSingle getInstance(Context context) {
         if (sAccountSingle == null) {
@@ -22,10 +22,10 @@ public class AccountSingle {
         mContext = context;
     }
 
-    public void setPerson(PersonModel person) {
+    public void setPerson(UserModel person) {
         mPerson = person;
     }
-    public PersonModel getPerson() {
+    public UserModel getPerson() {
         return mPerson;
     }
 }

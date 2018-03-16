@@ -18,6 +18,7 @@
         android:background="@drawable/searchview">
 
         <LinearLayout
+            android:id="@+id/ll_search"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_width="140dp"
@@ -26,16 +27,16 @@
             >
 
             <ImageView
-                android:padding="10dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_search"
                 android:layout_width="40dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:id="@+id/serach"
+                android:id="@+id/tv_serach"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:text="恋爱先生"
+                android:text="输入搜索课程"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
@@ -53,6 +54,7 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
 
+            android:id="@+id/test"
             app:civ_border_color="@color/blue_400"
             app:civ_border_width="3dp"
             android:src="@drawable/ic_download"

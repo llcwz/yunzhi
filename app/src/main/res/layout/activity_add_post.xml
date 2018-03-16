@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.union.yunzhi.yunzhi.activities.communication.AddPostActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_48"
+        android:background="?attr/colorPrimary"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/len_8"
+            android:orientation="vertical"
+            android:background="@color/white">
+            <EditText
+                android:id="@+id/et_post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/len_8"
+                android:maxLines="2"
+                android:hint="标题"
+                android:textSize="@dimen/font_20"
+                android:textStyle="bold"
+                android:background="@null"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black_alpha_48"/>
+
+            <EditText
+                android:id="@+id/et_post_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:height="648dp"
+                android:padding="@dimen/len_8"
+                android:gravity="start"
+                android:hint="内容"
+                android:lineSpacingExtra="@dimen/len_2"
+                android:lineSpacingMultiplier="1.2"
+                android:background="@null"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

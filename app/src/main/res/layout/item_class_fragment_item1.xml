@@ -10,7 +10,7 @@
         android:layout_height="100dp"
         android:layout_weight="1"
         android:id="@+id/iv_show_course"
-        android:src="@mipmap/tiger"/>
+        android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,7 +33,7 @@
                 android:textSize="@dimen/font_20"
                 android:gravity="left|center_vertical"
                 android:maxLines="1"
-                android:text="计算机组成原理"/>
+                android:text="云智课程"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -57,33 +57,26 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imgBtn_thumbUp"
+                    android:id="@+id/tv_thumbUp"
+                    android:layout_marginLeft="@dimen/len_8"
+                    android:text="@string/good_boy"
+                    android:textColor="@color/green_700"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_thumb_up_24dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/len_4"
                     android:id="@+id/tv_upCount"
                     android:layout_gravity="center_vertical"
                     android:text="12343"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imgBtn_thumbDown"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_thumb_down_24dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_downCount"
-                    android:layout_gravity="center_vertical"
-                    android:text="18123"/>
+
 
             </LinearLayout>
 
@@ -93,22 +86,23 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tv_tag"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/tv_tag"
-                    android:gravity="center"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/len_10"
                     android:layout_marginEnd="@dimen/len_10"
-                    android:text="评论"/>
+                    android:layout_marginRight="@dimen/len_10"
+                    android:gravity="center"
+                    android:text="评论" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
                     android:id="@+id/tv_pinLunCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_toLeftOf="@id/tv_tag"
-                    android:text="471"/>
+                    android:text="471"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/tv_tag" />
 
 
             </RelativeLayout>
