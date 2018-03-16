@@ -1,13 +1,17 @@
 package com.union.yunzhi.yunzhi.activities.classfication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.union.yunzhi.factories.moudles.classfication.ClassConst;
+import com.union.yunzhi.factories.moudles.classfication.beans.video.BaseVideoBean;
+import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.contant.Constant;
 
 import cn.jzvd.JZMediaSystem;
 import cn.jzvd.JZVideoPlayer;
@@ -20,7 +24,16 @@ import cn.jzvd.JZVideoPlayerStandard;
 public class VideoActivity extends AppCompatActivity{
 
     protected JZVideoPlayerStandard mplayer;
-    protected String videoUrl,videoName,videCoverUrl;
+    protected BaseVideoBean video;//视频信息
+    protected BaseCommentModel comment;//评论信息
+
+    public static void newInstance(Context context, BaseVideoBean video, BaseCommentModel comment) {
+
+        Intent intent=new Intent(context,VideoActivity.class);
+        intent.putExtra(Constant.VIDEO_TAG, (Parcelable) video);
+        intent.putExtra(Constant.COMMENT_TAG, (Parcelable) comment);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,10 +51,8 @@ public class VideoActivity extends AppCompatActivity{
 
     protected void initArgs(Bundle bundle) {
         bundle=getIntent().getExtras();
-
-        videoUrl = bundle.getString(ClassConst.VIDEO_URL);
-        videoName=bundle.getString(ClassConst.VIDEO_NAME);
-        videCoverUrl=bundle.getString(ClassConst.VIDEO_COVER_URL);
+        video=bundle.getParcelable(Constant.VIDEO_TAG);
+        comment=bundle.getParcelable(Constant.COMMENT_TAG);
     }
 
     protected void initWidget() {
@@ -53,9 +64,12 @@ public class VideoActivity extends AppCompatActivity{
 
     protected void initData() {
 
-        Glide.with(getBaseContext()).load(videCoverUrl).into(mplayer.thumbImageView);
-
-        mplayer.setUp(videoUrl, JZVideoPlayer.SCREEN_WINDOW_NORMAL,videoName);
+        /**
+         * 加载视频信息
+         */
+//        Glide.with(getBaseContext()).load(vi).into(mplayer.thumbImageView);
+//
+//        mplayer.setUp(videoUrl, JZVideoPlayer.SCREEN_WINDOW_NORMAL,videoName);
 
         mplayer.thumbImageView.setImageResource(R.drawable.jz_backward_icon);
 
@@ -67,6 +81,15 @@ public class VideoActivity extends AppCompatActivity{
                 finish();
             }
         });
+
+        /**
+         * 适配评论信息
+         */
+
+
+
+
+
     }
 
     @Override

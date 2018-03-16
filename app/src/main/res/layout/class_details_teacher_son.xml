@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/black_alpha_16">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/len_8"
         android:layout_marginLeft="@dimen/len_8"
         android:layout_marginRight="@dimen/len_8"
@@ -49,6 +49,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/iv_course_show1"
+            android:scaleType="centerCrop"
             android:background="@color/blue_300"
             android:src="@mipmap/course1"
             android:layout_marginLeft="8dp"
@@ -61,6 +62,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/iv_course_show2"
+            android:scaleType="centerCrop"
             android:background="@color/blue_300"
             android:src="@mipmap/course1"
             app:layout_constraintLeft_toRightOf="@+id/iv_course_show1"
@@ -73,6 +75,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/iv_course_show3"
+            android:scaleType="centerCrop"
             android:background="@color/blue_300"
             android:src="@mipmap/course1"
             app:layout_constraintLeft_toRightOf="@+id/iv_course_show2"
@@ -84,8 +87,8 @@
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:id="@+id/tv_course_show1"
+            android:gravity="center_vertical"
             android:textSize="@dimen/font_10"
             android:text="正月十五闹元宵"
             android:layout_marginLeft="8dp"

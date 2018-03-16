@@ -45,6 +45,8 @@ public class VideoUtils {
         intent.putExtra(ClassConst.VIDEO_URL,videoUrl);
         intent.putExtra(ClassConst.VIDEO_COVER_URL,coverUrl);
         context.startActivity(intent);
+
+        //VideoActivity.newInstance();
     }
 
 

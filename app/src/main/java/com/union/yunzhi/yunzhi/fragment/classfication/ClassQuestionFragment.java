@@ -12,11 +12,9 @@ import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 
-import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseQuestionBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.question.BaseQuestionBean;
 
 import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
-import com.union.yunzhi.factories.moudles.communication.CommentModel;
-import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.classfication.QuestionDetailsActivity;
@@ -26,7 +24,6 @@ import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by cjw on 2018/3/8 0008.

@@ -32,5 +32,10 @@ public final class ClassConst
     public static final String VIDEO_NAME="video_name";
     public static final String VIDEO_COVER_URL="video_cover_url";
 
+    public static final String COURSEID="course_id";
+    public static final String TEACHERID="teacher_id";
+
+
+
 }
 

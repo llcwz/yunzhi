@@ -24,9 +24,9 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="25dp"
             android:gravity="center"
-            android:text="取消l"
+            android:text="取消"
             android:textColor="#333333"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:id="@+id/input_layout"
