@@ -6,10 +6,11 @@
     android:padding="0.5dp">
 
     <ImageView
+        android:id="@+id/iv_show_course"
         android:layout_width="0dp"
         android:layout_height="100dp"
+        android:scaleType="centerCrop"
         android:layout_weight="1"
-        android:id="@+id/iv_show_course"
         android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout

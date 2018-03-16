@@ -86,7 +86,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
         mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
         mQRcode.setOnClickListener(this);
-        Test = (CircleImageView) view.findViewById(R.id.test);
+        Test = (CircleImageView) view.findViewById(R.id.cv_load);
         Test.setOnClickListener(this);
         mRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.refresh);
         mRefreshLayout.setOnRefreshListener(this);
@@ -182,7 +182,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                         SearchActivity.class));
                 break;
 
-            case R.id.test:
+            case R.id.cv_load:
                 MyQrCodeDialog dialog = new MyQrCodeDialog(getContext());
                 dialog.show();
 

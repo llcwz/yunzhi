@@ -62,4 +62,10 @@ public class HttpConstants {
 
     //请求学院及其课程列表
     public static final String ACADEMY_COURSE = "http://60.205.207.177/dennis_allan/index.php/Home/Index/allCourse";
+
+    //请求课程列表
+    public static final String GET_COURSE_TITLE="http://60.205.207.177/dennis_allan/index.php/Home/Index/courseInfo";
+
+    //请求课程详情信息
+    public static final String GET_ALL_DETAILS_MSG="http://60.205.207.177/dennis_allan/index.php/Home/Index/detail";
 }

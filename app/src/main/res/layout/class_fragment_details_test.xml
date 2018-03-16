@@ -2,10 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
+    <FrameLayout
+        android:id="@+id/fl_examine_standard"
+        android:layout_marginBottom="@dimen/len_4"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试"/>
+        android:layout_height="@dimen/len_40">
+      <TextView
+          android:layout_marginLeft="@dimen/len_4"
+          android:textColor="@color/black_alpha_240"
+          android:gravity="center"
+          android:text="@string/class_examine"
+          android:layout_width="@dimen/len_80"
+          android:layout_height="match_parent" />
+      <ImageView
+          android:layout_gravity="center_vertical|end"
+          android:background="@drawable/ic_arrow_right"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_examine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
 
 </LinearLayout>

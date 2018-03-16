@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.CourseShowBean;
 import com.union.yunzhi.yunzhi.R;
@@ -61,7 +62,11 @@ public class ClassCourseAdapter extends MyAdapter<CourseShowBean>{
             mTextView2.setText(data.teachername);
             mTextView3.setText(String.valueOf(data.good));
             mTextView4.setText(String.valueOf(data.commentnum));
-            Glide.with(context).load(data.coursecover).placeholder(R.mipmap.tiger).into(mImageView);
+            LogUtils.d("GLide",data.coursecover);
+            Glide.with(context).
+                    load(data.coursecover).
+                    placeholder(R.mipmap.ic_launcher).
+                    into(mImageView);
         }
     }
 }

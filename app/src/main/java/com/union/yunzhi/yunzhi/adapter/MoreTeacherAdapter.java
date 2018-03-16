@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.beans.details.TeacherBean;
@@ -92,19 +93,49 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
         protected void onBind(TeacherBean data, int position) {
 
             //TODO 相关老师 模块使用框架加载头像
-            //Glide.with(context).load(data.portraitUrl).into(portrait);
-            name.setText(data.teacherName);
-            state.setText(data.teacherState);
-            good.setText(String.valueOf(data.good));
-            mLongText.setText(data.teacherInfo);
+            Glide.with(context).load(data.photourl).into(portrait);
+
+            name.setText(data.teachername);
+            state.setText(data.teacherstate);
+            //good.setText(String.valueOf(data.good));
+            mLongText.setText(data.teacherinfo);
 
             //TODO 相关老师 模块使用框架加载其他课程的图片
-            //Glide.with(context).load(data.course1.courseCover).placeholder().into(img1);
-            //Glide.with(context).load(data.imgUrl2).into(img2);
-            //Glide.with(context).load(data.imgUrl3).into(img3);
-            tv1.setText(data.course1.coursename); tv2.setText(data.course2.coursename);
-            tv3.setText(data.course3.coursename);
+            if(data.coursecover.size()==0){
+                img1.setVisibility(View.GONE);
+                img2.setVisibility(View.GONE);
+                img3.setVisibility(View.GONE);
+                tv1.setVisibility(View.GONE);
+                tv2.setVisibility(View.GONE);
+                tv3.setVisibility(View.GONE);
+            }
+            if(data.coursecover.size()==1){
+                img2.setVisibility(View.GONE);
+                img3.setVisibility(View.GONE);
+                tv2.setVisibility(View.GONE);
+                tv3.setVisibility(View.GONE);
+                setImgSrc(context,data.coursecover.get(0),img1,R.mipmap.ic_launcher);
+            }
+            if(data.coursecover.size()==2){
+                img3.setVisibility(View.GONE);
+                tv3.setVisibility(View.GONE);
+                setImgSrc(context,data.coursecover.get(0),img1,R.mipmap.ic_launcher);
+                setImgSrc(context,data.coursecover.get(1),img2,R.mipmap.ic_launcher);
+            }
+            if(data.coursecover.size()==3){
+                setImgSrc(context,data.coursecover.get(0),img1,R.mipmap.ic_launcher);
+                setImgSrc(context,data.coursecover.get(1),img2,R.mipmap.ic_launcher);
+                setImgSrc(context,data.coursecover.get(2),img3,R.mipmap.ic_launcher);
+            }
 
+        }
+
+        public void setImgSrc(Context context, String url,ImageView img,int placeholder){
+            if(url!=null){
+                Glide.with(context).load(url).placeholder(placeholder).into(img);
+            }else{
+                img.setVisibility(View.GONE);
+            }
         }
 
     }

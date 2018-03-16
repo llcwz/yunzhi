@@ -100,7 +100,7 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View root = inflater.inflate(viewType, parent, false);
+        View root = inflater.inflate(viewType,parent,false);
 
         MyViewHolder<Datas> holder = onCreateViewHolder(root,viewType);
 

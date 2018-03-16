@@ -137,6 +137,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
        }else if(tab.getFragment() instanceof ClassFragment){
 
            ClassFragment classFragment = (ClassFragment)tab.getFragment();
+           classFragment.initRefreshData();
 
        }else if(tab.getFragment() instanceof CommunicationFragment){
 

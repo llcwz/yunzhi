@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/len_28"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_marginTop="@dimen/len_4"
+        android:layout_marginLeft="@dimen/font_8"
+        android:background="@drawable/test_chapter_tag"
+        android:layout_width="@dimen/len_20"
+        android:layout_height="@dimen/len_20" />
+    <TextView
+        android:id="@+id/item_examine_chapter"
+        android:gravity="center|left"
+        android:text="第六章:计算机的运行方式"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/len_10"
+        android:layout_width="match_parent" />
+</LinearLayout>
