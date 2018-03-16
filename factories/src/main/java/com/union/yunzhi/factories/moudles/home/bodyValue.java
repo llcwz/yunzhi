@@ -1,12 +1,18 @@
 package com.union.yunzhi.factories.moudles.home;
 
+import java.util.List;
+
 /**
  * Created by meng on 2018/3/13.
  */
 
 public class bodyValue {
-    public String Title;//视屏的标题
-    public String PhotoUrl;//视频的背景
-    public String PortraitUrl;//作者的头像
+
+    public List<String> titles;
+    public List<String> photos;
+    public List<String> portraits;
+    public List<String> ads;
+    public List<String> courseids;
+    public List<String> teacherids;
     public int viewType;
 }

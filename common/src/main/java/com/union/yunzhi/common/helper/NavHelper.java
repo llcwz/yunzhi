@@ -42,7 +42,7 @@ public class NavHelper<T> {
         this.listener = listener;
         this.reselectListener = reselectListener;
         this.Extra = Extra;
-        Log.i("NavHelper","init");
+        Log.i("NavHelper", "init");
     }
 
     /**
@@ -51,7 +51,7 @@ public class NavHelper<T> {
      * @param menuId Tab对应的菜单Id
      * @param tab    Tab
      */
-    public NavHelper<T> add(int menuId, Tab<T> tab ) {
+    public NavHelper<T> add(int menuId, Tab<T> tab) {
         tabs.put(menuId, tab);
         return this;
     }
@@ -96,7 +96,7 @@ public class NavHelper<T> {
             if (oldTab == tab) {
                 // 如果说当前的Tab就是点击的Tab，
                 // 那么我们不做处理
-                    notifyTabReselect(tab);
+                notifyTabReselect(tab);
 
 
                 return;
@@ -108,14 +108,15 @@ public class NavHelper<T> {
 
     }
 
-    private void setExtra(String field,String saveThing){
+    private void setExtra(String field, String saveThing) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(field,saveThing);
+        bundle.putSerializable(field, saveThing);
 
     }
 
     /**
      * 进行Fragment的真实的调度操作
+     *
      * @param newTab 新的
      * @param oldTab 旧的
      */
@@ -125,7 +126,7 @@ public class NavHelper<T> {
         if (oldTab != null) {
             if (oldTab.getFragment() != null) {
                 // 从界面移除，但是还在Fragment的缓存空间中
-                Log.i(TGA,"oldTab");
+                Log.i(TGA, "oldTab"+oldTab.fragment.toString());
                 ft.detach(oldTab.getFragment());
             }
         }
@@ -133,17 +134,20 @@ public class NavHelper<T> {
         if (newTab != null) {
 
             if (newTab.getFragment() == null) {
-                Log.i(TGA,"newTab");
+
                 // 首次新建
                 Fragment fragment = Fragment.instantiate(context, newTab.clx.getName(), null);
+
+
                 // 缓存起来
                 newTab.setFragment(fragment);
                 // 提交到FragmentManger
                 ft.add(containerId, fragment, newTab.clx.getName());
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("studentId",Extra);
+                bundle.putSerializable("studentId", Extra);
                 //      oldTab.fragment.setArguments(bundle);
                 newTab.getFragment().setArguments(bundle);
+                Log.i(TGA, "newTab"+newTab.fragment.toString());
             } else {
                 // 从FragmentManger的缓存空间中重新加载到界面中
                 ft.attach(newTab.getFragment());
@@ -171,10 +175,10 @@ public class NavHelper<T> {
 
     private void notifyTabReselect(Tab<T> tab) {
 
-        if(reselectListener !=null){
+        if (reselectListener != null) {
             reselectListener.notifyTabReselect(tab);
         }
-        Log.i(TGA,"notifyTabReselect");
+        Log.i(TGA, "notifyTabReselect");
     }
 
     /**
@@ -195,12 +199,16 @@ public class NavHelper<T> {
 
         // 内部缓存的对应的Fragment，
         // Package权限，外部无法使用
-       private Fragment fragment;
-    public Fragment getFragment() {
-    return fragment;
-}public void setFragment(Fragment fragment) {
-    this.fragment = fragment;
-}}
+        private Fragment fragment;
+
+        public Fragment getFragment() {
+            return fragment;
+        }
+
+        public void setFragment(Fragment fragment) {
+            this.fragment = fragment;
+        }
+    }
 
     /**
      * 定义事件处理完成后的回调接口
@@ -209,7 +217,7 @@ public class NavHelper<T> {
         void onTabChanged(Tab<T> newTab, Tab<T> oldTab);
     }
 
-    public interface OnTabReselectListener<T>{
+    public interface OnTabReselectListener<T> {
         void notifyTabReselect(Tab<T> tab);
     }
 }
