@@ -456,7 +456,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
                         }
                     });
                     mRecyclerView.setAdapter(adapter);
-                    Toast.makeText(getContext(),"更新完成",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(),"更新完成",Toast.LENGTH_SHORT).show();
                 }else{
                     mRecyclerView.setAdapter(adapter);
                     Toast.makeText(getContext(),"网络炸了哦，请求失败，请检查网络设置",Toast.LENGTH_SHORT).show();
