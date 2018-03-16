@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.union.yunzhi.common.app.PermissionsFragment;
 import com.union.yunzhi.common.constant.Constant;
 import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.util.LogUtils;
+import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
 import com.union.yunzhi.factories.moudles.hometest.HomeHeadModle;
@@ -41,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.union.yunzhi.yunzhi.activities.LoginActivity.LOGIN_ACTION;
 
 /**
  * A simple {@link FragmentM} subclass.
@@ -129,6 +133,9 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         Log.i("source", list.size() + "");
 
 
+
+
+
     }
 
     @Override
@@ -211,8 +218,8 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
                             Intent intent = new Intent(getContext(),ClassCourseDetailsActivity.class);
 
-                            intent.putExtra("courseId",courseId);
-                            intent.putExtra("teacherId",teacherId);
+                            intent.putExtra(ClassConst.COURSEID,courseId);
+                            intent.putExtra(ClassConst.TEACHERID,teacherId);
 
                             startActivity(intent);
 
@@ -329,5 +336,9 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         LogUtils.i("initRefreshData","initRefreshData");
         onRefresh(mRefreshLayout);
     }
+    private void sendLoginBroadcast() {
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(LOGIN_ACTION));
+    }
+
 
 }
