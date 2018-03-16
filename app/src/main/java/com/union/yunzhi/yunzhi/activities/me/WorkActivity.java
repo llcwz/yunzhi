@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
@@ -17,6 +18,7 @@ import com.union.yunzhi.factories.moudles.me.BaseWorkModel;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.factories.moudles.me.WorkModel;
+import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
@@ -44,6 +46,7 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
     private List<String> mSpinnerStates = new LinkedList<>(Arrays.asList("进行中" , "已完成")); // spinner的填充内容
     private Toolbar mToolbar;
     private NiceSpinner mSpinner;
+    private TextView mNoWork;
     private RecyclerView mRecyclerView;
     private MyWorkAdapter mAdapter;
 
@@ -63,6 +66,7 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
         mUser = MeUtils.getUser();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
+        mNoWork = (TextView) findViewById(R.id.tv_no_work);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
 
         getData();
@@ -89,7 +93,17 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
                     @Override
                     public void onFailure(Object reasonObj) {
                         DialogManager.getInstnce().dismissProgressDialog();
-                        Toast.makeText(WorkActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+                        OkHttpException okHttpException = (OkHttpException) reasonObj;
+                        if (okHttpException.getEcode() == 1) {
+                            Toast.makeText(WorkActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -1){
+                            Toast.makeText(WorkActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -2) {
+                            Toast.makeText(WorkActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -3) {
+                            Toast.makeText(WorkActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
     }
@@ -138,6 +152,11 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
                 notifyList(0); // 默认选择
             }
         });
+        if (mWorkModels.size() == 0) {
+            mNoWork.setVisibility(View.VISIBLE);
+        } else {
+            mNoWork.setVisibility(View.GONE);
+        }
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
     }

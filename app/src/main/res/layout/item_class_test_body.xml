@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <TextView
+        android:id="@+id/item_examine_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_28"
+        android:background="@color/white"
+        android:gravity="left|center_vertical"
+        android:text="      第六章：计算机的运算方法"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_10" />
+    <TextView
+        android:id="@+id/item_examine_deadline"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_10"
+        android:gravity="left|center_vertical"
+        android:text="      提交截止日期：2017-12-12"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_28" />
+    <FrameLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_28">
+        <TextView
+            android:id="@+id/item_examine_score"
+            android:gravity="center"
+            android:text="总分：15"
+            android:textSize="@dimen/font_8"
+            android:textColor="@color/black"
+            android:layout_width="@dimen/len_44"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/len_20"
+            />
+        <TextView
+
+            android:id="@+id/item_examine_submit_btn"
+            android:text="测试"
+            android:gravity="center"
+            android:textSize="@dimen/font_12"
+            android:textColor="@color/white"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/examine_btn"
+            android:layout_width="@dimen/len_60"
+            android:layout_height="@dimen/len_20"
+            android:layout_marginRight="@dimen/len_10"/>
+    </FrameLayout>
+</LinearLayout>

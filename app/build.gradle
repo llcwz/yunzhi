@@ -34,19 +34,15 @@ dependencies {
     compile project(':factories')
     compile project(':lang')
 
-    /**最新版本轮播组件**/
+    //没有使用特殊Header，可以不加这行
 
-    /**图片加载框架**/
 
-    /**底部导航加强版**/
+    compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
 
-    //TabFlowLayout
-    //TabFlowLayout 流式布局
-    //collapsibletextview 显示详情的textView
-    // FlycoTabLayout 设置Tab
-    // searchbox 搜索栏
-    // nice-spinner 下拉栏
-
+    //1.0.4 当1.1.0出现问题可以回退到1.0.4-7
+    //没有使用特殊Header，可以不加这行
+    compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
+    //版本随意（非必须，引用可以解决无法预览问题）
     compile 'com.hyman:flowlayout-lib:1.1.2'
     compile 'com.timqi.collapsibletextview:library:1.1.2'
     compile 'com.nineoldandroids:library:2.4.0'
@@ -61,15 +57,8 @@ dependencies {
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'cn.jzvd:jiaozivideoplayer:6.2.8'
-
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-1'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-1'//没有使用特殊Header，可以不加这行
-    compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
-
-    //1.0.4 当1.1.0出现问题可以回退到1.0.4-7
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'//没有使用特殊Header，可以不加这行
-    compile 'com.android.support:appcompat-v7:25.3.1'//版本随意（必须）
-    compile 'com.android.support:design:25.3.1'//版本随意（非必须，引用可以解决无法预览问题）
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-1'
+    compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
 }

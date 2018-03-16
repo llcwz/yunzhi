@@ -53,7 +53,7 @@ public class ViewHelper  {
                     //当手指离开的时候
                     x2 = event.getX();
                     y2 = event.getY();
-                    if(x2-x1>420){
+                    if(x2-x1>270){
                         LogUtils.i(TGA+"滑动","向上右滑销毁");
                         if(mListener!=null){
                             mListener.toFinshView();

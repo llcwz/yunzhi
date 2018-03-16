@@ -11,6 +11,7 @@ import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
+import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
@@ -158,8 +159,17 @@ public class LikeUtils {
 
                     @Override
                     public void onFailure(Object reasonObj) {
-                        Toast.makeText(context, "网络连接失败", Toast.LENGTH_SHORT).show();
                         DialogManager.getInstnce().dismissProgressDialog();
+                        OkHttpException okHttpException = (OkHttpException) reasonObj;
+                        if (okHttpException.getEcode() == 1) {
+                            Toast.makeText(context, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -1){
+                            Toast.makeText(context, "网络连接错误", Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -2) {
+                            Toast.makeText(context, "解析错误" , Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -3) {
+                            Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }

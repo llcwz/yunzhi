@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.me.UserModel;
+import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
@@ -68,8 +69,17 @@ public class CommentUtils {
 
                     @Override
                     public void onFailure(Object reasonObj) {
-                        Toast.makeText(mContext, "网络连接失败", Toast.LENGTH_SHORT).show();
                         DialogManager.getInstnce().dismissProgressDialog();
+                        OkHttpException okHttpException = (OkHttpException) reasonObj;
+                        if (okHttpException.getEcode() == 1) {
+                            Toast.makeText(mContext, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -1){
+                            Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -2) {
+                            Toast.makeText(mContext, "解析错误" , Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -3) {
+                            Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

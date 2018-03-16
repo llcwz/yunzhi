@@ -41,6 +41,15 @@ public class RequestCenter {
 
     }
 
+    //根据参数发送所有post请求，直接拼接整体
+    public static void postRequestO(String url, RequestParams params, DisposeDataListener listener, Class<?> clazz) {
+        CommonOkHttpClient.get(CommonRequest.
+                createPostRequestO(url, params), new DisposeDataHandle(listener, clazz));
+
+    }
+
+
+
 
 
     public static void requestHomeData(String userName, String password, DisposeDataListener listener) {
@@ -67,7 +76,6 @@ public class RequestCenter {
         RequestParams params = new RequestParams();
         params.put("account", userName);
         params.put("password", passwd);
-
         LogUtils.d("Login", "login: " + userName + "|" + passwd);
         RequestCenter.postRequest(HttpConstants.LOGIN_URL, params, listener, BaseUserModel.class);
     }
@@ -235,27 +243,17 @@ public class RequestCenter {
     /**
      *
      * @param account 发帖人的id
-     * @param id 根据用户名和当前时间生成的帖子的id
      * @param tag 帖子的类型
-     * @param icon 头像
-     * @param author 发帖人的姓名
-     * @param time 发帖时间
      * @param title 帖子标题
      * @param content 帖子内容
      * @param listener
      */
-    public static void requestAddPost(String account, String id,int tag, String icon, String author, String time,String title, String content, DisposeDataListener listener) {
+    public static void requestAddPost(String account,int tag,String title, String content, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("account", account);
-        params.put("mId", id);
-        params.put("mTag", "" + tag);
-        params.put("mIcon", icon);
-        params.put("mAuthor", author);
-        params.put("mTime", time);
-        params.put("mTitle", title);
-        params.put("mContent", content);
-        params.put("mCommentModels","");
-        params.put("mLikeModels","");
+        params.put("userId", account);
+        params.put("tag", "" + tag);
+        params.put("title", title);
+        params.put("content", content);
         RequestCenter.postRequest(HttpConstants.ADD_POST_URL, params, listener, BaseCommunicationModel.class);
     }
 

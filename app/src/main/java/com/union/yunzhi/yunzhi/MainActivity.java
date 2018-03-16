@@ -1,11 +1,16 @@
 package com.union.yunzhi.yunzhi;
 
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.union.yunzhi.common.app.ActivityM;
@@ -43,6 +48,21 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
 
     @Override
     protected void initWidget() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this,"a",Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("缺失读取sd卡权限")
+                    .setMessage("没有权限，主体功能无法实现")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(MainActivity.this,"asdasd",Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+            builder.create().show();
+        }
 
         //changeStatusBarColor(R.color.blue_400);
 
@@ -105,7 +125,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
        if(tab.getFragment() instanceof HomeFragment){
 
            HomeFragment homeFragment = (HomeFragment)tab.getFragment();
-           homeFragment.initRefreshData();
+           homeFragment.RefreshData();
 
        }else if(tab.getFragment() instanceof ClassFragment){
 

@@ -170,7 +170,6 @@ public class NavHelper<T> {
     }
 
     private void notifyTabReselect(Tab<T> tab) {
-        // TODO 二次点击Tab所做的操作
 
         if(reselectListener !=null){
             reselectListener.notifyTabReselect(tab);

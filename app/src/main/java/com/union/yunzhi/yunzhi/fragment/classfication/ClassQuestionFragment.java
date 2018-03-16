@@ -11,10 +11,9 @@ import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-
 import com.union.yunzhi.factories.moudles.classfication.beans.question.BaseQuestionBean;
-
 import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
+import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.classfication.QuestionDetailsActivity;
@@ -85,7 +84,17 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
                     @Override
                     public void onFailure(Object reasonObj) {
                         DialogManager.getInstnce().dismissProgressDialog();
-                        Toast.makeText(getActivity(), "网络连接失败", Toast.LENGTH_SHORT).show();
+                        OkHttpException okHttpException = (OkHttpException) reasonObj;
+                        if (okHttpException.getEcode() == 1) {
+                            Toast.makeText(getActivity(), "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -1){
+                            Toast.makeText(getActivity(), "网络连接错误", Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -2) {
+                            Toast.makeText(getActivity(), "解析错误" , Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -3) {
+                            Toast.makeText(getActivity(), "未知错误", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
     }

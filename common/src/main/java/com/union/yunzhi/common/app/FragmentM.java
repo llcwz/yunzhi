@@ -94,6 +94,10 @@ public abstract class FragmentM extends Fragment {
 
     }
 
+    public void RefreshData(){
+
+    }
+
 
     /**
      * 返回按键触发时调用
