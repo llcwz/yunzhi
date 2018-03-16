@@ -48,7 +48,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
     private FrameLayout hiddenView;
     private LinearLayout mLinearLayout;
     private ConstraintLayout showView;
-    private RoundedImageView back,share,play;
+    private RoundedImageView back,share,play,xback,xshare;
     private TextView mLikeCount,courseName,courseTeacher;
     private ImageButton mLike;
     private ImageView videoCover;
@@ -109,7 +109,9 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
         courseTeacher= (TextView) findViewById(R.id.tv_small_title);
         play= (RoundedImageView) findViewById(R.id.rImagV_play);
         back= (RoundedImageView) findViewById(R.id.rImagV_back);
-        share= (RoundedImageView) findViewById(R.id.rImgV_share);
+        share= (RoundedImageView) findViewById(R.id.rImagV_share);
+        xback= (RoundedImageView) findViewById(R.id.rImgV_back_hidden);
+        xshare= (RoundedImageView) findViewById(R.id.rImgV_share_hidden);
         back.setOnClickListener(this);
         share.setOnClickListener(this);
         play.setOnClickListener(this);
@@ -311,9 +313,11 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
                 startActivity(intent);
                 break;
             case R.id.rImagV_back:
+            case R.id.rImgV_back_hidden:
                 finish();
                 break;
             case R.id.rImagV_share:
+            case R.id.rImgV_share_hidden:
                 break;
             case R.id.rImagV_play:
                 com.union.yunzhi.factories.utils.LogUtils.d("URL","aASAd  "+videourl+"---"+videocoverurl);

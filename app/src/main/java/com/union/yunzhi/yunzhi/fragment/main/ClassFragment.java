@@ -286,7 +286,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     @Override
     public void initRefreshData() {
         super.initRefreshData();
-        requestCourse(courseId);
     }
 
     /**
@@ -480,8 +479,10 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
             @Override
             public void onSuccess(Object responseObj) {
 
+                BaseCourseShowBean temp= (BaseCourseShowBean) responseObj;
+                List<CourseShowBean> list=temp.data;
+                adapter.add(list);
             }
-
             @Override
             public void onFailure(Object reasonObj) {
 

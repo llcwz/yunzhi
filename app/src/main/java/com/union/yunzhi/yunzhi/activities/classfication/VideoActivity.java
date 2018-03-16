@@ -54,7 +54,7 @@ public class VideoActivity extends AppCompatActivity{
         comment=getIntent().getParcelableExtra(Constant.COMMENT_TAG);
 
         mplayer=(JZVideoPlayerStandard)findViewById(R.id.video_player);
-        
+
     }
 
     protected void initData() {
