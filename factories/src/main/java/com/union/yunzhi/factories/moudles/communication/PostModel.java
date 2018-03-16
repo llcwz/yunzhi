@@ -25,6 +25,21 @@ public class PostModel implements Parcelable {
     public PostModel() {
     }
 
+    @Override
+    public String toString() {
+        return "PostModel{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", time='" + time + '\'' +
+                ", msgNum='" + msgNum + '\'' +
+                ", favour='" + favour + '\'' +
+                '}';
+    }
+
     public String getId() {
         return id;
     }

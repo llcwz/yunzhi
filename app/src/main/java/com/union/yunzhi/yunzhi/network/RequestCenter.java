@@ -188,7 +188,7 @@ public class RequestCenter {
      */
     public static void requestPost(int tag, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("mTag","" + tag);
+        params.put("tag","" + tag);
         RequestCenter.postRequest(HttpConstants.POST_URL, params, listener, BaseCommunicationModel.class);
     }
 
