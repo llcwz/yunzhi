@@ -63,6 +63,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
         mContainer= (FrameLayout) findViewById(R.id.lay_contianer);
 
 
+        bottomNavigationViewEx.setBackgroundResource(R.drawable.timg);
         bottomNavigationViewEx.enableAnimation(false);
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);

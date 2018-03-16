@@ -69,10 +69,19 @@
     </string-array>
 
     <string-array name="introduce">
-        <item>万利教授亲自莅临</item>
-        <item>萌哥潇洒讲课</item>
-        <item>陈老师分享经验</item>
-        <item>萌哥讲课</item>
+        <item>网络协议是学习计算机网络的核心和关键。
+            网络协议实践是...
+        </item>
+        <item>
+            数据结构是计算机存储、组织数据的方式。数据结构是...
+        </item>
+        <item>
+            本书围绕算法设计技术组织素材，对每种算法技术选择了多个典型
+            范例进行分析。算法的正确性、复杂性进行恰当的分析...
+        </item>
+        <item>
+           计算机网络，是指将地理位置不同的具有独立功能的多台计算机及其外部设备...
+        </item>
     </string-array>
 
 </resources>

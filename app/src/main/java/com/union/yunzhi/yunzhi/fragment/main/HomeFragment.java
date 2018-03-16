@@ -75,6 +75,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     @Override
     protected int getContentLayoutId() {
+        reverseStatusColor();
         return R.layout.main_fragment_home;
     }
 
