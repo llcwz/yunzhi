@@ -13,6 +13,7 @@ import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 import com.union.yunzhi.factories.moudles.classfication.beans.file.CourseFileBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.file.CourseSonFileBean;
+import com.union.yunzhi.factories.moudles.classfication.beans.video.VideoBean;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.utils.VideoUtils;
 
@@ -73,12 +74,13 @@ public class ClassFileAdapter extends MyAdapter<CourseFileBean>{
                 @Override
                 public void onItemClick(MyViewHolder holder, CourseSonFileBean data) {
                     //TODO 课程文件子项目点击事件
-                    VideoUtils.newInstance(context,
-                            "最牛课程",
-                            "http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4",
-                            "http://mmbiz.qpic.cn/mmbiz/PwIlO51l7wuFyoFwAXfqPNETWCibjNACIt6ydN7vw8LeIwT7IjyG3eeribmK4rhibecvNKiaT2qeJRIWXLuKYPiaqtQ/0"
-                            ).startVideo();
-                    //http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4
+                    VideoBean bean=new VideoBean();
+                    bean.coverurl="http://mmbiz.qpic.cn/mmbiz/PwIlO51l7wuFyoFwAXfqPNETWCibjNACIt6ydN7vw8LeIwT7IjyG3eeribmK4rhibecvNKiaT2qeJRIWXLuKYPiaqtQ/0";
+                    bean.videourl="http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4";
+                    bean.videotitle="最牛课程";
+                    bean.videoid="1122";
+
+                    VideoUtils.newInstance(context,bean,null).startVideo();
                 }
 
                 @Override
