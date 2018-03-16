@@ -100,16 +100,13 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     @Override
     protected void initData() {
 
+        Menu menu = bottomNavigationViewEx.getMenu();
+        menu.performIdentifierAction(R.id.navigation_home,0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Menu menu = bottomNavigationViewEx.getMenu();
-
-        menu.performIdentifierAction(R.id.navigation_home,0);
-
-
     }
 
     @Override

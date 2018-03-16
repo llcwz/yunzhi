@@ -10,7 +10,6 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.factories.moudles.classfication.beans.video.VideoBean;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
-import com.union.yunzhi.factories.utils.LogUtils;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.contant.Constant;
 
@@ -55,10 +54,7 @@ public class VideoActivity extends AppCompatActivity{
         comment=getIntent().getParcelableExtra(Constant.COMMENT_TAG);
 
         mplayer=(JZVideoPlayerStandard)findViewById(R.id.video_player);
-
-        LogUtils.d("AK47","---------"+video.coverurl);
-
-        LogUtils.d("AK47","---------"+video.videourl);
+        
     }
 
     protected void initData() {
