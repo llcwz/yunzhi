@@ -1,7 +1,5 @@
 package com.union.yunzhi.factories.moudles.classfication.beans;
 
-import android.graphics.Bitmap;
-
 import com.union.yunzhi.factories.moudles.BaseModel;
 
 import java.util.List;

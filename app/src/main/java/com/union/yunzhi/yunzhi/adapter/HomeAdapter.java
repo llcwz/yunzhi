@@ -9,9 +9,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.union.yunzhi.common.helper.GlideImageLoader;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.hometest.BaseHomeModle;
-import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
+import com.union.yunzhi.factories.moudles.home.bodyModle;
 import com.union.yunzhi.yunzhi.R;
 import com.youth.banner.Banner;
 
@@ -21,7 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by meng on 2018/2/11.
  */
 
-public class HomeAdapter extends MyAdapter<HomeBodyModle> {
+public class HomeAdapter extends MyAdapter<bodyModle> {
 
     private Context context;
 
@@ -39,7 +39,9 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
     }
 
     @Override
-    protected int getItemViewType(int position, HomeBodyModle data) {
+    protected int getItemViewType(int position, bodyModle data) {
+
+        LogUtils.i("getItemViewType--",data.viewType+"");
 
         if(data.viewType == 0)
         {
@@ -51,6 +53,11 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
         else if(data.viewType == 1){
 
             return R.layout.item_home_fragment_page_one;
+
+        }else if(data.viewType == 2){
+
+            return R.layout.item_home_fragment_page_three;
+
         }
 
 
@@ -58,7 +65,7 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
     }
 
     @Override
-    protected MyAdapter.MyViewHolder<HomeBodyModle> onCreateViewHolder(View root, int viewType) {
+    protected MyAdapter.MyViewHolder<bodyModle> onCreateViewHolder(View root, int viewType) {
         if(viewType == R.layout.item_home_fragment_page_one)
         {
 
@@ -66,9 +73,12 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
         }
 
 
-        else if(viewType ==0){
+        else if(viewType == R.layout.item_home_fragment_page_two){
 
-            return null;
+            return new bannerViewHolder(root);
+        }else if(viewType == R.layout.item_home_fragment_page_three){
+
+            return new videoOneViewHodler(root);
         }
         else{
 
@@ -83,7 +93,7 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
         return false;
     }
 
-    public class bannerViewHolder extends MyViewHolder<BaseHomeModle> {
+    public class bannerViewHolder extends MyViewHolder<bodyModle> {
 
         private Banner banner;
 
@@ -93,10 +103,10 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
         }
 
         @Override
-        protected void onBind(BaseHomeModle data, int postion) {
+        protected void onBind(bodyModle data, int postion) {
             banner.setImageLoader(new GlideImageLoader());
 
-         //  banner.setImages(data.mBannerModle.iamgUrl);
+           banner.setImages(data.ads);
 
             banner.start();
         }
@@ -105,7 +115,7 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
     }
 
 
-    public class videoViewHodler extends MyViewHolder<HomeBodyModle> {
+    public class videoViewHodler extends MyViewHolder<bodyModle> {
 
         /**
          * UI  每个布局顶部的分类
@@ -170,7 +180,7 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
         }
 
         @Override
-        protected void onBind(HomeBodyModle data, int postion) {
+        protected void onBind(bodyModle data, int postion) {
 
             /**
              * 设置分类的头部
@@ -182,7 +192,9 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
 //                    .into(mIcon);
 
             //data.mVideoClassModle.videoClass
-            mTitles.setText("test1");
+            String[] titles = context.getResources().getStringArray(R.array.titles);
+            int id = (int) (Math.random()*(titles.length-1));//随机产生一个index索引
+            mTitles.setText(titles[id]);
 
 
             /**
@@ -204,13 +216,13 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
                 //设置背景图片
                 Glide.with(context)
                         //.load(data.mVideoClassModle.videoModle.get(i).PhotoUrl)
-                        .load(data.PhotoUrl)
+                        .load(data.coursecover.get(i))
                         .into(mRoundedImageView);
 
-                mTitle.setText(data.Title);
+                mTitle.setText(data.title.get(i));
 
                 Glide.with(context)
-                        .load(data.PortraitUrl)
+                        .load(data.image.get(i))
                        // .load(data.mVideoClassModle.videoModle.get(i).PortraitUrl)
                         .into(mPortrait);
 
@@ -221,5 +233,44 @@ public class HomeAdapter extends MyAdapter<HomeBodyModle> {
 
         }
     }
+
+    public class videoOneViewHodler extends MyViewHolder<bodyModle>{
+
+        private TextView mShow;
+        private RoundedImageView mRoundedImageView;
+        private TextView mTitle;
+        private CircleImageView mPortrait;
+
+        public videoOneViewHodler(View itemView) {
+            super(itemView);
+            mShow = (TextView) itemView.findViewById(R.id.tv_introduce);
+            mRoundedImageView = (RoundedImageView)itemView.findViewById(R.id.round_img);
+            mTitle = (TextView)itemView.findViewById(R.id.tv_title);
+            mPortrait = (CircleImageView) itemView.findViewById(R.id.ci_portrait);
+        }
+
+        @Override
+        protected void onBind(bodyModle data, int position) {
+
+            String[] titles = context.getResources().getStringArray(R.array.introduce);
+            int id = (int) (Math.random()*(titles.length-1));//随机产生一个index索引
+            mShow.setText(titles[id]);
+
+
+            //设置背景图片
+            Glide.with(context)
+                    //.load(data.mVideoClassModle.videoModle.get(i).PhotoUrl)
+                    .load(data.coursecover.get(0))
+                    .into(mRoundedImageView);
+
+            mTitle.setText(data.title.get(0));
+
+            Glide.with(context)
+                    .load(data.image.get(0))
+                    // .load(data.mVideoClassModle.videoModle.get(i).PortraitUrl)
+                    .into(mPortrait);
+        }
+    }
+
 
 }

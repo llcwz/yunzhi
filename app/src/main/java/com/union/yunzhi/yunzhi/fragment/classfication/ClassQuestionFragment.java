@@ -11,12 +11,8 @@ import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-
-import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseQuestionBean;
-
+import com.union.yunzhi.factories.moudles.classfication.beans.question.BaseQuestionBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
-import com.union.yunzhi.factories.moudles.communication.CommentModel;
-import com.union.yunzhi.factories.moudles.communication.LikeModel;
 import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
@@ -27,7 +23,6 @@ import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by cjw on 2018/3/8 0008.
@@ -50,10 +45,13 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
         return classQuestionFragment;
     }
 
+<<<<<<< HEAD
     public static ClassQuestionFragment newInstance() {
 
         return new ClassQuestionFragment();
     }
+=======
+>>>>>>> 132fbb6d71f91a5fd6216d6a9f9bdfeabf23928d
     @Override
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);

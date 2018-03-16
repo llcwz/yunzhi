@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/len_48"
-    android:background="@color/amber_100">
+    android:background="@color/blue_400">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="@dimen/len_40"
         android:layout_height="@dimen/len_40"
-        android:id="@+id/rImgV_back"
+        android:id="@+id/rImgV_back_hidden"
         android:src="@drawable/ic_arrow_back_40dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -21,7 +21,7 @@
     <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="@dimen/len_40"
         android:layout_height="@dimen/len_40"
-        android:id="@+id/rImgV_share"
+        android:id="@+id/rImgV_share_hidden"
         android:src="@drawable/ic_share_black_40dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"

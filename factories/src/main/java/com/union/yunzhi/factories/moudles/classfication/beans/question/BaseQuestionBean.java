@@ -1,7 +1,6 @@
-package com.union.yunzhi.factories.moudles.classfication.beans.classfication;
+package com.union.yunzhi.factories.moudles.classfication.beans.question;
 
 import com.union.yunzhi.factories.moudles.BaseModel;
-import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
 
 import java.util.List;
 

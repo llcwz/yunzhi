@@ -1,9 +1,9 @@
 package com.union.yunzhi.yunzhi.utils;
 
 import android.content.Context;
-import android.content.Intent;
 
-import com.union.yunzhi.factories.moudles.classfication.ClassConst;
+import com.union.yunzhi.factories.moudles.classfication.beans.video.VideoBean;
+import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.yunzhi.activities.classfication.VideoActivity;
 
 /**
@@ -14,37 +14,28 @@ public class VideoUtils {
 
     private  Context context;
 
-    private  String videoUrl, videoName, coverUrl;
+    private  VideoBean video;
 
-    private  Intent intent;
+    private BaseCommentModel comment;
 
-    public static VideoUtils newInstance(Context context, String videoName, String videoUrl,String coverUrl) {
 
-        return new VideoUtils(context,videoName,videoUrl,coverUrl);
+    public static VideoUtils newInstance(Context context,VideoBean video,BaseCommentModel comment) {
+
+        return new VideoUtils(context,video,comment);
     }
 
-    /**
-     *
-     * @param context 本页面的上下文
-     * @param videoName 视频标题
-     * @param videoUrl  视频地址
-     * @param coverUrl  封面地址
-     */
-    public  VideoUtils(Context context, String videoName, String videoUrl,String coverUrl) {
+
+    public  VideoUtils(Context context,VideoBean video,BaseCommentModel comment ) {
 
         this.context = context;
-        this.videoName = videoName;
-        this.videoUrl = videoUrl;
-        this.coverUrl=coverUrl;
+        this.video=video;
+        this.comment=comment;
+
     }
 
     public  void startVideo() {
 
-        intent=new Intent(context, VideoActivity.class);
-        intent.putExtra(ClassConst.VIDEO_NAME,videoName);
-        intent.putExtra(ClassConst.VIDEO_URL,videoUrl);
-        intent.putExtra(ClassConst.VIDEO_COVER_URL,coverUrl);
-        context.startActivity(intent);
+        VideoActivity.newInstance(context,video,comment);
     }
 
 

@@ -1,13 +1,17 @@
 package com.union.yunzhi.yunzhi.activities.classfication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.union.yunzhi.factories.moudles.classfication.ClassConst;
+import com.union.yunzhi.factories.moudles.classfication.beans.video.VideoBean;
+import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.contant.Constant;
 
 import cn.jzvd.JZMediaSystem;
 import cn.jzvd.JZVideoPlayer;
@@ -20,7 +24,16 @@ import cn.jzvd.JZVideoPlayerStandard;
 public class VideoActivity extends AppCompatActivity{
 
     protected JZVideoPlayerStandard mplayer;
-    protected String videoUrl,videoName,videCoverUrl;
+    protected VideoBean video;//视频信息
+    protected BaseCommentModel comment;//评论信息
+
+    public static void newInstance(Context context, VideoBean video, BaseCommentModel comment) {
+
+        Intent intent=new Intent(context,VideoActivity.class);
+        intent.putExtra(Constant.VIDEO_TAG,video);
+        intent.putExtra(Constant.COMMENT_TAG,comment);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,34 +41,30 @@ public class VideoActivity extends AppCompatActivity{
 
         setContentView(R.layout.class_video);
 
-        initArgs(savedInstanceState);
-
         initWidget();
 
         initData();
 
     }
 
-    protected void initArgs(Bundle bundle) {
-        bundle=getIntent().getExtras();
-
-        videoUrl = bundle.getString(ClassConst.VIDEO_URL);
-        videoName=bundle.getString(ClassConst.VIDEO_NAME);
-        videCoverUrl=bundle.getString(ClassConst.VIDEO_COVER_URL);
-    }
-
     protected void initWidget() {
 
-        mplayer=(JZVideoPlayerStandard)findViewById(R.id.video_player);
+        video=getIntent().getParcelableExtra(Constant.VIDEO_TAG);
 
+        comment=getIntent().getParcelableExtra(Constant.COMMENT_TAG);
+
+        mplayer=(JZVideoPlayerStandard)findViewById(R.id.video_player);
 
     }
 
     protected void initData() {
 
-        Glide.with(getBaseContext()).load(videCoverUrl).into(mplayer.thumbImageView);
+        /**
+         * 加载视频信息
+         */
+        Glide.with(getBaseContext()).load(video.coverurl).into(mplayer.thumbImageView);
 
-        mplayer.setUp(videoUrl, JZVideoPlayer.SCREEN_WINDOW_NORMAL,videoName);
+        mplayer.setUp(video.videourl, JZVideoPlayer.SCREEN_WINDOW_NORMAL,video.videotitle);
 
         mplayer.thumbImageView.setImageResource(R.drawable.jz_backward_icon);
 
@@ -67,17 +76,26 @@ public class VideoActivity extends AppCompatActivity{
                 finish();
             }
         });
+
+        /**
+         * 通过对象comment
+         * 适配评论信息
+         */
+
     }
 
     @Override
     protected void onPause() {
+
         super.onPause();
+
         mplayer.releaseAllVideos();
 
     }
 
     @Override
     public void onBackPressed() {
+
         if (mplayer.backPress()) {
             return;
         }
