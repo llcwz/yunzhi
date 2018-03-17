@@ -2,14 +2,120 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="@dimen/len_8"
+    android:layout_marginLeft="@dimen/len_4"
+    android:layout_marginRight="@dimen/len_4"
+    android:layout_marginTop="@dimen/len_4"
+    android:layout_marginBottom="@dimen/len_4"
+    android:background="@drawable/item_style">
+
+    <ImageView
+        android:id="@+id/iv_show_course"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:layout_weight="1"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/font_10"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/tv_largeTitle"
+                android:textSize="@dimen/font_20"
+                android:gravity="left|center_vertical"
+                android:maxLines="1"
+                android:text="云智课程"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/tv_smallTitle"
+                android:textSize="@dimen/font_14"
+                android:maxLines="2"
+                android:gravity="left|center_vertical"
+                android:text="精品课程系列"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="@dimen/len_4">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_thumbUp"
+                    android:layout_marginLeft="@dimen/len_8"
+                    android:text="@string/good_boy"
+                    android:textColor="@color/green_700"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_thumb_up_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/len_4"
+                    android:id="@+id/tv_upCount"
+                    android:layout_gravity="center_vertical"
+                    android:text="12343"/>
 
 
-    <include layout="@layout/item_class_fragment_item1"/>
+            </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/black_alpha_32"/>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/len_10"
+                    android:layout_marginRight="@dimen/len_10"
+                    android:gravity="center"
+                    android:text="评论" />
+
+                <TextView
+                    android:id="@+id/tv_pinLunCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="471"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/tv_tag" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

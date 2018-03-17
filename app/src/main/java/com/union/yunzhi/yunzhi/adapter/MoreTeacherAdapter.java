@@ -93,7 +93,7 @@ public class MoreTeacherAdapter extends MyAdapter<TeacherBean> {
         protected void onBind(TeacherBean data, int position) {
 
             //TODO 相关老师 模块使用框架加载头像
-            Glide.with(context).load(data.photourl).into(portrait);
+            Glide.with(context).load(data.photourl).placeholder(R.mipmap.ic_launcher).into(portrait);
 
             name.setText(data.teachername);
             state.setText(data.teacherstate);

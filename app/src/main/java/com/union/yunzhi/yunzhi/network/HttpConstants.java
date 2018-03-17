@@ -68,4 +68,9 @@ public class HttpConstants {
 
     //请求课程详情信息
     public static final String GET_ALL_DETAILS_MSG="http://60.205.207.177/dennis_allan/index.php/Home/Index/detail";
+
+    //轮播图请求
+    public static final String GET_CAROUSEL="http://60.205.207.177/dennis_allan/index.php/Home/Homepg/photoUrl";
+
+
 }
