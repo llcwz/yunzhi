@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/len_48"
-    android:background="@color/blue_300">
+    android:background="@color/white_alpha_128">
 
     <!--头部控制条布局-->
     <LinearLayout

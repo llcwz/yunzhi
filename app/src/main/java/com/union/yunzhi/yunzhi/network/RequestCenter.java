@@ -3,6 +3,7 @@ package com.union.yunzhi.yunzhi.network;
 import android.util.Log;
 
 import com.union.yunzhi.common.util.LogUtils;
+import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseCarouselBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseCourseShowBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.details.BaseDetailsBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerBean;
@@ -289,8 +290,9 @@ public class RequestCenter {
     /**
      * 请求分类轮播图
      */
-    public static void requestRecycle(){
+    public static void requestCarousel(String requestUrl,DisposeDataListener listener){
 
+        RequestCenter.postRequest(HttpConstants.GET_CAROUSEL,null,listener, BaseCarouselBean.class);
 
     }
 

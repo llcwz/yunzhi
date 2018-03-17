@@ -30,9 +30,9 @@ import com.union.yunzhi.common.helper.ScreenUtils;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
+import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseCarouselBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseCourseShowBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.CourseShowBean;
-import com.union.yunzhi.factories.moudles.classfication.beans.details.CourseBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.drawer.DrawerBean;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
@@ -64,8 +64,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     private View hidden_coprhsv;
     private DrawerLayout mDrawerLayout;
     private Banner mBanner;
-    private List<String> title;
-    private List<String> test;
     private RecyclerView mRecyclerView,mRecycleView2;
     private SmartRefreshLayout mSmartRefreshLayout;
     private ConstraintLayout mConstraintLayout;
@@ -82,7 +80,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
 
 
     //轮播图数据集合
-    private List<Integer> image;
+    private List<String> images;
 
     //侧滑栏数据集合
     private List<DrawerBean> drawerBeanList=new ArrayList<>();
@@ -90,7 +88,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     //课程列表数据集合
     private List<CourseShowBean> courseList;
 
-    private List<CourseBean> test1;
 
 
     @Override
@@ -103,24 +100,8 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
         courseList=new ArrayList<>();
-
-        test1=new ArrayList<>();
-        image=new ArrayList<>();
-        title=new ArrayList<>();
-        test=new ArrayList<>();
+        images=new ArrayList<>();
         drawerBeanList =new ArrayList<>();
-
-        //轮播测试数据
-        image.add(R.mipmap.aa);
-        image.add(R.mipmap.bb);
-        image.add(R.mipmap.cc);
-        title.add("快乐寒假");title.add("快乐暑假");title.add("快乐春节");
-
-        //分类测试抽屉数据
-        test.add("数据库");test.add("计算机组成原理");test.add("C语言程序设计");test.add("算法分析与设计");
-        test.add("计算机网络");test.add("操作系统");test.add("嵌入式系统设计");test.add("人工智能与算法");
-        test.add("软件工程");test.add("数值计算");test.add("Linux系统");test.add("Java程序设计");
-
 
     }
 
@@ -260,22 +241,37 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     @Override
     protected void initData() {
 
-
+        
         /**
          * 设置轮播风格
          * 设置图片加载器 设置图片集合 设置标题集合 设置动画效果
          * 设置自动播放 设置轮播时间 设置指示器位置
          */
-        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
-                .setImageLoader(new GlideImageLoader())
-                .setImages(image)
-                .setBannerTitles(title)
-                .setBannerAnimation(Transformer.DepthPage)
-                .isAutoPlay(true)
-                .setDelayTime(3000)
-                .setIndicatorGravity(BannerConfig.CENTER)
-                .start();
-        mBanner.start();//开始渲染
+
+        RequestCenter.requestCarousel(HttpConstants.GET_CAROUSEL, new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                BaseCarouselBean temp= (BaseCarouselBean) responseObj;
+                images=temp.data;
+                if(temp.ecode==0){
+                    images=temp.data;
+                    mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR)
+                            .setImageLoader(new GlideImageLoader())
+                            .setImages(images)
+                            .setBannerAnimation(Transformer.DepthPage)
+                            .isAutoPlay(true)
+                            .setDelayTime(3000)
+                            .setIndicatorGravity(BannerConfig.CENTER)
+                            .start();
+                    mBanner.start();//开始渲染
+                }
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Toast.makeText(getContext(),"网络请求失败",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //首次进入分类时请求数据
         requestCourse(courseId);

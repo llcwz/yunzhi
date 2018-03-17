@@ -99,8 +99,9 @@ public class HiddenAnimUtils {
      * 开关
      */
     public int toggle(){
-
-        startAnimation();
+        if(down!=null){
+            startAnimation();
+        }
         if (View.VISIBLE == hideView.getVisibility()) {
             closeAnimate(hideView);//布局隐藏
             return 0;

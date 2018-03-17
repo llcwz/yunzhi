@@ -1,5 +1,6 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:id="@+id/lv_drawer">
@@ -21,6 +22,7 @@
                 android:id="@+id/toor"/>
 
             <!--头部的控制条-->
+
             <include layout="@layout/class_head"/>
 w
             <FrameLayout
@@ -33,13 +35,20 @@ w
                     android:orientation="vertical">
 
                     <!--轮播推荐-->
-                    <include layout="@layout/class_carousel"
-                        android:id="@+id/layout_carousel"/>
-
-                    <View
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/layout_carousel"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/amber_400"/>
+                        android:layout_height="@dimen/len_224"
+                        android:layout_marginLeft="@dimen/len_4"
+                        android:layout_marginRight="@dimen/len_4"
+                        android:layout_marginBottom="@dimen/len_4"
+                        android:layout_marginTop="@dimen/len_4">
+                        <com.youth.banner.Banner
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/banner_class"/>
+                    </LinearLayout>
+
                     <!--显示课程-->
 
                     <include layout="@layout/class_course"/>
