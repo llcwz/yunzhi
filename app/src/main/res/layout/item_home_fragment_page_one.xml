@@ -35,6 +35,7 @@
                     android:src="@drawable/ic_fire" />
 
                 <TextView
+                    android:layout_marginLeft="20dp"
                     android:id="@+id/tv_titles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -42,14 +43,6 @@
                     android:text="热门视频" />
             </LinearLayout>
 
-
-            <ImageView
-
-                android:id="@+id/iv_arrow"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:src="@drawable/ic_arrow_right" />
         </FrameLayout>
 
         <LinearLayout
