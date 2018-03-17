@@ -1,6 +1,5 @@
 package com.union.yunzhi.yunzhi.activities.communication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -9,14 +8,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
-import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
-import com.union.yunzhi.yunzhi.fragment.main.CommunicationFragment;
-import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
 
 public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClickListener {
@@ -63,7 +59,7 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
                 Toast.makeText(this, "快写些话吧", Toast.LENGTH_SHORT).show();
             } else {
                 OpinionUtils opinionUtils = OpinionUtils.newInstance(mUser, this);
-                opinionUtils.postComment(mTag,title,content, new OpinionUtils.NotifyPostListener() {
+                opinionUtils.addPost(mTag,title,content, new OpinionUtils.NotifyPostListener() {
                     @Override
                     public void getPost(PostModel postModel) {
                         mIntent.putExtra(TAG, mTag);

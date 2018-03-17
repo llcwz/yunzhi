@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.union.yunzhi.common.R;
 import com.union.yunzhi.common.constant.Constant;
+import com.union.yunzhi.common.util.StatusBarUtil;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -161,6 +162,13 @@ public abstract class PermissionsFragment extends FragmentM {
      */
     public void doOpenCamera() {
 
+    }
+
+    /**
+     * 调整状态栏为亮模式，这样状态栏的文字颜色就为深模式了。
+     */
+    public void reverseStatusColor() {
+        StatusBarUtil.statusBarLightMode(getActivity());
     }
 
 }

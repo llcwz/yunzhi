@@ -15,8 +15,8 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/ri_navigation_icon"
-            android:layout_width="@dimen/len_64"
-            android:layout_height="@dimen/len_64"
+            android:layout_width="@dimen/len_48"
+            android:layout_height="@dimen/len_48"
             tools:background="@color/amber_300"/>
         <TextView
             android:id="@+id/tv_navigation_name"

@@ -84,6 +84,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
         mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
         mQRcode.setOnClickListener(this);
+        mQRcode.setColorFilter(R.color.home_qrcode);
         Test = (CircleImageView) view.findViewById(R.id.cv_load);
         Test.setOnClickListener(this);
         mRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.refresh);
@@ -256,8 +257,11 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     @Override
     public void initRefreshData() {
+        changeStatusBarColor(R.color.home_page_color);
+
         super.initRefreshData();
     }
+
 
 
     @Override

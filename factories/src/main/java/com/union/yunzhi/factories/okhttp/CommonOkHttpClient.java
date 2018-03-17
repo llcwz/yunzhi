@@ -81,11 +81,11 @@ public class CommonOkHttpClient {
         Call call = mOkHttpClient.newCall(request);
 
 
-        Log.i("TTGGAA",request.toString());
+        //Log.i("TTGGAA",request.toString());
 
         call.enqueue(new CommonJsonCallback(handle));
 
-        Log.d("Login", "get: " + request.toString());
+     //   Log.d("Login", "get: " + request.toString());
 
         return call;
     }

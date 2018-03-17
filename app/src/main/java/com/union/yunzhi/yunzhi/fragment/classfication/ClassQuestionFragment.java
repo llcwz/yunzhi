@@ -45,6 +45,11 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
         return classQuestionFragment;
     }
 
+    public static ClassQuestionFragment newInstance() {
+
+        return new ClassQuestionFragment();
+    }
+
     @Override
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);

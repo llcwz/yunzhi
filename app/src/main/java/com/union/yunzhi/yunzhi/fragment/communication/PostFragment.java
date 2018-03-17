@@ -19,6 +19,7 @@ import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.PostDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.PostAdapter;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
+import com.union.yunzhi.yunzhi.meutils.MeUtils;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.ArrayList;
@@ -60,7 +61,6 @@ public class PostFragment extends FragmentM {
 
     @Override
     protected void initWidget(View view) {
-        initAdapter();
         mNoPost = (TextView) view.findViewById(R.id.tv_no_post);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
 
@@ -75,10 +75,15 @@ public class PostFragment extends FragmentM {
                     @Override
                     public void onSuccess(Object responseObj) {
                         DialogManager.getInstnce().dismissProgressDialog();
-                        LogUtils.d("getPostData", responseObj.toString());
+
                         BaseCommunicationModel baseCommunicationModel = (BaseCommunicationModel) responseObj;
                         if (baseCommunicationModel.ecode == CommunicationConstant.ECODE) {
                             mPostModels = baseCommunicationModel.data;
+                            MeUtils.showNoMessage(mPostModels.size(),mNoPost, "暂无帖子，快来占领地盘吧");
+                            initAdapter(mPostModels);
+                            for (PostModel postModel : mPostModels) {
+                                LogUtils.d("postMessage", postModel.toString());
+                            }
                         } else {
                             Toast.makeText(getActivity(), "" + baseCommunicationModel.emsg, Toast.LENGTH_SHORT).show();
                         }
@@ -102,8 +107,8 @@ public class PostFragment extends FragmentM {
     }
 
     // 初始化适配器和数据
-    private void initAdapter() {
-        mAdapter = new PostAdapter(getContext(), mPostModels, new MyAdapter.AdapterListener<PostModel>() {
+    private void initAdapter(List<PostModel> postModels) {
+        mAdapter = new PostAdapter(getContext(), postModels, new MyAdapter.AdapterListener<PostModel>() {
 
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, PostModel data) {
@@ -126,19 +131,15 @@ public class PostFragment extends FragmentM {
 
             }
         });
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 
     @Override
     protected void initData() {
-        initAdapter();
-        if (mPostModels.size() == 0) {
-            mNoPost.setVisibility(View.VISIBLE); // 没有帖子显示
-        } else {
-            mNoPost.setVisibility(View.GONE); // 有帖子隐藏
-        }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
+
     }
 
 

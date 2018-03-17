@@ -2,6 +2,8 @@ package com.union.yunzhi.yunzhi;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -63,6 +65,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
         mContainer= (FrameLayout) findViewById(R.id.lay_contianer);
 
 
+       // bottomNavigationViewEx.setBackgroundResource(R.drawable.timg);
         bottomNavigationViewEx.enableAnimation(false);
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);
@@ -90,14 +93,15 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
 
     @Override
     protected void initData() {
-
         Menu menu = bottomNavigationViewEx.getMenu();
+
         menu.performIdentifierAction(R.id.navigation_home,0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     @Override
@@ -107,7 +111,94 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
 
     @Override
     public void onTabChanged(NavHelper.Tab<Integer> newTab, NavHelper.Tab<Integer> oldTab) {
+
+
+        if(newTab.getFragment() instanceof HomeFragment){
+            changeNavigationColor(0);
+        }else if(newTab.getFragment() instanceof ClassFragment){
+            changeNavigationColor(1);
+        }else if(newTab.getFragment() instanceof CommunicationFragment){
+            changeNavigationColor(2);
+        }else if(newTab.getFragment() instanceof LiveFragment){
+            changeNavigationColor(3);
+        }else{
+            changeNavigationColor(4);
+        }
     }
+
+    private void changeNavigationColor(int postion){
+        switch (postion){
+            case 0:
+                bottomNavigationViewEx.setIconTintList(0, ColorStateList.valueOf(Color.parseColor("#738ffe")));
+                bottomNavigationViewEx.setIconTintList(1, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(2, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(3, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(4, ColorStateList.valueOf(Color.parseColor("#000000")));
+               // R.color.grey_300 000000
+                bottomNavigationViewEx.setTextTintList(0, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setTextTintList(1, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(2, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(3, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(4, ColorStateList.valueOf(Color.parseColor("#757575")));
+                break;
+            case 1:
+                bottomNavigationViewEx.setIconTintList(0, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(1, ColorStateList.valueOf(Color.parseColor("#738ffe")));
+                bottomNavigationViewEx.setIconTintList(2, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(3, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(4, ColorStateList.valueOf(Color.parseColor("#000000")));
+
+                bottomNavigationViewEx.setTextTintList(0, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(1, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setTextTintList(2, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(3, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(4, ColorStateList.valueOf(Color.parseColor("#757575")));
+                break;
+            case 2:
+                bottomNavigationViewEx.setIconTintList(0, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(1, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(2, ColorStateList.valueOf(Color.parseColor("#738ffe")));
+                bottomNavigationViewEx.setIconTintList(3, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(4, ColorStateList.valueOf(Color.parseColor("#000000")));
+
+                bottomNavigationViewEx.setTextTintList(0, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(1, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(2, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setTextTintList(3, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(4, ColorStateList.valueOf(Color.parseColor("#757575")));
+                break;
+            case 3:
+                bottomNavigationViewEx.setIconTintList(0, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(1, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(2, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(3, ColorStateList.valueOf(Color.parseColor("#738ffe")));
+                bottomNavigationViewEx.setIconTintList(4, ColorStateList.valueOf(Color.parseColor("#000000")));
+
+
+                bottomNavigationViewEx.setTextTintList(0, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(1, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(2, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(3, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setTextTintList(4, ColorStateList.valueOf(Color.parseColor("#757575")));
+                break;
+            case 4:
+                bottomNavigationViewEx.setIconTintList(0, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(1, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(2, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(3, ColorStateList.valueOf(Color.parseColor("#000000")));
+                bottomNavigationViewEx.setIconTintList(4, ColorStateList.valueOf(Color.parseColor("#738ffe")));
+
+
+                bottomNavigationViewEx.setTextTintList(0, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(1, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(2, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(3, ColorStateList.valueOf(Color.parseColor("#757575")));
+                bottomNavigationViewEx.setTextTintList(4, ColorStateList.valueOf(Color.parseColor("#000000")));
+                break;
+        }
+    }
+
+
 
 
     /**

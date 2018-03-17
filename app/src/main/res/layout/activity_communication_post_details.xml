@@ -1,186 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black_alpha_32"
     tools:context="com.union.yunzhi.yunzhi.activities.communication.PostDetailsActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/len_48"
-        android:background="?attr/colorPrimary"/>
+        android:layout_height="wrap_content">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_above="@+id/bottom_layout">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/len_48"
+                app:layout_scrollFlags="scroll|enterAlways"/>
 
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RelativeLayout
+            android:layout_height="@dimen/len_40"
+            android:layout_marginLeft="@dimen/len_8"
+            android:layout_marginBottom="@dimen/len_8">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ci_post_icon"
+                android:layout_width="@dimen/len_40"
+                android:layout_height="@dimen/len_40"
+                tools:background="@drawable/dragon_cat"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/len_8"
+                android:layout_toRightOf="@+id/ci_post_icon"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_communication_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="李德贵"/>
+
+                <TextView
+                    android:id="@+id/tv_post_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/len_2"
+                    android:text="2018.3.12 15:16"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@+id/bottom_layout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/len_8">
+                android:background="@color/white">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_post_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_post_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="武科大吃鱼"
-                        android:textSize="@dimen/font_20"
-                        android:textStyle="bold"/>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/len_40"
-                        android:layout_marginTop="@dimen/len_16">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/ci_post_icon"
-                            android:layout_width="@dimen/len_40"
-                            android:layout_height="@dimen/len_40"
-                            tools:background="@drawable/dragon_cat"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/len_8"
-                            android:layout_toRightOf="@+id/ci_post_icon"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_communication_author"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="李德贵"/>
-
-                            <TextView
-                                android:id="@+id/tv_post_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2018.3.12 15:16"/>
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/tv_post_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/len_16"
-                        tools:text="这里是测试内容:每个人的心中，都有一处禁地。不想被他人踏足，亦不愿轻易触碰。岁月渐长，往事蒙尘，那些留存的记忆，被一层一层的覆盖，一点一点的风化。原以为，只要经过时光如水般的淡化，过往那滋味，就能被稀释，再稀释。然，这个世上也许什么都可以淡去，却唯有想念，是与日俱增。
+                    android:layout_margin="@dimen/len_8"
+                    android:lineSpacingExtra="@dimen/len_2"
+                    android:lineSpacingMultiplier="1.2"
+                    tools:text="这里是测试内容:每个人的心中，都有一处禁地。不想被他人踏足，亦不愿轻易触碰。岁月渐长，往事蒙尘，那些留存的记忆，被一层一层的覆盖，一点一点的风化。原以为，只要经过时光如水般的淡化，过往那滋味，就能被稀释，再稀释。然，这个世上也许什么都可以淡去，却唯有想念，是与日俱增。
 
 很多事情，眼睛看不见的时候，恍恍惚惚，或许还可以骗上自己一阵子。假装一切都还是曾经的模样，你在，我在，所以，他也应该在，一切都还在。只有在置身旧景，物是人空的时候，你才能深刻清晰的确认，原来，在的，只是记忆，只是过往，只是留下的东西，心存的幻想，而不再是人。"/>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/len_16"
-                        android:background="@color/black_alpha_48"/>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/len_6">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_marginTop="@dimen/len_6"
-                            android:text="评论区"
-                            android:textSize="@dimen/font_20"
-                            android:textStyle="bold"/>
-
-                        <ImageView
-                            android:id="@+id/iv_post_like"
-                            android:layout_width="@dimen/len_24"
-                            android:layout_height="@dimen/len_24"
-                            android:layout_toLeftOf="@+id/tv_post_like"
-                            android:layout_marginRight="@dimen/len_8"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/iv_like_unselect"/>
-
-                        <TextView
-                            android:id="@+id/tv_post_like"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="@dimen/len_32"
-                            android:text="0"
-                            android:textSize="@dimen/font_16"
-                            android:textStyle="bold"/>
-
-                    </RelativeLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/len_6"
-                        android:background="@color/black_alpha_48"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/len_8"
-                        android:padding="@dimen/len_8"
-                        android:background="@color/blue_100"/>
-                </LinearLayout>
 
 
-            </RelativeLayout>
 
-        </ScrollView>
+            </LinearLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/len_8"
+                android:background="@color/white">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignTop="@+id/bottom_layout"
-        android:background="@color/black_alpha_48"/>
-    <LinearLayout
-        android:id="@+id/bottom_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="@dimen/len_8"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+                <TextView
+                    android:id="@+id/tv_no_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/len_16"
+                    android:layout_gravity="center_horizontal"
+                    android:text="抢沙发"
+                    android:textSize="@dimen/font_16"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
-        <EditText
-            android:id="@+id/et_send_comment"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:maxLines="3"
-            android:ellipsize="start"
-            tools:text="日子，就在这一半清醒，一半恍惚中悄然流逝，冬去春来，又是一年。不知不觉，就是一年不见了；不知不觉，马上就是分别两年之久了。人啊，到底活的什么劲？怎么好好的，就会消失不见？你们都走了这么久了，可否想念？可否再见有期？"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/len_8"/>
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_send_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/len_6"
-            android:gravity="center"
-            android:text="发表评论"
-            android:textSize="@dimen/font_16"
-            android:textStyle="bold"/>
-    </LinearLayout>
-</RelativeLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+   <android.support.v7.widget.CardView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="bottom"
+       app:cardElevation="@dimen/len_8"
+       android:elevation="@dimen/len_8">
+
+       <LinearLayout
+           android:id="@+id/bottom_layout"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:padding="@dimen/len_8">
+
+           <LinearLayout
+               android:layout_weight="1"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:gravity="center">
+               <ImageView
+                   android:id="@+id/iv_post_like"
+                   android:layout_width="@dimen/len_24"
+                   android:layout_height="@dimen/len_24"
+                   android:background="@drawable/iv_like_unselect"/>
+
+               <TextView
+                   android:id="@+id/tv_post_like"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="@dimen/len_6"
+                   android:text="0"/>
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_weight="1"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:gravity="center">
+
+               <ImageView
+                   android:id="@+id/iv_post_comment"
+                   android:layout_width="@dimen/len_24"
+                   android:layout_height="@dimen/len_24"
+                   android:background="@drawable/iv_communication_comment"/>
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="@dimen/len_6"
+                   android:text="发表评论"/>
+           </LinearLayout>
+
+       </LinearLayout>
+
+   </android.support.v7.widget.CardView>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -11,7 +11,6 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/len_16"
     android:layout_gravity="center_horizontal"
-    android:text="暂无帖子，快来占领地盘吧"
     android:textSize="@dimen/font_16"
     android:textStyle="bold"
     android:visibility="gone"/>

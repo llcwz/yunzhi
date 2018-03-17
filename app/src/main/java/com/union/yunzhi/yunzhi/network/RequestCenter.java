@@ -189,8 +189,19 @@ public class RequestCenter {
      */
     public static void requestPost(int tag, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("mTag","" + tag);
+        params.put("tag","" + tag);
         RequestCenter.postRequest(HttpConstants.POST_URL, params, listener, BaseCommunicationModel.class);
+    }
+
+    /**
+     * @function 获取评论
+     * @param id 帖子的id
+     * @param listener
+     */
+    public static void requestComment(String id, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("id",id);
+        RequestCenter.postRequest(HttpConstants.COMMENT_URL, params, listener, BaseCommentModel.class);
     }
 
     /**
@@ -245,12 +256,14 @@ public class RequestCenter {
      * @param content 帖子内容
      * @param listener
      */
-    public static void requestAddPost(String account,int tag,String title, String content, DisposeDataListener listener) {
+    public static void requestAddPost(String account,int peopleType,int tag,String title, String content, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
         params.put("userId", account);
-        params.put("tag", "" + tag);
         params.put("title", title);
         params.put("content", content);
+        params.put("tag", "" + tag);
+        params.put("peopleType","" + peopleType);
+        LogUtils.d("tag",tag + "");
         RequestCenter.postRequest(HttpConstants.ADD_POST_URL, params, listener, BaseCommunicationModel.class);
     }
 
