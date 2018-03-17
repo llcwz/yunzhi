@@ -78,7 +78,8 @@ public class AbilityStudyScoreFragment extends FragmentM {
          for(int i=0;i<xdatas.length;i++){
              subcolumnValueList=new ArrayList<>();
              int ran=(int)(Math.random() * 100);
-             subcolumnValueList.add(new SubcolumnValue( ran, ChartUtils.pickColor()));
+             int _c=i%5;
+             subcolumnValueList.add(new SubcolumnValue( ran, ChartUtils.COLORS[_c]));
              score[i]=ran;
              Column column=new Column(subcolumnValueList);
              column.setHasLabels(true);
