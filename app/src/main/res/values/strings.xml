@@ -97,4 +97,40 @@
         </item>
     </string-array>
 
+    <string-array name="crouseId">
+        <item>
+            01001
+        </item>
+        <item>
+            01003
+        </item>
+        <item>
+            03003
+        </item>
+        <item>
+            03002
+        </item>
+        <item>
+            02003
+        </item>
+    </string-array>
+
+    <string-array name="teacherId">
+        <item>
+            2
+        </item>
+        <item>
+           1
+        </item>
+        <item>
+            7
+        </item>
+        <item>
+            8
+        </item>
+        <item>
+            6
+        </item>
+    </string-array>
+
 </resources>

@@ -98,8 +98,8 @@ public class LoginActivity extends ActivityM implements View.OnClickListener, Vi
 
         Glide.with(this)
                 .load(R.drawable.logins)
-               // .centerCrop()
                 .asGif()
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(mBackgroundView);
 

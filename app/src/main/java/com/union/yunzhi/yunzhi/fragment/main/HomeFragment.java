@@ -2,7 +2,10 @@ package com.union.yunzhi.yunzhi.fragment.main;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
@@ -10,9 +13,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -25,28 +33,27 @@ import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.home.bodyModle;
 import com.union.yunzhi.factories.moudles.home.homeBaseModle;
-import com.union.yunzhi.factories.moudles.hometest.HomeBodyModle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.LoginActivity;
 import com.union.yunzhi.yunzhi.activities.SearchActivity;
 import com.union.yunzhi.yunzhi.activities.classfication.ClassCourseDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.HomeAdapter;
+import com.union.yunzhi.yunzhi.fragment.me.PersonDialogFragment;
 import com.union.yunzhi.yunzhi.manager.MyQrCodeDialog;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 import com.union.yunzhi.yunzhi.zxing.app.CaptureActivity;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.union.yunzhi.yunzhi.activities.LoginActivity.LOGIN_ACTION;
 
 /**
  * A simple {@link FragmentM} subclass.
  */
-public class HomeFragment extends PermissionsFragment implements View.OnClickListener ,OnRefreshListener,OnLoadMoreListener{
+public class HomeFragment extends PermissionsFragment implements View.OnClickListener, OnRefreshListener, OnLoadMoreListener {
 
     private static final int REQUEST_QRCODE = 0x01;
 
@@ -58,6 +65,20 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     private SmartRefreshLayout mRefreshLayout;
 
+    private LinearLayout mShowSuccessLayout;
+
+    /**
+     * 错误界面
+     */
+    private FrameLayout mShowErrorLayout;
+    private TextView mRefreshButton;
+    private ImageView mGIF;
+
+    //登录和注销广播接收器
+    //自定义了一个广播接收器
+    private LoginBroadcastReceiver receiver = new LoginBroadcastReceiver();
+    private LogoutBroadcastReceiver mLogoutReceiver = new LogoutBroadcastReceiver();
+
 
     private Banner mBanner;
 
@@ -65,13 +86,42 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     //扫码按钮
     private CircleImageView mQRcode;
 
-    private CircleImageView Test;
+    private CircleImageView mPortrait;
 
 
     private HomeAdapter mHomeAdapter;
-    List<HomeBodyModle> list = new ArrayList<>();
-
     private final String TGA = "HomeFragment";
+
+    private class LoginBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (UserManager.getInstance().hasLogined()) {
+                //更新我们的fragment
+
+                if (UserManager.getInstance().hasLogined()) {
+                    Glide.with(getContext())
+                            .load(UserManager.getInstance().getUser().getPhotourl())
+                            .into(mPortrait);
+                } else {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                }
+
+            }
+        }
+    }
+    /**
+     * 接受PersonDialogFragment发来的注销广播
+     */
+    private class LogoutBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+           // visitUI();
+            Glide.with(getContext())
+                    .load(R.drawable.default_user_avatar)
+                    .into(mPortrait);
+        }
+    }
+
 
     @Override
     protected int getContentLayoutId() {
@@ -80,20 +130,31 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     @Override
     protected void initWidget(View view) {
+        registerBroadcast();
+
+        /**
+         * 隐藏界面控件初始化
+         */
+        mShowErrorLayout = (FrameLayout) view.findViewById(R.id.show_error);
+        mRefreshButton = (TextView) view.findViewById(R.id.tv_refresh);
+        mRefreshButton.setOnClickListener(this);
+        mGIF = (ImageView) view.findViewById(R.id.img_error);
+
+        mShowSuccessLayout = (LinearLayout) view.findViewById(R.id.show_success);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         toolbarLayout = (LinearLayout) view.findViewById(R.id.toolbar_layout);
         mQRcode = (CircleImageView) toolbarLayout.findViewById(R.id.cv_qrcode);
         mQRcode.setOnClickListener(this);
         mQRcode.setColorFilter(R.color.home_qrcode);
-        Test = (CircleImageView) view.findViewById(R.id.cv_load);
-        Test.setOnClickListener(this);
+
         mRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.refresh);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
+        mPortrait = (CircleImageView) view.findViewById(R.id.cv_portrait);
+        mPortrait.setOnClickListener(this);
 
 
-
-      //  mBanner = (Banner) view.findViewById(R.id.banner);
+        //  mBanner = (Banner) view.findViewById(R.id.banner);
 
 
         mSearchLayout = (LinearLayout) view.findViewById(R.id.ll_search);
@@ -104,12 +165,22 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
             @Override
             public void onSuccess(Object responseObj) {
                 Log.i("onSuccess", responseObj.toString());
+                mShowErrorLayout.setVisibility(View.GONE);
+                mShowSuccessLayout.setVisibility(View.VISIBLE);
                 datas(responseObj);
             }
 
             @Override
             public void onFailure(Object reasonObj) {
-                Log.i("onFailure", "error");
+                LogUtils.i("onFailure", "error");
+                mShowErrorLayout.setVisibility(View.VISIBLE);
+                mShowSuccessLayout.setVisibility(View.GONE);
+                Glide.with(getContext())
+                        .load(R.drawable.error)
+                        .asGif()
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .into(mGIF);
             }
         });
 
@@ -117,21 +188,8 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
     @Override
     protected void initData() {
-
-
-        LogUtils.i(TGA, "initWidget");
-
-
-        // mHomeAdapter = new HomeAdapter(getContext(),4);
-        data();
-
         recyclerView.setAdapter(mHomeAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        Log.i("source", list.size() + "");
-
-
-
 
 
     }
@@ -143,42 +201,11 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     }
 
 
-    public void data() {
-
-    }
-
     public void datas(Object object) {
-
-
-
 
         homeBaseModle data = (homeBaseModle) object;
 
-
-            for(int j=0;j<data.data.list.get(1).coursecover.size();j++){
-                LogUtils.i("homeBaseModle",data.data.list.get(1).coursecover.get(j));
-            }
-
-            for(int i=0;i<data.data.list.size();i++){
-                LogUtils.i("homeBaseModle",data.data.list.get(i).viewType+"");
-            }
-
-
-
-
         mHomeAdapter.add(data.data.list);
-
-
-
-
-
-        //mHomeAdapter.add(data.data.list);
-
-
-        // list.add(data);
-
-       // mHomeAdapter.add(list);
-
     }
 
     @Override
@@ -197,10 +224,19 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                         SearchActivity.class));
                 break;
 
-            case R.id.cv_load:
-                MyQrCodeDialog dialog = new MyQrCodeDialog(getContext());
-                dialog.show();
+            case R.id.cv_portrait:
+                if(UserManager.getInstance().hasLogined()){
+                    MyQrCodeDialog dialog = new MyQrCodeDialog(getContext());
+                    dialog.show();
+                }else{
+                    startActivity(new Intent(getContext(),LoginActivity.class));
+                }
+                break;
 
+            case R.id.tv_refresh:
+                Toast.makeText(getContext(),"请求失败，请检查网络状况",Toast.LENGTH_SHORT).show();
+
+                RefreshData();
                 break;
         }
     }
@@ -221,19 +257,19 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                         startActivity(intent);
                     } else {
                         //视频界面二维码跳转逻辑
-                        if(code.contains("&")){
+                        if (code.contains("&")) {
                             String courseId;
 
-                            courseId = code.substring(0,code.indexOf("&"));
+                            courseId = code.substring(0, code.indexOf("&"));
 
                             String teacherId;
 
-                            teacherId = code.substring(code.indexOf("&")+1,code.length());
+                            teacherId = code.substring(code.indexOf("&") + 1, code.length());
 
-                            Intent intent = new Intent(getContext(),ClassCourseDetailsActivity.class);
+                            Intent intent = new Intent(getContext(), ClassCourseDetailsActivity.class);
 
-                            intent.putExtra(ClassConst.COURSEID,courseId);
-                            intent.putExtra(ClassConst.TEACHERID,teacherId);
+                            intent.putExtra(ClassConst.COURSEID, courseId);
+                            intent.putExtra(ClassConst.TEACHERID, teacherId);
 
                             startActivity(intent);
 
@@ -263,33 +299,32 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     }
 
 
-
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         RequestCenter.requestHomeData("", "", new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
-                    RequestCenter.requestHomeData("", "", new DisposeDataListener() {
-                        @Override
-                        public void onSuccess(Object responseObj) {
-                            homeBaseModle data = (homeBaseModle) responseObj;
-                            if(data!=null){
-                               // mHomeAdapter.clear();
-                                ArrayList<bodyModle> lists = new ArrayList<bodyModle>();
-                                for(int i=1;i<data.data.list.size();i++){
-                                    lists.add(data.data.list.get(i));
-                                }
-                                mHomeAdapter.add(lists);
-                                //mHomeAdapter.add(data.data.list);
-                                mRefreshLayout.finishLoadMore(true);
+                RequestCenter.requestHomeData("", "", new DisposeDataListener() {
+                    @Override
+                    public void onSuccess(Object responseObj) {
+                        homeBaseModle data = (homeBaseModle) responseObj;
+                        if (data != null) {
+                            // mHomeAdapter.clear();
+                            ArrayList<bodyModle> lists = new ArrayList<bodyModle>();
+                            for (int i = 1; i < data.data.list.size(); i++) {
+                                lists.add(data.data.list.get(i));
                             }
+                            mHomeAdapter.add(lists);
+                            //mHomeAdapter.add(data.data.list);
+                            mRefreshLayout.finishLoadMore(true);
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Object reasonObj) {
+                    @Override
+                    public void onFailure(Object reasonObj) {
 
-                        }
-                    });
+                    }
+                });
             }
 
             @Override
@@ -302,35 +337,67 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
 
-        Log.i("onRefresh","onRefresh");
+        Log.i("onRefresh", "onRefresh");
         refreshLayout.autoRefresh();
 
         RequestCenter.requestHomeData("", "", new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
+                mShowErrorLayout.setVisibility(View.GONE);
+                mShowSuccessLayout.setVisibility(View.VISIBLE);
                 homeBaseModle data = (homeBaseModle) responseObj;
-                if(data!=null){
+                if (data != null) {
                     mHomeAdapter.clear();
                     mHomeAdapter.add(data.data.list);
-                    mRefreshLayout.finishRefresh(2000,true);//传入false表示刷新失败
+                    mRefreshLayout.finishRefresh(2000, true);//传入false表示刷新失败
                 }
 
             }
 
             @Override
             public void onFailure(Object reasonObj) {
+                Toast.makeText(getContext(),"请求失败，请检查网络状况",Toast.LENGTH_SHORT).show();
+                mShowErrorLayout.setVisibility(View.VISIBLE);
+                mShowSuccessLayout.setVisibility(View.GONE);
+                Glide.with(getContext())
+                        .load(R.drawable.error)
+                        .asGif()
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .into(mGIF);
+                mRefreshLayout.finishRefresh(2000,false);
             }
         });
     }
 
 
-    public void RefreshData(){
-        LogUtils.i("initRefreshData","initRefreshData");
+    public void RefreshData() {
         onRefresh(mRefreshLayout);
     }
-    private void sendLoginBroadcast() {
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(LOGIN_ACTION));
+
+
+    /**
+     * 注销广播
+     */
+    private void unregisterBroadcast() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mLogoutReceiver);
     }
 
+    /**
+     * 注册广播，监听用户登录状态
+     */
+    private void registerBroadcast() {
+        IntentFilter filter = new IntentFilter(LoginActivity.LOGIN_ACTION);
+        IntentFilter logoutFilter = new IntentFilter(PersonDialogFragment.LOGOUT_ACTION);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, filter);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mLogoutReceiver, logoutFilter);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterBroadcast();
+    }
 }

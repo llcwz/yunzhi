@@ -5,7 +5,44 @@
     android:layout_height="match_parent"
     tools:context="com.union.yunzhi.yunzhi.fragment.main.HomeFragment">
 
+
+    <FrameLayout
+        android:id="@+id/show_error"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include android:id="@+id/toolbar_layout" layout="@layout/toolbar"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/img_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_marginTop="60dp"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:text="网络不给力"
+            android:textColor="@color/grey_500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_refresh"
+            android:gravity="center"
+            android:text="点击刷新"
+            android:textSize="30dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="bottom|center"
+            android:background="@drawable/button"
+            android:layout_width="160dp"
+            android:layout_height="50dp" />
+    </FrameLayout>
+
     <LinearLayout
+        android:id="@+id/show_success"
         android:background="@color/grey_300"
         android:orientation="vertical"
         android:layout_width="match_parent"
