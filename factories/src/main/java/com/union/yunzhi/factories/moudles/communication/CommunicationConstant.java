@@ -20,7 +20,7 @@ public class CommunicationConstant {
 
 
     // 上传点赞数据时，区分是给帖子点赞还是评论点赞
-    public static final int LIKE_TAG_POST = 0;
-    public static final int LIKE_TAG_COMMENT = 1;
-    public static final int LIKE_TAG_QUESTION = 2;
+    public static final String LIKE_TAG_POST = "0";
+    public static final String LIKE_TAG_COMMENT = "1";
+    public static final String LIKE_TAG_QUESTION = "2";
 }

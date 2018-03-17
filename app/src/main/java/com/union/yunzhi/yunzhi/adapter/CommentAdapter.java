@@ -12,6 +12,7 @@ import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
+import com.union.yunzhi.yunzhi.fragment.communication.CommentDialogFragment;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 
 import java.util.List;
@@ -26,10 +27,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CommentAdapter extends MyAdapter<CommentModel> {
 
     private Context mContext;
+    private AdapterListener<CommentModel> mListener;
 
     public CommentAdapter(Context context, List<CommentModel> data, AdapterListener<CommentModel> listener) {
         super(data,listener);
         mContext = context;
+        mListener = listener;
     }
 
     @Override
@@ -42,11 +45,13 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         return new CommentViewHolder(root);
     }
 
-    public class CommentViewHolder extends MyViewHolder<CommentModel> {
+    public class CommentViewHolder extends MyViewHolder<CommentModel> implements View.OnClickListener {
         private UserManager mUserManager;
+        private CommentModel data;
         private CircleImageView mIcon;
         private TextView mAuthor;
         private TextView mTime;
+        private ImageView mReply;
         private ImageView mLike;
         private TextView mLikeCount; // 点赞数
         private TextView mContent;
@@ -58,6 +63,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
             mIcon = (CircleImageView) itemView.findViewById(R.id.ci_comment_icon);
             mAuthor = (TextView) itemView.findViewById(R.id.tv_comment_author);
             mTime = (TextView) itemView.findViewById(R.id.tv_comment_time);
+            mReply = (ImageView) itemView.findViewById(R.id.iv_comment_reply);
             mLike = (ImageView) itemView.findViewById(R.id.iv_comment_like);
             mLikeCount = (TextView) itemView.findViewById(R.id.tv_comment_like);
             mContent = (TextView) itemView.findViewById(R.id.tv_comment_content);
@@ -65,23 +71,36 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
 
         @Override
         protected void onBind(final CommentModel data, int position) {
-            Glide.with(mContext).load(data.getIcon()).into(mIcon);
-            mAuthor.setText(data.getAuthor());
+            this.data = data;
+            Glide.with(mContext).load(data.getPhotoUrl()).into(mIcon);
+            mAuthor.setText(data.getName());
             mTime.setText(data.getTime());
             mContent.setText(data.getContent());
-            mLikeCount.setText("" + data.getLikeModels().size()); // 获取点赞数
-            // 点赞的点击事件
-            mLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mUserManager.hasLogined()) { // 用户登录了
-                        LikeUtils likeUtils = LikeUtils.newInstance(data.getId(),mUserManager.getUser(), mContext, mLike,mLikeCount);
-                        likeUtils.checkedCommentLike(data);
-                    } else { // 用户没登录
-                        Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
-                    }
+            mLikeCount.setText(data.getFavour()); // 获取点赞数
+            mReply.setOnClickListener(this);
+            mLike.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mUserManager.hasLogined()) { // 用户登录了
+                switch (v.getId()) {
+                    case R.id.iv_comment_reply:
+                        LikeUtils likeUtils = LikeUtils.newInstance(data.getId(),
+                                CommunicationConstant.LIKE_TAG_COMMENT,
+                                mUserManager.getUser(),
+                                mContext,
+                                mLike,
+                                mLikeCount);
+                        likeUtils.iLike(data.getLikeUserId());
+                        break;
+                    case R.id.iv_comment_like:
+                        CommentDialogFragment.newInstance();
+                        break;
                 }
-            });
+            } else { // 用户没登录
+                Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

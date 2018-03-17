@@ -12,7 +12,6 @@ import java.util.List;
 
 public class PostModel implements Parcelable {
     private String id; // 帖子的id
-//    private int tag; // 标记类型，由此可知是哪一个模块的帖子
     private String userId; // 作者id
     private String photoUrl; // 作者头像
     private String name; // 作者
@@ -21,24 +20,51 @@ public class PostModel implements Parcelable {
     private String time; // 时间
     private String msgNum; // 评论数
     private String favour; // 赞数
+    private List<String> mLikeUserId;
 
-    public PostModel() {
+    protected PostModel(Parcel in) {
+        id = in.readString();
+        userId = in.readString();
+        photoUrl = in.readString();
+        name = in.readString();
+        title = in.readString();
+        content = in.readString();
+        time = in.readString();
+        msgNum = in.readString();
+        favour = in.readString();
+        mLikeUserId = in.createStringArrayList();
     }
 
     @Override
-    public String toString() {
-        return "PostModel{" +
-                "id='" + id + '\'' +
-                ", userId='" + userId + '\'' +
-                ", photoUrl='" + photoUrl + '\'' +
-                ", name='" + name + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", time='" + time + '\'' +
-                ", msgNum='" + msgNum + '\'' +
-                ", favour='" + favour + '\'' +
-                '}';
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(userId);
+        dest.writeString(photoUrl);
+        dest.writeString(name);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(time);
+        dest.writeString(msgNum);
+        dest.writeString(favour);
+        dest.writeStringList(mLikeUserId);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<PostModel> CREATOR = new Creator<PostModel>() {
+        @Override
+        public PostModel createFromParcel(Parcel in) {
+            return new PostModel(in);
+        }
+
+        @Override
+        public PostModel[] newArray(int size) {
+            return new PostModel[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -47,8 +73,6 @@ public class PostModel implements Parcelable {
     public void setId(String id) {
         this.id = id;
     }
-
-
 
     public String getUserId() {
         return userId;
@@ -114,49 +138,11 @@ public class PostModel implements Parcelable {
         this.favour = favour;
     }
 
-    public static Creator<PostModel> getCREATOR() {
-        return CREATOR;
+    public List<String> getLikeUserId() {
+        return mLikeUserId;
     }
 
-    protected PostModel(Parcel in) {
-        id = in.readString();
-        userId = in.readString();
-        photoUrl = in.readString();
-        name = in.readString();
-        title = in.readString();
-        content = in.readString();
-        time = in.readString();
-        msgNum = in.readString();
-        favour = in.readString();
+    public void setLikeUserId(List<String> likeUserId) {
+        mLikeUserId = likeUserId;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(userId);
-        dest.writeString(photoUrl);
-        dest.writeString(name);
-        dest.writeString(title);
-        dest.writeString(content);
-        dest.writeString(time);
-        dest.writeString(msgNum);
-        dest.writeString(favour);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<PostModel> CREATOR = new Creator<PostModel>() {
-        @Override
-        public PostModel createFromParcel(Parcel in) {
-            return new PostModel(in);
-        }
-
-        @Override
-        public PostModel[] newArray(int size) {
-            return new PostModel[size];
-        }
-    };
 }

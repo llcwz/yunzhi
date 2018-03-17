@@ -32,6 +32,7 @@ import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
 import com.union.yunzhi.yunzhi.communicationutils.CommentUtils;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
+import com.union.yunzhi.yunzhi.fragment.communication.CommentDialogFragment;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
@@ -41,7 +42,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PostDetailsActivity extends ActivityM implements View.OnClickListener {
+public class PostDetailsActivity extends ActivityM implements View.OnClickListener, CommentDialogFragment.OnAddCommentListener {
     private static final String TAG = "PostDetailsActivity";
     private UserManager mUserManager;
     private UserModel mUser;
@@ -59,6 +60,8 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     private ImageView mLike; // 点赞图标
     private TextView mLikeCounts; // 点赞数
     private ImageView mSendComment; // 发送评论
+
+    private String mReply;
 
     public static void newInstance(Context context, PostModel postModel) {
         Intent intent = new Intent(context, PostDetailsActivity.class);
@@ -108,8 +111,11 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
                         BaseCommentModel baseCommentModel = (BaseCommentModel) responseObj;
                         if (baseCommentModel.ecode == CommunicationConstant.ECODE) {
                             mCommentModels = baseCommentModel.data;
-                            MeUtils.showNoMessage(mCommentModels.size(),mNoComment, "抢沙发~~");
-                            initAdapter(mCommentModels);
+                            if (mAdapter == null) { // 已经有数据
+                                initAdapter(mCommentModels);
+                            } else { // 请求刷新
+
+                            }
                             for (CommentModel commentModel : mCommentModels) {
                                 LogUtils.d("commentMessage", commentModel.toString());
                             }
@@ -162,8 +168,11 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
 
     @Override
     protected void initData() {
-
-        mToolbar.setTitle(getString(R.string.me_navigation_news));
+        if (!TextUtils.isEmpty(mPostModel.getTitle())) {
+            mToolbar.setTitle(mPostModel.getTitle());
+        } else {
+            mToolbar.setTitle("测试标题");
+        }
         // 根据头像改变背景颜色
         MeUtils.showPalette(this, mPostModel.getPhotoUrl(), new MeUtils.OnShowPalleteListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -206,23 +215,32 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         if (mUserManager.hasLogined()) { // 如果用户登录了
             switch (view.getId()) {
                 case R.id.tv_send_comment: // 发表评论
-//                    if (TextUtils.isEmpty(comment)) {
-//                        Toast.makeText(this, "请先评论", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        mComment.setText("");
-//                        CommentUtils commentUtils =CommentUtils.newInstance(mUser, this, mPostModel.getId(), comment);
-//                        commentUtils.addComment(CommunicationConstant.COMMENT_TAG_POST,mAdapter); // 刷新
-//                    }
+                    CommentDialogFragment.newInstance();
                     break;
                 case R.id.iv_post_like: // 点赞帖子
-                    LikeUtils likeUtils = LikeUtils.newInstance(mPostModel.getId(),mUser, this, mLike, mLikeCounts);
-//                    likeUtils.checkedPostLike(mPostModel);
+                    LikeUtils likeUtils = LikeUtils.newInstance(mPostModel.getId(),
+                            CommunicationConstant.LIKE_TAG_POST,
+                            mUser,
+                            PostDetailsActivity.this,
+                            mLike,
+                            mLikeCounts);
+                    likeUtils.iLike(mPostModel.getLikeUserId());
                     break;
                 default:
             }
         } else { // 如果用户没有登录
             Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * @function 获取评论内容
+     * @param content
+     */
+    @Override
+    public void getContent(String content) {
+        mReply = content;
+        // TODO: 2018/3/17 发表评论
     }
 
 

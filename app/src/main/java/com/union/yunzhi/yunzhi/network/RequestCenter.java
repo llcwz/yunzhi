@@ -207,17 +207,12 @@ public class RequestCenter {
      * @function 上传点赞
      * @param postOrCommentOrQuestionId 给点赞的那个东西的id
      * @param account 点赞者的id
-     * @param icon 点赞者的头像
-     * @param author 点赞者的姓名
-     * @param time 点赞时的时间
      */
-    public static void requestLike(String postOrCommentOrQuestionId,String account,String icon, String author, String time, DisposeDataListener listener) {
+    public static void requestLike(String postOrCommentOrQuestionId,String tag,String account, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
         params.put("mId", postOrCommentOrQuestionId);
+        params.put("tag", tag);
         params.put("mAccount", account);
-        params.put("mIcon", icon);
-        params.put("mAuthor", author);
-        params.put("mTime", time);
         RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, null);
     }
 

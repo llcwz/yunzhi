@@ -34,7 +34,8 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CommunicationFragment extends FragmentM implements ViewPager.OnPageChangeListener, Toolbar.OnMenuItemClickListener {
+public class CommunicationFragment extends FragmentM implements ViewPager.OnPageChangeListener,
+        Toolbar.OnMenuItemClickListener {
 
     private int mTag=0; // 用于存放当前的viewPager页索引,同时也对应帖子里面的tag
     private UserManager mUserManager;
@@ -134,27 +135,9 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
      */
     private void addPost(int tag) {
         if (mUserManager.hasLogined()) {
-            Intent intent = new Intent(getActivity(), AddPostActivity.class);
-            intent.putExtra(AddPostActivity.TAG, tag);
-            startActivityForResult(intent, AddPostActivity.KEY_POST);
+            AddPostActivity.newInstance(getActivity(), tag);
         } else {
             Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case AddPostActivity.KEY_POST:
-                if (resultCode == RESULT_OK) {
-                    if (data != null) {
-                        int tag =data.getIntExtra(AddPostActivity.TAG,0);
-                        PostModel postModel = data.getParcelableExtra(AddPostActivity.RESULT_POST);
-                        mFragments.get(tag).notifyList(postModel);
-                    }
-                }
-                break;
-            default:
         }
     }
 

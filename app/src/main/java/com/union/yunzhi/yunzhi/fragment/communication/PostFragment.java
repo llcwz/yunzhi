@@ -1,6 +1,7 @@
 package com.union.yunzhi.yunzhi.fragment.communication;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
 import com.union.yunzhi.yunzhi.activities.communication.PostDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.PostAdapter;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
@@ -29,7 +31,7 @@ import java.util.List;
  * Created by CrazyGZ on 2018/3/9.
  */
 
-public class PostFragment extends FragmentM {
+public class PostFragment extends FragmentM implements AddPostActivity.OnAddPostListener {
 
     private static final String FRAGMENT_TAG = "TAG";
     private int mTag; // 标记fragment的生成以及相应的帖子
@@ -79,8 +81,8 @@ public class PostFragment extends FragmentM {
                         BaseCommunicationModel baseCommunicationModel = (BaseCommunicationModel) responseObj;
                         if (baseCommunicationModel.ecode == CommunicationConstant.ECODE) {
                             mPostModels = baseCommunicationModel.data;
-                            MeUtils.showNoMessage(mPostModels.size(),mNoPost, "暂无帖子，快来占领地盘吧");
                             initAdapter(mPostModels);
+                            MeUtils.showNoMessage(mPostModels.size(), mNoPost, mRecyclerView, "暂无帖子，快来占领地盘吧");
                             for (PostModel postModel : mPostModels) {
                                 LogUtils.d("postMessage", postModel.toString());
                             }
@@ -142,10 +144,10 @@ public class PostFragment extends FragmentM {
 
     }
 
-
-    // 用于添加帖子后的刷新
-    public void notifyList (PostModel postModel) {
-        mAdapter.add(postModel);
-        mAdapter.notify();
+    @Override
+    public void getPost(int tag, PostModel postModel) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        PostFragment fragment = (PostFragment) fragmentManager.findFragmentById(tag);
+        fragment.mAdapter.add(postModel);
     }
 }

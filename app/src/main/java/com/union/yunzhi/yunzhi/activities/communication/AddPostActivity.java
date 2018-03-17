@@ -1,6 +1,8 @@
 package com.union.yunzhi.yunzhi.activities.communication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -13,6 +15,7 @@ import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
+import com.union.yunzhi.yunzhi.fragment.communication.PostFragment;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
 
 public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClickListener {
@@ -21,12 +24,19 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
     public static final String TAG = "tag";
 
     private int mTag; // fragment标签
+    private OnAddPostListener mOnAddPostListener;
     private Intent mIntent;
     private UserModel mUser;
     private Toolbar mToolbar;
     private EditText mTitle;
     private EditText mContent;
 
+
+    public static void newInstance(Context context, int tag) {
+        Intent intent = new Intent(context, AddPostActivity.class);
+        intent.putExtra(AddPostActivity.TAG, tag);
+        context.startActivity(intent);
+    }
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_add_post;
@@ -35,7 +45,7 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
     @Override
     protected void initWidget() {
         mIntent = getIntent();
-        mTag = mIntent.getIntExtra(CommunicationConstant.KEY_TAG, -1);
+        mTag = mIntent.getIntExtra(TAG, -1);
         mUser = MeUtils.getUser();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.inflateMenu(R.menu.communication_add_post_item);
@@ -62,12 +72,16 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
                 opinionUtils.addPost(mTag,title,content, new OpinionUtils.NotifyPostListener() {
                     @Override
                     public void getPost(PostModel postModel) {
-                        mIntent.putExtra(TAG, mTag);
-                        mIntent.putExtra(RESULT_POST, postModel);
-                        setResult(RESULT_OK, mIntent);
+//                        mOnAddPostListener.getPost(mTag, postModel);
+                        finish();
                     }
                 });
             }
         return false;
+    }
+
+
+    public interface OnAddPostListener {
+        void getPost(int tag,PostModel postModel);
     }
 }

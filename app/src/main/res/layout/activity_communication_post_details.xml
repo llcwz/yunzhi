@@ -43,7 +43,9 @@
                     android:id="@+id/tv_communication_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="李德贵"/>
+                    android:text="李德贵"
+                    android:textSize="@dimen/font_16"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tv_post_time"
@@ -84,10 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/len_8"
                     android:lineSpacingExtra="@dimen/len_2"
-                    android:lineSpacingMultiplier="1.2"
-                    tools:text="这里是测试内容:每个人的心中，都有一处禁地。不想被他人踏足，亦不愿轻易触碰。岁月渐长，往事蒙尘，那些留存的记忆，被一层一层的覆盖，一点一点的风化。原以为，只要经过时光如水般的淡化，过往那滋味，就能被稀释，再稀释。然，这个世上也许什么都可以淡去，却唯有想念，是与日俱增。
-
-很多事情，眼睛看不见的时候，恍恍惚惚，或许还可以骗上自己一阵子。假装一切都还是曾经的模样，你在，我在，所以，他也应该在，一切都还在。只有在置身旧景，物是人空的时候，你才能深刻清晰的确认，原来，在的，只是记忆，只是过往，只是留下的东西，心存的幻想，而不再是人。"/>
+                    android:lineSpacingMultiplier="1.2"/>
 
 
 
@@ -95,30 +94,24 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_no_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/len_16"
+                android:layout_gravity="center_horizontal"
+                android:text="暂无评论，抢个抢沙发"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/len_8"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/tv_no_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/len_16"
-                    android:layout_gravity="center_horizontal"
-                    android:text="抢沙发"
-                    android:textSize="@dimen/font_16"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/len_8"/>
-            </LinearLayout>
-
+                android:padding="@dimen/len_8"
+                android:background="@color/white"/>
 
         </LinearLayout>
 

@@ -57,10 +57,10 @@ public class ClassQuestionAdapter extends MyAdapter<QuestionBean> {
 
         @Override
         protected void onBind(QuestionBean data, int position) {
-            Glide.with(mContext).load(data.iconUrl).into(mIcon);
-            mAuthor.setText(data.author);
-            mLike.setText("" + data.likeModels.size());
-            mComment.setText("" + data.commentModels.size());
+            Glide.with(mContext).load(data.photoUrl).into(mIcon);
+            mAuthor.setText(data.name);
+            mLike.setText(data.favour);
+            mComment.setText(data.msgNum);
             mTime.setText(data.time);
             mContent.setText(data.content);
         }

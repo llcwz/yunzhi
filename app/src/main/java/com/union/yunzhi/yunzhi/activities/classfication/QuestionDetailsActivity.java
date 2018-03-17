@@ -29,6 +29,9 @@ import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class QuestionDetailsActivity extends ActivityM implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -38,6 +41,8 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
     private UserModel mUser;
     private QuestionBean mQuestionBean;
     private CommentAdapter mAdapter; // 这个虽然是在communication中的评论，但是也可以拿来用作问题的回复
+    private List<CommentModel> mCommentModels = new ArrayList<>();
+
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private CircleImageView mIcon;
     private TextView mAuthor;
@@ -80,7 +85,7 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
 
     // 初始化数据
     private void data() {
-        mAdapter = new CommentAdapter(this, mQuestionBean.commentModels, new MyAdapter.AdapterListener<CommentModel>() {
+        mAdapter = new CommentAdapter(this, mCommentModels, new MyAdapter.AdapterListener<CommentModel>() {
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, CommentModel data) {
 
@@ -106,8 +111,8 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
     @Override
     protected void initData() {
         data();
-        Glide.with(this).load(mQuestionBean.iconUrl).into(mIcon);
-        mAuthor.setText(mQuestionBean.author);
+        Glide.with(this).load(mQuestionBean.photoUrl).into(mIcon);
+        mAuthor.setText(mQuestionBean.name);
         mTime.setText(mQuestionBean.time);
         mContent.setText(mQuestionBean.content);
         mSendComment.setOnClickListener(this);
@@ -116,10 +121,7 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
         linearLayoutManager.setScrollEnabled(false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
-        if (mQuestionBean.likeModels.size() > 0) {
-            mLikeCounts.setText("" + mQuestionBean.likeModels.size());
-        }
+        mLikeCounts.setText(mQuestionBean.favour);
         mLike.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
@@ -131,18 +133,20 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
         if (mUserManager.hasLogined()) { // 如果用户登录了
             switch (view.getId()) {
                 case R.id.tv_send_reply: // 回复
-                    String comment = mComment.getText().toString();
-                    if (TextUtils.isEmpty(comment)) {
-                        Toast.makeText(this, "空内容", Toast.LENGTH_SHORT).show();
-                    } else {
-                        mComment.setText("");
-                        CommentUtils commentUtils =CommentUtils.newInstance(mUser, this, mQuestionBean.id, comment);
-                        commentUtils.addComment(CommunicationConstant.COMMENT_TAG_QUESTION,mAdapter); // 刷新
-                    }
+//                    String comment = mComment.getText().toString();
+//                    if (TextUtils.isEmpty(comment)) {
+//                        Toast.makeText(this, "空内容", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        mComment.setText("");
+//                        CommentUtils commentUtils =CommentUtils.newInstance(mUser, this, mQuestionBean.id, comment);
+//                        commentUtils.addComment(CommunicationConstant.COMMENT_TAG_QUESTION,mAdapter); // 刷新
+//                    }
                     break;
                 case R.id.iv_question_like: // 点赞问题
-                    LikeUtils likeUtils = LikeUtils.newInstance(mQuestionBean.id,mUser, this, mLike, mLikeCounts);
-                    likeUtils.checkedQuestionLike(mQuestionBean);
+                    LikeUtils likeUtils = LikeUtils.newInstance(mQuestionBean.id,
+                            CommunicationConstant.LIKE_TAG_POST, // 因为这个类型和帖子一模一样
+                            mUser, this, mLike, mLikeCounts);
+                    likeUtils.iLike(mQuestionBean.mLikeUserId);
                     break;
                 default:
             }

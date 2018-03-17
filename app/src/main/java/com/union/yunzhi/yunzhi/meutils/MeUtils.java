@@ -3,6 +3,7 @@ package com.union.yunzhi.yunzhi.meutils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -72,12 +73,14 @@ public class MeUtils {
                 });
     }
 
-    public static void showNoMessage(int size,TextView noMessage, String hint) {
+    public static void showNoMessage(int size, TextView noMessage, RecyclerView recyclerView, String hint) {
         if (size == 0) {
             noMessage.setText(hint);
             noMessage.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         } else {
             noMessage.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 }

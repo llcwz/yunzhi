@@ -10,93 +10,42 @@ import java.util.List;
  */
 
 public class CommentModel implements Parcelable {
-    private String mId; // 该评论或者问题的id
-    private int mTag; // 该评论的类型，是属于帖子的评论还是问题的评论
-    private String mIcon; // 头像
-    private String mAuthor; // 作者
-    private String mTime; // 时间
-    private String mContent; // 内容
-    private List<LikeModel> mLikeModels; // 点赞数
-
-    public String getId() {
-        return mId;
-    }
-
-    public void setId(String id) {
-        mId = id;
-    }
-
-    public int getTag() {
-        return mTag;
-    }
-
-    public void setTag(int tag) {
-        mTag = tag;
-    }
-
-    public String getIcon() {
-        return mIcon;
-    }
-
-    public void setIcon(String icon) {
-        mIcon = icon;
-    }
-
-    public String getAuthor() {
-        return mAuthor;
-    }
-
-    public void setAuthor(String author) {
-        mAuthor = author;
-    }
-
-    public String getTime() {
-        return mTime;
-    }
-
-    public void setTime(String time) {
-        mTime = time;
-    }
-
-    public String getContent() {
-        return mContent;
-    }
-
-    public void setContent(String content) {
-        mContent = content;
-    }
-
-    public List<LikeModel> getLikeModels() {
-        return mLikeModels;
-    }
-
-    public void setLikeModels(List<LikeModel> likeModels) {
-        mLikeModels = likeModels;
-    }
-
-    public static Creator<CommentModel> getCREATOR() {
-        return CREATOR;
-    }
+    private String id; // 该评论的id
+    private String matrixId; // 评论主体的id
+    private String userId; // 评论者id
+    private String photoUrl; // 评论者头像
+    private String name; // 评论者名字
+    private String content; // 评论内容
+    private String time; // 评论时间
+    private String replyNum; // 回复数
+    private String favour; // 点赞数
+    private List<String> mLikeUserId; // 点赞人的id
 
     protected CommentModel(Parcel in) {
-        mId = in.readString();
-        mTag = in.readInt();
-        mIcon = in.readString();
-        mAuthor = in.readString();
-        mTime = in.readString();
-        mContent = in.readString();
-        mLikeModels = in.createTypedArrayList(LikeModel.CREATOR);
+        id = in.readString();
+        matrixId = in.readString();
+        userId = in.readString();
+        photoUrl = in.readString();
+        name = in.readString();
+        content = in.readString();
+        time = in.readString();
+        replyNum = in.readString();
+        favour = in.readString();
+        mLikeUserId = in.createStringArrayList();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mId);
-        dest.writeInt(mTag);
-        dest.writeString(mIcon);
-        dest.writeString(mAuthor);
-        dest.writeString(mTime);
-        dest.writeString(mContent);
-        dest.writeTypedList(mLikeModels);
+        dest.writeString(id);
+        dest.writeString(matrixId);
+        dest.writeString(userId);
+        dest.writeString(photoUrl);
+        dest.writeString(name);
+        dest.writeString(content);
+        dest.writeString(time);
+        dest.writeString(replyNum);
+        dest.writeString(favour);
+        dest.writeStringList(mLikeUserId);
     }
 
     @Override
@@ -115,4 +64,84 @@ public class CommentModel implements Parcelable {
             return new CommentModel[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMatrixId() {
+        return matrixId;
+    }
+
+    public void setMatrixId(String matrixId) {
+        this.matrixId = matrixId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getReplyNum() {
+        return replyNum;
+    }
+
+    public void setReplyNum(String replyNum) {
+        this.replyNum = replyNum;
+    }
+
+    public String getFavour() {
+        return favour;
+    }
+
+    public void setFavour(String favour) {
+        this.favour = favour;
+    }
+
+    public List<String> getLikeUserId() {
+        return mLikeUserId;
+    }
+
+    public void setLikeUserId(List<String> likeUserId) {
+        mLikeUserId = likeUserId;
+    }
 }
