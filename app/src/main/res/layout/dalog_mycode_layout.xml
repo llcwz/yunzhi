@@ -16,10 +16,10 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photo_view"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/default_user_avatar"
         />
 
@@ -29,9 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/photo_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:textColor="#333333"
-        android:textSize="13sp"
+        android:textSize="23sp"
         />
 
     <ImageView
@@ -42,7 +42,20 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/black"/>
+
+    <TextView
+        android:text="扫码关注我的课程"
+        android:id="@+id/tick_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/qrcode_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/grey_600"
+        android:textSize="28sp"
+        android:layout_marginBottom="20dp"
+        />
 
 </RelativeLayout>
