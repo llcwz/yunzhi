@@ -240,7 +240,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
 
     @Override
     protected void initData() {
-
         
         /**
          * 设置轮播风格

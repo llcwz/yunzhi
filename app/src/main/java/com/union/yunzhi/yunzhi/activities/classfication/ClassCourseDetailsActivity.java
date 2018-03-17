@@ -174,10 +174,10 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
 
                 //LogUtils.d("KKK","滚动监听");
                 //手指上滑
-                if((y>=(hiddenView.getHeight()-200))&&y-oldy>8){
+                if((y>=(hiddenView.getHeight()-20))&&y-oldy>8){
                     if(hiddenView.getVisibility()==View.VISIBLE){
                         LogUtils.d("KKK","执行View隐藏");
-                        //HiddenAnimUtils.newInstance(getBaseContext(),224).closeAnimate(hiddenView);
+                        HiddenAnimUtils.newInstance(getBaseContext(),224).closeAnimate(hiddenView);
                         hiddenView.setVisibility(View.GONE);
                         HiddenAnimUtils.newInstance(getBaseContext(),48).openAnimate(showView);
                     }
@@ -186,7 +186,6 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
                         LogUtils.d("KKK","执行View显现");
                         HiddenAnimUtils.newInstance(getBaseContext(),224).openAnimate(hiddenView);
                     }
-                    //HiddenAnimUtils.newInstance(getBaseContext(),48).closeAnimate(showView);
                     showView.setVisibility(View.GONE);
                 }else{
 
