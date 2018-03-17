@@ -110,7 +110,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
 
         //顶部搜索栏
         mToor= (LinearLayout) view.findViewById(R.id.toor);
-        load= (CircleImageView) view.findViewById(R.id.cv_load);
+        load= (CircleImageView) view.findViewById(R.id.cv_portrait);
         qrcode= (CircleImageView) view.findViewById(R.id.cv_qrcode);
         load.setVisibility(View.GONE);
         qrcode.setVisibility(View.GONE);
@@ -240,7 +240,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
 
     @Override
     protected void initData() {
-
         
         /**
          * 设置轮播风格

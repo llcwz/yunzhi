@@ -168,6 +168,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
          * 其第二个参数“48”为View的高度，单位为dp
          * 但是不能通过View.getHeight()获得，view 对象动态渲染高度会有变化
          */
+
 //        mMyScrollView.setOnScollChangedListener(new MyScrollView.OnScollChangedListener() {
 //            @Override
 //            public void onScrollViewChanged(MyScrollView scrollView, int x, int y, int oldx, int oldy) {
@@ -193,6 +194,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
 //                }
 //            }
 //        });
+
 
         //请求并适配页面数据
         requestAllData(courseid,teacherid);
