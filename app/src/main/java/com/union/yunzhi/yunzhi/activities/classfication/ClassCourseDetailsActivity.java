@@ -60,6 +60,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
     //课程简介
     private TextView mCollapsibleTextView;
     private StringBuilder mLongText;
+    private ConstraintLayout mConstraintLayout;
 
     //老师介绍
     private TextView mCollapsibleTextView1;
@@ -112,9 +113,10 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
         share= (RoundedImageView) findViewById(R.id.rImagV_share);
         xback= (RoundedImageView) findViewById(R.id.rImgV_back_hidden);
         xshare= (RoundedImageView) findViewById(R.id.rImgV_share_hidden);
-        back.setOnClickListener(this);
-        share.setOnClickListener(this);
+        back.setOnClickListener(this);xback.setOnClickListener(this);
+        share.setOnClickListener(this);xshare.setOnClickListener(this);
         play.setOnClickListener(this);
+
 
 
         /**
@@ -135,6 +137,8 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
         tv1= (TextView) findViewById(R.id.tv_course_show1);
         tv2= (TextView) findViewById(R.id.tv_course_show2);
         tv3= (TextView) findViewById(R.id.tv_course_show3);
+        mConstraintLayout= (ConstraintLayout) findViewById(R.id.layout_details_class_state);
+        mConstraintLayout.setOnClickListener(this);
         //TODO 老师简介部分等待添加其他的元素
 
 
@@ -309,6 +313,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
         switch (v.getId()){
 
             case R.id.btn_enter_course:
+            case R.id.layout_details_class_state:
                 Intent intent=new Intent(ClassCourseDetailsActivity.this,ClassCourseFileActivity.class);
                 startActivity(intent);
                 break;

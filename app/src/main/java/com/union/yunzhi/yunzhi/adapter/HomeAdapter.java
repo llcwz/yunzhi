@@ -159,7 +159,6 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
 
             mTitles = (TextView) itemView.findViewById(R.id.tv_titles);
             mIcon = (CircleImageView) itemView.findViewById(R.id.iv_icon);
-            mArrow = (ImageView) itemView.findViewById(R.id.iv_arrow);
 
 
             //这里要做动态初始化，预留出模板
