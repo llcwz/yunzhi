@@ -241,7 +241,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     @Override
     protected void initData() {
 
-
+        
         /**
          * 设置轮播风格
          * 设置图片加载器 设置图片集合 设置标题集合 设置动画效果
