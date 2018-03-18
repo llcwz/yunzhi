@@ -8,12 +8,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
+import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
+import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.communication.PostDetailsActivity;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.fragment.communication.CommentDialogFragment;
+import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
+import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.List;
 
@@ -27,12 +33,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CommentAdapter extends MyAdapter<CommentModel> {
 
     private Context mContext;
-    private AdapterListener<CommentModel> mListener;
 
     public CommentAdapter(Context context, List<CommentModel> data, AdapterListener<CommentModel> listener) {
         super(data,listener);
         mContext = context;
-        mListener = listener;
     }
 
     @Override
@@ -51,6 +55,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         private CircleImageView mIcon;
         private TextView mAuthor;
         private TextView mTime;
+        
         private ImageView mReply;
         private ImageView mLike;
         private TextView mLikeCount; // 点赞数
@@ -85,7 +90,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         public void onClick(View v) {
             if (mUserManager.hasLogined()) { // 用户登录了
                 switch (v.getId()) {
-                    case R.id.iv_comment_reply:
+                    case R.id.iv_comment_like: // 点赞评论
                         LikeUtils likeUtils = LikeUtils.newInstance(data.getId(),
                                 CommunicationConstant.LIKE_TAG_COMMENT,
                                 mUserManager.getUser(),
@@ -94,14 +99,15 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
                                 mLikeCount);
                         likeUtils.iLike(data.getLikeUserId());
                         break;
-                    case R.id.iv_comment_like:
-                        CommentDialogFragment.newInstance();
+                    case R.id.iv_comment_reply: // 回复评论
+                        CommentDialogFragment.newInstance(data.getId());
                         break;
                 }
             } else { // 用户没登录
                 Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
 }
