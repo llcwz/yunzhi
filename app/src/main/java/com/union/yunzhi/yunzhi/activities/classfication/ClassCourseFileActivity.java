@@ -40,7 +40,7 @@ public class ClassCourseFileActivity extends ActivityM {
         mFragments.add(ClassTestFragment.newInstance());
         mList.add(getCustomTabEntity("课程",R.drawable.select_24dp,R.drawable.unselect_24dp));
         mList.add(getCustomTabEntity("交流",R.drawable.select_24dp,R.drawable.unselect_24dp));
-        mList.add(getCustomTabEntity("测试",R.drawable.select_24dp,R.drawable.unselect_24dp));
+        mList.add(getCustomTabEntity("测评",R.drawable.select_24dp,R.drawable.unselect_24dp));
     }
 
     @Override

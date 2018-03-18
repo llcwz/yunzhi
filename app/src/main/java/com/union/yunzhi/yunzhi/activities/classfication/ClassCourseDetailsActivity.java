@@ -1,6 +1,8 @@
 package com.union.yunzhi.yunzhi.activities.classfication;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,11 +20,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.union.yunzhi.common.app.ActivityM;
-import com.union.yunzhi.common.helper.HiddenAnimUtils;
-import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.util.Utils;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.common.widget.MyScrollView;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 import com.union.yunzhi.factories.moudles.classfication.beans.details.BaseDetailsBean;
@@ -94,6 +92,18 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
         courseid= (String) bundle.get(ClassConst.COURSEID);
         teacherid=(String) bundle.get(ClassConst.TEACHERID);
         return super.initArgs(bundle);
+    }
+
+    @Override
+    protected void initWindows() {
+        super.initWindows();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 
     @Override

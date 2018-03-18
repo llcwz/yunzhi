@@ -2,6 +2,7 @@ package com.union.yunzhi.yunzhi.fragment.main;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -19,9 +20,10 @@ import android.widget.Toast;
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.live.beans.LiveBean;
 import com.union.yunzhi.factories.moudles.live.SpacesItemDecoration;
+import com.union.yunzhi.factories.moudles.live.beans.LiveBean;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.SearchActivity;
 import com.union.yunzhi.yunzhi.adapter.LiveShowAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -30,14 +32,17 @@ import com.youth.banner.Transformer;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LiveFragment extends FragmentM {
+public class LiveFragment extends FragmentM implements View.OnClickListener{
 
 
-    private Context contex;
-    private TextView mTextView;//搜索栏
+    private Context context;
+    private LinearLayout mToor;
+    private CircleImageView portrait,qrcode;
     private HorizontalScrollView mHorizontalScrollView;//水平分类条
     private LinearLayout mLinearLayout;//水平分类条包含的布局
     private Banner mBanner;//轮播推荐
@@ -60,7 +65,7 @@ public class LiveFragment extends FragmentM {
         mTitle=new ArrayList<>();
         images=new ArrayList<>();
         list=new ArrayList<>();
-        contex=getActivity();
+        context=getActivity();
 
         //滚动条测试数据
         mTitle.add("关注");mTitle.add("热课");mTitle.add("考研");mTitle.add("计算机");
@@ -73,14 +78,24 @@ public class LiveFragment extends FragmentM {
         images.add(R.mipmap.cc);
 
         //直播显示测试数据
-        list.add(new LiveBean(contex,R.mipmap.timg1));list.add(new LiveBean(contex,R.mipmap.timg2));list.add(new LiveBean(contex,R.mipmap.timg3));
-        list.add(new LiveBean(contex,R.mipmap.timg4));list.add(new LiveBean(contex,R.mipmap.timg5));list.add(new LiveBean(contex,R.mipmap.timg6));
-        list.add(new LiveBean(contex,R.mipmap.timg7));list.add(new LiveBean(contex,R.mipmap.timg8));list.add(new LiveBean(contex,R.mipmap.timg9));
-        list.add(new LiveBean(contex,R.mipmap.timg10));
+        list.add(new LiveBean(context,R.mipmap.timg1));list.add(new LiveBean(context,R.mipmap.timg2));list.add(new LiveBean(context,R.mipmap.timg3));
+        list.add(new LiveBean(context,R.mipmap.timg4));list.add(new LiveBean(context,R.mipmap.timg5));list.add(new LiveBean(context,R.mipmap.timg6));
+        list.add(new LiveBean(context,R.mipmap.timg7));list.add(new LiveBean(context,R.mipmap.timg8));list.add(new LiveBean(context,R.mipmap.timg9));
+        list.add(new LiveBean(context,R.mipmap.timg10));
     }
 
     @Override
     protected void initWidget(View view) {
+
+        //顶部搜索栏
+        mToor= (LinearLayout) view.findViewById(R.id.live_toolbar);
+        portrait= (CircleImageView) view.findViewById(R.id.cv_portrait);
+        qrcode= (CircleImageView) view.findViewById(R.id.cv_qrcode);
+        portrait.setVisibility(View.GONE);
+        qrcode.setVisibility(View.GONE);
+        mToor.setOnClickListener(this);
+
+
         mHorizontalScrollView= (HorizontalScrollView) view.findViewById(R.id.horizontal_view);
         mLinearLayout= (LinearLayout) view.findViewById(R.id.layout_horizontal_view);
         mBanner= (Banner) view.findViewById(R.id.banner_live);
@@ -210,4 +225,14 @@ public class LiveFragment extends FragmentM {
         Toast.makeText(getContext(),"点击了"+mTitle.get(positon),Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.live_toolbar:
+                startActivity(new Intent(context, SearchActivity.class));
+                break;
+            default:
+                break;
+        }
+    }
 }

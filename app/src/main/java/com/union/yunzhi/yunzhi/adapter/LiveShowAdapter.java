@@ -87,7 +87,7 @@ public  class LiveShowAdapter extends MyAdapter<LiveBean> {
             //teacherName.setText(data.teacherName);
             //lineCount.setText(String.valueOf(data.lineCount));
 
-            mImageView.setOnClickListener(new View.OnClickListener() {
+            mLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //TODO 进入直播的点击事件
