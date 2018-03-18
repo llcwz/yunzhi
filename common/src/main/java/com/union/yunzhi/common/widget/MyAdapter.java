@@ -169,6 +169,26 @@ public abstract class MyAdapter<Datas> extends RecyclerView.Adapter<MyAdapter.My
 
     }
 
+
+    /**
+     * 插入末尾
+     * @param data
+     */
+    public void addLast(Datas data){
+        mDataList.add(mDataList.size(),data);
+        notifyItemInserted(mDataList.size());
+    }
+
+    /**
+     * 插入指定位置
+     * @param data
+     * @param postion
+     */
+    public void add(Datas data,int postion){
+        mDataList.add(postion,data);
+        notifyItemInserted(postion);
+    }
+
     /**
      * 插入一堆数据，并通知这段集合更新
      *
