@@ -96,11 +96,10 @@
 
             <TextView
                 android:id="@+id/tv_no_comment"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/len_16"
                 android:layout_gravity="center_horizontal"
-                android:text="暂无评论，抢个抢沙发"
                 android:textSize="@dimen/font_16"
                 android:textStyle="bold"
                 android:visibility="gone"/>

@@ -3,6 +3,7 @@ package com.union.yunzhi.yunzhi.fragment.communication;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -18,37 +19,41 @@ import com.union.yunzhi.yunzhi.R;
  */
 
 public class CommentDialogFragment extends DialogFragment implements View.OnClickListener {
+    public static final String TAG = "CommentDialogFragment";
+    public static final String EXTRA_ID = "id";
+    public static final String EXTRA_NAME = "name";
+    private String mId; // 主体的id
+    private String mName; // 主体名字
     private View mView;
     private EditText mContent;
     private TextView mSend;
 
-    private OnAddCommentListener mOnAddCommentListener;
-    public static CommentDialogFragment newInstance() {
+    private OnGetCommentContentListener mOnGetCommentContentListener;
+
+    public static CommentDialogFragment newInstance(String id,String name) {
         CommentDialogFragment commentDialogFragment = new CommentDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(EXTRA_ID, id);
+        commentDialogFragment.setArguments(bundle);
         return commentDialogFragment;
     }
 
-    @Override
-    public void onClick(View v) {
-        String content = mContent.getText().toString();
-        if (TextUtils.isEmpty(content)) {
-            Toast.makeText(getActivity(), "请先输入文字", Toast.LENGTH_SHORT).show();
-        } else {
-            mOnAddCommentListener.getContent(content);
-        }
-        dismiss();
-    }
-
     // 数据回传
-    public interface OnAddCommentListener {
-        void getContent(String content);
+    public interface OnGetCommentContentListener {
+        void getContent(String id,String name,String content);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mOnAddCommentListener = (OnAddCommentListener) getActivity();
+        mOnGetCommentContentListener = (OnGetCommentContentListener) getActivity();
+        mId = (String) getArguments().get(EXTRA_ID);
+        mName = (String) getArguments().get(EXTRA_NAME);
         mView = View.inflate(getActivity(), R.layout.communication_fragment_comment, null);
         mContent = (EditText) mView.findViewById(R.id.et_content);
         mSend = (TextView) mView.findViewById(R.id.tv_send);
@@ -56,5 +61,16 @@ public class CommentDialogFragment extends DialogFragment implements View.OnClic
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(mView);
         return builder.create();
+    }
+
+    @Override
+    public void onClick(View v) {
+        String content = mContent.getText().toString();
+        if (TextUtils.isEmpty(content)) {
+            Toast.makeText(getActivity(), "请先输入文字", Toast.LENGTH_SHORT).show();
+            dismiss();
+        } else {
+            mOnGetCommentContentListener.getContent(mId,mName,content);
+        }
     }
 }

@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,15 +41,18 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PostDetailsActivity extends ActivityM implements View.OnClickListener, CommentDialogFragment.OnAddCommentListener {
+public class PostDetailsActivity extends ActivityM implements View.OnClickListener, CommentDialogFragment.OnGetCommentContentListener {
     private static final String TAG = "PostDetailsActivity";
     private UserManager mUserManager;
     private UserModel mUser;
     private PostModel mPostModel;
+
     private List<CommentModel> mCommentModels; // 评论
     private CommentAdapter mAdapter;
+
     private AppBarLayout mAppBar;
     private Toolbar mToolbar;
+
     private CircleImageView mIcon;
     private TextView mAuthor;
     private TextView mTime;
@@ -60,8 +62,6 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     private ImageView mLike; // 点赞图标
     private TextView mLikeCounts; // 点赞数
     private ImageView mSendComment; // 发送评论
-
-    private String mReply;
 
     public static void newInstance(Context context, PostModel postModel) {
         Intent intent = new Intent(context, PostDetailsActivity.class);
@@ -86,6 +86,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
 
         mAppBar = (AppBarLayout) findViewById(R.id.app_bar_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
         mIcon = (CircleImageView) findViewById(R.id.ci_post_icon);
         mAuthor = (TextView) findViewById(R.id.tv_communication_author);
         mTime = (TextView) findViewById(R.id.tv_post_time);
@@ -96,49 +97,6 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         mLikeCounts = (TextView) findViewById(R.id.tv_post_like);
         mSendComment = (ImageView) findViewById(R.id.iv_post_comment);
 
-        getData();
-    }
-
-    // 根据tag获取不同的帖子数据
-    private void getData() {
-        DialogManager.getInstnce().showProgressDialog(this);
-        RequestCenter.requestComment(mPostModel.getId(),
-                new DisposeDataListener() {
-                    @Override
-                    public void onSuccess(Object responseObj) {
-                        DialogManager.getInstnce().dismissProgressDialog();
-
-                        BaseCommentModel baseCommentModel = (BaseCommentModel) responseObj;
-                        if (baseCommentModel.ecode == CommunicationConstant.ECODE) {
-                            mCommentModels = baseCommentModel.data;
-                            if (mAdapter == null) { // 已经有数据
-                                initAdapter(mCommentModels);
-                            } else { // 请求刷新
-
-                            }
-                            for (CommentModel commentModel : mCommentModels) {
-                                LogUtils.d("commentMessage", commentModel.toString());
-                            }
-                        } else {
-                            Toast.makeText(PostDetailsActivity.this, "" + baseCommentModel.emsg, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Object reasonObj) {
-                        DialogManager.getInstnce().dismissProgressDialog();
-                        OkHttpException okHttpException = (OkHttpException) reasonObj;
-                        if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(PostDetailsActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -1){
-                            Toast.makeText(PostDetailsActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -2) {
-                            Toast.makeText(PostDetailsActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -3) {
-                            Toast.makeText(PostDetailsActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     // 初始化数据
@@ -168,11 +126,24 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
 
     @Override
     protected void initData() {
+        // 获取数据
+        CommentUtils.newInstance(mUser, this).getComment(mPostModel.getId(),
+                new CommentUtils.OnRequestCommentListener() {
+                    @Override
+                    public void getComments(List<CommentModel> commentModels) {
+                        if (commentModels.size() != 0) {
+                            mCommentModels = commentModels;
+                            initAdapter(mCommentModels);
+                            MeUtils.showNoMessage(mCommentModels.size(), mNoComment, mRecyclerView, "暂无评论，快抢个沙发");
+                        }
+                    }
+                });
         if (!TextUtils.isEmpty(mPostModel.getTitle())) {
             mToolbar.setTitle(mPostModel.getTitle());
         } else {
             mToolbar.setTitle("测试标题");
         }
+
         // 根据头像改变背景颜色
         MeUtils.showPalette(this, mPostModel.getPhotoUrl(), new MeUtils.OnShowPalleteListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -214,8 +185,8 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         // 用户登录才能操作
         if (mUserManager.hasLogined()) { // 如果用户登录了
             switch (view.getId()) {
-                case R.id.tv_send_comment: // 发表评论
-                    CommentDialogFragment.newInstance();
+                case R.id.tv_send_comment: // 评论帖子
+                    CommentDialogFragment.newInstance(mPostModel.getId(), mPostModel.getName());
                     break;
                 case R.id.iv_post_like: // 点赞帖子
                     LikeUtils likeUtils = LikeUtils.newInstance(mPostModel.getId(),
@@ -234,13 +205,25 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     }
 
     /**
-     * @function 获取评论内容
+     * @function 获取新添加的评论
+     * @param id
      * @param content
      */
     @Override
-    public void getContent(String content) {
-        mReply = content;
-        // TODO: 2018/3/17 发表评论
+    public void getContent(String id,String name,String content) {
+        if (!id.equals(mPostModel.getId())) { // 如果不是评论帖子，那么就是评论评论，所以要追加“XXX评论了XXX：”作为评论内容
+            content = "回复 " + name + " 的评论：" + content;
+        }
+        CommentUtils.newInstance(mUser, this).addComment(id,
+                content,
+                new CommentUtils.OnAddCommentListener() {
+                    @Override
+                    public void getComment(CommentModel commentModel) {
+                        if (commentModel != null) {
+                            mAdapter.add(commentModel, mCommentModels.size());
+                        }
+                    }
+                });
     }
 
 

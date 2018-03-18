@@ -13,12 +13,14 @@ import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
 import com.union.yunzhi.factories.moudles.classfication.beans.question.BaseQuestionBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.question.QuestionBean;
+import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.classfication.QuestionDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.ClassQuestionAdapter;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
+import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.ArrayList;
@@ -45,11 +47,6 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
         return classQuestionFragment;
     }
 
-    public static ClassQuestionFragment newInstance() {
-
-        return new ClassQuestionFragment();
-    }
-
     @Override
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
@@ -65,7 +62,6 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
     protected void initWidget(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rec_question);
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.float_action_button);
-
         getData();
     }
 
@@ -81,6 +77,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
                         BaseQuestionBean baseQuestionBean = (BaseQuestionBean) responseObj;
                         if (baseQuestionBean.ecode == ClassConst.ECODE) {
                             mQuestionBeen = baseQuestionBean.data;
+                            initAdapter(mQuestionBeen);
                         } else {
                             Toast.makeText(getActivity(), "" + baseQuestionBean.emsg, Toast.LENGTH_SHORT).show();
                         }
@@ -107,7 +104,6 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
 
     @Override
     protected void initData() {
-        initAdapter();
         CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -115,7 +111,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
     }
 
     // 初始化适配器
-    private void initAdapter() {
+    private void initAdapter(List<QuestionBean> questionBeen) {
 
         mAdapter = new ClassQuestionAdapter(getActivity(), mQuestionBeen, new MyAdapter.AdapterListener<QuestionBean>() {
             @Override
@@ -143,11 +139,22 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
     // 点击事件
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.float_action_button: // 发起问题
-
-                break;
-            default:
+        UserManager userManager = UserManager.getInstance();
+        if (userManager.hasLogined()) {
+            switch (view.getId()) {
+                case R.id.float_action_button: // 发起问题
+                    ClassAddQuestionDialogFragment classAddQuestionDialogFragment = ClassAddQuestionDialogFragment.newInstance();
+                    classAddQuestionDialogFragment.show(getChildFragmentManager(),ClassAddQuestionDialogFragment.TAG);
+                    break;
+                default:
+            }
+        } else {
+            Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void notifyQuestion(QuestionBean questionBean) {
+        mAdapter.add(questionBean);
+    }
+
 }

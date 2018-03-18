@@ -30,6 +30,8 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.app.PermissionsFragment;
 import com.union.yunzhi.common.constant.Constant;
 import com.union.yunzhi.common.util.LogUtils;
+import com.union.yunzhi.common.util.NetWorkUtil;
+import com.union.yunzhi.common.util.ToastUtils;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.home.bodyModle;
 import com.union.yunzhi.factories.moudles.home.homeBaseModle;
@@ -356,16 +358,24 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 
             @Override
             public void onFailure(Object reasonObj) {
-                Toast.makeText(getContext(),"请求失败，请检查网络状况",Toast.LENGTH_SHORT).show();
-                mShowErrorLayout.setVisibility(View.VISIBLE);
-                mShowSuccessLayout.setVisibility(View.GONE);
-                Glide.with(getContext())
-                        .load(R.drawable.error)
-                        .asGif()
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        .into(mGIF);
-                mRefreshLayout.finishRefresh(2000,false);
+//                Toast.makeText(getContext(),"请求失败，请检查网络状况",Toast.LENGTH_SHORT).show();
+//                mShowErrorLayout.setVisibility(View.VISIBLE);
+//                mShowSuccessLayout.setVisibility(View.GONE);
+//                Glide.with(getContext())
+//                        .load(R.drawable.error)
+//                        .asGif()
+//                        .centerCrop()
+//                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                        .into(mGIF);
+//                mRefreshLayout.finishRefresh(2000,false);
+                if(!NetWorkUtil.isNetworkConn(getContext())){
+
+                    ToastUtils.showSnackbar(toolbarLayout,"无法连接到网络,请检查网络设置");
+
+
+                    mRefreshLayout.finishRefresh(1000,false);
+
+                }
             }
         });
     }

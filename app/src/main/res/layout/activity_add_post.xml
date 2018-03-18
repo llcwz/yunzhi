@@ -39,10 +39,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black_alpha_48"/>
-
-            <android.support.v4.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
             <EditText
                 android:id="@+id/et_post_content"
                 android:layout_width="match_parent"
@@ -50,10 +46,12 @@
                 android:padding="@dimen/len_8"
                 android:gravity="start"
                 android:hint="内容"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"
                 android:lineSpacingExtra="@dimen/len_2"
                 android:lineSpacingMultiplier="1.2"
                 android:background="@null"/>
-            </android.support.v4.widget.NestedScrollView>
+
         </LinearLayout>
 
 

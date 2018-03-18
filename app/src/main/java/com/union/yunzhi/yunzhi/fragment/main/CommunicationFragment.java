@@ -135,12 +135,17 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
      */
     private void addPost(int tag) {
         if (mUserManager.hasLogined()) {
-            AddPostActivity.newInstance(getActivity(), tag);
+            Intent intent = new Intent(getActivity(), AddPostActivity.class);
+            intent.putExtra(AddPostActivity.TAG, mTag);
+            startActivityForResult(intent, AddPostActivity.REQUEST);
+//            AddPostActivity.newInstance(getActivity(), tag);
         } else {
             Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
         }
     }
 
+
+    // 适配器
     private class CommunicationPagerAdapter extends FragmentPagerAdapter {
         public CommunicationPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -159,6 +164,23 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
         @Override
         public CharSequence getPageTitle(int position) {
             return mTabs.get(position);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case AddPostActivity.REQUEST:
+                if (resultCode == AddPostActivity.RESULT_OK) {
+                    if (data != null) {
+
+                        PostModel postModel = data.getParcelableExtra(AddPostActivity.RESULT_POST);
+                        LogUtils.d("notifyPostList",postModel.toString());
+                        mFragments.get(mTag).notifyList(postModel);
+                    }
+                }
+                break;
+            default:
         }
     }
 }

@@ -2,6 +2,8 @@ package com.union.yunzhi.yunzhi.fragment.communication;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.util.ArraySet;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,23 +22,25 @@ import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
 import com.union.yunzhi.yunzhi.activities.communication.PostDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.PostAdapter;
+import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by CrazyGZ on 2018/3/9.
  */
 
-public class PostFragment extends FragmentM implements AddPostActivity.OnAddPostListener {
+public class PostFragment extends FragmentM  {
 
     private static final String FRAGMENT_TAG = "TAG";
     private int mTag; // 标记fragment的生成以及相应的帖子
     private List<PostModel> mPostModels = new ArrayList<>();
-    private TextView mNoPost;
+    private NestedScrollView mNoPost;
     private RecyclerView mRecyclerView;
     private PostAdapter mAdapter;
 
@@ -63,49 +67,9 @@ public class PostFragment extends FragmentM implements AddPostActivity.OnAddPost
 
     @Override
     protected void initWidget(View view) {
-        mNoPost = (TextView) view.findViewById(R.id.tv_no_post);
+        mNoPost = (NestedScrollView) view.findViewById(R.id.layout_no_post);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
 
-        getData(mTag);
-    }
-
-    // 根据tag获取不同的帖子数据
-    private void getData(int tag) {
-        DialogManager.getInstnce().showProgressDialog(getActivity());
-        RequestCenter.requestPost(tag,
-                new DisposeDataListener() {
-                    @Override
-                    public void onSuccess(Object responseObj) {
-                        DialogManager.getInstnce().dismissProgressDialog();
-
-                        BaseCommunicationModel baseCommunicationModel = (BaseCommunicationModel) responseObj;
-                        if (baseCommunicationModel.ecode == CommunicationConstant.ECODE) {
-                            mPostModels = baseCommunicationModel.data;
-                            initAdapter(mPostModels);
-                            MeUtils.showNoMessage(mPostModels.size(), mNoPost, mRecyclerView, "暂无帖子，快来占领地盘吧");
-                            for (PostModel postModel : mPostModels) {
-                                LogUtils.d("postMessage", postModel.toString());
-                            }
-                        } else {
-                            Toast.makeText(getActivity(), "" + baseCommunicationModel.emsg, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Object reasonObj) {
-                        DialogManager.getInstnce().dismissProgressDialog();
-                        OkHttpException okHttpException = (OkHttpException) reasonObj;
-                        if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(getActivity(), "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -1){
-                            Toast.makeText(getActivity(), "网络连接错误", Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -2) {
-                            Toast.makeText(getActivity(), "解析错误" , Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -3) {
-                            Toast.makeText(getActivity(), "未知错误", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     // 初始化适配器和数据
@@ -133,21 +97,44 @@ public class PostFragment extends FragmentM implements AddPostActivity.OnAddPost
 
             }
         });
+    }
 
+
+    // 获取帖子
+    private void getData() {
+        OpinionUtils.newInstance(null, getActivity()).getPosts(mTag, new OpinionUtils.OnRequestPostListener() {
+            @Override
+            public void getPosts(List<PostModel> postModels) {
+                if (postModels.size() != 0) {
+                    mPostModels = postModels;
+                    initAdapter(mPostModels);
+                } else {
+                    noPost(mPostModels);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+        getData();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
     }
 
 
-    @Override
-    protected void initData() {
-
+    // 提示没有帖子
+    private void noPost(List<PostModel> postModels) {
+        if (postModels.size() == 0) {
+            mNoPost.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        } else {
+            mNoPost.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
-    @Override
-    public void getPost(int tag, PostModel postModel) {
-        FragmentManager fragmentManager = getChildFragmentManager();
-        PostFragment fragment = (PostFragment) fragmentManager.findFragmentById(tag);
-        fragment.mAdapter.add(postModel);
+    public void notifyList(PostModel postModel) {
+        mAdapter.add(postModel);
     }
 }

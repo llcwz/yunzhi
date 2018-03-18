@@ -327,6 +327,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
             case R.id.btn_enter_course:
             case R.id.layout_details_class_state:
                 Intent intent=new Intent(ClassCourseDetailsActivity.this,ClassCourseFileActivity.class);
+                intent.putExtra(ClassCourseFileActivity.KEY, courseid);
                 startActivity(intent);
                 break;
             case R.id.rImgV_back_hidden:

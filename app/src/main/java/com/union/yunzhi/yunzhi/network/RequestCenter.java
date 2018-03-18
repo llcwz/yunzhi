@@ -205,6 +205,21 @@ public class RequestCenter {
     }
 
     /**
+     * @function 添加评论
+     * @param matrixId
+     * @param userId
+     * @param content
+     * @param listener
+     */
+    public static void requestAddComment(String matrixId, String userId, String content, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("matrixId", matrixId);
+        params.put("userId", userId);
+        params.put("content", content);
+        RequestCenter.postRequest(HttpConstants.ADD_COMMENT_URL, params, listener, BaseCommentModel.class);
+    }
+
+    /**
      * @function 上传点赞
      * @param postOrCommentOrQuestionId 给点赞的那个东西的id
      * @param account 点赞者的id
@@ -215,31 +230,6 @@ public class RequestCenter {
         params.put("tag", tag);
         params.put("mAccount", account);
         RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, null);
-    }
-
-    /**
-     * @function 请求评论
-     * @param account 评论者的id
-     * @param postId 评论的帖子
-     * @param id 这条评论的id
-     * @param icon
-     * @param author
-     * @param time
-     * @param content
-     * @param listener
-     */
-    public static void requestComment(String account,String postId, String id,int tag, String icon, String author, String time, String content, DisposeDataListener listener) {
-        RequestParams params = new RequestParams();
-        params.put("account", account);
-        params.put("mId", postId);
-        params.put("id", id);
-        params.put("mTag","" +tag);
-        params.put("mIcon", icon);
-        params.put("mAuthor", author);
-        params.put("mTime", time);
-        params.put("mContent", content);
-        params.put("mLikeModels", "");
-        RequestCenter.postRequest(HttpConstants.ADD_COMMENT_URL, params, listener, BaseCommentModel.class);
     }
 
 
