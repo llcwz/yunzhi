@@ -2,7 +2,6 @@ package com.union.yunzhi.yunzhi.activities.communication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -10,21 +9,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.ActivityM;
-import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
-import com.union.yunzhi.yunzhi.fragment.communication.PostFragment;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
 
 public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClickListener {
-    public static final int KEY_POST = 1;
+    public static final int REQUEST = 1;
     public static final String RESULT_POST = "addPost";
     public static final String TAG = "tag";
 
     private int mTag; // fragment标签
-    private OnAddPostListener mOnAddPostListener;
     private Intent mIntent;
     private UserModel mUser;
     private Toolbar mToolbar;
@@ -37,6 +34,7 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
         intent.putExtra(AddPostActivity.TAG, tag);
         context.startActivity(intent);
     }
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_add_post;
@@ -68,11 +66,14 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
             } else if (TextUtils.isEmpty(content)) {
                 Toast.makeText(this, "快写些话吧", Toast.LENGTH_SHORT).show();
             } else {
+                // 发起添加帖子的请求
                 OpinionUtils opinionUtils = OpinionUtils.newInstance(mUser, this);
-                opinionUtils.addPost(mTag,title,content, new OpinionUtils.NotifyPostListener() {
+                opinionUtils.addPost(mTag,title,content, new OpinionUtils.OnAddPostListener() {
                     @Override
                     public void getPost(PostModel postModel) {
-//                        mOnAddPostListener.getPost(mTag, postModel);
+                        getIntent().putExtra(RESULT_POST, postModel);
+                        setResult(RESULT_OK);
+                        LogUtils.d("AddPostActivity", postModel.toString());
                         finish();
                     }
                 });
@@ -80,8 +81,4 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
         return false;
     }
 
-
-    public interface OnAddPostListener {
-        void getPost(int tag,PostModel postModel);
-    }
 }

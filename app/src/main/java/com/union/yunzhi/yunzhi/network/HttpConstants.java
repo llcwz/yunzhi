@@ -43,10 +43,11 @@ public class HttpConstants {
     //请求获取评论
     public static final String COMMENT_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/allNote";
 
+
 //    //请求获取
 //    public static final String  = "";
-//
-//    //请求获取
+
+    //    //请求获取
 //    public static final String  = "";
 
 

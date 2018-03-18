@@ -157,7 +157,7 @@
 
         <activity android:name=".activities.MyQRCodeActivity"/>
         <activity android:name=".activities.me.MyAbilityActivity"/>
-        <activity android:name=".activities.communication.CommentDetailsActivity">
+        <activity android:name=".activities.communication.CommentContentDetailsActivity">
         </activity>
     </application>
 

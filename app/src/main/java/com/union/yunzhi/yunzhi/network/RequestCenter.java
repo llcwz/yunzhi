@@ -205,6 +205,21 @@ public class RequestCenter {
     }
 
     /**
+     * @function 添加评论
+     * @param matrixId
+     * @param userId
+     * @param content
+     * @param listener
+     */
+    public static void requestAddComment(String matrixId, String userId, String content, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("matrixId", matrixId);
+        params.put("userId", userId);
+        params.put("content", content);
+        RequestCenter.postRequest(HttpConstants.ADD_COMMENT_URL, params, listener, BaseCommentModel.class);
+    }
+
+    /**
      * @function 上传点赞
      * @param postOrCommentOrQuestionId 给点赞的那个东西的id
      * @param account 点赞者的id
