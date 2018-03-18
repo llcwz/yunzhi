@@ -15,11 +15,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.union.yunzhi.common.app.ActivityM;
+import com.union.yunzhi.common.util.ToastUtils;
 import com.union.yunzhi.common.util.Utils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
@@ -220,10 +220,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
         RequestCenter.requestCourseDeatails(courseid, teacherid, new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
-
-                Toast.makeText(getBaseContext(),"onSuccess()",Toast.LENGTH_SHORT).show();
-
-
+                
                 BaseDetailsBean bean= (BaseDetailsBean) responseObj;
                 mList=bean.data.teacher;
                 videocoverurl=bean.data.introimgurl;
@@ -308,7 +305,7 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
             }
             @Override
             public void onFailure(Object reasonObj) {
-                Toast.makeText(getBaseContext(),"请求失败xxx",Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(getBaseContext(),"请求失败");
             }
         });
 
