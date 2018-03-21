@@ -55,7 +55,8 @@ public class ClassCourseDetailsActivity extends ActivityM implements View.OnClic
     private TextView mLikeCount,courseName,courseTeacher;
     private ImageButton mLike;
     private ImageView videoCover;
-    private String videocoverurl,videourl,coursename,videoid;
+    private String videocoverurl,videourl,coursename;
+    private int videoid;
     private VideoBean videoBean;
     private BaseCommentModel commentModel;
 

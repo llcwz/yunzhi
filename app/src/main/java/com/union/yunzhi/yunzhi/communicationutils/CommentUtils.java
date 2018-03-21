@@ -10,6 +10,7 @@ import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
+import com.union.yunzhi.factories.okhttp.response.NotCallBackData;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 
@@ -35,7 +36,7 @@ public class CommentUtils {
     }
 
     public interface OnAddCommentListener {
-        void getComment(CommentModel commentModel);
+        void getComment(Boolean result);
     }
 
     public interface OnRequestCommentListener {
@@ -58,11 +59,12 @@ public class CommentUtils {
                     @Override
                     public void onSuccess(Object responseObj) {
                         DialogManager.getInstnce().dismissProgressDialog();
-                        BaseCommentModel baseCommentModel = (BaseCommentModel) responseObj;
-                        if (baseCommentModel.ecode == CommunicationConstant.ECODE) {
-                            listener.getComment(baseCommentModel.data.get(0));
+                        NotCallBackData notCallBackData = (NotCallBackData) responseObj;
+                        if (notCallBackData.getEcode() == CommunicationConstant.ECODE) {
+                            listener.getComment(true);
                         } else {
-                            Toast.makeText(mContext, "" + baseCommentModel.emsg, Toast.LENGTH_SHORT).show();
+                            listener.getComment(false);
+                            Toast.makeText(mContext, "" + notCallBackData.getEmsg(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -86,17 +88,90 @@ public class CommentUtils {
 
     /**
      * @function 获取评论
-     * @param id 评论主体的id
+     * @param matrixId 评论主体的id
      * @param listener 数据回调
      */
-    public void getComment(String id, final OnRequestCommentListener listener) {
+    public void getComment(String matrixId, final OnRequestCommentListener listener) {
         DialogManager.getInstnce().showProgressDialog(mContext);
-        RequestCenter.requestComment(id,
+        RequestCenter.requestComment(matrixId,
                 new DisposeDataListener() {
                     @Override
                     public void onSuccess(Object responseObj) {
                         DialogManager.getInstnce().dismissProgressDialog();
+                        BaseCommentModel baseCommentModel = (BaseCommentModel) responseObj;
+                        if (baseCommentModel.ecode == CommunicationConstant.ECODE) {
+                            listener.getComments(baseCommentModel.data);
+                            for (CommentModel commentModel : baseCommentModel.data) {
+                                LogUtils.d("commentMessage", commentModel.toString());
+                            }
+                        } else {
+                            Toast.makeText(mContext, "" + baseCommentModel.emsg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Object reasonObj) {
+                        DialogManager.getInstnce().dismissProgressDialog();
+                        OkHttpException okHttpException = (OkHttpException) reasonObj;
+                        if (okHttpException.getEcode() == 1) {
+                            Toast.makeText(mContext, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -1){
+                            Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -2) {
+                            Toast.makeText(mContext, "解析错误" , Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -3) {
+                            Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void addReply(String matrixId, String noteId, String replyId, String content, final OnAddCommentListener listener) {
+
+        DialogManager.getInstnce().showProgressDialog(mContext);
+        RequestCenter.requestAddReply(matrixId,
+                noteId,
+                replyId,
+                mUser.getAccount(),
+                content,
+                new DisposeDataListener() {
+                    @Override
+                    public void onSuccess(Object responseObj) {
+                        DialogManager.getInstnce().dismissProgressDialog();
+                        NotCallBackData notCallBackData = (NotCallBackData) responseObj;
+                        if (notCallBackData.getEcode() == CommunicationConstant.ECODE) {
+                            listener.getComment(true);
+                        } else {
+                            listener.getComment(false);
+                            Toast.makeText(mContext, "" + notCallBackData.getEmsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Object reasonObj) {
+                        DialogManager.getInstnce().dismissProgressDialog();
+                        OkHttpException okHttpException = (OkHttpException) reasonObj;
+                        if (okHttpException.getEcode() == 1) {
+                            Toast.makeText(mContext, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -1){
+                            Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -2) {
+                            Toast.makeText(mContext, "解析错误" , Toast.LENGTH_SHORT).show();
+                        } else if (okHttpException.getEcode() == -3) {
+                            Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+    public void getReply(String noteId, final OnRequestCommentListener listener) {
+        DialogManager.getInstnce().showProgressDialog(mContext);
+        RequestCenter.requestReply(noteId,
+                new DisposeDataListener() {
+                    @Override
+                    public void onSuccess(Object responseObj) {
+                        DialogManager.getInstnce().dismissProgressDialog();
                         BaseCommentModel baseCommentModel = (BaseCommentModel) responseObj;
                         if (baseCommentModel.ecode == CommunicationConstant.ECODE) {
                             listener.getComments(baseCommentModel.data);

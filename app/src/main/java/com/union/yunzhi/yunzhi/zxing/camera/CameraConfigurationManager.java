@@ -293,7 +293,7 @@ final class CameraConfigurationManager {
 	 * parameters.get("sharpness-max"); if (maxSharpnessString != null) { try {
 	 * int maxSharpness = Integer.parseInt(maxSharpnessString); if
 	 * (desiredSharpness > maxSharpness) { desiredSharpness = maxSharpness; } }
-	 * catch (NumberFormatException nfe) { Log.w(TAG, "Bad sharpness-max: " +
+	 * catch (NumberFormatException nfe) { Log.w(KEY, "Bad sharpness-max: " +
 	 * maxSharpnessString); } } parameters.set("sharpness", desiredSharpness); }
 	 */
 

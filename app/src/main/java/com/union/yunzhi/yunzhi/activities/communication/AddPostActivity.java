@@ -29,6 +29,16 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
     private EditText mContent;
 
 
+    private static OnGetPostContentListener mListener;
+    public interface OnGetPostContentListener {
+        void getPost(String title, String content);
+    }
+
+    public static void setGetPostListener(OnGetPostContentListener listener) {
+        mListener = listener;
+    }
+
+
     public static void newInstance(Context context, int tag) {
         Intent intent = new Intent(context, AddPostActivity.class);
         intent.putExtra(AddPostActivity.TAG, tag);
@@ -66,17 +76,8 @@ public class AddPostActivity extends ActivityM implements Toolbar.OnMenuItemClic
             } else if (TextUtils.isEmpty(content)) {
                 Toast.makeText(this, "快写些话吧", Toast.LENGTH_SHORT).show();
             } else {
-                // 发起添加帖子的请求
-                OpinionUtils opinionUtils = OpinionUtils.newInstance(mUser, this);
-                opinionUtils.addPost(mTag,title,content, new OpinionUtils.OnAddPostListener() {
-                    @Override
-                    public void getPost(PostModel postModel) {
-                        getIntent().putExtra(RESULT_POST, postModel);
-                        setResult(RESULT_OK);
-                        LogUtils.d("AddPostActivity", postModel.toString());
-                        finish();
-                    }
-                });
+                mListener.getPost(title, content);
+                finish();
             }
         return false;
     }

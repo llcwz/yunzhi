@@ -30,13 +30,16 @@ import java.util.List;
 public class CommentContentDetailsActivity extends ActivityM implements CommentDialogFragment.OnGetCommentContentListener {
 
     public static final String EXTRA_COMMENT_MODEL = "commentModel";
+    private String mNoteId;
+    private String mReplyId;
     private UserManager mUserManager;
     private UserModel mUser;
     private CommentModel mCommentModel;
     private List<CommentModel> mData = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private ReplyAdapter mAdapter;
-    public void newInstance(Context context, CommentModel commentModel) {
+
+    public static void newInstance(Context context, CommentModel commentModel) {
         Intent intent = new Intent(context, CommentContentDetailsActivity.class);
         intent.putExtra(EXTRA_COMMENT_MODEL, commentModel);
         context.startActivity(intent);
@@ -56,6 +59,25 @@ public class CommentContentDetailsActivity extends ActivityM implements CommentD
     }
 
 
+    private void getData() {
+        // 根据评论id获取的评论回复数据
+        CommentUtils.newInstance(mUser, this).getComment(mCommentModel.getId(), new CommentUtils.OnRequestCommentListener() {
+            @Override
+            public void getComments(List<CommentModel> commentModels) {
+                commentModels.add(0, mCommentModel); // 就算没有回复，也确保有这条评论
+                if (mAdapter == null) {
+                    mData = commentModels;
+                    initAdapter(mData);
+                } else { // 重新请求页面
+                    mData.clear();
+                    mData = commentModels;
+                    mAdapter.add(mData);
+                }
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(CommentContentDetailsActivity.this));
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        });
+    }
 
     /**
      * 获取回复
@@ -67,6 +89,8 @@ public class CommentContentDetailsActivity extends ActivityM implements CommentD
             public void onItemClick(MyAdapter.MyViewHolder holder, CommentModel data) {
                 if (mUserManager.hasLogined()) {
                     mUser = MeUtils.getUser();
+                    mNoteId = data.getId();
+                    mReplyId = data.getUserId();
                     CommentDialogFragment.newInstance(data.getId(), data.getName());
                 } else {
                     Toast.makeText(CommentContentDetailsActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
@@ -92,17 +116,8 @@ public class CommentContentDetailsActivity extends ActivityM implements CommentD
 
     @Override
     protected void initData() {
-        // 根据评论id获取的评论回复数据
-        CommentUtils.newInstance(mUser, this).getComment(mCommentModel.getId(), new CommentUtils.OnRequestCommentListener() {
-            @Override
-            public void getComments(List<CommentModel> commentModels) {
-                commentModels.add(0, mCommentModel); // 就算没有回复，也确保有这条评论
-                mData = commentModels;
-                initAdapter(mData);
-            }
-        });
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mAdapter);
+        getData();
+
     }
 
 
@@ -110,15 +125,15 @@ public class CommentContentDetailsActivity extends ActivityM implements CommentD
     @Override
     public void getContent(final String id, String name, String content) {
         content = "回复 " + name + " 的评论：" + content;
-        CommentUtils.newInstance(mUser, this).addComment(id,
+        CommentUtils.newInstance(mUser, this).addReply(id,
+                mNoteId,
+                mReplyId,
                 content,
                 new CommentUtils.OnAddCommentListener() {
                     @Override
-                    public void getComment(CommentModel commentModel) {
-                        if (commentModel != null) { // 返回的评论不为空
-                            if (id.equals(mCommentModel.getId())) { // 说明是回复评论，那么就要立刻刷新列表
-                                mAdapter.add(commentModel, mData.size());
-                            }
+                    public void getComment(Boolean result) {
+                        if (result) {
+                            getData();
                         }
                     }
                 });

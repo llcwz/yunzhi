@@ -37,15 +37,17 @@ public class HttpConstants {
     //请求获取帖子
     public static final String POST_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/allNote";
 
-    //请求获取
-    public static final String QUESTION_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
 
     //请求获取评论
-    public static final String COMMENT_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/allNote";
+    public static final String COMMENT_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/comment";
 
 
-//    //请求获取
-//    public static final String  = "";
+    //请求获取评论回复
+    public static final String REPLY_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/replyInfo";
+
+
+        //请求获取
+    public static final String ADD_REPLY_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/addreply";
 
     //    //请求获取
 //    public static final String  = "";
@@ -56,10 +58,10 @@ public class HttpConstants {
     public static final String ADD_WORK_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
 
     // 请求点赞
-    public static final String LIKE_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+    public static final String LIKE_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/addfavour";
 
     // 请求评论
-    public static final String ADD_COMMENT_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Login/check";
+    public static final String ADD_COMMENT_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/noteResponse";
 
     // 请求发帖
     public static final String ADD_POST_URL = "http://60.205.207.177/dennis_allan/index.php/Home/Note/addNote";

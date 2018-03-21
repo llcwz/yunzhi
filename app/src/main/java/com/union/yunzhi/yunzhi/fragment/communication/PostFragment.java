@@ -37,7 +37,7 @@ import java.util.Set;
 
 public class PostFragment extends FragmentM  {
 
-    private static final String FRAGMENT_TAG = "TAG";
+    private static final String FRAGMENT_TAG = "KEY";
     private int mTag; // 标记fragment的生成以及相应的帖子
     private List<PostModel> mPostModels = new ArrayList<>();
     private NestedScrollView mNoPost;
@@ -70,6 +70,7 @@ public class PostFragment extends FragmentM  {
         mNoPost = (NestedScrollView) view.findViewById(R.id.layout_no_post);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
 
+        getData();
     }
 
     // 初始化适配器和数据
@@ -97,6 +98,8 @@ public class PostFragment extends FragmentM  {
 
             }
         });
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 
@@ -105,21 +108,19 @@ public class PostFragment extends FragmentM  {
         OpinionUtils.newInstance(null, getActivity()).getPosts(mTag, new OpinionUtils.OnRequestPostListener() {
             @Override
             public void getPosts(List<PostModel> postModels) {
-                if (postModels.size() != 0) {
-                    mPostModels = postModels;
-                    initAdapter(mPostModels);
-                } else {
-                    noPost(mPostModels);
-                }
+                    if (postModels.size() == 0) {
+                        noPost(postModels);
+                    } else {
+                        mPostModels = postModels;
+                        initAdapter(mPostModels);
+                    }
             }
         });
     }
 
     @Override
     protected void initData() {
-        getData();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
+
     }
 
 

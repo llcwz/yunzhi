@@ -26,7 +26,7 @@ import java.util.List;
 
 public class MessageFragment extends FragmentM {
 
-    private static final String FRAGMENT_TAG = "TAG";
+    private static final String FRAGMENT_TAG = "KEY";
     private static final String FRAGMENT_DATA = "messageModel";
     private MessageModel mMessageModel;
     private List<CommentMeModel> mCommentMeModelList;

@@ -91,7 +91,7 @@ public class ReplyAdapter extends MyAdapter<CommentModel> {
                                 mContext,
                                 mLike,
                                 mLikeCount);
-                        likeUtils.iLike(data.getLikeUserId());
+                        likeUtils.iLike();
                         break;
                     case R.id.iv_comment_reply: // 回复评论
                         CommentDialogFragment.newInstance(data.getId(), data.getName());

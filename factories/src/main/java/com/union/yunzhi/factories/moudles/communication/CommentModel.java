@@ -19,7 +19,6 @@ public class CommentModel implements Parcelable {
     private String time; // 评论时间
     private String replyNum; // 回复数
     private String favour; // 点赞数
-    private List<String> mLikeUserId; // 点赞人的id
 
     protected CommentModel(Parcel in) {
         id = in.readString();
@@ -31,7 +30,6 @@ public class CommentModel implements Parcelable {
         time = in.readString();
         replyNum = in.readString();
         favour = in.readString();
-        mLikeUserId = in.createStringArrayList();
     }
 
     @Override
@@ -45,7 +43,6 @@ public class CommentModel implements Parcelable {
         dest.writeString(time);
         dest.writeString(replyNum);
         dest.writeString(favour);
-        dest.writeStringList(mLikeUserId);
     }
 
     @Override
@@ -137,11 +134,4 @@ public class CommentModel implements Parcelable {
         this.favour = favour;
     }
 
-    public List<String> getLikeUserId() {
-        return mLikeUserId;
-    }
-
-    public void setLikeUserId(List<String> likeUserId) {
-        mLikeUserId = likeUserId;
-    }
 }

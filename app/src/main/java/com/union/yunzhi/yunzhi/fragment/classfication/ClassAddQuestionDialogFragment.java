@@ -1,8 +1,6 @@
 package com.union.yunzhi.yunzhi.fragment.classfication;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -13,11 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.union.yunzhi.factories.moudles.me.UserModel;
-import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
-import com.union.yunzhi.yunzhi.meutils.MeUtils;
-import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 /**
  * Created by CrazyGZ on 2018/3/17.
@@ -30,20 +24,22 @@ public class ClassAddQuestionDialogFragment extends DialogFragment implements Vi
     private EditText mQuestion;
     private EditText mContent;
     private Button mSubmit;
-    private OnAddQuestionListener mOnAddQuestionListener;
+    private static OnGetQuestionContentListener mOnGetQuestionContentListener;
 
     public static ClassAddQuestionDialogFragment newInstance() {
         return new ClassAddQuestionDialogFragment();
     }
-    public interface OnAddQuestionListener {
+    public interface OnGetQuestionContentListener {
         void getQuestion(String question, String details);
     }
 
+    public static void setOnGetQuestionListener(OnGetQuestionContentListener listener) {
+        mOnGetQuestionContentListener = listener;
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mOnAddQuestionListener = (OnAddQuestionListener) getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         mView = View.inflate(getActivity(), R.layout.class_fragment_add_question, null);
         mQuestion = (EditText) mView.findViewById(R.id.et_question);
@@ -62,7 +58,7 @@ public class ClassAddQuestionDialogFragment extends DialogFragment implements Vi
             if (TextUtils.isEmpty(question) || TextUtils.isEmpty(content)) {
                 Toast.makeText(getActivity(), "把问题描述详细喔", Toast.LENGTH_SHORT).show();
             } else {
-                mOnAddQuestionListener.getQuestion(question,content);
+                mOnGetQuestionContentListener.getQuestion(question,content);
                 dismiss();
             }
         }

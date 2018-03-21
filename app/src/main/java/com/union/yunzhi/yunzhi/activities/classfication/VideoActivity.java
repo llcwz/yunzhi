@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -12,6 +14,7 @@ import com.union.yunzhi.factories.moudles.classfication.beans.video.VideoBean;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.contant.Constant;
+import com.union.yunzhi.yunzhi.fragment.classfication.ClassQuestionFragment;
 
 import cn.jzvd.JZMediaSystem;
 import cn.jzvd.JZVideoPlayer;
@@ -26,6 +29,8 @@ public class VideoActivity extends AppCompatActivity{
     protected JZVideoPlayerStandard mplayer;
     protected VideoBean video;//视频信息
     protected BaseCommentModel comment;//评论信息
+    private FragmentManager mFragmentManager;
+    private ClassQuestionFragment mClassQuestionFragment;
 
     public static void newInstance(Context context, VideoBean video, BaseCommentModel comment) {
 
@@ -55,6 +60,7 @@ public class VideoActivity extends AppCompatActivity{
 
         mplayer=(JZVideoPlayerStandard)findViewById(R.id.video_player);
 
+        mFragmentManager = getSupportFragmentManager();
     }
 
     protected void initData() {
@@ -82,6 +88,18 @@ public class VideoActivity extends AppCompatActivity{
          * 适配评论信息
          */
 
+        initQuestionFragment();
+
+    }
+
+
+    private void initQuestionFragment() {
+        if (mClassQuestionFragment == null) {
+            mClassQuestionFragment = ClassQuestionFragment.newInstance(video.videoid);
+        }
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.add(R.id.fragment_layout, mClassQuestionFragment);
+        transaction.commit();
     }
 
     @Override

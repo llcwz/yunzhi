@@ -34,6 +34,7 @@ public class CommentDialogFragment extends DialogFragment implements View.OnClic
         CommentDialogFragment commentDialogFragment = new CommentDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString(EXTRA_ID, id);
+        bundle.putString(EXTRA_NAME, name);
         commentDialogFragment.setArguments(bundle);
         return commentDialogFragment;
     }

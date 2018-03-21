@@ -97,7 +97,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
                                 mContext,
                                 mLike,
                                 mLikeCount);
-                        likeUtils.iLike(data.getLikeUserId());
+                        likeUtils.iLike();
                         break;
                 }
             } else { // 用户没登录
