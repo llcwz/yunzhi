@@ -19,6 +19,8 @@ public class NotCallBackData {
      */
     private Object emsg;
 
+    public NotCallBackData() {}
+
     public NotCallBackData(int ecode, Object emsg) {
         this.ecode = ecode;
         this.emsg = emsg;

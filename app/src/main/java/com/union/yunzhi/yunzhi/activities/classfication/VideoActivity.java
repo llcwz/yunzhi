@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.factories.moudles.classfication.beans.video.VideoBean;
@@ -68,7 +69,10 @@ public class VideoActivity extends AppCompatActivity{
         /**
          * 加载视频信息
          */
-        Glide.with(getBaseContext()).load(video.coverurl).into(mplayer.thumbImageView);
+
+        mplayer.thumbImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        Glide.with(getBaseContext()).load(video.coverurl).placeholder(R.mipmap.ic_launcher).into(mplayer.thumbImageView);
 
         mplayer.setUp(video.videourl, JZVideoPlayer.SCREEN_WINDOW_NORMAL,video.videotitle);
 

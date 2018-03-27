@@ -21,6 +21,8 @@ public class PostModel implements Parcelable {
     private int tag;
     private int peopletype;
 
+    public PostModel() {}
+
     protected PostModel(Parcel in) {
         matrixId = in.readString();
         userid = in.readString();

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
@@ -42,6 +43,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
     private UserManager mUserManager;
     private UserModel mUser;
     private int  mVideoId;
+    private TextView mNoQuestion;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;
     private ClassQuestionAdapter mAdapter;
@@ -69,6 +71,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
     @Override
     protected void initWidget(View view) {
         mUserManager = UserManager.getInstance();
+        mNoQuestion = (TextView) view.findViewById(R.id.tv_no_question);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rec_question);
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.float_action_button);
         getData();
@@ -76,7 +79,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
 
     // 获取问题交流数据
     private void getData() {
-        OpinionUtils.newInstance(mUser, getActivity()).getQuestions(mVideoId,
+        OpinionUtils.newInstance(mUser, getActivity()).getQuestions(CommunicationConstant.TAG_QUESTION,
                 new OpinionUtils.OnRequestQuestionListener() {
                     @Override
                     public void getQuestions(List<QuestionBean> questionBeen) {
@@ -84,6 +87,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
                             mQuestionBeen = questionBeen;
                             initAdapter(mQuestionBeen);
                         }
+                        MeUtils.showNoMessage(mQuestionBeen.size(), mNoQuestion, mRecyclerView, "这里可以提问哟");
                     }
                 });
 
@@ -93,9 +97,6 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
     @Override
     protected void initData() {
         getData();
-        CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
         mFloatingActionButton.setOnClickListener(this);
 
         getQuestion();
@@ -125,6 +126,9 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
 
             }
         });
+        CustomLinearLayoutManager linearLayoutManager=new CustomLinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     // 点击事件

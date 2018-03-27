@@ -198,7 +198,7 @@ public class OpinionUtils {
      */
     public void getQuestions(int videoId, final OnRequestQuestionListener listener) {
         DialogManager.getInstnce().showProgressDialog(mContext);
-        RequestCenter.requestPost(videoId,
+        RequestCenter.requestQuestion(videoId,
                 new DisposeDataListener() {
                     @Override
                     public void onSuccess(Object responseObj) {

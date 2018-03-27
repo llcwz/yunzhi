@@ -55,6 +55,7 @@ public class ClassQuestionAdapter extends MyAdapter<QuestionBean> {
         private TextView mReply;
         private TextView mLikeCount;
         private TextView mReplyCount;
+        private TextView mTitle;
         private TextView mContent;
         private RecyclerView mRecyclerView;
 
@@ -68,6 +69,7 @@ public class ClassQuestionAdapter extends MyAdapter<QuestionBean> {
             mLikeCount = (TextView) itemView.findViewById(R.id.tv_like_count);
             mReplyCount = (TextView) itemView.findViewById(R.id.tv_reply_count);
             mTime = (TextView) itemView.findViewById(R.id.tv_question_time);
+            mTitle = (TextView) itemView.findViewById(R.id.tv_question_title);
             mContent = (TextView) itemView.findViewById(R.id.tv_question_content);
             mRecyclerView = (RecyclerView) itemView.findViewById(R.id.recycler);
         }
@@ -80,6 +82,7 @@ public class ClassQuestionAdapter extends MyAdapter<QuestionBean> {
             mLikeCount.setText(data.favour);
             mReplyCount.setText(data.msgNum);
             mTime.setText(data.time);
+            mTitle.setText(data.title);
             mContent.setText(data.content);
 
             mLike.setOnClickListener(this);
@@ -93,8 +96,9 @@ public class ClassQuestionAdapter extends MyAdapter<QuestionBean> {
             } else {
                 mUser = mUserManager.getUser();
                 switch (v.getId()) {
-                    case R.id.tv_question_like:
-                        LikeUtils.newInstance(data.id, CommunicationConstant.LIKE_TAG_QUESTION, mUser, mContext, mLike, mLikeCount);
+                    case R.id.iv_question_like:
+                        LikeUtils likeUtils = LikeUtils.newInstance(data.id, CommunicationConstant.LIKE_TAG_QUESTION, mUser, mContext, mLike, mLikeCount);
+                        likeUtils.iLike(Integer.parseInt(CommunicationConstant.LIKE_TAG_QUESTION));
                         break;
                     case R.id.tv_question_reply:
                         break;

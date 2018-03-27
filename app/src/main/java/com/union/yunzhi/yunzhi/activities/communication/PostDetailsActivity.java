@@ -101,6 +101,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
                 new CommentUtils.OnRequestCommentListener() {
                     @Override
                     public void getComments(List<CommentModel> commentModels) {
+                        Toast.makeText(PostDetailsActivity.this, "执行了", Toast.LENGTH_SHORT).show();
                         if (commentModels.size() != 0) {
                             if (mAdapter != null) { // 页面重新请求
                                 mCommentModels.clear();
@@ -192,7 +193,8 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         if (mUserManager.hasLogined()) { // 如果用户登录了
             switch (view.getId()) {
                 case R.id.iv_post_comment: // 评论帖子
-                    CommentDialogFragment.newInstance(mPostModel.getMatrixId(), mPostModel.getName());
+                    CommentDialogFragment commentDialogFragment = CommentDialogFragment.newInstance(mPostModel.getMatrixId(), mPostModel.getName());
+                    commentDialogFragment.show(getSupportFragmentManager(), CommentDialogFragment.TAG);
                     break;
                 case R.id.iv_post_like: // 点赞帖子
                     LikeUtils likeUtils = LikeUtils.newInstance(mPostModel.getMatrixId(),
@@ -201,7 +203,7 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
                             PostDetailsActivity.this,
                             mLike,
                             mLikeCounts);
-                    likeUtils.iLike();
+                    likeUtils.iLike(Integer.parseInt(CommunicationConstant.LIKE_TAG_POST));
                     break;
                 default:
             }

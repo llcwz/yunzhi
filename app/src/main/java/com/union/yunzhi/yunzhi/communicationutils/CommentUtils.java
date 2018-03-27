@@ -92,6 +92,7 @@ public class CommentUtils {
      * @param listener 数据回调
      */
     public void getComment(String matrixId, final OnRequestCommentListener listener) {
+        Toast.makeText(mContext, "matrixId=" + matrixId, Toast.LENGTH_SHORT).show();
         DialogManager.getInstnce().showProgressDialog(mContext);
         RequestCenter.requestComment(matrixId,
                 new DisposeDataListener() {

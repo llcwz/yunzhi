@@ -79,51 +79,90 @@ public class LikeUtils {
     /**
      * @function 点赞评论
      */
-    public void iLike() {
+    public void iLike(int flag) {
         if (mUser != null) {
-            loadLike();
+            loadLike(flag);
         }
     }
     /**
      * 上传点赞
      */
-    private  void loadLike() {
+    private  void loadLike(int flag) {
         DialogManager.getInstnce().showProgressDialog(mContext);
         LogUtils.d("likeMessage",mId + "|" + mTag + "|" + mUser);
-        RequestCenter.requestLike(mId,
-                mTag,
-                mUser.getAccount(),
-                new DisposeDataListener() {
-                    @Override
-                    public void onSuccess(Object responseObj) {
-                        NotCallBackData notCallBackData = (NotCallBackData) responseObj;
-                        if (notCallBackData.getEcode() == CommunicationConstant.ECODE) {
-                            LogUtils.d("like", "+1");
-                            Glide.with(mContext).load(R.drawable.iv_like_select).into(mLike);
-                            mLikeCount.setText(Integer.parseInt(mLikeCount.getText().toString())+ 1 + "");
-                            mLike.setClickable(false); // 只能被点击一次
-                            DialogManager.getInstnce().dismissProgressDialog();
-                        } else {
-                            LogUtils.d("like", "你已经点过赞啦");
+        if (flag == Integer.parseInt(CommunicationConstant.LIKE_TAG_POST)) {
+            RequestCenter.requestLikePost(mId,
+                    mUser.getAccount(),
+                    new DisposeDataListener() {
+                        @Override
+                        public void onSuccess(Object responseObj) {
+                            NotCallBackData notCallBackData = (NotCallBackData) responseObj;
+                            if (notCallBackData.getEcode() == CommunicationConstant.ECODE) {
+                                LogUtils.d("like", "+1");
+                                Glide.with(mContext).load(R.drawable.iv_like_select).into(mLike);
+                                mLikeCount.setText(Integer.parseInt(mLikeCount.getText().toString())+ 1 + "");
+                                mLike.setClickable(false); // 只能被点击一次
+                                DialogManager.getInstnce().dismissProgressDialog();
+                            } else {
+                                LogUtils.d("like", "你已经点过赞啦");
 //                        Glide.with(mContext).load(R.drawable.iv_like_select).iSnto(mLike);
-                            mLike.setClickable(false); // 只能被点击一次
+                                mLike.setClickable(false); // 只能被点击一次
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Object reasonObj) {
-                        DialogManager.getInstnce().dismissProgressDialog();
-                        OkHttpException okHttpException = (OkHttpException) reasonObj;
-                        if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(mContext, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -1){
-                            Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -2) {
-                            Toast.makeText(mContext, "解析错误" , Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -3) {
-                            Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Object reasonObj) {
+                            DialogManager.getInstnce().dismissProgressDialog();
+                            OkHttpException okHttpException = (OkHttpException) reasonObj;
+                            if (okHttpException.getEcode() == 1) {
+                                Toast.makeText(mContext, "你已经点过赞啦" , Toast.LENGTH_SHORT).show();
+                            } else if (okHttpException.getEcode() == -1){
+                                Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
+                            } else if (okHttpException.getEcode() == -2) {
+                                Toast.makeText(mContext, "解析错误" , Toast.LENGTH_SHORT).show();
+                            } else if (okHttpException.getEcode() == -3) {
+                                Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        } else if (flag == Integer.parseInt(CommunicationConstant.LIKE_TAG_COMMENT)) {
+            RequestCenter.requestLikeComment(mId,
+                    mUser.getAccount(),
+                    new DisposeDataListener() {
+                        @Override
+                        public void onSuccess(Object responseObj) {
+                            NotCallBackData notCallBackData = (NotCallBackData) responseObj;
+                            if (notCallBackData.getEcode() == CommunicationConstant.ECODE) {
+                                LogUtils.d("like", "+1");
+                                Glide.with(mContext).load(R.drawable.iv_like_select).into(mLike);
+                                mLikeCount.setText(Integer.parseInt(mLikeCount.getText().toString())+ 1 + "");
+                                mLike.setClickable(false); // 只能被点击一次
+                                DialogManager.getInstnce().dismissProgressDialog();
+                            } else {
+                                LogUtils.d("like", "你已经点过赞啦");
+//                        Glide.with(mContext).load(R.drawable.iv_like_select).iSnto(mLike);
+                                mLike.setClickable(false); // 只能被点击一次
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Object reasonObj) {
+                            DialogManager.getInstnce().dismissProgressDialog();
+                            OkHttpException okHttpException = (OkHttpException) reasonObj;
+                            if (okHttpException.getEcode() == 1) {
+                                Toast.makeText(mContext, "你已经点过赞啦", Toast.LENGTH_SHORT).show();
+                            } else if (okHttpException.getEcode() == -1){
+                                Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
+                            } else if (okHttpException.getEcode() == -2) {
+                                Toast.makeText(mContext, "解析错误" , Toast.LENGTH_SHORT).show();
+                            } else if (okHttpException.getEcode() == -3) {
+                                Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } else if (flag == Integer.parseInt(CommunicationConstant.LIKE_TAG_QUESTION)) {
+
+        }
+
     }
 }

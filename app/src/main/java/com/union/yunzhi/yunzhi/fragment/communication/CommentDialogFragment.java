@@ -69,9 +69,9 @@ public class CommentDialogFragment extends DialogFragment implements View.OnClic
         String content = mContent.getText().toString();
         if (TextUtils.isEmpty(content)) {
             Toast.makeText(getActivity(), "请先输入文字", Toast.LENGTH_SHORT).show();
-            dismiss();
         } else {
             mOnGetCommentContentListener.getContent(mId,mName,content);
+            dismiss();
         }
     }
 }

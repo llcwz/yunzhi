@@ -195,6 +195,12 @@ public class RequestCenter {
         RequestCenter.postRequest(HttpConstants.POST_URL, params, listener, BaseCommunicationModel.class);
     }
 
+    public static void requestQuestion(int tag, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("tag","" + tag);
+        RequestCenter.postRequest(HttpConstants.POST_URL, params, listener, BaseQuestionBean.class);
+    }
+
     /**
      * @function 获取评论
      * @param id 帖子的id
@@ -248,16 +254,25 @@ public class RequestCenter {
 
     /**
      * @function 上传点赞
-     * @param postOrCommentOrQuestionId 给点赞的那个东西的id
+     * @param
      * @param account 点赞者的id
      */
-    public static void requestLike(String postOrCommentOrQuestionId,String flag,String account, DisposeDataListener listener) {
+    public static void requestLikePost(String postId,String account, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("Id", postOrCommentOrQuestionId);
-        params.put("flag", flag);
+        params.put("matrixId", postId);
+        params.put("flag", "" + 1);
         params.put("userId", account);
         RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, NotCallBackData.class);
     }
+
+    public static void requestLikeComment(String commentId,String account, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("noteId", commentId);
+        params.put("flag", "" + 2);
+        params.put("userId", account);
+        RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, NotCallBackData.class);
+    }
+
 
 
     /**

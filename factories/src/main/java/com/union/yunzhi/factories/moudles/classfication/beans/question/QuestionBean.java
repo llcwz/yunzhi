@@ -26,6 +26,7 @@ public class QuestionBean implements Parcelable {
     public List<String> mLikeUserId;
 
 
+    public QuestionBean() {}
     protected QuestionBean(Parcel in) {
         courseId = in.readString();
         id = in.readString();
