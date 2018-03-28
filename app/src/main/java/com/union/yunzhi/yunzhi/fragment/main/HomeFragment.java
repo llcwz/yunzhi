@@ -30,7 +30,6 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.app.PermissionsFragment;
 import com.union.yunzhi.common.constant.Constant;
 import com.union.yunzhi.common.util.LogUtils;
-import com.union.yunzhi.common.util.NetWorkUtil;
 import com.union.yunzhi.common.util.ToastUtils;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.home.bodyModle;
@@ -342,6 +341,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
         Log.i("onRefresh", "onRefresh");
         refreshLayout.autoRefresh();
 
+
         RequestCenter.requestHomeData("", "", new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
@@ -368,7 +368,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
 //                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
 //                        .into(mGIF);
 //                mRefreshLayout.finishRefresh(2000,false);
-                if(!NetWorkUtil.isNetworkConn(getContext())){
+              //  if(!NetWorkUtil.isNetworkConn(getActivity())){
 
                     ToastUtils.showSnackbar(toolbarLayout,"无法连接到网络,请检查网络设置");
 
@@ -376,7 +376,7 @@ public class HomeFragment extends PermissionsFragment implements View.OnClickLis
                     mRefreshLayout.finishRefresh(1000,false);
 
                 }
-            }
+          //  }
         });
     }
 
