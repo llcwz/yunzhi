@@ -179,15 +179,20 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
                 @Override
                 public void getPost(PostModel postModel) {
                     if (postModel != null) {
-                        mFragments.get(mTag).notifyList(postModel);
                     }
                 }
             });
         }
     };
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        changeStatusBarColor(R.color.blue_400);
 
-//    @Override
+    }
+
+    //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        switch (requestCode) {
 //            case AddPostActivity.REQUEST:

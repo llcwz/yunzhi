@@ -7,6 +7,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.manager.SupportRequestManagerFragment;
+import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
@@ -33,10 +35,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CommentAdapter extends MyAdapter<CommentModel> {
 
     private Context mContext;
-
+    private OnReplyListener mListener;
+    public interface OnReplyListener {
+        void doReply(CommentModel data);
+    }
     public CommentAdapter(Context context, List<CommentModel> data, AdapterListener<CommentModel> listener) {
         super(data,listener);
         mContext = context;
+        mListener = (OnReplyListener) context;
     }
 
     @Override
@@ -52,7 +58,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
     public class CommentViewHolder extends MyViewHolder<CommentModel> implements View.OnClickListener {
         private UserManager mUserManager;
         private CommentModel data;
-        private CircleImageView mIcon;
+        public CircleImageView mIcon;
         private TextView mAuthor;
         private TextView mTime;
         
@@ -60,7 +66,6 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         private ImageView mLike;
         private TextView mLikeCount; // 点赞数
         private TextView mContent;
-
 
         public CommentViewHolder(View itemView) {
             super(itemView);
@@ -77,12 +82,12 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         @Override
         protected void onBind(final CommentModel data, int position) {
             this.data = data;
-            Glide.with(mContext).load(data.getPhotoUrl()).into(mIcon);
+//            Glide.with(mContext).load(data).into(mIcon);
             mAuthor.setText(data.getName());
             mTime.setText(data.getTime());
             mContent.setText(data.getContent());
+            mReply.setOnClickListener(this);
             mLikeCount.setText(data.getFavour()); // 获取点赞数
-            mReply.setVisibility(View.GONE);
             mLike.setOnClickListener(this);
         }
 
@@ -90,14 +95,17 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         public void onClick(View v) {
             if (mUserManager.hasLogined()) { // 用户登录了
                 switch (v.getId()) {
+                    case R.id.iv_comment_reply:
+                        mListener.doReply(data);
+                        break;
                     case R.id.iv_comment_like: // 点赞评论
-                        LikeUtils likeUtils = LikeUtils.newInstance(data.getId(),
+                        LikeUtils.newInstance(data.getNoteid(),
                                 CommunicationConstant.LIKE_TAG_COMMENT,
                                 mUserManager.getUser(),
                                 mContext,
                                 mLike,
-                                mLikeCount);
-                        likeUtils.iLike(Integer.parseInt(CommunicationConstant.LIKE_TAG_COMMENT));
+                                mLikeCount)
+                                .iLike();
                         break;
                 }
             } else { // 用户没登录

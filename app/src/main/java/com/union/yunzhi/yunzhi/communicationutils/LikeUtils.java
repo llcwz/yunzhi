@@ -39,28 +39,6 @@ public class LikeUtils {
     private ImageView mLike; // 点赞图标
     private TextView mLikeCount; // 点赞数
 
-//    // 回调接口，利用它来实现如果用户没点过赞就点赞，然后上传点赞数据的功能
-//    private  OnLikeListener mOnLikeListener = new OnLikeListener() {
-//        @Override
-//        public void isLike(boolean result) {
-//            if (result) {
-//                Glide.with(mContext).load(R.drawable.iv_like_select).into(mLike);
-//                mLike.setClickable(false);
-//            } else {
-//                loadLike();
-//            }
-//        }
-//    };
-//
-//    // 这条赞是否被当前用户赞过的接口
-//    private interface OnLikeListener {
-//        /**
-//         * @function 根据参数的真假处理相应的逻辑
-//         * @param result 得到的结果,真表示用户点过赞，假则没有
-//         */
-//        void isLike(boolean result);
-//    }
-
 
     public static LikeUtils newInstance(String id,String tag,UserModel user, Context context, ImageView like, TextView likeCount) {
         return new LikeUtils(id,tag,user, context, like, likeCount);
@@ -79,18 +57,18 @@ public class LikeUtils {
     /**
      * @function 点赞评论
      */
-    public void iLike(int flag) {
+    public void iLike( ) {
         if (mUser != null) {
-            loadLike(flag);
+            loadLike();
         }
     }
     /**
      * 上传点赞
      */
-    private  void loadLike(int flag) {
+    private  void loadLike() {
         DialogManager.getInstnce().showProgressDialog(mContext);
         LogUtils.d("likeMessage",mId + "|" + mTag + "|" + mUser);
-        if (flag == Integer.parseInt(CommunicationConstant.LIKE_TAG_POST)) {
+        if (mTag.equals(CommunicationConstant.LIKE_TAG_POST)) {
             RequestCenter.requestLikePost(mId,
                     mUser.getAccount(),
                     new DisposeDataListener() {
@@ -125,7 +103,7 @@ public class LikeUtils {
                             }
                         }
                     });
-        } else if (flag == Integer.parseInt(CommunicationConstant.LIKE_TAG_COMMENT)) {
+        } else if (mTag.equals(CommunicationConstant.LIKE_TAG_COMMENT)) {
             RequestCenter.requestLikeComment(mId,
                     mUser.getAccount(),
                     new DisposeDataListener() {
@@ -160,7 +138,7 @@ public class LikeUtils {
                             }
                         }
                     });
-        } else if (flag == Integer.parseInt(CommunicationConstant.LIKE_TAG_QUESTION)) {
+        } else if (mTag.equals(CommunicationConstant.LIKE_TAG_QUESTION)) {
 
         }
 

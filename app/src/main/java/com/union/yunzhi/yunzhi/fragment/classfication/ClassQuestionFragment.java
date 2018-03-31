@@ -108,7 +108,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
         mAdapter = new ClassQuestionAdapter(getActivity(), questionBeen, new MyAdapter.AdapterListener<QuestionBean>() {
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, QuestionBean data) {
-                CommentDialogFragment.newInstance(data.id, data.name);
+                CommentDialogFragment.newInstance(data.id, data.userId, data.name);
             }
 
             @Override

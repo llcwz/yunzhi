@@ -11,6 +11,7 @@ import com.union.yunzhi.factories.moudles.classfication.beans.question.BaseQuest
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.BaseCommunicationModel;
 import com.union.yunzhi.factories.moudles.communication.BaseLikeModel;
+import com.union.yunzhi.factories.moudles.communication.BaseReplyModel;
 import com.union.yunzhi.factories.moudles.home.homeBaseModle;
 import com.union.yunzhi.factories.moudles.me.BaseCourseModel;
 import com.union.yunzhi.factories.moudles.me.BaseGradeModel;
@@ -209,13 +210,15 @@ public class RequestCenter {
     public static void requestComment(String id, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
         params.put("matrixId",id);
+        LogUtils.d("获取评论，matrixId=",id);
         RequestCenter.postRequest(HttpConstants.COMMENT_URL, params, listener, BaseCommentModel.class);
     }
+
 
     public static void requestReply(String id, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
         params.put("noteId",id);
-        RequestCenter.postRequest(HttpConstants.REPLY_URL, params, listener, BaseCommentModel.class);
+        RequestCenter.postRequest(HttpConstants.REPLY_URL, params, listener, BaseReplyModel.class);
     }
 
     /**
@@ -249,6 +252,7 @@ public class RequestCenter {
         params.put("replyId", replyId);
         params.put("userId", account);
         params.put("content", content);
+        LogUtils.d("请求回复", content);
         RequestCenter.postRequest(HttpConstants.ADD_REPLY_URL, params, listener, NotCallBackData.class);
     }
 
@@ -262,6 +266,7 @@ public class RequestCenter {
         params.put("matrixId", postId);
         params.put("flag", "" + 1);
         params.put("userId", account);
+        LogUtils.d("点赞", "点赞帖子");
         RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, NotCallBackData.class);
     }
 
@@ -270,6 +275,7 @@ public class RequestCenter {
         params.put("noteId", commentId);
         params.put("flag", "" + 2);
         params.put("userId", account);
+        LogUtils.d("点赞", "点赞评论");
         RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, NotCallBackData.class);
     }
 

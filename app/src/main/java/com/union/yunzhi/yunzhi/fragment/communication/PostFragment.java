@@ -39,7 +39,7 @@ public class PostFragment extends FragmentM  {
 
     private static final String FRAGMENT_TAG = "KEY";
     private int mTag; // 标记fragment的生成以及相应的帖子
-    private List<PostModel> mPostModels = new ArrayList<>();
+    //private List<PostModel> mPostModels = new ArrayList<>();
     private NestedScrollView mNoPost;
     private RecyclerView mRecyclerView;
     private PostAdapter mAdapter;
@@ -69,8 +69,6 @@ public class PostFragment extends FragmentM  {
     protected void initWidget(View view) {
         mNoPost = (NestedScrollView) view.findViewById(R.id.layout_no_post);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
-
-        getData();
     }
 
     // 初始化适配器和数据
@@ -111,11 +109,22 @@ public class PostFragment extends FragmentM  {
                     if (postModels.size() == 0) {
                         noPost(postModels);
                     } else {
-                        mPostModels = postModels;
-                        initAdapter(mPostModels);
+                        if (mAdapter == null) {
+                            initAdapter(postModels);
+                        } else {
+
+                            mAdapter.clear();
+                            mAdapter.add(postModels);
+                        }
                     }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 
     @Override
@@ -133,9 +142,5 @@ public class PostFragment extends FragmentM  {
             mNoPost.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
         }
-    }
-
-    public void notifyList(PostModel postModel) {
-        mAdapter.add(postModel);
     }
 }

@@ -5,8 +5,10 @@ import android.widget.Toast;
 
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
+import com.union.yunzhi.factories.moudles.communication.BaseReplyModel;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
+import com.union.yunzhi.factories.moudles.communication.ReplyModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
@@ -41,6 +43,10 @@ public class CommentUtils {
 
     public interface OnRequestCommentListener {
         void getComments(List<CommentModel> commentModels);
+    }
+
+    public interface OnRequestReplyListener {
+        void getReplys(List<ReplyModel> replyModels);
     }
 
     /**
@@ -92,7 +98,6 @@ public class CommentUtils {
      * @param listener 数据回调
      */
     public void getComment(String matrixId, final OnRequestCommentListener listener) {
-        Toast.makeText(mContext, "matrixId=" + matrixId, Toast.LENGTH_SHORT).show();
         DialogManager.getInstnce().showProgressDialog(mContext);
         RequestCenter.requestComment(matrixId,
                 new DisposeDataListener() {
@@ -112,10 +117,12 @@ public class CommentUtils {
 
                     @Override
                     public void onFailure(Object reasonObj) {
+                        listener.getComments(null);
+                        LogUtils.d("评论", "failed");
                         DialogManager.getInstnce().dismissProgressDialog();
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
                         if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(mContext, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+
                         } else if (okHttpException.getEcode() == -1){
                             Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -2) {
@@ -128,7 +135,6 @@ public class CommentUtils {
     }
 
     public void addReply(String matrixId, String noteId, String replyId, String content, final OnAddCommentListener listener) {
-
         DialogManager.getInstnce().showProgressDialog(mContext);
         RequestCenter.requestAddReply(matrixId,
                 noteId,
@@ -153,7 +159,7 @@ public class CommentUtils {
                         DialogManager.getInstnce().dismissProgressDialog();
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
                         if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(mContext, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+
                         } else if (okHttpException.getEcode() == -1){
                             Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -2) {
@@ -166,30 +172,30 @@ public class CommentUtils {
 
     }
 
-    public void getReply(String noteId, final OnRequestCommentListener listener) {
+    public void getReply(String noteId, final OnRequestReplyListener listener) {
         DialogManager.getInstnce().showProgressDialog(mContext);
         RequestCenter.requestReply(noteId,
                 new DisposeDataListener() {
                     @Override
                     public void onSuccess(Object responseObj) {
                         DialogManager.getInstnce().dismissProgressDialog();
-                        BaseCommentModel baseCommentModel = (BaseCommentModel) responseObj;
-                        if (baseCommentModel.ecode == CommunicationConstant.ECODE) {
-                            listener.getComments(baseCommentModel.data);
-                            for (CommentModel commentModel : baseCommentModel.data) {
-                                LogUtils.d("commentMessage", commentModel.toString());
+                        BaseReplyModel baseReplyModel = (BaseReplyModel) responseObj;
+                        if (baseReplyModel.ecode == CommunicationConstant.ECODE) {
+                            listener.getReplys(baseReplyModel.data);
+                            for (ReplyModel replyModel : baseReplyModel.data) {
+                                LogUtils.d("commentMessage", replyModel.toString());
                             }
                         } else {
-                            Toast.makeText(mContext, "" + baseCommentModel.emsg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "" + baseReplyModel.emsg, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Object reasonObj) {
+                        listener.getReplys(null);
                         DialogManager.getInstnce().dismissProgressDialog();
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
                         if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(mContext, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -1){
                             Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -2) {
