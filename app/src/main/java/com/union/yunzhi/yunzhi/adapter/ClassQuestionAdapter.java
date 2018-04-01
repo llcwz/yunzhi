@@ -97,13 +97,13 @@ public class ClassQuestionAdapter extends MyAdapter<QuestionBean> {
                 mUser = mUserManager.getUser();
                 switch (v.getId()) {
                     case R.id.iv_question_like:
-                        LikeUtils.newInstance(data.id,
-                                CommunicationConstant.LIKE_TAG_QUESTION,
-                                mUser,
-                                mContext,
-                                mLike,
-                                mLikeCount)
-                        .iLike();
+//                        LikeUtils.newInstance(data.id,
+//                                CommunicationConstant.LIKE_TAG_QUESTION,
+//                                mUser,
+//                                mContext,
+//                                mLike,
+//                                mLikeCount)
+//                        .iLike();
                         break;
                     case R.id.tv_question_reply:
                         break;
