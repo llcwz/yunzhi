@@ -183,7 +183,7 @@ public class CommentUtils {
                         if (baseReplyModel.ecode == CommunicationConstant.ECODE) {
                             listener.getReplys(baseReplyModel.data);
                             for (ReplyModel replyModel : baseReplyModel.data) {
-                                LogUtils.d("commentMessage", replyModel.toString());
+                                LogUtils.d("replyMessage", replyModel.toString());
                             }
                         } else {
                             Toast.makeText(mContext, "" + baseReplyModel.emsg, Toast.LENGTH_SHORT).show();

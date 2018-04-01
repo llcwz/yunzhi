@@ -312,7 +312,7 @@ public class NewWorkActivity extends ActivityM implements View.OnClickListener {
                 DialogManager.getInstnce().dismissProgressDialog();
                 OkHttpException okHttpException = (OkHttpException) reasonObj;
                 if (okHttpException.getEcode() == 1) {
-                    Toast.makeText(NewWorkActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(NewWorkActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
                 } else if (okHttpException.getEcode() == -1){
                     Toast.makeText(NewWorkActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
                 } else if (okHttpException.getEcode() == -2) {

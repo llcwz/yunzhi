@@ -60,6 +60,14 @@
                         android:layout_height="@dimen/len_24"
                         android:background="@drawable/iv_communication_comment"/>
 
+                    <TextView
+                        android:id="@+id/tv_comment_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/len_8"
+                        android:text="0"
+                        android:textSize="@dimen/font_16"/>
+
                     <ImageView
                         android:id="@+id/iv_comment_like"
                         android:layout_width="@dimen/len_24"

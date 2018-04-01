@@ -1,8 +1,6 @@
 package com.union.yunzhi.yunzhi.fragment.main;
 
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,20 +15,16 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
-import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
 import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
 import com.union.yunzhi.yunzhi.fragment.communication.PostFragment;
 import com.union.yunzhi.yunzhi.manager.UserManager;
-import com.union.yunzhi.yunzhi.meutils.MeUtils;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.

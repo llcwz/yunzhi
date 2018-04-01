@@ -193,6 +193,7 @@ public class RequestCenter {
     public static void requestPost(int tag, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
         params.put("tag","" + tag);
+        LogUtils.d("获取帖子", "" + tag);
         RequestCenter.postRequest(HttpConstants.POST_URL, params, listener, BaseCommunicationModel.class);
     }
 
@@ -252,7 +253,6 @@ public class RequestCenter {
         params.put("replyId", replyId);
         params.put("userId", account);
         params.put("content", content);
-        LogUtils.d("请求回复", content);
         RequestCenter.postRequest(HttpConstants.ADD_REPLY_URL, params, listener, NotCallBackData.class);
     }
 

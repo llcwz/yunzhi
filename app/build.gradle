@@ -11,6 +11,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+// 防止在发布的时候出现因MissingTranslation导致Build Failed!
+        disable 'MissingTranslation'
+    }
     buildTypes {
         release {
             minifyEnabled false

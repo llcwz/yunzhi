@@ -95,7 +95,7 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
                         DialogManager.getInstnce().dismissProgressDialog();
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
                         if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(WorkActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(WorkActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -1){
                             Toast.makeText(WorkActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -2) {

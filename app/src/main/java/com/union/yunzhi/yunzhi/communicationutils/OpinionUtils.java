@@ -106,6 +106,7 @@ public class OpinionUtils {
      * @param listener
      */
     public void getPosts(int tag, final OnRequestPostListener listener) {
+        LogUtils.d("post","正在拉取帖子" + tag);
         DialogManager.getInstnce().showProgressDialog(mContext);
         RequestCenter.requestPost(tag,
                 new DisposeDataListener() {
@@ -125,10 +126,11 @@ public class OpinionUtils {
 
                     @Override
                     public void onFailure(Object reasonObj) {
+                        listener.getPosts(null);
                         DialogManager.getInstnce().dismissProgressDialog();
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
                         if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(mContext, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+
                         } else if (okHttpException.getEcode() == -1){
                             Toast.makeText(mContext, "网络连接错误", Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -2) {

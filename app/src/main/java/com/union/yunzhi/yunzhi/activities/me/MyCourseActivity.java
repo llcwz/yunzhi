@@ -91,7 +91,7 @@ public class MyCourseActivity extends ActivityM {
                         DialogManager.getInstnce().dismissProgressDialog();
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
                         if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(MyCourseActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MyCourseActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -1){
                             Toast.makeText(MyCourseActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
                         } else if (okHttpException.getEcode() == -2) {

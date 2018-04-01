@@ -63,6 +63,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         private TextView mTime;
         
         private ImageView mReply;
+        private TextView mReplyNum;
         private ImageView mLike;
         private TextView mLikeCount; // 点赞数
         private TextView mContent;
@@ -74,6 +75,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
             mAuthor = (TextView) itemView.findViewById(R.id.tv_comment_author);
             mTime = (TextView) itemView.findViewById(R.id.tv_comment_time);
             mReply = (ImageView) itemView.findViewById(R.id.iv_comment_reply);
+            mReplyNum = (TextView) itemView.findViewById(R.id.tv_comment_num);
             mLike = (ImageView) itemView.findViewById(R.id.iv_comment_like);
             mLikeCount = (TextView) itemView.findViewById(R.id.tv_comment_like);
             mContent = (TextView) itemView.findViewById(R.id.tv_comment_content);
@@ -82,11 +84,12 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         @Override
         protected void onBind(final CommentModel data, int position) {
             this.data = data;
-//            Glide.with(mContext).load(data).into(mIcon);
+            Glide.with(mContext).load(data.getPhotourl()).into(mIcon);
             mAuthor.setText(data.getName());
             mTime.setText(data.getTime());
             mContent.setText(data.getContent());
             mReply.setOnClickListener(this);
+            mReplyNum.setText(data.getReplynum());
             mLikeCount.setText(data.getFavour()); // 获取点赞数
             mLike.setOnClickListener(this);
         }

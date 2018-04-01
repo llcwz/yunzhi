@@ -16,12 +16,14 @@ import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.communication.BaseCommunicationModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
+import com.union.yunzhi.factories.moudles.communication.ReplyModel;
 import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
 import com.union.yunzhi.yunzhi.activities.communication.PostDetailsActivity;
 import com.union.yunzhi.yunzhi.adapter.PostAdapter;
+import com.union.yunzhi.yunzhi.communicationutils.CommentUtils;
 import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
 import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
@@ -39,7 +41,6 @@ public class PostFragment extends FragmentM  {
 
     private static final String FRAGMENT_TAG = "KEY";
     private int mTag; // 标记fragment的生成以及相应的帖子
-    //private List<PostModel> mPostModels = new ArrayList<>();
     private NestedScrollView mNoPost;
     private RecyclerView mRecyclerView;
     private PostAdapter mAdapter;
@@ -103,12 +104,15 @@ public class PostFragment extends FragmentM  {
 
     // 获取帖子
     private void getData() {
+
         OpinionUtils.newInstance(null, getActivity()).getPosts(mTag, new OpinionUtils.OnRequestPostListener() {
+
             @Override
             public void getPosts(List<PostModel> postModels) {
-                    if (postModels.size() == 0) {
+                    if (postModels  == null) {
+                        postModels = new ArrayList<PostModel>();
                         noPost(postModels);
-                    } else {
+                    }
                         if (mAdapter == null) {
                             initAdapter(postModels);
                         } else {
@@ -116,7 +120,7 @@ public class PostFragment extends FragmentM  {
                             mAdapter.clear();
                             mAdapter.add(postModels);
                         }
-                    }
+
             }
         });
     }
