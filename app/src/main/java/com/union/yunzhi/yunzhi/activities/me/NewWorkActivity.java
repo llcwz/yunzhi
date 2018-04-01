@@ -311,15 +311,15 @@ public class NewWorkActivity extends ActivityM implements View.OnClickListener {
             public void onFailure(Object reasonObj) {
                 DialogManager.getInstnce().dismissProgressDialog();
                 OkHttpException okHttpException = (OkHttpException) reasonObj;
-                if (okHttpException.getEcode() == 1) {
-//                    Toast.makeText(NewWorkActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
-                } else if (okHttpException.getEcode() == -1){
-                    Toast.makeText(NewWorkActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
-                } else if (okHttpException.getEcode() == -2) {
-                    Toast.makeText(NewWorkActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
-                } else if (okHttpException.getEcode() == -3) {
-                    Toast.makeText(NewWorkActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
-                }
+//                if (okHttpException.getEcode() == 1) {
+////                    Toast.makeText(NewWorkActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
+//                } else if (okHttpException.getEcode() == -1){
+//                    Toast.makeText(NewWorkActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
+//                } else if (okHttpException.getEcode() == -2) {
+//                    Toast.makeText(NewWorkActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
+//                } else if (okHttpException.getEcode() == -3) {
+//                    Toast.makeText(NewWorkActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });
