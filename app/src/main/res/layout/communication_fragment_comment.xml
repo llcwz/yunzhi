@@ -24,7 +24,7 @@
                 android:scrollbars="vertical"
                 android:lineSpacingExtra="@dimen/len_2"
                 android:lineSpacingMultiplier="1.2"
-                android:text="大多数收到收到收到订单的的收到的收到的水电费是否第三方的是非得失浮点数范德萨放大啊大的说法都是范德萨范德萨佛挡杀佛地方都是是非得失佛挡杀佛佛挡杀佛地方都是第三方"/>
+                android:hint="请输入"/>
         </ScrollView>
         <TextView
             android:id="@+id/tv_send"

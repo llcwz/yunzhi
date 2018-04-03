@@ -131,10 +131,10 @@ public class QuestionDetailsActivity extends ActivityM implements View.OnClickLi
 //                    }
                     break;
                 case R.id.iv_question_like: // 点赞问题
-                    LikeUtils likeUtils = LikeUtils.newInstance(mQuestionBean.id,
+                    LikeUtils.newInstance(mQuestionBean.id,
                             CommunicationConstant.LIKE_TAG_QUESTION, // 因为这个类型和帖子一模一样
-                            mUser, this, mLike, mLikeCounts);
-                    likeUtils.iLike(Integer.parseInt(CommunicationConstant.LIKE_TAG_QUESTION));
+                            mUser, this, mLike, mLikeCounts)
+                            .iLike();
                     break;
                 default:
             }

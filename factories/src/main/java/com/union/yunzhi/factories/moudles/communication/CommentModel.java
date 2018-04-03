@@ -10,88 +10,63 @@ import java.util.List;
  */
 
 public class CommentModel implements Parcelable {
-    private String id; // 该评论的id
-    private String matrixId; // 评论主体的id
-    private String userId; // 评论者id
-    private String photoUrl; // 评论者头像
+    private String noteid; // 该评论的id
+    private String matrixid; // 评论主体的id
+    private String userid; // 评论者id
+    private String photourl; // 评论者头像
     private String name; // 评论者名字
     private String content; // 评论内容
     private String time; // 评论时间
-    private String replyNum; // 回复数
+    private String replynum; // 回复数
     private String favour; // 点赞数
 
-    protected CommentModel(Parcel in) {
-        id = in.readString();
-        matrixId = in.readString();
-        userId = in.readString();
-        photoUrl = in.readString();
-        name = in.readString();
-        content = in.readString();
-        time = in.readString();
-        replyNum = in.readString();
-        favour = in.readString();
-    }
+    public CommentModel() {}
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(matrixId);
-        dest.writeString(userId);
-        dest.writeString(photoUrl);
-        dest.writeString(name);
-        dest.writeString(content);
-        dest.writeString(time);
-        dest.writeString(replyNum);
-        dest.writeString(favour);
+    public String toString() {
+        return "CommentModel{" +
+                "noteid='" + noteid + '\'' +
+                ", matrixid='" + matrixid + '\'' +
+                ", userid='" + userid + '\'' +
+                ", photourl='" + photourl + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", time='" + time + '\'' +
+                ", replynum='" + replynum + '\'' +
+                ", favour='" + favour + '\'' +
+                '}';
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getNoteid() {
+        return noteid;
     }
 
-    public static final Creator<CommentModel> CREATOR = new Creator<CommentModel>() {
-        @Override
-        public CommentModel createFromParcel(Parcel in) {
-            return new CommentModel(in);
-        }
-
-        @Override
-        public CommentModel[] newArray(int size) {
-            return new CommentModel[size];
-        }
-    };
-
-    public String getId() {
-        return id;
+    public void setNoteid(String noteid) {
+        this.noteid = noteid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getMatrixid() {
+        return matrixid;
     }
 
-    public String getMatrixId() {
-        return matrixId;
+    public void setMatrixid(String matrixid) {
+        this.matrixid = matrixid;
     }
 
-    public void setMatrixId(String matrixId) {
-        this.matrixId = matrixId;
+    public String getUserid() {
+        return userid;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getPhotourl() {
+        return photourl;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setPhotourl(String photourl) {
+        this.photourl = photourl;
     }
 
     public String getName() {
@@ -118,12 +93,12 @@ public class CommentModel implements Parcelable {
         this.time = time;
     }
 
-    public String getReplyNum() {
-        return replyNum;
+    public String getReplynum() {
+        return replynum;
     }
 
-    public void setReplyNum(String replyNum) {
-        this.replyNum = replyNum;
+    public void setReplynum(String replynum) {
+        this.replynum = replynum;
     }
 
     public String getFavour() {
@@ -134,4 +109,49 @@ public class CommentModel implements Parcelable {
         this.favour = favour;
     }
 
+    public static Creator<CommentModel> getCREATOR() {
+        return CREATOR;
+    }
+
+    protected CommentModel(Parcel in) {
+        noteid = in.readString();
+        matrixid = in.readString();
+        userid = in.readString();
+        photourl = in.readString();
+        name = in.readString();
+        content = in.readString();
+        time = in.readString();
+        replynum = in.readString();
+        favour = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(noteid);
+        dest.writeString(matrixid);
+        dest.writeString(userid);
+        dest.writeString(photourl);
+        dest.writeString(name);
+        dest.writeString(content);
+        dest.writeString(time);
+        dest.writeString(replynum);
+        dest.writeString(favour);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CommentModel> CREATOR = new Creator<CommentModel>() {
+        @Override
+        public CommentModel createFromParcel(Parcel in) {
+            return new CommentModel(in);
+        }
+
+        @Override
+        public CommentModel[] newArray(int size) {
+            return new CommentModel[size];
+        }
+    };
 }

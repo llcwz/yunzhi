@@ -29,24 +29,24 @@
                     android:id="@+id/ci_post_icon"
                     android:layout_width="@dimen/len_48"
                     android:layout_height="@dimen/len_48"
+                    android:layout_alignParentLeft="true"
                     android:layout_margin="@dimen/len_8"
-                    tools:background="@color/amber_100"
-                    android:layout_alignParentLeft="true"/>
+                    tools:background="@color/amber_100"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/ci_post_icon"
-                    android:layout_centerVertical="true">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_post_author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="WUST第一吃货王"
                         android:textSize="@dimen/font_16"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        tools:text="WUST第一吃货王"/>
 
                     <TextView
                         android:id="@+id/tv_post_time"
@@ -59,16 +59,16 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
                     android:layout_margin="@dimen/len_8">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginRight="@dimen/len_8"
                         android:layout_marginTop="@dimen/len_4"
-                        android:layout_marginRight="@dimen/len_8">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -83,12 +83,12 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
                         android:layout_width="0dp"
-                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/len_4"
-                        android:gravity="center_horizontal">
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_post_like"

@@ -20,19 +20,22 @@ import com.union.yunzhi.yunzhi.R;
 
 public class CommentDialogFragment extends DialogFragment implements View.OnClickListener {
     public static final String TAG = "CommentDialogFragment";
+    public static final String EXTRA_REPLY_ID = "replyId";
     public static final String EXTRA_ID = "id";
     public static final String EXTRA_NAME = "name";
-    private String mId; // 主体的id
-    private String mName; // 主体名字
+    private String mId; // 帖子的id
+    private String mReplyId; // 原评论者的id
+    private String mName; // 主体的名字
     private View mView;
     private EditText mContent;
     private TextView mSend;
 
     private OnGetCommentContentListener mOnGetCommentContentListener;
 
-    public static CommentDialogFragment newInstance(String id,String name) {
+    public static CommentDialogFragment newInstance(String id,String replyId,String name) {
         CommentDialogFragment commentDialogFragment = new CommentDialogFragment();
         Bundle bundle = new Bundle();
+        bundle.putString(EXTRA_REPLY_ID, replyId);
         bundle.putString(EXTRA_ID, id);
         bundle.putString(EXTRA_NAME, name);
         commentDialogFragment.setArguments(bundle);
@@ -41,7 +44,7 @@ public class CommentDialogFragment extends DialogFragment implements View.OnClic
 
     // 数据回传
     public interface OnGetCommentContentListener {
-        void getContent(String id,String name,String content);
+        void getContent(String id,String replyId,String name,String content);
     }
 
     @Override
@@ -54,6 +57,7 @@ public class CommentDialogFragment extends DialogFragment implements View.OnClic
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mOnGetCommentContentListener = (OnGetCommentContentListener) getActivity();
         mId = (String) getArguments().get(EXTRA_ID);
+        mReplyId = getArguments().getString(EXTRA_REPLY_ID);
         mName = (String) getArguments().get(EXTRA_NAME);
         mView = View.inflate(getActivity(), R.layout.communication_fragment_comment, null);
         mContent = (EditText) mView.findViewById(R.id.et_content);
@@ -70,7 +74,7 @@ public class CommentDialogFragment extends DialogFragment implements View.OnClic
         if (TextUtils.isEmpty(content)) {
             Toast.makeText(getActivity(), "请先输入文字", Toast.LENGTH_SHORT).show();
         } else {
-            mOnGetCommentContentListener.getContent(mId,mName,content);
+            mOnGetCommentContentListener.getContent(mId,mReplyId,mName,content);
             dismiss();
         }
     }

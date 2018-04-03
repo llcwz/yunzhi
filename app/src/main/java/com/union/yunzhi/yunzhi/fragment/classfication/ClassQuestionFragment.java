@@ -47,7 +47,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;
     private ClassQuestionAdapter mAdapter;
-    private List<QuestionBean> mQuestionBeen = new ArrayList<>();
+//    private List<QuestionBean> mQuestionBeen = new ArrayList<>();
 
     public static ClassQuestionFragment newInstance(int videoId) {
         Bundle bundle = new Bundle();
@@ -84,10 +84,16 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
                     @Override
                     public void getQuestions(List<QuestionBean> questionBeen) {
                         if (questionBeen != null) {
-                            mQuestionBeen = questionBeen;
-                            initAdapter(mQuestionBeen);
+                            if (mAdapter == null) {
+                                initAdapter(questionBeen);
+                            } else {
+                                mAdapter.clear();
+                                mAdapter.add(questionBeen);
+                            }
+                        } else {
+                            questionBeen = new ArrayList<QuestionBean>();
                         }
-                        MeUtils.showNoMessage(mQuestionBeen.size(), mNoQuestion, mRecyclerView, "这里可以提问哟");
+                        MeUtils.showNoMessage(questionBeen.size(), mNoQuestion, mRecyclerView, "这里可以提问哟");
                     }
                 });
 
@@ -108,7 +114,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
         mAdapter = new ClassQuestionAdapter(getActivity(), questionBeen, new MyAdapter.AdapterListener<QuestionBean>() {
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, QuestionBean data) {
-                CommentDialogFragment.newInstance(data.id, data.name);
+                CommentDialogFragment.newInstance(data.id, data.userId, data.name);
             }
 
             @Override
@@ -163,7 +169,7 @@ public class ClassQuestionFragment extends FragmentM implements View.OnClickList
                                     @Override
                                     public void getQuestion(QuestionBean questionBean) {
                                         if (questionBean != null) {
-                                            mAdapter.add(questionBean, mQuestionBeen.size());
+                                            getData();
                                         }
                                     }
                                 });
