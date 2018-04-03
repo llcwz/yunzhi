@@ -1,10 +1,8 @@
 package com.union.yunzhi.yunzhi.communicationutils;
 
 import android.content.Context;
+import android.widget.Toast;
 
-<<<<<<< HEAD
-import com.union.yunzhi.factories.moudles.me.UserModel;
-=======
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.BaseReplyModel;
@@ -19,7 +17,7 @@ import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.List;
->>>>>>> 6adee440faaad392195116edcaa40b0af088e3e7
+
 
 /** 评论功能
  * Created by CrazyGZ on 2018/3/11.
@@ -93,7 +91,7 @@ public class CommentUtils {
                     }
                 });
 
-<<<<<<< HEAD
+
 //    public void addComment(int tag,final CommentAdapter commentAdapter) {
 //
 //        DialogManager.getInstnce().showProgressDialog(mContext);
@@ -139,7 +137,7 @@ public class CommentUtils {
 //                });
 //
 //    }
-=======
+
     }
 
     /**
@@ -256,5 +254,5 @@ public class CommentUtils {
                     }
                 });
     }
->>>>>>> 6adee440faaad392195116edcaa40b0af088e3e7
+
 }
