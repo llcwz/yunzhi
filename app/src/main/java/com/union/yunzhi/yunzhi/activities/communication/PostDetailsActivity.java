@@ -10,9 +10,9 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,28 +21,23 @@ import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
-import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
-import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
 import com.union.yunzhi.yunzhi.communicationutils.CommentUtils;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.fragment.communication.CommentDialogFragment;
-import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
-import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PostDetailsActivity extends ActivityM implements View.OnClickListener, CommentDialogFragment.OnAddCommentListener {
+public class PostDetailsActivity extends ActivityM implements View.OnClickListener, CommentDialogFragment.OnGetCommentContentListener {
     private static final String TAG = "PostDetailsActivity";
     private UserManager mUserManager;
     private UserModel mUser;
@@ -63,8 +58,6 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
     private ImageView mLike; // 点赞图标
     private TextView mLikeCounts; // 点赞数
     private ImageView mSendComment; // 发送评论
-
-    private String mReply;
 
     public static void newInstance(Context context, PostModel postModel) {
         Intent intent = new Intent(context, PostDetailsActivity.class);
@@ -100,86 +93,36 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         mLikeCounts = (TextView) findViewById(R.id.tv_post_like);
         mSendComment = (ImageView) findViewById(R.id.iv_post_comment);
 
-        getData(mPostModel.getId());
     }
 
-    // 根据id获取不同的帖子数据
-    private void getData(String id) {
-        DialogManager.getInstnce().showProgressDialog(this);
-        RequestCenter.requestComment(id,
-                new DisposeDataListener() {
+    // 获取数据
+    private void getData() {
+        CommentUtils.newInstance(mUser, this).getComment(mPostModel.getMatrixId(),
+                new CommentUtils.OnRequestCommentListener() {
                     @Override
-                    public void onSuccess(Object responseObj) {
-                        DialogManager.getInstnce().dismissProgressDialog();
-
-                        BaseCommentModel baseCommentModel = (BaseCommentModel) responseObj;
-                        if (baseCommentModel.ecode == CommunicationConstant.ECODE) {
-                            mCommentModels = baseCommentModel.data;
-                            if (mAdapter == null) { // 第一次加载
-                                initAdapter(mCommentModels);
-                            } else {
-                                
+                    public void getComments(List<CommentModel> commentModels) {
+                        Toast.makeText(PostDetailsActivity.this, "执行了", Toast.LENGTH_SHORT).show();
+                        if (commentModels.size() != 0) {
+                            if (mAdapter != null) { // 页面重新请求
+                                mCommentModels.clear();
+                                mCommentModels = commentModels;
+                                mAdapter.add(mCommentModels);
                             }
-                            MeUtils.showNoMessage(mCommentModels.size(), mNoComment, mRecyclerView, "暂无评论，快抢个沙发");
-                            for (CommentModel commentModel : mCommentModels) {
-                                LogUtils.d("commentMessage", commentModel.toString());
-                            }
+                            mCommentModels = commentModels;
+                            initAdapter(mCommentModels);
                         } else {
-                            Toast.makeText(PostDetailsActivity.this, "" + baseCommentModel.emsg, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Object reasonObj) {
-                        DialogManager.getInstnce().dismissProgressDialog();
-                        OkHttpException okHttpException = (OkHttpException) reasonObj;
-                        if (okHttpException.getEcode() == 1) {
-                            Toast.makeText(PostDetailsActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -1){
-                            Toast.makeText(PostDetailsActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -2) {
-                            Toast.makeText(PostDetailsActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
-                        } else if (okHttpException.getEcode() == -3) {
-                            Toast.makeText(PostDetailsActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
+                            MeUtils.showNoMessage(mCommentModels.size(), mNoComment, mRecyclerView, "暂无评论，快抢个沙发");
                         }
                     }
                 });
-    }
-
-    // 初始化数据
-    private void initAdapter(List<CommentModel> commentModels) {
-        mAdapter = new CommentAdapter(this, commentModels,new MyAdapter.AdapterListener<CommentModel>() {
-            @Override
-            public void onItemClick(MyAdapter.MyViewHolder holder, CommentModel data) {
-
-            }
-
-            @Override
-            public void onItemLongClick(MyAdapter.MyViewHolder holder, CommentModel data) {
-
-            }
-
-            @Override
-            public Boolean setAddActionContinue() {
-                return null;
-            }
-
-            @Override
-            public void updataUI(Object object) {
-
-            }
-        });
-    }
-
-    @Override
-    protected void initData() {
         if (!TextUtils.isEmpty(mPostModel.getTitle())) {
             mToolbar.setTitle(mPostModel.getTitle());
         } else {
-            mToolbar.setTitle("测试标题");
+            mToolbar.setTitle("交流区");
         }
+
         // 根据头像改变背景颜色
-        MeUtils.showPalette(this, mPostModel.getPhotoUrl(), new MeUtils.OnShowPalleteListener() {
+        MeUtils.showPalette(this, mPostModel.getPhotourl(), new MeUtils.OnShowPalleteListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void show(Bitmap bitmap, List<Palette.Swatch> swatches) {
@@ -210,6 +153,36 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         linearLayoutManager.setScrollEnabled(false);
         mRecyclerView.setAdapter(mAdapter);
         mLikeCounts.setText("" + mPostModel.getFavour());
+    }
+
+    // 初始化数据
+    private void initAdapter(List<CommentModel> commentModels) {
+        mAdapter = new CommentAdapter(this, commentModels,new MyAdapter.AdapterListener<CommentModel>() {
+            @Override
+            public void onItemClick(MyAdapter.MyViewHolder holder, CommentModel data) {
+                CommentContentDetailsActivity.newInstance(PostDetailsActivity.this, data);
+            }
+
+            @Override
+            public void onItemLongClick(MyAdapter.MyViewHolder holder, CommentModel data) {
+
+            }
+
+            @Override
+            public Boolean setAddActionContinue() {
+                return null;
+            }
+
+            @Override
+            public void updataUI(Object object) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+        getData();
         mLike.setOnClickListener(this);
     }
 
@@ -219,17 +192,18 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
         // 用户登录才能操作
         if (mUserManager.hasLogined()) { // 如果用户登录了
             switch (view.getId()) {
-                case R.id.tv_send_comment: // 评论帖子
-                    CommentDialogFragment.newInstance(mPostModel.getId());
+                case R.id.iv_post_comment: // 评论帖子
+                    CommentDialogFragment commentDialogFragment = CommentDialogFragment.newInstance(mPostModel.getMatrixId(), mPostModel.getName());
+                    commentDialogFragment.show(getSupportFragmentManager(), CommentDialogFragment.TAG);
                     break;
                 case R.id.iv_post_like: // 点赞帖子
-                    LikeUtils likeUtils = LikeUtils.newInstance(mPostModel.getId(),
+                    LikeUtils likeUtils = LikeUtils.newInstance(mPostModel.getMatrixId(),
                             CommunicationConstant.LIKE_TAG_POST,
                             mUser,
                             PostDetailsActivity.this,
                             mLike,
                             mLikeCounts);
-                    likeUtils.iLike(mPostModel.getLikeUserId());
+                    likeUtils.iLike(Integer.parseInt(CommunicationConstant.LIKE_TAG_POST));
                     break;
                 default:
             }
@@ -244,35 +218,20 @@ public class PostDetailsActivity extends ActivityM implements View.OnClickListen
      * @param content
      */
     @Override
-    public void getContent(String id,String content) {
-        DialogManager.getInstnce().showProgressDialog(PostDetailsActivity.this);
-        RequestCenter.requestComment(id, new DisposeDataListener() {
-            @Override
-            public void onSuccess(Object responseObj) {
-                DialogManager.getInstnce().dismissProgressDialog();
-                BaseCommentModel baseCommentModel = (BaseCommentModel) responseObj;
-                if (baseCommentModel.ecode == CommunicationConstant.ECODE) {
-                    mAdapter.add(baseCommentModel.data.get(0)); // 刷新列表
-                } else {
-                    Toast.makeText(PostDetailsActivity.this, "" + baseCommentModel.emsg, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Object reasonObj) {
-                DialogManager.getInstnce().dismissProgressDialog();
-                OkHttpException okHttpException = (OkHttpException) reasonObj;
-                if (okHttpException.getEcode() == 1) {
-                    Toast.makeText(PostDetailsActivity.this, "" + okHttpException.getEmsg(), Toast.LENGTH_SHORT).show();
-                } else if (okHttpException.getEcode() == -1){
-                    Toast.makeText(PostDetailsActivity.this, "网络连接错误", Toast.LENGTH_SHORT).show();
-                } else if (okHttpException.getEcode() == -2) {
-                    Toast.makeText(PostDetailsActivity.this, "解析错误" , Toast.LENGTH_SHORT).show();
-                } else if (okHttpException.getEcode() == -3) {
-                    Toast.makeText(PostDetailsActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    public void getContent(String id,String name,String content) {
+        if (!id.equals(mPostModel.getMatrixId())) { // 如果不是评论帖子，那么就是评论评论，所以要追加“XXX评论了XXX：”作为评论内容
+            content = "回复 " + name + " 的评论：" + content;
+        }
+        CommentUtils.newInstance(mUser, this).addComment(id,
+                content,
+                new CommentUtils.OnAddCommentListener() {
+                    @Override
+                    public void getComment(Boolean result) {
+                        if (result) {
+                            getData();
+                        }
+                    }
+                });
     }
 
 

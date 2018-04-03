@@ -10,6 +10,7 @@ import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerB
 import com.union.yunzhi.factories.moudles.classfication.beans.question.BaseQuestionBean;
 import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.BaseCommunicationModel;
+import com.union.yunzhi.factories.moudles.communication.BaseLikeModel;
 import com.union.yunzhi.factories.moudles.home.homeBaseModle;
 import com.union.yunzhi.factories.moudles.me.BaseCourseModel;
 import com.union.yunzhi.factories.moudles.me.BaseGradeModel;
@@ -21,6 +22,7 @@ import com.union.yunzhi.factories.okhttp.listener.DisposeDataHandle;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.factories.okhttp.request.CommonRequest;
 import com.union.yunzhi.factories.okhttp.request.RequestParams;
+import com.union.yunzhi.factories.okhttp.response.NotCallBackData;
 
 /**
  * Created by meng on 2018/2/24.
@@ -184,13 +186,19 @@ public class RequestCenter {
 
     /**
      * @function 获取帖子
-     * @param tag
+     * @param tag 帖子的类型
      * @param listener
      */
     public static void requestPost(int tag, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
         params.put("tag","" + tag);
         RequestCenter.postRequest(HttpConstants.POST_URL, params, listener, BaseCommunicationModel.class);
+    }
+
+    public static void requestQuestion(int tag, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("tag","" + tag);
+        RequestCenter.postRequest(HttpConstants.POST_URL, params, listener, BaseQuestionBean.class);
     }
 
     /**
@@ -200,22 +208,71 @@ public class RequestCenter {
      */
     public static void requestComment(String id, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("id",id);
+        params.put("matrixId",id);
         RequestCenter.postRequest(HttpConstants.COMMENT_URL, params, listener, BaseCommentModel.class);
+    }
+
+    public static void requestReply(String id, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("noteId",id);
+        RequestCenter.postRequest(HttpConstants.REPLY_URL, params, listener, BaseCommentModel.class);
+    }
+
+    /**
+     * @function 添加评论
+     * @param matrixId
+     * @param userId
+     * @param content
+     * @param listener
+     */
+    public static void requestAddComment(String matrixId, String userId, String content, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("matrixId", matrixId);
+        params.put("userId", userId);
+        params.put("content", content);
+        RequestCenter.postRequest(HttpConstants.ADD_COMMENT_URL, params, listener, NotCallBackData.class);
+    }
+
+    /**
+     * @function 回复评论
+     * @param matrixId
+     * @param noteId
+     * @param replyId
+     * @param account
+     * @param content
+     * @param listener
+     */
+    public static void requestAddReply(String matrixId, String noteId, String replyId,String account, String content, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("matrixId", matrixId);
+        params.put("noteId", noteId);
+        params.put("replyId", replyId);
+        params.put("userId", account);
+        params.put("content", content);
+        RequestCenter.postRequest(HttpConstants.ADD_REPLY_URL, params, listener, NotCallBackData.class);
     }
 
     /**
      * @function 上传点赞
-     * @param postOrCommentOrQuestionId 给点赞的那个东西的id
+     * @param
      * @param account 点赞者的id
      */
-    public static void requestLike(String postOrCommentOrQuestionId,String tag,String account, DisposeDataListener listener) {
+    public static void requestLikePost(String postId,String account, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("mId", postOrCommentOrQuestionId);
-        params.put("tag", tag);
-        params.put("mAccount", account);
-        RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, null);
+        params.put("matrixId", postId);
+        params.put("flag", "" + 1);
+        params.put("userId", account);
+        RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, NotCallBackData.class);
     }
+
+    public static void requestLikeComment(String commentId,String account, DisposeDataListener listener) {
+        RequestParams params = new RequestParams();
+        params.put("noteId", commentId);
+        params.put("flag", "" + 2);
+        params.put("userId", account);
+        RequestCenter.postRequest(HttpConstants.LIKE_URL, params, listener, NotCallBackData.class);
+    }
+
 
 
     /**
@@ -237,17 +294,17 @@ public class RequestCenter {
         RequestCenter.postRequest(HttpConstants.ADD_POST_URL, params, listener, BaseCommunicationModel.class);
     }
 
-
-    /**
-     * @function 获取课程下的问题交流数据
-     * @param id
-     * @param listener
-     */
-    public static void requestQuestion(String id, DisposeDataListener listener) {
+    public static void requestAddQuestion(String account,int peopleType,int tag,String title, String content, DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("courseId","" + id);
-        RequestCenter.postRequest(HttpConstants.QUESTION_URL, params, listener, BaseQuestionBean.class);
+        params.put("userId", account);
+        params.put("title", title);
+        params.put("content", content);
+        params.put("tag", "" + tag);
+        params.put("peopleType","" + peopleType);
+        LogUtils.d("tag",tag + "");
+        RequestCenter.postRequest(HttpConstants.ADD_POST_URL, params, listener, BaseQuestionBean.class);
     }
+
 
     /**
      *  侧滑栏抽屉请求

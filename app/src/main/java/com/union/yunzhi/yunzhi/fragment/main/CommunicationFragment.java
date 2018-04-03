@@ -20,6 +20,7 @@ import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
+import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
 import com.union.yunzhi.yunzhi.fragment.communication.PostFragment;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
@@ -135,12 +136,18 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
      */
     private void addPost(int tag) {
         if (mUserManager.hasLogined()) {
+//            Intent intent = new Intent(getActivity(), AddPostActivity.class);
+//            intent.putExtra(AddPostActivity.TAG, mTag);
+//            startActivityForResult(intent, AddPostActivity.REQUEST);
             AddPostActivity.newInstance(getActivity(), tag);
+            AddPostActivity.setGetPostListener(mListener);
         } else {
             Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
         }
     }
 
+
+    // 适配器
     private class CommunicationPagerAdapter extends FragmentPagerAdapter {
         public CommunicationPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -161,4 +168,39 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
             return mTabs.get(position);
         }
     }
+
+
+    private AddPostActivity.OnGetPostContentListener mListener = new AddPostActivity.OnGetPostContentListener() {
+        @Override
+        public void getPost(String title, String content) {
+            // 发起添加帖子的请求
+            OpinionUtils opinionUtils = OpinionUtils.newInstance(mUserManager.getUser(), getActivity());
+            opinionUtils.addPost(mTag,title,content, new OpinionUtils.OnAddPostListener() {
+                @Override
+                public void getPost(PostModel postModel) {
+                    if (postModel != null) {
+                        mFragments.get(mTag).notifyList(postModel);
+                    }
+                }
+            });
+        }
+    };
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch (requestCode) {
+//            case AddPostActivity.REQUEST:
+//                if (resultCode == AddPostActivity.RESULT_OK) {
+//                    if (data != null) {
+//
+//                        PostModel postModel = data.getParcelableExtra(AddPostActivity.RESULT_POST);
+//                        LogUtils.d("notifyPostList",postModel.toString());
+//                        mFragments.get(mTag).notifyList(postModel);
+//                    }
+//                }
+//                break;
+//            default:
+//        }
+//    }
 }

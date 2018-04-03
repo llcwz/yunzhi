@@ -78,7 +78,7 @@ public class ClassFileAdapter extends MyAdapter<CourseFileBean>{
                     bean.coverurl="http://mmbiz.qpic.cn/mmbiz/PwIlO51l7wuFyoFwAXfqPNETWCibjNACIt6ydN7vw8LeIwT7IjyG3eeribmK4rhibecvNKiaT2qeJRIWXLuKYPiaqtQ/0";
                     bean.videourl="http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4";
                     bean.videotitle="最牛课程";
-                    bean.videoid="1122";
+                    bean.videoid=1;
 
                     VideoUtils.newInstance(context,bean,null).startVideo();
                 }

@@ -10,26 +10,15 @@
         android:orientation="vertical">
 
         <!--TODO 直播预留搜索栏位置-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/len_40"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="预留搜索栏的位置"/>
-
-        </LinearLayout>
-
+        <include layout="@layout/toolbar"
+            android:id="@+id/live_toolbar"/>
 
         <!--分类滚动条-->
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="@dimen/len_40"
             android:id="@+id/horizontal_view"
-            android:background="@color/blue_300"
+            android:background="@color/white_alpha_128"
             android:scrollbars="none">
 
             <LinearLayout

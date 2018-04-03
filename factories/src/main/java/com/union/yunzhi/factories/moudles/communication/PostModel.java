@@ -3,50 +3,53 @@ package com.union.yunzhi.factories.moudles.communication;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
-
 /**
  * 交流区帖子模型
  * Created by CrazyGZ on 2018/3/9.
  */
 
 public class PostModel implements Parcelable {
-    private String id; // 帖子的id
-    private String userId; // 作者id
-    private String photoUrl; // 作者头像
+    private String matrixId; // 帖子id
+    private String userid; // 作者id
+    private String photourl; // 作者头像
     private String name; // 作者
     private String title; // 标题
     private String content; // 内容
     private String time; // 时间
-    private String msgNum; // 评论数
+    private String msgnum; // 评论数
     private String favour; // 赞数
-    private List<String> mLikeUserId;
+    private int tag;
+    private int peopletype;
+
+    public PostModel() {}
 
     protected PostModel(Parcel in) {
-        id = in.readString();
-        userId = in.readString();
-        photoUrl = in.readString();
+        matrixId = in.readString();
+        userid = in.readString();
+        photourl = in.readString();
         name = in.readString();
         title = in.readString();
         content = in.readString();
         time = in.readString();
-        msgNum = in.readString();
+        msgnum = in.readString();
         favour = in.readString();
-        mLikeUserId = in.createStringArrayList();
+        tag = in.readInt();
+        peopletype = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(userId);
-        dest.writeString(photoUrl);
+        dest.writeString(matrixId);
+        dest.writeString(userid);
+        dest.writeString(photourl);
         dest.writeString(name);
         dest.writeString(title);
         dest.writeString(content);
         dest.writeString(time);
-        dest.writeString(msgNum);
+        dest.writeString(msgnum);
         dest.writeString(favour);
-        dest.writeStringList(mLikeUserId);
+        dest.writeInt(tag);
+        dest.writeInt(peopletype);
     }
 
     @Override
@@ -66,28 +69,28 @@ public class PostModel implements Parcelable {
         }
     };
 
-    public String getId() {
-        return id;
+    public String getMatrixId() {
+        return matrixId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMatrixId(String matrixId) {
+        this.matrixId = matrixId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getPhotourl() {
+        return photourl;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setPhotourl(String photourl) {
+        this.photourl = photourl;
     }
 
     public String getName() {
@@ -122,12 +125,12 @@ public class PostModel implements Parcelable {
         this.time = time;
     }
 
-    public String getMsgNum() {
-        return msgNum;
+    public String getMsgnum() {
+        return msgnum;
     }
 
-    public void setMsgNum(String msgNum) {
-        this.msgNum = msgNum;
+    public void setMsgnum(String msgnum) {
+        this.msgnum = msgnum;
     }
 
     public String getFavour() {
@@ -138,11 +141,19 @@ public class PostModel implements Parcelable {
         this.favour = favour;
     }
 
-    public List<String> getLikeUserId() {
-        return mLikeUserId;
+    public int getTag() {
+        return tag;
     }
 
-    public void setLikeUserId(List<String> likeUserId) {
-        mLikeUserId = likeUserId;
+    public void setTag(int tag) {
+        this.tag = tag;
+    }
+
+    public int getPeopletype() {
+        return peopletype;
+    }
+
+    public void setPeopletype(int peopletype) {
+        this.peopletype = peopletype;
     }
 }

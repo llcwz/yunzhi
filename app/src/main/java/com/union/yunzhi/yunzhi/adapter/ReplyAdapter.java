@@ -8,18 +8,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
-import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
-import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
-import com.union.yunzhi.yunzhi.activities.communication.PostDetailsActivity;
 import com.union.yunzhi.yunzhi.communicationutils.LikeUtils;
 import com.union.yunzhi.yunzhi.fragment.communication.CommentDialogFragment;
-import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
-import com.union.yunzhi.yunzhi.network.RequestCenter;
 
 import java.util.List;
 
@@ -30,11 +24,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by CrazyGZ on 2018/3/9.
  */
 
-public class CommentAdapter extends MyAdapter<CommentModel> {
+public class ReplyAdapter extends MyAdapter<CommentModel> {
 
     private Context mContext;
 
-    public CommentAdapter(Context context, List<CommentModel> data, AdapterListener<CommentModel> listener) {
+    public ReplyAdapter(Context context, List<CommentModel> data, AdapterListener<CommentModel> listener) {
         super(data,listener);
         mContext = context;
     }
@@ -46,10 +40,10 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
 
     @Override
     protected MyViewHolder<CommentModel> onCreateViewHolder(View root, int viewType) {
-        return new CommentViewHolder(root);
+        return new ReplyViewHolder(root);
     }
 
-    public class CommentViewHolder extends MyViewHolder<CommentModel> implements View.OnClickListener {
+    public class ReplyViewHolder extends MyViewHolder<CommentModel> implements View.OnClickListener {
         private UserManager mUserManager;
         private CommentModel data;
         private CircleImageView mIcon;
@@ -62,7 +56,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
         private TextView mContent;
 
 
-        public CommentViewHolder(View itemView) {
+        public ReplyViewHolder(View itemView)  {
             super(itemView);
             mUserManager = UserManager.getInstance();
             mIcon = (CircleImageView) itemView.findViewById(R.id.ci_comment_icon);
@@ -82,7 +76,7 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
             mTime.setText(data.getTime());
             mContent.setText(data.getContent());
             mLikeCount.setText(data.getFavour()); // 获取点赞数
-            mReply.setVisibility(View.GONE);
+            mReply.setOnClickListener(this);
             mLike.setOnClickListener(this);
         }
 
@@ -98,6 +92,9 @@ public class CommentAdapter extends MyAdapter<CommentModel> {
                                 mLike,
                                 mLikeCount);
                         likeUtils.iLike(Integer.parseInt(CommunicationConstant.LIKE_TAG_COMMENT));
+                        break;
+                    case R.id.iv_comment_reply: // 回复评论
+                        CommentDialogFragment.newInstance(data.getId(), data.getName());
                         break;
                 }
             } else { // 用户没登录

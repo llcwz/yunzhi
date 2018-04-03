@@ -68,7 +68,7 @@ public final class CaptureActivityHandler extends Handler {
     @Override
     public void handleMessage(Message message) {
         if (message.what == R.id.auto_focus) {
-            // Log.d(TAG, "Got auto-focus message");
+            // Log.d(KEY, "Got auto-focus message");
             // When one auto focus pass finishes, start another. This is the
             // closest thing to
             // continuous AF. It does seem to hunt a bit, but I'm not sure what
