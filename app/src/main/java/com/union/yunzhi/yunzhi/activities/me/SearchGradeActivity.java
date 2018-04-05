@@ -136,6 +136,7 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
 
     @Override
     protected void initData() {
+        mToolbar.setTitle("成绩查询");
         mToolbar.inflateMenu(R.menu.search_grade_item);
         mToolbar.setOnMenuItemClickListener(this);
 

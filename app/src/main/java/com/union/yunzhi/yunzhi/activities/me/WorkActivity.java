@@ -181,6 +181,7 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
 
     @Override
     protected void initData() {
+        mToolbar.setTitle("我的任务");
         if (mUser.getPriority() == MeConstant.PRIORITY_TEACHER) { // 如果是老师登进，则给予权限发布新的任务
             mToolbar.inflateMenu(R.menu.me_add_work_item);
             mToolbar.setOnMenuItemClickListener(this);

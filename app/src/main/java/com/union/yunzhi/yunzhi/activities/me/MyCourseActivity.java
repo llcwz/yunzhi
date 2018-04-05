@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,6 +41,7 @@ public class MyCourseActivity extends ActivityM {
     private List<CourseModel> mCourseModels  = new ArrayList<>();
     private List<CourseModel> mSeletedData = new ArrayList<>(); // 存放当前下拉栏状态对应的列表数据
     private List<String> mStates = new ArrayList<>(); // 课程的三种状态:进行中、即将开始、已完成
+    private Toolbar mToolbar;
     private Spinner mCourseState; // 选择课程的状态
     private TextView mNoCourse;
     private RecyclerView mRecyclerView;
@@ -60,6 +62,7 @@ public class MyCourseActivity extends ActivityM {
     @Override
     protected void initWidget() {
         mUser = MeUtils.getUser();
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mCourseState = (Spinner) findViewById(R.id.spn_my_course_state);
         mNoCourse = (TextView) findViewById(R.id.tv_no_course);
         mRecyclerView = (RecyclerView) findViewById(R.id.rec_my_course);
@@ -272,33 +275,34 @@ public class MyCourseActivity extends ActivityM {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initData() {
+        mToolbar.setTitle("我的课程");
 
         // 监听选择的课程的状态
-        mCourseState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                mSeletedData.clear(); // 先清空，以备接下来选择的数据做准备
-                if (mCourseModels != null) {
-                    // 如果是选择全部类型的，那么则将网络获取到的全部数据赋给当前选择全部状态的列表
-                    if (i == MeConstant.COURSE_STATE_ALL) { // 第0项，也就是全部
-                        mSeletedData = mCourseModels;
-                    } else { // 否则根据课程的状态选择相应的数据
-                        for (CourseModel courseModel : mCourseModels) {
-                            if (courseModel.getState() == i) { // 课程的状态有三种，1进行时，2即将开始，3已完成
-                                mSeletedData.add(courseModel);
-                            }
-                        }
-                    }
-                } else {
-                    Toast.makeText(MyCourseActivity.this, "快去选择一门课吧", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        mCourseState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                mSeletedData.clear(); // 先清空，以备接下来选择的数据做准备
+//                if (mCourseModels != null) {
+//                    // 如果是选择全部类型的，那么则将网络获取到的全部数据赋给当前选择全部状态的列表
+//                    if (i == MeConstant.COURSE_STATE_ALL) { // 第0项，也就是全部
+//                        mSeletedData = mCourseModels;
+//                    } else { // 否则根据课程的状态选择相应的数据
+//                        for (CourseModel courseModel : mCourseModels) {
+//                            if (courseModel.getState() == i) { // 课程的状态有三种，1进行时，2即将开始，3已完成
+//                                mSeletedData.add(courseModel);
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    Toast.makeText(MyCourseActivity.this, "快去选择一门课吧", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
     }
 

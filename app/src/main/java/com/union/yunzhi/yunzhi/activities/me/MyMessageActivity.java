@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.flyco.tablayout.SegmentTabLayout;
@@ -33,6 +34,7 @@ public class MyMessageActivity extends ActivityM {
 
     private UserModel mUser;
     private MessageModel mMessageModel;
+    private Toolbar mToolbar;
     private SegmentTabLayout mTabLayout;
     private String[] mTitles;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -49,7 +51,7 @@ public class MyMessageActivity extends ActivityM {
     @Override
     protected void initWidget() {
         mUser = MeUtils.getUser();
-
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTabLayout = (SegmentTabLayout) findViewById(R.id.segment_tab_layout);
         getData();
 
@@ -158,6 +160,7 @@ public class MyMessageActivity extends ActivityM {
 
     @Override
     protected void initData() {
+        mToolbar.setTitle("我的消息");
 
 //        class MessageAdapter extends FragmentPagerAdapter {
 //            public MessageAdapter(FragmentManager fm) {
