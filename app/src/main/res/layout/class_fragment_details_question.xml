@@ -2,8 +2,18 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
+    <TextView
+        android:id="@+id/tv_no_question"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/len_16"
+        android:gravity="center"
+        android:text="这里可以提问哟"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

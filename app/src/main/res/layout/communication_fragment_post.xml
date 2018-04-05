@@ -5,16 +5,21 @@
               android:layout_height="match_parent"
               android:padding="@dimen/len_8">
 
-<TextView
-    android:id="@+id/tv_no_post"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/len_16"
-    android:layout_gravity="center_horizontal"
-    android:text="暂无帖子，快来占领地盘吧"
-    android:textSize="@dimen/font_16"
-    android:textStyle="bold"
-    android:visibility="gone"/>
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/layout_no_post"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/len_16"
+            android:gravity="center"
+            android:text="暂无帖子，快来占领地盘吧"
+            android:textSize="@dimen/font_16"
+            android:textStyle="bold"/>
+    </android.support.v4.widget.NestedScrollView>
+
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/recycler"

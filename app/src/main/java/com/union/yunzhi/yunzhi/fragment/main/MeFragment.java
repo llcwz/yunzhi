@@ -289,8 +289,6 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         mUserManager.removeUser(); // 清除用户的数据
         // TODO: 2018/3/10 更改数据库用户的数据
         // 加载默认头像
-        String defaultPhotoUrl = "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3693357268,602549071&fm=27&gp=0.jpg";
-        setBackground(defaultPhotoUrl);
         mUsername.setText("点击头像登录");
         mAccount.setText("");
         if (mMeNavigationAdapter != null) { // 如果是用户选择注销，则清除已经加载的导航数据
@@ -307,13 +305,22 @@ public class MeFragment extends FragmentM implements View.OnClickListener {
         // 加载导航数据以及初始化适配器
         initAdapter();
         // 加载头像
-        setBackground(mUser.getPhotourl());
         mUsername.setText(mUser.getName());
         mAccount.setText(mUser.getAccount());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         mRecyclerView.setAdapter(mMeNavigationAdapter);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mUser == null) {
+            String defaultPhotoUrl = "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3693357268,602549071&fm=27&gp=0.jpg";
+            setBackground(defaultPhotoUrl);
+        } else {
+            setBackground(mUser.getPhotourl());
+        }
+    }
 
     private void setBackground(String url) {
         Glide.with(this)

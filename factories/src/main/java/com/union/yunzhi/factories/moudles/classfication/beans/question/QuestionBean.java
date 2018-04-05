@@ -14,36 +14,46 @@ import java.util.List;
 
 public class QuestionBean implements Parcelable {
     public String courseId; // 该问题属于那一课程的id
-    public String id; // 该问题的id
-    public String iconUrl; // 头像
-    public String author; // 作者
-    public String time; // 时间
+    public String id; // 问题的id
+    public String userId; // 作者id
+    public String photoUrl; // 作者头像
+    public String name; // 作者
+    public String title; // 标题
     public String content; // 内容
-    public List<CommentModel> commentModels; // 该问题的评论
-    public List<LikeModel> likeModels; // 该问题的点赞
+    public String time; // 时间
+    public String msgNum; // 评论数
+    public String favour; // 赞数
+    public List<String> mLikeUserId;
 
 
+    public QuestionBean() {}
     protected QuestionBean(Parcel in) {
         courseId = in.readString();
         id = in.readString();
-        iconUrl = in.readString();
-        author = in.readString();
-        time = in.readString();
+        userId = in.readString();
+        photoUrl = in.readString();
+        name = in.readString();
+        title = in.readString();
         content = in.readString();
-        commentModels = in.createTypedArrayList(CommentModel.CREATOR);
-        likeModels = in.createTypedArrayList(LikeModel.CREATOR);
+        time = in.readString();
+        msgNum = in.readString();
+        favour = in.readString();
+        mLikeUserId = in.createStringArrayList();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(courseId);
         dest.writeString(id);
-        dest.writeString(iconUrl);
-        dest.writeString(author);
-        dest.writeString(time);
+        dest.writeString(userId);
+        dest.writeString(photoUrl);
+        dest.writeString(name);
+        dest.writeString(title);
         dest.writeString(content);
-        dest.writeTypedList(commentModels);
-        dest.writeTypedList(likeModels);
+        dest.writeString(time);
+        dest.writeString(msgNum);
+        dest.writeString(favour);
+        dest.writeStringList(mLikeUserId);
     }
 
     @Override

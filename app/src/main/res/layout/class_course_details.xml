@@ -1,29 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false">
 
-    <!--当视频隐藏时候，头出现-->
-    <include layout="@layout/class_details_head"
-        android:id="@+id/lv_details_head"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_256"
+        android:fitsSystemWindows="true">
 
-    <com.union.yunzhi.common.widget.MyScrollView
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:statusBarScrim="@android:color/transparent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/toolContent"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll|snap">
+
+            <!--课程简介视频布局-->
+            <include layout="@layout/class_couse_video"
+                     android:id="@+id/lv_details_video"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_marginBottom="@dimen/len_16"
+                     app:layout_collapseMode="parallax"
+                     app:layout_collapseParallaxMultiplier="0.7"/>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/lv_details_head"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="@dimen/len_40"
+                        android:layout_height="@dimen/len_40"
+                        android:id="@+id/rImgV_back_hidden"
+                        android:src="@drawable/ic_arrow_back_40dp"
+                        android:layout_alignParentLeft="true"/>
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="@dimen/len_40"
+                        android:layout_height="@dimen/len_40"
+                        android:id="@+id/rImgV_share_hidden"
+                        android:src="@drawable/ic_share_black_40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/len_8"/>
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scroll_details">
+        android:id="@+id/scroll_details"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--课程简介视频布局-->
-            <include layout="@layout/class_couse_video"
-                android:id="@+id/lv_details_video"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/len_224"/>
+
 
             <!--课程简介布局-->
             <include layout="@layout/class_details_jianjie_course"/>
@@ -83,6 +134,6 @@
 
         </LinearLayout>
 
-    </com.union.yunzhi.common.widget.MyScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

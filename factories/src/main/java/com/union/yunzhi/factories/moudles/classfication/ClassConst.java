@@ -24,6 +24,11 @@ public final class ClassConst
     public static final int CLASS_NOT_START=7;
 
 
+    /**
+     * 课程考核
+     */
+
+
     public static final int TSET_VIEW_TITLE=1;
     public static final int TSET_VIEW_CONTENT=2;
 
@@ -35,6 +40,7 @@ public final class ClassConst
     public static final String VIDEO_URL="video_url";
     public static final String VIDEO_NAME="video_name";
     public static final String VIDEO_COVER_URL="video_cover_url";
+
     public static final String COURSEID="course_id";
     public static final String TEACHERID="teacher_id";
 }

@@ -1,8 +1,6 @@
 package com.union.yunzhi.yunzhi.fragment.main;
 
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,24 +15,22 @@ import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
-import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.activities.communication.AddPostActivity;
+import com.union.yunzhi.yunzhi.communicationutils.OpinionUtils;
 import com.union.yunzhi.yunzhi.fragment.communication.PostFragment;
 import com.union.yunzhi.yunzhi.manager.UserManager;
-import com.union.yunzhi.yunzhi.meutils.MeUtils;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CommunicationFragment extends FragmentM implements ViewPager.OnPageChangeListener, Toolbar.OnMenuItemClickListener {
+public class CommunicationFragment extends FragmentM implements ViewPager.OnPageChangeListener,
+        Toolbar.OnMenuItemClickListener {
 
     private int mTag=0; // 用于存放当前的viewPager页索引,同时也对应帖子里面的tag
     private UserManager mUserManager;
@@ -134,30 +130,18 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
      */
     private void addPost(int tag) {
         if (mUserManager.hasLogined()) {
-            Intent intent = new Intent(getActivity(), AddPostActivity.class);
-            intent.putExtra(AddPostActivity.TAG, tag);
-            startActivityForResult(intent, AddPostActivity.KEY_POST);
+//            Intent intent = new Intent(getActivity(), AddPostActivity.class);
+//            intent.putExtra(AddPostActivity.TAG, mTag);
+//            startActivityForResult(intent, AddPostActivity.REQUEST);
+            AddPostActivity.newInstance(getActivity(), tag);
+            AddPostActivity.setGetPostListener(mListener);
         } else {
             Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case AddPostActivity.KEY_POST:
-                if (resultCode == RESULT_OK) {
-                    if (data != null) {
-                        int tag =data.getIntExtra(AddPostActivity.TAG,0);
-                        PostModel postModel = data.getParcelableExtra(AddPostActivity.RESULT_POST);
-                        mFragments.get(tag).notifyList(postModel);
-                    }
-                }
-                break;
-            default:
-        }
-    }
 
+    // 适配器
     private class CommunicationPagerAdapter extends FragmentPagerAdapter {
         public CommunicationPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -178,4 +162,44 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
             return mTabs.get(position);
         }
     }
+
+
+    private AddPostActivity.OnGetPostContentListener mListener = new AddPostActivity.OnGetPostContentListener() {
+        @Override
+        public void getPost(String title, String content) {
+            // 发起添加帖子的请求
+            OpinionUtils opinionUtils = OpinionUtils.newInstance(mUserManager.getUser(), getActivity());
+            opinionUtils.addPost(mTag,title,content, new OpinionUtils.OnAddPostListener() {
+                @Override
+                public void getPost(PostModel postModel) {
+                    if (postModel != null) {
+                    }
+                }
+            });
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        changeStatusBarColor(R.color.blue_400);
+
+    }
+
+    //    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch (requestCode) {
+//            case AddPostActivity.REQUEST:
+//                if (resultCode == AddPostActivity.RESULT_OK) {
+//                    if (data != null) {
+//
+//                        PostModel postModel = data.getParcelableExtra(AddPostActivity.RESULT_POST);
+//                        LogUtils.d("notifyPostList",postModel.toString());
+//                        mFragments.get(mTag).notifyList(postModel);
+//                    }
+//                }
+//                break;
+//            default:
+//        }
+//    }
 }

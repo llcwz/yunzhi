@@ -9,8 +9,6 @@ import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.communication.PostModel;
 import com.union.yunzhi.yunzhi.R;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -58,10 +56,10 @@ public class PostAdapter extends MyAdapter<PostModel> {
 
         @Override
         protected void onBind(PostModel data, int position) {
-            Glide.with(mContext).load(data.getPhotoUrl()).into(mIcon);
+            Glide.with(mContext).load(data.getPhotourl()).into(mIcon);
             mAuthor.setText(data.getName());
             mLike.setText(data.getFavour());
-            mComment.setText(data.getMsgNum());
+            mComment.setText(data.getMsgnum());
             mTime.setText(data.getTime());
             mTitle.setText(data.getTitle());
             mContent.setText(data.getContent());

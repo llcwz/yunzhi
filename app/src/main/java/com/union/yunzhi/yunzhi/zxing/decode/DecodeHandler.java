@@ -54,7 +54,7 @@ final class DecodeHandler extends Handler
 	{
 		if (message.what == R.id.decode)
 		{
-			// Log.d(TAG, "Got decode message");
+			// Log.d(KEY, "Got decode message");
 			decode((byte[]) message.obj, message.arg1, message.arg2);
 		}
 		else if (message.what == R.id.quit)
@@ -110,7 +110,7 @@ final class DecodeHandler extends Handler
 			Bundle bundle = new Bundle();
 			bundle.putParcelable(DecodeThread.BARCODE_BITMAP, source.renderCroppedGreyscaleBitmap());
 			message.setData(bundle);
-			// Log.d(TAG, "Sending decode succeeded message...");
+			// Log.d(KEY, "Sending decode succeeded message...");
 			message.sendToTarget();
 		}
 		else

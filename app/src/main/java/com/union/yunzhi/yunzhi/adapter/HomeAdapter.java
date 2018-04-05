@@ -1,6 +1,7 @@
 package com.union.yunzhi.yunzhi.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -9,10 +10,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.union.yunzhi.common.helper.GlideImageLoader;
-import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
+import com.union.yunzhi.factories.moudles.classfication.ClassConst;
 import com.union.yunzhi.factories.moudles.home.bodyModle;
 import com.union.yunzhi.yunzhi.R;
+import com.union.yunzhi.yunzhi.activities.classfication.ClassCourseDetailsActivity;
 import com.youth.banner.Banner;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,7 +43,6 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
     @Override
     protected int getItemViewType(int position, bodyModle data) {
 
-        LogUtils.i("getItemViewType--",data.viewType+"");
 
         if(data.viewType == 0)
         {
@@ -109,13 +110,24 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
            banner.setImages(data.ads);
 
             banner.start();
+
+
+            banner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ClassCourseDetailsActivity.class);
+                    intent.putExtra(ClassConst.COURSEID,"01003");
+                    intent.putExtra(ClassConst.TEACHERID,"7");
+                    context.startActivity(intent);
+                }
+            });
         }
 
 
     }
 
 
-    public class videoViewHodler extends MyViewHolder<bodyModle> {
+    public class videoViewHodler extends MyViewHolder<bodyModle> implements View.OnClickListener {
 
         /**
          * UI  每个布局顶部的分类
@@ -127,18 +139,12 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
         /**
          * UI  分类里面对应的4个小视频布局
          */
-
-
-
         private FrameLayout mVideo[] = new FrameLayout[size];
 
-        private FrameLayout mVideo_one;
-        private FrameLayout mVideo_two;
-        private FrameLayout mVideo_three;
-        private FrameLayout mVideo_four;
-
-
-
+        private RoundedImageView mRoundedImageView1;
+        private RoundedImageView mRoundedImageView2;
+        private RoundedImageView mRoundedImageView3;
+        private RoundedImageView mRoundedImageView4;
 
         /**
          * 公共部分
@@ -153,7 +159,6 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
 
             mTitles = (TextView) itemView.findViewById(R.id.tv_titles);
             mIcon = (CircleImageView) itemView.findViewById(R.id.iv_icon);
-            mArrow = (ImageView) itemView.findViewById(R.id.iv_arrow);
 
 
             //这里要做动态初始化，预留出模板
@@ -162,15 +167,11 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
             mVideo[2] = (FrameLayout) itemView.findViewById(R.id.video_three);
             mVideo[3] = (FrameLayout) itemView.findViewById(R.id.video_four);
 
-            /*
 
-            //TODO 动态实现初始化
-            mVideo_one = (FrameLayout) itemView.findViewById(R.id.video_one);
-            mVideo_two = (FrameLayout) itemView.findViewById(R.id.video_two);
-            mVideo_three = (FrameLayout) itemView.findViewById(R.id.video_three);
-            mVideo_four = (FrameLayout) itemView.findViewById(R.id.video_four);
-            */
-
+            mRoundedImageView1 = (RoundedImageView) mVideo[0].findViewById(R.id.round_img);
+            mRoundedImageView2 = (RoundedImageView) mVideo[1].findViewById(R.id.round_img);
+            mRoundedImageView3 = (RoundedImageView) mVideo[2].findViewById(R.id.round_img);
+            mRoundedImageView4 = (RoundedImageView) mVideo[3].findViewById(R.id.round_img);
             /**
              * 公共部分初始化
              */
@@ -180,23 +181,11 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
         }
 
         @Override
-        protected void onBind(bodyModle data, int postion) {
+        protected void onBind(final bodyModle data, int postion) {
 
-            /**
-             * 设置分类的头部
-             */
-//            Glide.with(context)
-//                    .load(data.mVideoClassModle.iconUrl)
-//                    .centerCrop()
-//                    .placeholder(R.drawable.bg1)
-//                    .into(mIcon);
-
-            //data.mVideoClassModle.videoClass
             String[] titles = context.getResources().getStringArray(R.array.titles);
             int id = (int) (Math.random()*(titles.length-1));//随机产生一个index索引
             mTitles.setText(titles[id]);
-
-
             /**
              * 设置分类内部
              */
@@ -205,13 +194,9 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
              * 循环的去初始化我们的内部布局
              */
             for(int i=0;i<size;i++){
-
-
                 mRoundedImageView = (RoundedImageView) mVideo[i].findViewById(R.id.round_img);
                 mTitle = (TextView) mVideo[i].findViewById(R.id.tv_title);
                 mPortrait = (CircleImageView) mVideo[i].findViewById(R.id.ci_portrait);
-
-
 
                 //设置背景图片
                 Glide.with(context)
@@ -226,15 +211,58 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
                        // .load(data.mVideoClassModle.videoModle.get(i).PortraitUrl)
                         .into(mPortrait);
 
+                mRoundedImageView1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ClassCourseDetailsActivity.class);
+                        intent.putExtra(ClassConst.COURSEID,data.courseid.get(0));
+                        intent.putExtra(ClassConst.TEACHERID,data.teacherid.get(0));
+                        context.startActivity(intent);
+                    }
+                });
+
+                mRoundedImageView2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ClassCourseDetailsActivity.class);
+                        intent.putExtra(ClassConst.COURSEID,data.courseid.get(1));
+                        intent.putExtra(ClassConst.TEACHERID,data.teacherid.get(1));
+                        context.startActivity(intent);
+                    }
+                });
+
+                mRoundedImageView3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ClassCourseDetailsActivity.class);
+                        intent.putExtra(ClassConst.COURSEID,data.courseid.get(2));
+                        intent.putExtra(ClassConst.TEACHERID,data.teacherid.get(2));
+                        context.startActivity(intent);
+                    }
+                });
+
+                mRoundedImageView4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ClassCourseDetailsActivity.class);
+                        intent.putExtra(ClassConst.COURSEID,data.courseid.get(3));
+                        intent.putExtra(ClassConst.TEACHERID,data.teacherid.get(3));
+                        context.startActivity(intent);
+                    }
+                });
 
 
             }//end for
+        }
 
-
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+            }
         }
     }
 
-    public class videoOneViewHodler extends MyViewHolder<bodyModle>{
+    public class videoOneViewHodler extends MyViewHolder<bodyModle> {
 
         private TextView mShow;
         private RoundedImageView mRoundedImageView;
@@ -250,7 +278,7 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
         }
 
         @Override
-        protected void onBind(bodyModle data, int position) {
+        protected void onBind(final bodyModle data, int position) {
 
             String[] titles = context.getResources().getStringArray(R.array.introduce);
             int id = (int) (Math.random()*(titles.length-1));//随机产生一个index索引
@@ -269,7 +297,18 @@ public class HomeAdapter extends MyAdapter<bodyModle> {
                     .load(data.image.get(0))
                     // .load(data.mVideoClassModle.videoModle.get(i).PortraitUrl)
                     .into(mPortrait);
+
+            mRoundedImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ClassCourseDetailsActivity.class);
+                    intent.putExtra(ClassConst.COURSEID,data.courseid.get(0));
+                    intent.putExtra(ClassConst.TEACHERID,data.teacherid.get(0));
+                    context.startActivity(intent);
+                }
+            });
         }
+
     }
 
 

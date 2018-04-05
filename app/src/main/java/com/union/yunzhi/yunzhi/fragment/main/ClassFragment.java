@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -28,11 +27,12 @@ import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.helper.ScreenUtils;
 import com.union.yunzhi.common.util.LogUtils;
+import com.union.yunzhi.common.util.ToastUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
+import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseCarouselBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.BaseCourseShowBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.classfication.CourseShowBean;
-import com.union.yunzhi.factories.moudles.classfication.beans.details.CourseBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.drawer.BaseDrawerBean;
 import com.union.yunzhi.factories.moudles.classfication.beans.drawer.DrawerBean;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
@@ -64,8 +64,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     private View hidden_coprhsv;
     private DrawerLayout mDrawerLayout;
     private Banner mBanner;
-    private List<String> title;
-    private List<String> test;
     private RecyclerView mRecyclerView,mRecycleView2;
     private SmartRefreshLayout mSmartRefreshLayout;
     private ConstraintLayout mConstraintLayout;
@@ -76,13 +74,13 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     private View.OnClickListener onClick;
     private View.OnLongClickListener onLongClick;
     private LinearLayout mLinearLayout,mLinearLayout1,mToor;
-    private CircleImageView load,qrcode;
+    private CircleImageView portrait,qrcode;
     private String courseId="";
     private ClassCourseAdapter adapter;
 
 
     //轮播图数据集合
-    private List<Integer> image;
+    private List<String> images;
 
     //侧滑栏数据集合
     private List<DrawerBean> drawerBeanList=new ArrayList<>();
@@ -90,7 +88,6 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     //课程列表数据集合
     private List<CourseShowBean> courseList;
 
-    private List<CourseBean> test1;
 
 
     @Override
@@ -103,24 +100,8 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
         courseList=new ArrayList<>();
-
-        test1=new ArrayList<>();
-        image=new ArrayList<>();
-        title=new ArrayList<>();
-        test=new ArrayList<>();
+        images=new ArrayList<>();
         drawerBeanList =new ArrayList<>();
-
-        //轮播测试数据
-        image.add(R.mipmap.aa);
-        image.add(R.mipmap.bb);
-        image.add(R.mipmap.cc);
-        title.add("快乐寒假");title.add("快乐暑假");title.add("快乐春节");
-
-        //分类测试抽屉数据
-        test.add("数据库");test.add("计算机组成原理");test.add("C语言程序设计");test.add("算法分析与设计");
-        test.add("计算机网络");test.add("操作系统");test.add("嵌入式系统设计");test.add("人工智能与算法");
-        test.add("软件工程");test.add("数值计算");test.add("Linux系统");test.add("Java程序设计");
-
 
     }
 
@@ -129,9 +110,9 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
 
         //顶部搜索栏
         mToor= (LinearLayout) view.findViewById(R.id.toor);
-        load= (CircleImageView) view.findViewById(R.id.cv_load);
+        portrait= (CircleImageView) view.findViewById(R.id.cv_portrait);
         qrcode= (CircleImageView) view.findViewById(R.id.cv_qrcode);
-        load.setVisibility(View.GONE);
+        portrait.setVisibility(View.GONE);
         qrcode.setVisibility(View.GONE);
         mToor.setOnClickListener(this);
 
@@ -260,32 +241,19 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     @Override
     protected void initData() {
 
-
-        /**
-         * 设置轮播风格
-         * 设置图片加载器 设置图片集合 设置标题集合 设置动画效果
-         * 设置自动播放 设置轮播时间 设置指示器位置
-         */
-        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
-                .setImageLoader(new GlideImageLoader())
-                .setImages(image)
-                .setBannerTitles(title)
-                .setBannerAnimation(Transformer.DepthPage)
-                .isAutoPlay(true)
-                .setDelayTime(3000)
-                .setIndicatorGravity(BannerConfig.CENTER)
-                .start();
-        mBanner.start();//开始渲染
+        //首次进入分类时请求轮播数据
+        requestCarousel();
 
         //首次进入分类时请求数据
         requestCourse(courseId);
-
 
     }
 
     @Override
     public void initRefreshData() {
         super.initRefreshData();
+        requestCarousel();
+        requestCourse(courseId);
     }
 
     /**
@@ -347,6 +315,45 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
         return temp;
     }
 
+
+    /**
+     * 加载轮播图信息
+     */
+    void requestCarousel(){
+        /**
+         * 设置轮播风格
+         * 设置图片加载器 设置图片集合 设置标题集合 设置动画效果
+         * 设置自动播放 设置轮播时间 设置指示器位置
+         */
+
+        RequestCenter.requestCarousel(HttpConstants.GET_CAROUSEL, new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                BaseCarouselBean temp= (BaseCarouselBean) responseObj;
+                images=temp.data;
+                if(temp.ecode==0){
+                    images=temp.data;
+                    mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR)
+                            .setImageLoader(new GlideImageLoader())
+                            .setImages(images)
+                            .setBannerAnimation(Transformer.DepthPage)
+                            .isAutoPlay(true)
+                            .setDelayTime(3000)
+                            .setIndicatorGravity(BannerConfig.CENTER)
+                            .start();
+                    mBanner.start();//开始渲染
+                }
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+
+                ToastUtils.showToast(getActivity(),"网络请求失败");
+
+            }
+        });
+    }
+
     /**
      * 加载侧滑栏信息
      */
@@ -401,7 +408,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
                 }else{
                     //TODO 请求失败显示窗口
                     showDrawer();
-                    Toast.makeText(getContext(),"网络链接失败1",Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast(getActivity(),"网络链接失败");
                 }
             }
 
@@ -409,7 +416,7 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
             public void onFailure(Object reasonObj) {
                 //TODO 请求失败显示窗口
                 showDrawer();
-                Toast.makeText(getContext(),"网络链接失败2",Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(getActivity(),"网络链接失败");
             }
         });
 
@@ -458,14 +465,14 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
 //                    Toast.makeText(getContext(),"更新完成",Toast.LENGTH_SHORT).show();
                 }else{
                     mRecyclerView.setAdapter(adapter);
-                    Toast.makeText(getContext(),"网络炸了哦，请求失败，请检查网络设置",Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast(getActivity(),"网络炸了哦，请求失败，请检查网络设置");
                 }
             }
 
             @Override
             public void onFailure(Object reasonObj) {
                 mRecyclerView.setAdapter(adapter);
-                Toast.makeText(getContext(),"请求失败，请检查网络设置",Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(getActivity(),"请求失败，请检查网络设置");
             }
         });
     }

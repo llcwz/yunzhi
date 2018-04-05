@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/tv_no_grade"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/len_36"
         android:height="@dimen/len_256"
         android:layout_gravity="center_horizontal"

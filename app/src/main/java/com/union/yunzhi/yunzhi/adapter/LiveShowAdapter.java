@@ -2,8 +2,8 @@ package com.union.yunzhi.yunzhi.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,13 +49,13 @@ public  class LiveShowAdapter extends MyAdapter<LiveBean> {
 
     public class LiveShowHolder extends MyViewHolder<LiveBean>{
 
-        private FrameLayout mFrameLayout;
+        private LinearLayout mLinearLayout;
         private ImageView mImageView;
         private TextView courseName,teacherName,lineCount;
 
         public LiveShowHolder(View itemView) {
             super(itemView);
-            mFrameLayout= (FrameLayout) itemView.findViewById(R.id.fragment_layout);
+            mLinearLayout= (LinearLayout) itemView.findViewById(R.id.linear_layout);
             mImageView= (ImageView) itemView.findViewById(R.id.iv_live_show);
             courseName= (TextView) itemView.findViewById(R.id.tv_Cname);
             teacherName= (TextView) itemView.findViewById(R.id.tv_show_Tname);
@@ -67,7 +67,7 @@ public  class LiveShowAdapter extends MyAdapter<LiveBean> {
 
             LiveBean liveBean=mDataList.get(position);
             //获取Item宽度，计算图片等比比例缩放后的高度，为ImageView设置参数
-            FrameLayout.LayoutParams params1= (FrameLayout.LayoutParams) mImageView.getLayoutParams();
+            LinearLayout.LayoutParams params1= (LinearLayout.LayoutParams) mImageView.getLayoutParams();
             float itemWidth=(ScreenUtils.getScreenWidth(itemView.getContext())-1*3)/2;
 
             params1.width=(int)itemWidth;
@@ -77,7 +77,7 @@ public  class LiveShowAdapter extends MyAdapter<LiveBean> {
 
 
             mImageView.setImageResource(data.Id);
-            courseName.setText("见算计组成原理");
+            courseName.setText("计算机组成原理");
             teacherName.setText("张三老师");
             lineCount.setText(String.valueOf("12306"));
 
@@ -87,7 +87,7 @@ public  class LiveShowAdapter extends MyAdapter<LiveBean> {
             //teacherName.setText(data.teacherName);
             //lineCount.setText(String.valueOf(data.lineCount));
 
-            mImageView.setOnClickListener(new View.OnClickListener() {
+            mLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //TODO 进入直播的点击事件

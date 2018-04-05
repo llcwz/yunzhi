@@ -3,7 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="transparence">#ffd0d0d0</color>
+    <color name="toolContent">#33A1C9</color>
     <!-- QR_Code -->
     <color name="viewfinder_mask">#60000000</color>
     <color name="result_view">#b0000000</color>
@@ -12,4 +13,7 @@
     <color name="result_minor_text">#ffc0c0c0</color>
     <color name="result_points">#c000ff00</color>
     <color name="system_bar_color">#fed952</color>
+
+    <color name="home_page_color">#074471</color>
+    <color name="home_qrcode">#000000</color>
 </resources>

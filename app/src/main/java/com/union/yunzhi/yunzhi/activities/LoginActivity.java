@@ -8,9 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.helper.ViewHelper;
 import com.union.yunzhi.common.util.LogUtils;
@@ -40,6 +43,8 @@ public class LoginActivity extends ActivityM implements View.OnClickListener, Vi
     private EditText mAccount;
     private EditText mPasswordView;
     private TextView mLoginView;
+
+    private ImageView mBackgroundView;
 
     private CheckBox mRemAccount;
     private CheckBox mRemPassword;
@@ -73,6 +78,7 @@ public class LoginActivity extends ActivityM implements View.OnClickListener, Vi
        // mAccount.clearFocus();
         mPasswordView = (EditText) findViewById(R.id.login_input_password);
 
+        mBackgroundView = (ImageView) findViewById(R.id.iv_gif);
         mLoginView = (TextView) findViewById(R.id.login_button);
         mLoginView.setOnClickListener(this);
         mRemAccount = (CheckBox) findViewById(R.id.cb_remaccount);
@@ -90,6 +96,12 @@ public class LoginActivity extends ActivityM implements View.OnClickListener, Vi
         fromPush = intent.getBooleanExtra("fromPush", false);
 
 
+        Glide.with(this)
+                .load(R.drawable.logins)
+                .asGif()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(mBackgroundView);
 
         //如果记住了账号和密码则直接获取
         if(SPManager.getInstance().getBoolean(SPManager.IS_REMMEBER_ACCOUNT,false)){

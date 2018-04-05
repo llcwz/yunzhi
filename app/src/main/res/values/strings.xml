@@ -60,19 +60,76 @@
     <string name="please_wait">加载中...</string>
 
 
-
     <string-array name="titles">
         <item>热门推荐</item>
         <item>最强男神</item>
         <item>实力老师</item>
         <item>最佳推荐</item>
+        <item>新秀老师</item>
+        <item>考研课程详解</item>
+        <item>清华推荐课程</item>
+        <item>北大推荐课程</item>
     </string-array>
 
     <string-array name="introduce">
-        <item>万利教授亲自莅临</item>
-        <item>萌哥潇洒讲课</item>
-        <item>陈老师分享经验</item>
-        <item>萌哥讲课</item>
+        <item>网络协议是学习计算机网络的核心和关键。
+            网络协议实践是...
+        </item>
+        <item>
+            数据结构是计算机存储、组织数据的方式。数据结构是...
+        </item>
+        <item>
+            本课程围绕算法设计技术组织素材，对每种算法技术选择了多个典型
+            范例进行分析。算法的正确性、复杂性进行恰当的分析...
+        </item>
+        <item>
+           风化岁月，还有多少时间可以留给你呢，点击，查看详情。。
+        </item>
+
+        <item>
+           一世风华还需埋头苦干。。
+        </item>
+
+        <item>
+           离散数学(Discrete mathematics)是研究离散量的结构及其相互关系的数学学科，
+            是现代数学的一个重要分支。离散的含义是指不同的连接在一起的元素
+        </item>
+    </string-array>
+
+    <string-array name="crouseId">
+        <item>
+            01001
+        </item>
+        <item>
+            01003
+        </item>
+        <item>
+            03003
+        </item>
+        <item>
+            03002
+        </item>
+        <item>
+            02003
+        </item>
+    </string-array>
+
+    <string-array name="teacherId">
+        <item>
+            2
+        </item>
+        <item>
+           1
+        </item>
+        <item>
+            7
+        </item>
+        <item>
+            8
+        </item>
+        <item>
+            6
+        </item>
     </string-array>
 
 </resources>
