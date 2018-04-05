@@ -92,5 +92,17 @@ public class CommentMeModel {
         mQuestion = question;
     }
 
-
+    @Override
+    public String toString() {
+        return "CommentMeModel{" +
+                "mId='" + mId + '\'' +
+                ", mAccount='" + mAccount + '\'' +
+                ", mIcon='" + mIcon + '\'' +
+                ", mName='" + mName + '\'' +
+                ", mTime='" + mTime + '\'' +
+                ", mContent='" + mContent + '\'' +
+                ", mMyTitle='" + mMyTitle + '\'' +
+                ", mQuestion='" + mQuestion + '\'' +
+                '}';
+    }
 }

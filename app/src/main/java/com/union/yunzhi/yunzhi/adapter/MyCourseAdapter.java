@@ -34,10 +34,13 @@ public class MyCourseAdapter extends MyAdapter<CourseModel> {
         } else {
             Log.d( "getItemViewType", "null");
         }
-        if (data.getViewType() == MeConstant.STUDENT_COURSE_VIEW) {
-            return R.layout.item_me_my_course_student;
-        } else {
-            return R.layout.item_me_my_course_teacher;
+        switch (data.getViewType()) {
+            case MeConstant.STUDENT_COURSE_VIEW:
+                return R.layout.item_me_my_course_student;
+            case MeConstant.TEACHER_COURSE_VIEW:
+                return R.layout.item_me_my_course_teacher;
+            default:
+                return 0;
         }
     }
 
@@ -115,7 +118,7 @@ public class MyCourseAdapter extends MyAdapter<CourseModel> {
             mTitle.setText(data.getName());
             Glide.with(mContext).load(data.getIcon()).into(mIcon);
             mSchool.setText(data.getSchool());
-            mCollege.setText(data.getCollege());
+//            mCollege.setText(data.getCollege());
             mSchedule.setText("进行至" + data.getProgress() + "周，总共" + data.getSchedule() + "周");
             mProgress.setMax(data.getSchedule());
             mProgress.setProgress(data.getProgress());

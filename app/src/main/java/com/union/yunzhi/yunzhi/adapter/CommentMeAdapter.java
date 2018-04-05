@@ -64,12 +64,12 @@ public class CommentMeAdapter extends MyAdapter<CommentMeModel> {
             Glide.with(mContext).load(data.getIcon()).into(mIcon);
             mName.setText(data.getName());
             mTime.setText(data.getTime());
-            if (TextUtils.isEmpty(data.getMyTitle())) { // 标题为空，说明这条评论评论的是问题
-                mCommentOrReply.setText("回复了你");
-                mQuestion.setText(data.getQuestion());
-            } else {
-                mCommentOrReply.setText("评论了你");
+            if (TextUtils.isEmpty(data.getQuestion())) {
+                mCommentOrReply.setText("评论了你：");
                 mTitle.setText(data.getMyTitle());
+            } else {
+                mCommentOrReply.setText("回复了你：");
+                mQuestion.setText(data.getQuestion());
             }
             mContent.setText(data.getContent());
         }

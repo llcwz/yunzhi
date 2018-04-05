@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by CrazyGZ on 2018/3/5.
@@ -85,6 +86,7 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
                         BaseWorkModel baseWorkModel = (BaseWorkModel) responseObj;
                         if (baseWorkModel.ecode == MeConstant.ECODE) {
                             mWorkModels = baseWorkModel.data;
+                            initAdapter(mWorkModels);
                         } else {
                             Toast.makeText(WorkActivity.this, "" + baseWorkModel.emsg, Toast.LENGTH_SHORT).show();
                         }
@@ -92,6 +94,8 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
 
                     @Override
                     public void onFailure(Object reasonObj) {
+                        mWorkModels = locationData();
+                        initAdapter(mWorkModels);
                         DialogManager.getInstnce().dismissProgressDialog();
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
 //                        if (okHttpException.getEcode() == 1) {
@@ -108,9 +112,48 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
                 });
     }
 
+    // 加载本地数据
+    private List<WorkModel> locationData() {
+        List<WorkModel> workModels = new ArrayList<>();
+        String[] type = new String[] {"期中测试", "单元测试", "期末测试"};
+        String[] promulgator = new String[] {"张老师", "赵老师", "李老师", "黄老师", "朱老师"};
+        if (UserManager.getInstance().getUser().getPriority() == MeConstant.PRIORITY_STUDENT) {
+            for (int i = 0; i < 5; i++) {
+                workModels.add(new WorkModel("" + i,
+                        "任务" + i,
+                        "课程" + i,
+                        type[new Random().nextInt(3)],
+                        "2018-04-02 " + new Random().nextInt(24) + ":" + new Random().nextInt(60) + ":" + new Random().nextInt(60),
+                        "2018-04-05 " + new Random().nextInt(24) + ":" + new Random().nextInt(60) + ":" + new Random().nextInt(60),
+                        "进行中",
+                        promulgator[new Random().nextInt(5)],
+                        "2018-04-01 " + new Random().nextInt(24) + ":" + new Random().nextInt(60) + ":" + new Random().nextInt(60),
+                        MeConstant.STUDENT_WORK_VIEW));
+            }
+        } else {
+            for (int i = 0; i < 5; i++) {
+                workModels.add(new WorkModel("" + i,
+                        "任务" + i,
+                        "课程" + i,
+                        type[new Random().nextInt(3)],
+                        "2018-04-02 " + new Random().nextInt(24) + ":" + new Random().nextInt(60) + ":" + new Random().nextInt(60),
+                        "2018-04-05 " + new Random().nextInt(24) + ":" + new Random().nextInt(60) + ":" + new Random().nextInt(60),
+                        "进行中",
+                        promulgator[new Random().nextInt(5)],
+                        "2018-04-01 " + new Random().nextInt(24) + ":" + new Random().nextInt(60) + ":" + new Random().nextInt(60),
+                        MeConstant.TEACHER_WORK_VIEW));
+            }
+        }
+        return workModels;
+    }
+
     // 初始化适配器
-    private void initAdapter() {
-            mAdapter = new MyWorkAdapter(this, mWorkModels, new MyAdapter.AdapterListener<WorkModel>() {
+    private void initAdapter(List<WorkModel> workModels) {
+        if (workModels == null) {
+            workModels = new ArrayList<>();
+        }
+        MeUtils.showNoMessage(workModels.size(), mNoWork, mRecyclerView, "暂无任务");
+            mAdapter = new MyWorkAdapter(this, workModels, new MyAdapter.AdapterListener<WorkModel>() {
                 @Override
                 public void onItemClick(MyAdapter.MyViewHolder holder, WorkModel data) {
                     // TODO: 2018/3/6 跳到课程下的单元测试
@@ -132,33 +175,28 @@ public class WorkActivity extends ActivityM implements Toolbar.OnMenuItemClickLi
 
                 }
             });
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void initData() {
-        initAdapter();
         if (mUser.getPriority() == MeConstant.PRIORITY_TEACHER) { // 如果是老师登进，则给予权限发布新的任务
             mToolbar.inflateMenu(R.menu.me_add_work_item);
             mToolbar.setOnMenuItemClickListener(this);
         }
         mSpinner.attachDataSource(mSpinnerStates);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                notifyList(i);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                notifyList(0); // 默认选择
-            }
-        });
-        if (mWorkModels.size() == 0) {
-            mNoWork.setVisibility(View.VISIBLE);
-        } else {
-            mNoWork.setVisibility(View.GONE);
-        }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(mAdapter);
+//        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                notifyList(i);
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                notifyList(0); // 默认选择
+//            }
+//        });
+
     }
 
     /**

@@ -15,6 +15,7 @@ import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.factories.moudles.me.BaseGradeModel;
 import com.union.yunzhi.factories.moudles.me.GradeModel;
 import com.union.yunzhi.factories.moudles.me.MeConstant;
+import com.union.yunzhi.factories.moudles.me.UnitGradeModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
 import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
 import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
@@ -29,6 +30,7 @@ import com.wyt.searchbox.custom.IOnSearchClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItemClickListener {
 
@@ -73,6 +75,7 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
                         BaseGradeModel baseGradeModel = (BaseGradeModel) responseObj;
                         if (baseGradeModel.ecode == MeConstant.ECODE) {
                             mGradeModels = baseGradeModel.data;
+                            initAdapter(mGradeModels);
                         } else {
                             Toast.makeText(SearchGradeActivity.this, "" + baseGradeModel.emsg, Toast.LENGTH_SHORT).show();
                         }
@@ -80,6 +83,8 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
 
                     @Override
                     public void onFailure(Object reasonObj) {
+                        mGradeModels = locationData();
+                        initAdapter(mGradeModels);
                         DialogManager.getInstnce().dismissProgressDialog();
                         OkHttpException okHttpException = (OkHttpException) reasonObj;
 //                        if (okHttpException.getEcode() == 1) {
@@ -96,25 +101,44 @@ public class SearchGradeActivity extends ActivityM implements Toolbar.OnMenuItem
                 });
     }
 
+    private List<GradeModel> locationData() {
+        List<GradeModel> gradeModels = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            gradeModels.add(new GradeModel("测试课程" + i,
+                    "" + new Random().nextInt(100),
+                    getUnitGrade()));
+        }
+        return gradeModels;
+    }
+
+    private List<UnitGradeModel> getUnitGrade() {
+        List<UnitGradeModel> unitGradeModels = new ArrayList<>();
+        int j = new Random().nextInt(5);
+        for (int i = 0; i < j; i++) {
+            unitGradeModels.add(new UnitGradeModel("单元测试" + i, "" + new Random().nextInt(100)));
+        }
+        return unitGradeModels;
+    }
+
+
     /**
      * 初始化数据和适配器
      */
-    private void initAdapter() {
-        mAdapter = new SearchGradeAdapter(this, mGradeModels, null);
+    private void initAdapter(List<GradeModel> gradeModels) {
+        if (gradeModels == null) {
+            gradeModels = new ArrayList<>();
+        }
+        MeUtils.showNoMessage(gradeModels.size(), mNoGrade, mRecyclerView, "成绩成绩");
+        mAdapter = new SearchGradeAdapter(this, gradeModels, null);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void initData() {
-        initAdapter();
         mToolbar.inflateMenu(R.menu.search_grade_item);
         mToolbar.setOnMenuItemClickListener(this);
-        if (mGradeModels.size() == 0) {
-            mNoGrade.setVisibility(View.VISIBLE);
-        } else {
-            mNoGrade.setVisibility(View.GONE);
-        }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
