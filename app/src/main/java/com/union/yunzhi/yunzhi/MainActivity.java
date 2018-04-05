@@ -21,15 +21,9 @@ import com.union.yunzhi.yunzhi.fragment.main.LiveFragment;
 import com.union.yunzhi.yunzhi.fragment.main.MeFragment;
 
 public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,NavHelper.OnTabReselectListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
-
-
     private BottomNavigationViewEx bottomNavigationViewEx;
-
     private NavHelper<Integer> mNavHelper;
-
     private FrameLayout mContainer;
-
-
     private Boolean flag = false;
     @Override
     protected int getContentLayoutId() {
@@ -98,12 +92,6 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     @Override
     protected void onResume() {
         super.onResume();
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 235df81913cde8157e7d13c725a02c3b0c38a0cc
     }
 
     @Override

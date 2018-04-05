@@ -22,17 +22,13 @@ import java.util.List;
 /**
  * Created by 62588 on 2018/3/16.
  */
-
 public class MyAbilityActivity extends ActivityM{
-
-
     private TextView tv_title;
     private ViewPager mViewpager;
     private ImageView arrow_back;
     private AbilityViewPagerAdapter adapter;
     private List<String> title_lists;
     private List<Fragment> fragmentList;
-
     public static void newInstance(Context context){
         Intent intent=new Intent(context,MyAbilityActivity.class);
         context.startActivity(intent);
