@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
@@ -58,7 +59,7 @@ public class ReplyAdapter extends MyAdapter<ReplyModel> {
 
         @Override
         protected void onBind(final ReplyModel data, int position) {
-//            Glide.with(mContext).load(data).into(mIcon);
+            Glide.with(mContext).load(data.getPhotourl()).into(mIcon);
             mAuthor.setText(data.getName());
             mTime.setText(data.getTime());
             mContent.setText(data.getContent());

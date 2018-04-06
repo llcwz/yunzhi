@@ -112,13 +112,15 @@ public class CommentContentDetailsActivity extends ActivityM implements CommentD
         mAdapter = new ReplyAdapter(this, data, new MyAdapter.AdapterListener<ReplyModel>() {
             @Override
             public void onItemClick(MyAdapter.MyViewHolder holder, ReplyModel data) {
-                if (mUserManager.hasLogined()) {
-                    mUser = MeUtils.getUser();
-                    CommentDialogFragment commentDialogFragment = CommentDialogFragment.newInstance(data.getNoteid(), data.getUserid(), data.getName());
-                    commentDialogFragment.show(getSupportFragmentManager(), CommentDialogFragment.TAG);
-                } else {
-                    Toast.makeText(CommentContentDetailsActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
-                }
+//                if (mUserManager.hasLogined()) {
+//                    mUser = MeUtils.getUser();
+//                    LogUtils.d("回复",mCommentModel.getNoteid() + "\n" + data.toString());
+//
+//                    CommentDialogFragment commentDialogFragment = CommentDialogFragment.newInstance(data.getNoteid(), data.getUserid(), data.getName());
+//                    commentDialogFragment.show(getSupportFragmentManager(), CommentDialogFragment.TAG);
+//                } else {
+//                    Toast.makeText(CommentContentDetailsActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+//                }
             }
 
             @Override
@@ -143,7 +145,7 @@ public class CommentContentDetailsActivity extends ActivityM implements CommentD
     @Override
     protected void initData() {
         getData();
-        //Glide.with(this).load(mCommentModel.getPhotourl()).into(mIcon);
+        Glide.with(this).load(mCommentModel.getPhotourl()).into(mIcon);
         mName.setText(mCommentModel.getName());
         mTime.setText(mCommentModel.getTime());
         mContent.setText(mCommentModel.getContent());

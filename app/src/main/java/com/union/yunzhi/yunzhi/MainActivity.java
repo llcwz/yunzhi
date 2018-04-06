@@ -23,15 +23,9 @@ import com.union.yunzhi.yunzhi.fragment.main.LiveFragment;
 import com.union.yunzhi.yunzhi.fragment.main.MeFragment;
 
 public class MainActivity extends ActivityM implements NavHelper.OnTabChangedListener<Integer>,NavHelper.OnTabReselectListener<Integer>,BottomNavigationViewEx.OnNavigationItemSelectedListener {
-
-
     private BottomNavigationViewEx bottomNavigationViewEx;
-
     private NavHelper<Integer> mNavHelper;
-
     private FrameLayout mContainer;
-
-
     private Boolean flag = false;
     @Override
     protected int getContentLayoutId() {

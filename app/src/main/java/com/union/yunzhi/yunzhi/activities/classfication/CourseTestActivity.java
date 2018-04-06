@@ -33,7 +33,7 @@ public class CourseTestActivity extends ActivityM {
     private int sum=12;//总共的题目
 
     private List<Integer> answers;
-
+    private List<String> subjects;
     public static void newInstance(Context context){
         Intent intent=new Intent(context,CourseTestActivity.class);
         context.startActivity(intent);
@@ -85,15 +85,17 @@ public class CourseTestActivity extends ActivityM {
      */
     public void init(){
         fragmentList=new ArrayList<>();
+        subjects=new ArrayList<>();
+        subjects.add("在学校，每个学生可选修多门课程，每门课程可为多名学生选修，学生与课程之间的联系类型是(   )。 ");
         answers=new ArrayList<>();
         for(int i=0;i<12;i++){
             List<String> lists=new ArrayList<>();
-            lists.add("11");
-            lists.add("12");
-            lists.add("13");
-            lists.add("14");
+            lists.add("一对多");
+            lists.add("多对一");
+            lists.add("一对一");
+            lists.add("多对多");
             answers.add(1);
-            ClassTestContentFragment fragment=ClassTestContentFragment.newInstance("1+1等于多少？",lists,i+1);
+            ClassTestContentFragment fragment=ClassTestContentFragment.newInstance(subjects.get(0),lists,i+1);
             fragment.setListener(new ClassTestContentFragment.OnChooseListener() {
                 @Override
                 public void OnChoose(int pos, int choose) {

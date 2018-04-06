@@ -75,12 +75,14 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/len_4"
                 android:padding="@dimen/len_4"
-                android:background="@color/black_alpha_32">
+                >
                 <TextView
                     android:id="@+id/tv_message_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/black_alpha_32"
                     tools:text="后勤携手龙舟队 敲鼓赶鱼拉开捕鱼序幕"
                     android:textSize="@dimen/font_16"
                     android:textStyle="bold"

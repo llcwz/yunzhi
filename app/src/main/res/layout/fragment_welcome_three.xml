@@ -42,7 +42,7 @@
 
     <TextView
         android:id="@+id/heading"
-        android:text="测试3"
+        android:text="丰富的资源"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/images"
@@ -54,7 +54,7 @@
 
     <TextView
         android:id="@+id/content"
-        android:text="测试3.3"
+        android:text="各大知名老师授课"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/images"
