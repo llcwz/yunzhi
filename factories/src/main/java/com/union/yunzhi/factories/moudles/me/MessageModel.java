@@ -75,4 +75,13 @@ public class MessageModel implements Parcelable{
     public void setSystemInformModels(List<SystemInformModel> systemInformModels) {
         mSystemInformModels = systemInformModels;
     }
+
+    @Override
+    public String toString() {
+        return "MessageModel{" +
+                "mCommentMeModels=" + mCommentMeModels.toString() +
+                ", mLikeMeModels=" + mLikeMeModels.toString() +
+                ", mSystemInformModels=" + mSystemInformModels.toString() +
+                '}';
+    }
 }

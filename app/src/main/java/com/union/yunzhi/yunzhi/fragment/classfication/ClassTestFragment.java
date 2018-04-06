@@ -15,6 +15,7 @@ import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.adapter.ClassTestAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cjw on 2018/3/8 0008.
@@ -27,7 +28,8 @@ public class ClassTestFragment extends FragmentM{
 
     private ClassTestAdapter madapter;
     private ArrayList<CourseTestBean> mdates;
-
+    private String[] test_title={"第一章节","第二章节","第三章节","第四章节","第五章节","第六章节"};
+    private String[] test_content={"绪论","关系代数","sql语句查询","范式","E-R图","UML"};
     public static ClassTestFragment newInstance() {
         return new ClassTestFragment();
     }
@@ -47,13 +49,11 @@ public class ClassTestFragment extends FragmentM{
      */
     public void Init(){
         mdates=new ArrayList<>();
-        for(int i=0;i<20;i++){
+        for(int i=0;i<6;i++){
             CourseTestBean bean;
-            if(i%3==0){
-                bean=new CourseTestBean("第一章节", ClassConst.TSET_VIEW_TITLE);
-            }else{
-                bean=new CourseTestBean("数据库的基本操作"+i,"2017-12-12",15,"数据库内容",ClassConst.TSET_VIEW_CONTENT);
-            }
+            bean=new CourseTestBean(test_title[i], ClassConst.TSET_VIEW_TITLE);
+            mdates.add(bean);
+            bean=new CourseTestBean(test_content[i],"2017-12-12",15,"数据库内容",ClassConst.TSET_VIEW_CONTENT);
             mdates.add(bean);
         }
         madapter=new ClassTestAdapter(mdates,null,getContext());
