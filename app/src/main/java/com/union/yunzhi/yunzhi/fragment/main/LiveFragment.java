@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.union.yunzhi.common.app.FragmentM;
 import com.union.yunzhi.common.helper.GlideImageLoader;
+import com.union.yunzhi.common.util.StatusBarUtil;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.live.SpacesItemDecoration;
 import com.union.yunzhi.factories.moudles.live.beans.LiveBean;
@@ -160,6 +162,20 @@ public class LiveFragment extends FragmentM implements View.OnClickListener{
 
 
         mRecycleView.setAdapter(adapter);
+    }
+
+    @Override
+    public void initRefreshData() {
+        super.initRefreshData();
+        changeStatusBarColor(R.color.home_page_color);
+    }
+
+    /**
+     * 改状态栏颜色
+     * @param color
+     */
+    public void changeStatusBarColor(@ColorRes int color) {
+        StatusBarUtil.setStatusBarColor(getActivity(), color);
     }
 
     /**

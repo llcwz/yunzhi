@@ -14,6 +14,7 @@
     <color name="result_points">#c000ff00</color>
     <color name="system_bar_color">#fed952</color>
 
-    <color name="home_page_color">#074471</color>
+    <color name="home_page_color">#ee074471</color>
+    <color name="comment_page_color">#074471</color>
     <color name="home_qrcode">#000000</color>
 </resources>

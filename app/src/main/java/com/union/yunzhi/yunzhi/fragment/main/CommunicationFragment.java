@@ -182,7 +182,7 @@ public class CommunicationFragment extends FragmentM implements ViewPager.OnPage
     @Override
     public void onResume() {
         super.onResume();
-        changeStatusBarColor(R.color.blue_400);
+        changeStatusBarColor(R.color.home_page_color);
 
     }
 

@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_400">
+        android:background="@color/home_page_color">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -23,9 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorHeight="@dimen/len_2"
-            app:tabIndicatorColor="@color/red_500"
+            app:tabIndicatorColor="@color/red_400"
             app:tabTextColor="@color/white"
-            app:tabSelectedTextColor="@color/red_500"/>
+            app:tabSelectedTextColor="@color/red_400"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -33,7 +33,6 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue_100"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

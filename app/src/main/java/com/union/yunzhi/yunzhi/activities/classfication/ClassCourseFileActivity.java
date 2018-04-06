@@ -1,9 +1,11 @@
 package com.union.yunzhi.yunzhi.activities.classfication;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.fragment.classfication.ClassFileFragment;
@@ -15,12 +17,14 @@ import java.util.ArrayList;
  * Created by cjw on 2018/3/1 0001.
  */
 
-public class ClassCourseFileActivity extends ActivityM  {
+public class ClassCourseFileActivity extends ActivityM implements View.OnClickListener{
 
     public static final String KEY = "courseId";
     private CommonTabLayout mTabLayout;
     private ArrayList<CustomTabEntity> mList=new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
+
+    private RoundedImageView back,share;
 
     @Override
     protected int getContentLayoutId() {
@@ -33,6 +37,8 @@ public class ClassCourseFileActivity extends ActivityM  {
     protected void initWidget() {
         data();
         mTabLayout = (CommonTabLayout)findViewById(R.id.sliding_tab_layout);
+        back= (RoundedImageView) findViewById(R.id.rImagV_back);
+        share= (RoundedImageView) findViewById(R.id.rImagV_share);
     }
 
     private void data() {
@@ -75,4 +81,17 @@ public class ClassCourseFileActivity extends ActivityM  {
         return temp;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.rImagV_back:
+                finish();
+                break;
+            case R.id.rImagV_share:
+                break;
+        }
+
+    }
 }

@@ -3,6 +3,7 @@ package com.union.yunzhi.yunzhi.fragment.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -27,6 +28,7 @@ import com.union.yunzhi.common.helper.GlideImageLoader;
 import com.union.yunzhi.common.helper.HiddenAnimUtils;
 import com.union.yunzhi.common.helper.ScreenUtils;
 import com.union.yunzhi.common.util.LogUtils;
+import com.union.yunzhi.common.util.StatusBarUtil;
 import com.union.yunzhi.common.util.ToastUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
 import com.union.yunzhi.factories.moudles.classfication.ClassConst;
@@ -252,8 +254,17 @@ public class ClassFragment extends FragmentM implements View.OnClickListener,Vie
     @Override
     public void initRefreshData() {
         super.initRefreshData();
+        changeStatusBarColor(R.color.home_page_color);
         requestCarousel();
         requestCourse(courseId);
+    }
+
+    /**
+     * 改状态栏的颜色
+     * @param color
+     */
+    public void changeStatusBarColor(@ColorRes int color) {
+        StatusBarUtil.setStatusBarColor(getActivity(), color);
     }
 
     /**
