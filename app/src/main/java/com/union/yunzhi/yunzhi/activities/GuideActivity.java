@@ -14,7 +14,6 @@ import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.yunzhi.MainActivity;
 import com.union.yunzhi.yunzhi.R;
 import com.union.yunzhi.yunzhi.fragment.guide.GuideFragment;
-import com.union.yunzhi.yunzhi.manager.SPManager;
 
 public class GuideActivity extends ActivityM {
 
@@ -93,7 +92,12 @@ public class GuideActivity extends ActivityM {
      * 动画结束的时候跳转
      */
     private void endTutorial() {
-        SPManager.getInstance().putBoolean(SPManager.IS_SHOW_GUIDE, true);
+        /**
+         * 用来屏蔽引导界面，引导界面只会在第一次安装程序的时候出现
+         * 再次打开程序的时候不会出现引导界面
+         * 这里为了演示，不予屏蔽
+         */
+        //SPManager.getInstance().putBoolean(SPManager.IS_SHOW_GUIDE, true);
         startActivity(new Intent(GuideActivity.this, MainActivity.class));
         finish();
     }

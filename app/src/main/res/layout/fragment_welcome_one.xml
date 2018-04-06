@@ -54,12 +54,12 @@
         android:layout_marginTop="24dp"
         android:layout_marginLeft="@dimen/welcome_text_margin"
         android:layout_marginRight="@dimen/welcome_text_margin"
-        android:text="测试1"
+        android:text="轻松在线学习"
         android:textAppearance="@style/WelcomeHeadingAppearance" />
 
     <TextView
         android:id="@+id/content"
-        android:text="测试1.1"
+        android:text="随时随地的学"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/images"

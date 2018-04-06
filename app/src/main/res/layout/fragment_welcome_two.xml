@@ -81,7 +81,7 @@
         android:layout_marginLeft="@dimen/welcome_text_margin"
         android:layout_marginRight="@dimen/welcome_text_margin"
         android:layout_marginTop="24dp"
-        android:text="测试2"
+        android:text="交流无障碍"
         android:textAppearance="@style/WelcomeHeadingAppearance" />
 
     <TextView
@@ -94,7 +94,7 @@
         android:layout_marginRight="@dimen/welcome_text_margin"
         android:layout_marginTop="8dp"
         android:minHeight="@dimen/welcome_content_min_height"
-        android:text="测试2.2"
+        android:text="面对面的交流"
         android:textAppearance="@style/WelcomeContentAppearance" />
 
 </LinearLayout>
