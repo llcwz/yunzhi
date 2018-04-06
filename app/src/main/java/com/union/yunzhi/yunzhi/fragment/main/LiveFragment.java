@@ -78,10 +78,15 @@ public class LiveFragment extends FragmentM implements View.OnClickListener{
         images.add(R.mipmap.cc);
 
         //直播显示测试数据
-        list.add(new LiveBean(context,R.mipmap.timg1));list.add(new LiveBean(context,R.mipmap.timg2));list.add(new LiveBean(context,R.mipmap.timg3));
-        list.add(new LiveBean(context,R.mipmap.timg4));list.add(new LiveBean(context,R.mipmap.timg5));list.add(new LiveBean(context,R.mipmap.timg6));
-        list.add(new LiveBean(context,R.mipmap.timg7));list.add(new LiveBean(context,R.mipmap.timg8));list.add(new LiveBean(context,R.mipmap.timg9));
-        list.add(new LiveBean(context,R.mipmap.timg10));
+        list.add(new LiveBean(context,R.mipmap.play1));list.add(new LiveBean(context,R.mipmap.play2));
+        list.add(new LiveBean(context,R.mipmap.play3));list.add(new LiveBean(context,R.mipmap.play4));
+        list.add(new LiveBean(context,R.mipmap.play5));list.add(new LiveBean(context,R.mipmap.play6));
+        list.add(new LiveBean(context,R.mipmap.play7));list.add(new LiveBean(context,R.mipmap.play8));
+        list.add(new LiveBean(context,R.mipmap.play9));list.add(new LiveBean(context,R.mipmap.play10));
+        list.add(new LiveBean(context,R.mipmap.play11));list.add(new LiveBean(context,R.mipmap.play12));
+        list.add(new LiveBean(context,R.mipmap.play13));list.add(new LiveBean(context,R.mipmap.play14));
+        list.add(new LiveBean(context,R.mipmap.play15));list.add(new LiveBean(context,R.mipmap.play16));
+
     }
 
     @Override

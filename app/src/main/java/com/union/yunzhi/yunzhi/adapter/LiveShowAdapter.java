@@ -77,8 +77,8 @@ public  class LiveShowAdapter extends MyAdapter<LiveBean> {
 
 
             mImageView.setImageResource(data.Id);
-            courseName.setText("计算机组成原理");
-            teacherName.setText("张三老师");
+            courseName.setText("课程名称");
+            teacherName.setText("万老师");
             lineCount.setText(String.valueOf("12306"));
 
             //TODO 此处处理直播模块recycleView信息加载
