@@ -95,10 +95,7 @@ public class MainActivity extends ActivityM implements NavHelper.OnTabChangedLis
     @Override
     protected void onResume() {
         super.onResume();
-<<<<<<< HEAD
-=======
 
->>>>>>> c53159e8f42614ac13440a6d5ce8609453845b34
     }
 
     @Override
