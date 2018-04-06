@@ -39,6 +39,8 @@ public class ClassCourseFileActivity extends ActivityM implements View.OnClickLi
         mTabLayout = (CommonTabLayout)findViewById(R.id.sliding_tab_layout);
         back= (RoundedImageView) findViewById(R.id.rImagV_back);
         share= (RoundedImageView) findViewById(R.id.rImagV_share);
+        back.setOnClickListener(this);
+        share.setOnClickListener(this);
     }
 
     private void data() {

@@ -94,12 +94,11 @@
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="@dimen/len_2"
-        app:tl_textSelectColor="@color/blue_a700"
-        app:tl_textUnselectColor="@color/amber_200"
+        app:tl_textSelectColor="@color/amber_200"
+        app:tl_textUnselectColor="@color/light_gray"
         android:background="@color/transparence"
         app:tl_indicator_corner_radius="@dimen/len_6"
-        app:tl_indicator_color="@color/blue_900"
-        app:tl_indicator_height="@dimen/len_2"
+        app:tl_indicator_height="0dp"
         app:tl_divider_color="@color/blue_800"
         app:tl_textBold="BOTH">
 
