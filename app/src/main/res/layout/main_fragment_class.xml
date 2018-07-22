@@ -24,7 +24,7 @@
             <!--头部的控制条-->
 
             <include layout="@layout/class_head"/>
-w
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

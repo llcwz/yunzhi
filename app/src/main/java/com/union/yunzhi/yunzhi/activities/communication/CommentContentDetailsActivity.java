@@ -13,31 +13,19 @@ import com.bumptech.glide.Glide;
 import com.union.yunzhi.common.app.ActivityM;
 import com.union.yunzhi.common.util.LogUtils;
 import com.union.yunzhi.common.widget.MyAdapter;
-import com.union.yunzhi.factories.moudles.classfication.CustomLinearLayoutManager;
-import com.union.yunzhi.factories.moudles.communication.BaseCommentModel;
 import com.union.yunzhi.factories.moudles.communication.CommentModel;
-import com.union.yunzhi.factories.moudles.communication.CommunicationConstant;
 import com.union.yunzhi.factories.moudles.communication.ReplyModel;
 import com.union.yunzhi.factories.moudles.me.UserModel;
-import com.union.yunzhi.factories.okhttp.exception.OkHttpException;
-import com.union.yunzhi.factories.okhttp.listener.DisposeDataListener;
 import com.union.yunzhi.yunzhi.R;
-import com.union.yunzhi.yunzhi.adapter.CommentAdapter;
 import com.union.yunzhi.yunzhi.adapter.ReplyAdapter;
 import com.union.yunzhi.yunzhi.communicationutils.CommentUtils;
 import com.union.yunzhi.yunzhi.fragment.communication.CommentDialogFragment;
-import com.union.yunzhi.yunzhi.manager.DialogManager;
 import com.union.yunzhi.yunzhi.manager.UserManager;
 import com.union.yunzhi.yunzhi.meutils.MeUtils;
-import com.union.yunzhi.yunzhi.network.RequestCenter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.union.yunzhi.yunzhi.R.id.tv_comment_author;
 
 public class CommentContentDetailsActivity extends ActivityM implements CommentDialogFragment.OnGetCommentContentListener, View.OnClickListener {
 
